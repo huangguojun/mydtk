@@ -1,0 +1,71 @@
+/* dtkFinder.qss --- 
+;; 
+;; Author: Julien Wintz
+;; Copyright (C) 2008 - Julien Wintz, Inria.
+;; Created: Fri Jun 11 17:34:50 2010 (+0200)
+;; Version: $Id$
+;; Last-Updated: Sat Jun 12 16:28:59 2010 (+0200)
+;;           By: Julien Wintz
+;;     Update #: 28
+*/
+
+/* Commentary: 
+;; 
+*/
+
+/* Change log:
+;; 
+*/
+
+dtkFinderToolBar {
+    min-height: 23;
+    max-height: 23;
+}
+
+dtkFinderPathBar {
+    font: 11px;
+    border-top: 1px solid #d4d4d4;
+    min-height: 23;
+    max-height: 23;
+}
+
+dtkFinderSideView {
+    padding: 5px;
+    background: #dfe4ea;
+    border-right: 1px solid #d4d4d4;
+    show-decoration-selected: 1;
+    font-size: 10pt;
+    qproperty-headerFontSize: 11;
+}
+
+dtkFinderSideView::item {
+    margin-left: 0px;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+dtkFinderSideView::item:selected {
+    border-top: 1px solid #567dbc;
+    border-bottom: 1px solid #567dbc;
+}
+
+dtkFinderSideView::item:selected:active{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
+}
+
+dtkFinderSideView::item:selected:!active {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
+}
+
+dtkFinderSideView::branch:selected {
+    border-top: 1px solid #567dbc;
+    border-bottom: 1px solid #567dbc;
+}
+
+dtkFinderSideView::branch:selected:active{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
+}
+
+dtkFinderSideView::branch:selected:!active {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6b9be8, stop: 1 #577fbf);
+}

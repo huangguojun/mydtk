@@ -1,0 +1,32 @@
+/* dtkAnchoredBar.qss --- 
+;; 
+;; Author: Julien Wintz
+;; Copyright (C) 2008 - Julien Wintz, Inria.
+;; Created: Tue Mar 16 08:49:21 2010 (+0100)
+;; Version: $Id$
+;; Last-Updated: Thu Jun 20 16:24:46 2013 (+0200)
+;;           By: Selim Kraria
+;;     Update #: 6
+*/
+
+/* Commentary: 
+;; 
+*/
+
+/* Change log:
+;; 
+*/
+
+dtkAnchoredBar {
+  background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop 0.4 #f5f5f5, stop: 0.5 #ebebeb stop:1 #ebebeb);
+  border-top: 1px solid #d4d4d4;
+  border-right: 1px solid #d4d4d4;
+  background-image: url(:dtkGui/pixmaps/dtk-anchored-bar-handle.png);
+  background-position: right;
+  background-repeat: none;
+}
+
+dtkAnchoredBar::separator {
+  background: #d4d4d4;
+  width: 1px;
+}

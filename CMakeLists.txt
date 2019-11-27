@@ -52,8 +52,11 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/Libs
   ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkLog
   ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkCore
+  ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkGui
   ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkMeta
   ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkWidgets
+  ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkCoreSupport
+  ${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkMathSupport
   ${CUDA_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${VTK_INCLUDE_DIRS}

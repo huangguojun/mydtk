@@ -1,0 +1,32 @@
+<!DOCTYPE RCC><RCC version="1.0">
+  <qresource prefix="dtkGui">
+
+    <file>dtkFinder.qss</file>
+    <file>dtkAnchoredBar.qss</file>
+
+    <file>dtkSwitch.qml</file>
+
+    <file>pixmaps/star.svg</file>
+    <file>pixmaps/hidden-folder.png</file>
+    <file>pixmaps/dtk-anchored-bar-action.png</file>
+    <file>pixmaps/dtk-anchored-bar-add.png</file>
+    <file>pixmaps/dtk-anchored-bar-handle.png</file>
+    <file>pixmaps/dtk-item-list-delegate-arrow.png</file>
+    <file>pixmaps/dtk-item-list-delegate-tags.png</file>
+    <file>pixmaps/dtk-tag_bg.png</file>
+    <file>pixmaps/dtk-tag_fg.png</file>
+    <file>pixmaps/dtk-tag_fg_blue.png</file>
+    <file>pixmaps/dtk-tag_fg_dark.png</file>
+    <file>pixmaps/dtk-view-tree.png</file>
+    <file>pixmaps/dtk-view-list.png</file>
+    <file>pixmaps/dtk.png</file>
+    <file>pixmaps/dtkLedBlue.png</file>
+    <file>pixmaps/dtkLedGray.png</file>
+    <file>pixmaps/dtkLedGreen.png</file>
+    <file>pixmaps/dtkLedPurple.png</file>
+    <file>pixmaps/dtkLedRed.png</file>
+    <file>pixmaps/dtkLedYellow.png</file>
+    <file>pixmaps/dtkSwitch-groove.png</file>
+    <file>pixmaps/dtkSwitch-knob.png</file>
+  </qresource>
+</RCC>

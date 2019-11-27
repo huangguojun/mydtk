@@ -4,4 +4,5 @@
 ################################################################################
 
 
-add_subdirectory(dtkApp)
+add_subdirectory(dtkApp1)
+add_subdirectory(dtkApp2)
