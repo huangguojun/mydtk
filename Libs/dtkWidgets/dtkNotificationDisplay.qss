@@ -1,0 +1,92 @@
+/* dtkNotificationDisplay.qss --- 
+;; 
+;; Author: Julien Wintz
+;; Copyright (C) 2008-2011 - Julien Wintz, Inria.
+;; Created: Sat Apr 21 18:35:15 2012 (+0200)
+;; Version: $Id$
+;; Last-Updated: Mon Apr 23 23:57:23 2012 (+0200)
+;;           By: Julien Wintz
+;;     Update #: 69
+*/
+
+/* Commentary: 
+;; 
+*/
+
+/* Change log:
+;; 
+*/
+
+.dtkNotificationDisplay:active {
+    color: black;
+    border-image: url(:dtkNotification/pixmaps/dtkNotificationDisplay_active.png) 5 5 7 5;
+    border-top: 5px transparent;
+    border-right: 5px transparent;
+    border-bottom: 7px transparent;
+    border-left: 5px transparent;
+}
+
+.dtkNotificationDisplay:!active {
+    color: black;
+    border-image: url(:dtkNotification/pixmaps/dtkNotificationDisplay_inactive.png) 5 5 7 5;
+    border-top: 5px transparent;
+    border-right: 5px transparent;
+    border-bottom: 7px transparent;
+    border-left: 5px transparent
+}
+
+dtkNotificationDisplay QToolButton {
+    border: none;
+    min-width: 12px;
+    max-width: 12px;
+    min-height: 12px;
+    max-height: 12px;
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-next {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-next);
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-next:pressed {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-next-pressed);
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-prev {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-prev);
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-prev:pressed {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-prev-pressed);
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-clse {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-clse);
+    min-width: 14px;
+    max-width: 14px;
+    min-height: 14px;
+    max-height: 14px;
+}
+
+dtkNotificationDisplay QToolButton#dtkNotifiable-clse:pressed {
+    background-image: url(:dtkNotification/pixmaps/dtkNotifiable-clse-pressed);
+}
+
+dtkNotificationDisplay .QLabel {
+    color: #393939;
+}
+
+dtkNotificationDisplay .QLabel#dtkNotificationDisplayPersistentCount {
+    color: lightGray;
+    background: #595959;
+    border: 1px solid #595959;
+    border-radius: 7px;
+    font-size: 10px;
+}
+
+dtkNotificationDisplay .QLabel#dtkNotificationDisplayNonPersistentCount {
+    color: lightGray;
+    background: darkRed;
+    border: 1px solid darkRed;
+    border-radius: 7px;
+    font-size: 10px;
+}

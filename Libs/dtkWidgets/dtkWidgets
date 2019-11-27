@@ -1,0 +1,44 @@
+// Version: $Id$
+//
+//
+
+// Commentary:
+//
+//
+
+// Change Log:
+//
+//
+
+// Code:
+
+#include "dtkApplication.h"
+#include "dtkDistributedGuiApplication.h"
+#if defined (DTK_BUILD_SCRIPT)
+#include "dtkInterpreter.h"
+#endif
+#include "dtkNotification.h"
+#include "dtkNotificationDisplay.h"
+#include "dtkToolBox.h"
+#include "dtkRecentFilesMenu.h"
+#include "dtkScreenMenu.h"
+#include "dtkSpacer.h"
+#include "dtkSplitter.h"
+#include "dtkViewController.h"
+#include "dtkViewLayout.h"
+#include "dtkViewLayoutItem.h"
+#include "dtkViewManager.h"
+#include "dtkViewWidget.h"
+#include "dtkWidgetsLogView.h"
+#include "dtkWidgetsTag.h"
+#include "dtkWidgetsTagCloud.h"
+#include "dtkWidgetsTagCloudController.h"
+#include "dtkWidgetsTagCloudDesc.h"
+#include "dtkWidgetsTagCloudItem.h"
+#include "dtkWidgetsTagCloudLayout.h"
+#include "dtkWidgetsTagCloudList.h"
+#include "dtkWidgetsTagCloudScope.h"
+#include "dtkWidgetsTagCloudView.h"
+
+//
+// dtkWidgets ends here

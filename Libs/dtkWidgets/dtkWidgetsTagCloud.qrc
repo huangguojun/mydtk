@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+  <qresource prefix="dtkWidgetsTagCloud">
+    <file>dtkWidgetsTagCloudList-arrow.png</file>
+    <file>dtkWidgetsTagCloudList-tags.png</file>
+    <file>dtkWidgetsTagCloudScopeItem-bg.png</file>
+    <file>dtkWidgetsTagCloudScopeItem-fg-light.png</file>
+    <file>dtkWidgetsTagCloudScopeItem-fg-dark.png</file>
+  </qresource>
+</RCC>

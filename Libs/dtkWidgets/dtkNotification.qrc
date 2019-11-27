@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="dtkNotification">  
+    <file>dtkNotificationDisplay.qss</file>
+
+    <file>pixmaps/dtkNotifiable-clse.png</file>
+    <file>pixmaps/dtkNotifiable-clse-pressed.png</file>
+    <file>pixmaps/dtkNotifiable-next.png</file>
+    <file>pixmaps/dtkNotifiable-next-pressed.png</file>
+    <file>pixmaps/dtkNotifiable-ok.png</file>
+    <file>pixmaps/dtkNotifiable-ok-pressed.png</file>
+    <file>pixmaps/dtkNotifiable-prev.png</file>
+    <file>pixmaps/dtkNotifiable-prev-pressed.png</file>
+
+    <file>pixmaps/dtkNotificationDisplay_active.png</file>
+    <file>pixmaps/dtkNotificationDisplay_inactive.png</file>
+  </qresource>
+</RCC>
