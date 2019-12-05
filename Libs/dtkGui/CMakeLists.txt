@@ -152,10 +152,10 @@ endforeach(header)
 install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION include/${PROJECT_NAME})
 install(FILES ${${PROJECT_NAME}_HEADERS_QTS} DESTINATION include/${PROJECT_NAME})
 
-install(TARGETS ${PROJECT_NAME}
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      COMPONENT guisupport
-         EXPORT dtkDepends)
+#install(TARGETS ${PROJECT_NAME}
+#  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#      COMPONENT guisupport
+#         EXPORT dtkDepends)
 
 ######################################################################
 ### CMakeLists.txt ends here

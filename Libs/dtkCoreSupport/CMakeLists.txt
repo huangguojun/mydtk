@@ -240,10 +240,10 @@ install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION include/${PROJECT_NAME})
 install(FILES ${${PROJECT_NAME}_HEADERS_QTS} DESTINATION include/${PROJECT_NAME})
 install(FILES ${${PROJECT_NAME}_MODULES} DESTINATION ${DTK_PYTHON_INSTALL_PATH})
 
-install(TARGETS ${PROJECT_NAME}
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      COMPONENT coresupport
-         EXPORT dtkDepends)
+#install(TARGETS ${PROJECT_NAME}
+#    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#      COMPONENT coresupport
+#         EXPORT dtkDepends)
 
 ######################################################################
 ### CMakeLists.txt ends here

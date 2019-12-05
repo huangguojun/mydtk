@@ -82,10 +82,10 @@ install(FILES ${${PROJECT_NAME}_HEADERS}
 ## Install rules - targets
 ## ###################################################################
 
-install(TARGETS ${PROJECT_NAME}
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      COMPONENT meta
-         EXPORT dtkDepends)
+#install(TARGETS ${PROJECT_NAME}
+#    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#      COMPONENT meta
+#        EXPORT dtkDepends)
 
 ######################################################################
 ### CMakeLists.txt ends here
