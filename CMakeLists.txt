@@ -69,7 +69,13 @@ endforeach()
 foreach(d ${vtk_flags})
     remove_definitions(-D${d})
 endforeach()
-###
+
+## ###################################################################
+##
+## ###################################################################
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkWrap.cmake)
+
 
 ## #################################################################
 ## Options
@@ -102,6 +108,22 @@ include_directories(${CUDA_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${VTK_INCLUDE_DIRS})
 include_directories(/usr/local/cuda/lib64)
+
+## ###################################################################
+## Exporting
+## ###################################################################
+
+#export(PACKAGE dtk)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfig.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/dtkConfig.cmake" @ONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfig.install.cmake.in
+ "${PROJECT_BINARY_DIR}/install/dtkConfig.cmake" @ONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfigVersion.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/dtkConfigVersion.cmake" @ONLY)
+
 
 
 ########################################
