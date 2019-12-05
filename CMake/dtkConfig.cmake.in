@@ -1,0 +1,133 @@
+## Version: $Id$
+##
+######################################################################
+##
+### Commentary:
+##
+######################################################################
+##
+### Change Log:
+##
+######################################################################
+##
+### Code:
+
+set(DTK_BUILD_32 @DTK_BUILD_32@)
+set(DTK_BUILD_64 @DTK_BUILD_64@)
+
+## ###################################################################
+## Defines:
+## - dtk_INCLUDE_DIRS
+## ###################################################################
+
+set(dtk_INCLUDE_DIR "@CMAKE_CURRENT_SOURCE_DIR@")
+
+set(dtk_INCLUDE_DIRS
+  "@CMAKE_CURRENT_SOURCE_DIR@"
+  "@CMAKE_CURRENT_SOURCE_DIR@/include"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtk"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkLog"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkCore"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkMath"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkMeta"
+  "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkTest"
+  "@CMAKE_CURRENT_BINARY_DIR@")
+
+include("@CMAKE_BINARY_DIR@/dtkDepends.cmake")
+include("@CMAKE_CURRENT_SOURCE_DIR@/cmake/dtkWrap.cmake")
+
+set(CMAKE_MODULE_PATH
+  ${CMAKE_MODULE_PATH} "@CMAKE_SOURCE_DIR@/cmake/")
+
+set_directory_properties(PROPERTIES TEST_INCLUDE_FILE "@CMAKE_BINARY_DIR@/dtkSetTestEnvironment.cmake")
+
+set(dtk_MODULE_PATH "@CMAKE_BINARY_DIR@")
+set(dtk_INSTALL_DOCS "@dtk_INSTALL_DOCS@")
+set(dtk_CONFIG_DOCS  "@dtk_CONFIG_DOCS@")
+
+set(dtk_WRAP_PREFIX "@CMAKE_CURRENT_SOURCE_DIR@/wrp")
+
+## ###################################################################
+## Options
+## ###################################################################
+
+set(DTK_BUILD_DISTRIBUTED @DTK_BUILD_DISTRIBUTED@)
+set(DTK_BUILD_COMPOSER @DTK_BUILD_COMPOSER@)
+set(DTK_BUILD_SCRIPT @DTK_BUILD_SCRIPT@)
+set(DTK_BUILD_WRAPPERS @DTK_BUILD_WRAPPERS@)
+set(DTK_BUILD_WIDGETS @DTK_BUILD_WIDGETS@)
+set(DTK_BUILD_SUPPORT_CORE @DTK_BUILD_SUPPORT_CORE@)
+set(DTK_BUILD_SUPPORT_CONTAINER @DTK_BUILD_SUPPORT_CONTAINER@)
+set(DTK_BUILD_SUPPORT_COMPOSER @DTK_BUILD_SUPPORT_COMPOSER@)
+set(DTK_BUILD_SUPPORT_DISTRIBUTED @DTK_BUILD_SUPPORT_DISTRIBUTED@)
+set(DTK_BUILD_SUPPORT_GUI @DTK_BUILD_SUPPORT_GUI@)
+set(DTK_BUILD_SUPPORT_MATH @DTK_BUILD_SUPPORT_MATH@)
+set(DTK_BUILD_SUPPORT_PLOT @DTK_BUILD_SUPPORT_PLOT@)
+set(DTK_BUILD_SUPPORT_VR @DTK_BUILD_SUPPORT_VR@)
+set(DTK_ENABLE_COVERAGE @DTK_ENABLE_COVERAGE@)
+set(DTK_COVERAGE_USE_COBERTURA @DTK_COVERAGE_USE_COBERTURA@)
+set(DTK_ENABLE_MEMCHECK @DTK_ENABLE_MEMCHECK@)
+
+set(DTK_HAVE_MPI @DTK_HAVE_MPI@)
+set(DTK_HAVE_VRPN @DTK_HAVE_VRPN@)
+set(DTK_HAVE_NITE @DTK_HAVE_NITE@)
+set(DTK_HAVE_ZLIB @DTK_HAVE_ZLIB@)
+
+if(DTK_BUILD_DISTRIBUTED)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkDistributed")
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkDistributedTest")
+endif(DTK_BUILD_DISTRIBUTED)
+
+if(DTK_BUILD_COMPOSER)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkComposer")
+endif(DTK_BUILD_COMPOSER)
+
+if(DTK_BUILD_SCRIPT)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkScript")
+endif(DTK_BUILD_SCRIPT)
+
+if(DTK_BUILD_WRAPPERS)
+  set(SIP_FOUND @SIP_FOUND@)
+  set(SWIG_FOUND @SWIG_FOUND@)
+  set(DTK_PYTHON_WRAPPER @DTK_PYTHON_WRAPPER@)
+  set(DTK_PYTHON_INSTALL_PATH @DTK_PYTHON_INSTALL_PATH@)
+  set(DTK_WRAPPING_PYTHON @DTK_WRAPPING_PYTHON@)
+  set(DTK_WRAPPING_CSHARP @DTK_WRAPPING_CSHARP@)
+  set(DTK_WRAPPING_TCL @DTK_WRAPPING_TCL@)
+endif(DTK_BUILD_WRAPPERS)
+
+if(DTK_BUILD_WIDGETS)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/src/dtkWidgets")
+endif(DTK_BUILD_WIDGETS)
+
+if(DTK_BUILD_SUPPORT_CORE)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/include/dtkCoreSupport")
+endif(DTK_BUILD_SUPPORT_CORE)
+
+if(DTK_BUILD_SUPPORT_CONTAINER)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/include/dtkContainerSupport")
+endif(DTK_BUILD_SUPPORT_CONTAINER)
+
+if(DTK_BUILD_SUPPORT_MATH)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/include/dtkMathSupport")
+endif(DTK_BUILD_SUPPORT_MATH)
+
+if(DTK_BUILD_SUPPORT_GUI)
+  set(dtk_INCLUDE_DIRS ${dtk_INCLUDE_DIRS} "@CMAKE_CURRENT_SOURCE_DIR@/include/dtkGuiSupport")
+endif(DTK_BUILD_SUPPORT_GUI)
+
+## ###################################################################
+## Helper function
+## ###################################################################
+
+function(PREPEND var prefix)
+   set(listVar "")
+   foreach(f ${ARGN})
+      list(APPEND listVar "${prefix}/${f}")
+   endforeach(f)
+   set(${var} "${listVar}" PARENT_SCOPE)
+endfunction(PREPEND)
+
+######################################################################
+### dtkConfig.cmake.in ends here
