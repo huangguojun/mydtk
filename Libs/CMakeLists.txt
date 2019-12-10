@@ -12,4 +12,5 @@ add_subdirectory(dtkMeta)
 add_subdirectory(dtkTest)
 add_subdirectory(dtkWidgets)
 add_subdirectory(dtkScript)
+add_subdirectory(dtkIo)
 
