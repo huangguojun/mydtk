@@ -1,0 +1,56 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/*
+
+;; dtkThemeTomorrow.qless
+
+;; @bg:          #1d1f21
+;; @bgalt:       #161719
+;; @base0:       #0d0d0d
+;; @base1:       #1b1b1b
+;; @base2:       #212122
+;; @base3:       #292b2b
+;; @base4:       #3f4040
+;; @base5:       #5c5e5e
+;; @base6:       #757878
+;; @base7:       #969896
+;; @base8:       #ffffff
+;; @fg:          #c5c8c6
+;; @fgalt:       #bbbbbb
+
+;; @grey:        #5a5b5a
+;; @red:         #cc6666
+;; @orange:      #de935f
+;; @yellow:      #f0c674
+;; @green:       #b5bd68
+;; @blue:        #81a2be
+;; @darkblue:    #41728e
+;; @teal:        @blue
+;; @magenta:     #c9b4cf
+;; @violet:      #b294bb
+;; @cyan:        #8abeb7
+;; @darkcyan:    #6a9e97
+
+;; @bd:         @base1
+;; @bdalt:      @base4
+
+;; @hl:        @darkblue
+
+*/
+
+=yield
+
+/* dtkThemeTomorrow.qless ends here */

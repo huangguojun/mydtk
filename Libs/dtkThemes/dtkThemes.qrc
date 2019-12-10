@@ -1,0 +1,27 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="dtk-themes">
+        <file>./mixins/dtkThemeChallenger.qless</file>
+        <file>./mixins/dtkThemeCity.qless</file>
+        <file>./mixins/dtkThemeDracula.qless</file>
+        <file>./mixins/dtkThemeIosvkem.qless</file>
+        <file>./mixins/dtkThemeNord.qless</file>
+        <file>./mixins/dtkThemeNordLight.qless</file>
+        <file>./mixins/dtkThemeOne.qless</file>
+        <file>./mixins/dtkThemeOneLight.qless</file>
+        <file>./mixins/dtkThemePeacock.qless</file>
+        <file>./mixins/dtkThemeSolarized.qless</file>
+        <file>./mixins/dtkThemeSolarizedLight.qless</file>
+        <file>./mixins/dtkThemeSourcerer.qless</file>
+        <file>./mixins/dtkThemeSpacegrey.qless</file>
+        <file>./mixins/dtkThemeTomorrow.qless</file>
+        <file>./mixins/dtkThemeTomorrowLight.qless</file>
+
+        <file>./style/common.qless</file>
+        <file>./style/common+q.qless</file>
+        <file>./style/common+d.qless</file>
+
+        <file>./img/radio-button.svg</file>
+        <file>./img/radio-button-checked.svg</file>
+    </qresource>
+</RCC>

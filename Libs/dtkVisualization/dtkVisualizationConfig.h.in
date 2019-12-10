@@ -1,0 +1,26 @@
+// Version: $Id$
+//
+//
+
+// Commentary:
+//
+//
+
+// Change Log:
+//
+//
+
+// Code:
+
+#pragma once
+
+#define dtkVisualization_VERSION_MAJOR @dtkVisualization_VERSION_MAJOR@
+#define dtkVisualization_VERSION_MINOR @dtkVisualization_VERSION_MINOR@
+#define dtkVisualization_VERSION_PATCH @dtkVisualization_VERSION_PATCH@
+
+#include <QString>
+
+static const QString DTKVISUALIZATION_INSTALL_PREFIX = "@CMAKE_INSTALL_PREFIX@";
+
+//
+// dtkVisualizationConfig.h.in ends here

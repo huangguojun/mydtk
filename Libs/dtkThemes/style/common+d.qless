@@ -1,0 +1,197 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //  dtkWidgetsLayout framework                                                   */
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+dtkWidgetsLayoutItemProxy
+{
+    background: @bg;
+}
+
+QFrame#dtkWidgetsLayoutItemFooterFocused
+{
+    background: @base2;
+
+    border-top: 1px solid @base5;
+}
+
+QFrame#dtkWidgetsLayoutItemFooterUnfocused
+{
+    background: @base2;
+}
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //  dtkWidgetsMenu framework                                                     */
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+dtkWidgetsMenuHeaderFacade
+{
+    font-size: 15px;
+}
+
+dtkWidgetsMenuNavigationFacade
+{
+    font-weight: bold;
+    font-size: 15px;
+    padding-left:  5px;
+    padding-right: 5px;
+    background: alpha(@base1, 66);
+    border-bottom: 1px solid @base1;
+}
+
+dtkWidgetsMenuInnerFacade
+{
+    font-size: 14px;
+    margin-left:  5px;
+    margin-right: 5px;
+    background: alpha(@base1, aa);
+    border-radius: 5px;
+}
+
+dtkWidgetsMenuInnerFacade[state="first"]
+{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+dtkWidgetsMenuInnerFacade[state="inner"]
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+dtkWidgetsMenuInnerFacade[state="last"]
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+dtkWidgetsMenuItemFacade
+{
+    font-size: 14px;
+    background: alpha(@base1, aa);
+    border-radius: 5px;
+    margin-left:  5px;
+    margin-right: 5px;
+}
+
+dtkWidgetsMenuItemFacade[state="alone"]
+{
+    
+}
+
+dtkWidgetsMenuItemFacade[state="first"]
+{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+dtkWidgetsMenuItemFacade[state="inner"]
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+dtkWidgetsMenuItemFacade[state="last"]
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+dtkWidgetsMenuBar
+{
+    background: alpha(@base0, dd);
+    border-right: 1px solid @base1;
+}
+
+dtkWidgetsMenuBarButton[state="default"]
+{
+    background: alpha(@base0, 00);
+    border-radius: 5px;
+}
+
+dtkWidgetsMenuBarButton[state="default"]:hover
+{
+    background: @hl;
+    border-radius: 5px;
+}
+
+dtkWidgetsMenuBarButton[state="current"]
+{
+    background: @hl;
+    border-radius: 5px;
+}
+
+dtkWidgetsMenuBarButtonCollapse
+{
+    border-top: 1px solid @base1;
+}
+
+dtkWidgetsMenuBarButtonCollapse:hover
+{
+    background: @hl;
+    border-top: 1px solid @base1;
+}
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //  dtkWidgetsOverlay framework                                                  */
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+dtkWidgetsOverlayPaneItemHeader
+{
+
+}
+
+dtkWidgetsOverlayPaneItemFooter QLabel
+{
+    color: @fg;
+}
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //  dtkWidgetsWorkspaceBar framework                                             */
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+dtkWidgetsWorkspaceBar
+{
+    background: @bg;
+}
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //  WM fixes (TODO: isolate in +w.qless)                                         */
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+#central
+{
+    color: @fg;
+    background-color: @bg;
+}
+
+/* // ///////////////////////////////////////////////////////////////////////////// */
+/* //
+/* // ///////////////////////////////////////////////////////////////////////////// */
+
+QTextEdit, QTextDocument, QPlainTextEdit
+{
+    color: @fg;
+    background-color: @bg;
+}
+
+/* common+d.qless ends here */

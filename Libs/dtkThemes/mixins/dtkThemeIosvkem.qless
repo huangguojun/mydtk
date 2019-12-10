@@ -1,0 +1,56 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/*
+
+;; dtkThemeIosvkem.qless
+
+;; @bg:        #1b1d1e
+;; @bgalt:     #262829
+;; @base0:     #1b1d1e
+;; @base1:     #202020
+;; @base2:     #303030
+;; @base3:     #303030
+;; @base4:     #505050
+;; @base5:     #505050
+;; @base6:     #808080
+;; @base7:     #808080
+;; @base8:     #DFDFDF
+;; @fg:        #dddddd
+;; @fgalt:     #5B6268
+
+;; @grey:      @base4
+;; @red:       #d02b61
+;; @orange:    #da8548
+;; @green:     #60aa00
+;; @teal:      #4db5bd
+;; @yellow:    #d08928
+;; @blue:      #6c9ef8
+;; @darkblue:  #6688aa
+;; @magenta:   #b77fdb
+;; @violet:    #a9a1e1
+;; @cyan:      #00aa80
+;; @darkcyan:  #5699AF
+
+;; @bd:        @base1
+;; @bdalt:     @base4
+
+;; @hl:        @magenta
+
+*/
+
+=yield
+
+/* dtkThemeIosvkem.qless ends here */

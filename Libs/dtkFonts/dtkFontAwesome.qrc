@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource prefix="">
+    <file>dtkFontAwesome.ttf</file>
+    <file>dtkFontAwesome.otf</file>
+  </qresource>
+</RCC>

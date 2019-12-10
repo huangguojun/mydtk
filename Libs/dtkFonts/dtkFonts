@@ -1,0 +1,6 @@
+#include "dtkFontAllTheIcons.h"
+#include "dtkFontAwesome.h"
+#include "dtkFontFileIcons.h"
+#include "dtkFontOcticon.h"
+#include "dtkFontSourceCodePro.h"
+#include "dtkFontSourceSansPro.h"

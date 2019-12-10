@@ -1,0 +1,9 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource prefix="">
+    <file>dtkVisualizationViewVideoGL.120.vert</file>
+    <file>dtkVisualizationViewVideoGL.120.frag</file>
+    <file>dtkVisualizationViewVideoGL.150.vert</file>
+    <file>dtkVisualizationViewVideoGL.150.frag</file>
+  </qresource>
+</RCC>

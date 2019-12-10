@@ -12,5 +12,8 @@ add_subdirectory(dtkMeta)
 add_subdirectory(dtkTest)
 add_subdirectory(dtkWidgets)
 add_subdirectory(dtkScript)
+add_subdirectory(dtkFonts)
+add_subdirectory(dtkThemes)
 add_subdirectory(dtkIo)
+add_subdirectory(dtkVisualization)
 

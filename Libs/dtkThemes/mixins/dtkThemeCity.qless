@@ -1,0 +1,56 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/*
+
+;; dtkThemeCity.qless
+
+;; @bg:         #1D252C
+;; @bgalt:      #181E24
+;; @base0:      #10151C
+;; @base1:      #171D22
+;; @base2:      #20282F
+;; @base3:      #28323B
+;; @base4:      #384551
+;; @base5:      #56697A
+;; @base6:      #688094
+;; @base7:      #7FA0B7
+;; @base8:      #9CAABB
+;; @fgalt:      #728CA0
+;; @fg:         #A0B3C5
+
+;; @grey:       @base4
+;; @red:        #D95468
+;; @orange:     #D98E48
+;; @green:      #8BD49C
+;; @teal:       #4db5bd
+;; @yellow:     #EBBF83
+;; @blue:       #5EC4FF
+;; @darkblue:   #5C748E
+;; @magenta:    #E27E8D
+;; @violet:     #B62D65
+;; @cyan:       #70E1E8
+;; @darkcyan:   #41858C
+
+;; @bd:         @base1
+;; @bdalt:      @base4
+
+;; @hl:        @blue
+
+*/
+
+=yield
+
+/* dtkThemeCity.qless ends here */

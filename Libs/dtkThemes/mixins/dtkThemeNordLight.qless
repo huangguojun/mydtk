@@ -1,0 +1,56 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/*
+
+;; dtkThemeNordLight.qless
+
+;; @base0:    #F0F4FC
+;; @base1:    #E3EAF5
+;; @base2:    #D8DEE9
+;; @base3:    #C2D0E7
+;; @base4:    #B8C5DB
+;; @base5:    #AEBACF
+;; @base6:    #A1ACC0
+;; @base7:    #60728C
+;; @base8:    #485163
+
+;; @bg:       #E5E9F0
+;; @bgalt:    #D8DEE9
+;; @fg:       #3B4252
+;; @fgalt:    #2E3440
+;; @bd:       @base6
+;; @bdalt:    @base5
+;; @hl:       @base5
+;; @hlalt:    @base4
+
+;; @grey:     @base4
+;; @red:      #99324B
+;; @orange:   #AC4426
+;; @green:    #4F894C
+;; @teal:     #29838D
+;; @yellow:   #9A7500
+;; @blue:     #3B6EA8
+;; @darkblue: #5272AF
+;; @magenta:  #97365B
+;; @violet:   #842879
+;; @cyan:     #398EAC
+;; @darkcyan: #2C7088
+
+*/
+
+=yield
+
+/* dtkThemeNordLight.qless ends here */

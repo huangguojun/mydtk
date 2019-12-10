@@ -1,0 +1,56 @@
+/*
+;; Version: $Id$
+;;
+*/
+
+/* Commentary:
+;;
+*/
+
+/* Change Log:
+;;
+*/
+
+/* Code: */
+
+/*
+
+;; dtkThemePeacock.qless
+
+;; @bg:        #2b2a27
+;; @bgalt:     #282725
+;; @base0:     #2b2a27
+;; @base1:     #1c1f24
+;; @base2:     #202328
+;; @base3:     #23272e
+;; @base4:     #3f444a
+;; @base5:     #5B6268
+;; @base6:     #73797e
+;; @base7:     #9ca0a4
+;; @base8:     #DFDFDF
+;; @fg:        #ede0ce
+;; @fgalt:     #5B6268
+
+;; @grey:      @base4
+;; @red:       #ff5d38
+;; @orange:    #cb4b16
+;; @green:     #98be65
+;; @teal:      #26a6a6
+;; @yellow:    #bcd42a
+;; @blue:      #51afef
+;; @darkblue:  #2257A0
+;; @magenta:   #c678dd
+;; @violet:    #a9a1e1
+;; @cyan:      #46D9FF
+;; @darkcyan:  #5699AF
+
+;; @bd:        @base1
+;; @bdalt:     @base4
+
+;; @hl:        @violet
+
+*/
+
+=yield
+
+/* dtkThemePeacock.qless ends here */
