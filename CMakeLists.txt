@@ -75,6 +75,7 @@ endforeach()
 ## ###################################################################
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkWrap.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/FindQwt.cmake)
 
 
 ## #################################################################

@@ -1,0 +1,66 @@
+/* dtkPlotView.qss --- 
+;; 
+;; Author: Julien Wintz
+;; Copyright (C) 2008 - Julien Wintz, Inria.
+;; Created: Tue Mar 16 08:49:21 2010 (+0100)
+;; Version: $Id$
+;; Last-Updated: Tue Jun 25 16:03:28 2013 (+0200)
+;;           By: Selim Kraria
+;;     Update #: 83
+*/
+
+/* Commentary: 
+;; 
+*/
+
+/* Change log:
+;; 
+*/
+
+/*****************************************************************
+ * QToolBar
+ */
+
+QToolBar {
+    background: none;
+    border: none;
+}
+
+QToolButton {
+    background: none;
+}
+
+/*****************************************************************
+ * QScrollBar
+ */
+
+QScrollBar:vertical {
+    background: white;
+    width: 6px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #d8d8d8;
+    border: 1px solid gray;
+    border-radius: 2px;
+    min-height: 15px;
+}
+
+QScrollBar::add-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}

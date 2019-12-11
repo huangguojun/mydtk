@@ -1,121 +1,90 @@
-## Version: $Id$
+### CMakeLists.txt ---
 ##
+## Author: Julien Wintz
+## Copyright (C) 2008 - Julien Wintz, Inria.
+## Created: Mon Nov 22 10:20:27 2010 (+0100)
 ######################################################################
 ##
 ### Commentary:
 ##
 ######################################################################
 ##
-### Change Log:
+### Change log:
 ##
 ######################################################################
-##
-### Code:
 
-project(dtkGui)
+project(dtkPlotSupport)
 
-if(DTK_BUILD_SUPPORT_GUI AND NOT DTK_BUILD_SUPPORT_CORE)
-  message(SEND_ERROR "You can't select \"DTK_BUILD_SUPPORT_GUI\" because it's dependencies (DTK_BUILD_SUPPORT_CORE) were not met")
+## #################################################################
+## Dependencies
+## #################################################################
+
+if(DTK_BUILD_SUPPORT_PLOT AND NOT DTK_BUILD_SUPPORT_GUI)
+  message(SEND_ERROR "You can't select \"DTK_BUILD_SUPPORT_PLOT\" because it's dependencies (DTK_BUILD_SUPPORT_GUI) were not met")
 endif()
+
+if(DTK_BUILD_SUPPORT_PLOT AND NOT DTK_BUILD_WIDGETS)
+  message(SEND_ERROR "You can't select \"DTK_BUILD_SUPPORT_PLOT\" because it's dependencies (DTK_BUILD_WIDGETS) were not met")
+endif()
+
+
+if(QWT_FOUND)
+
+include_directories(${QWT_INCLUDE_DIR})
 
 ## #################################################################
 ## Sources
 ## #################################################################
 
 set(${PROJECT_NAME}_HEADERS
-  dtkAboutBox.h
-  dtkAboutPlugin.h
-  dtkAnchoredBar.h
-  dtkColorButton.h
-  dtkColorGrid.h
-  dtkFlowLayout.h
-  dtkFinder.h
-  dtkPieChart.h
-  dtkPluginsEditor.h
-  dtkPopup.h
-  dtkProgressIndicator.h
-  dtkRecentFilesMenu.h
-  dtkScreenMenu.h
-  dtkSearchField.h
-  dtkSettingsEditor.h
-  dtkSpacer.h
-  dtkSplitter.h
-#  dtkSwitch.h
-#  dtkTagCloud.h
-  dtkViewManager.h
-  dtkViewLayout.h
-  dtkViewLayoutItem.h
-  dtkViewList.h
-  dtkViewListControl.h)
+  dtkPlotCurve.h
+  dtkPlotRenderer.h
+  dtkPlotView.h
+  dtkPlotViewPanner.h
+  dtkPlotViewPicker.h
+  dtkPlotViewZoomer.h
+  dtkPlotViewLegend.h
+  dtkPlotViewLegend_p.h
+  dtkPlotViewGrid.h
+#  dtkPlotViewSettings.h
+  dtkPlotViewToolBar.h)
 
 set(${PROJECT_NAME}_SOURCES
-  dtkAboutBox.cpp
-  dtkAboutPlugin.cpp
-  dtkAnchoredBar.cpp
-  dtkColorButton.cpp
-  dtkColorGrid.cpp
-  dtkFlowLayout.cpp
-  dtkFinder.cpp
-  dtkPieChart.cpp
-  dtkPluginsEditor.cpp
-  dtkPopup.cpp
-  dtkProgressIndicator.cpp
-  dtkRecentFilesMenu.cpp
-  dtkScreenMenu.cpp
-  dtkSettingsEditor.cpp
-  dtkSpacer.cpp
-  dtkSplitter.cpp
-#  dtkSwitch.cpp
-#  dtkTagCloud.cpp
-  dtkViewManager.cpp
-  dtkViewLayout.cpp
-  dtkViewLayoutItem.cpp
-  dtkViewList.cpp
-  dtkViewListControl.cpp)
+  dtkPlotCurve.cpp
+  dtkPlotRenderer.cpp
+  dtkPlotView.cpp
+  dtkPlotViewPanner.cpp
+  dtkPlotViewPicker.cpp
+  dtkPlotViewZoomer.cpp
+  dtkPlotViewLegend.cpp
+  dtkPlotViewGrid.cpp
+#  dtkPlotViewSettings.cpp
+  dtkPlotViewToolBar.cpp)
 
-if(APPLE)
-set(${PROJECT_NAME}_SOURCES
-  ${${PROJECT_NAME}_SOURCES}
-    dtkSearchField.mm)
-else(APPLE)
-set(${PROJECT_NAME}_SOURCES
-  ${${PROJECT_NAME}_SOURCES}
-    dtkSearchField.cpp)
-endif(APPLE)
-
-set(${PROJECT_NAME}_SOURCES_RCC
-  dtkGui.qrc)
+set(${PROJECT_NAME}_SOURCES_QRC dtkPlot.qrc)
 
 ## #################################################################
 ## Build rules
 ## #################################################################
 
-qt5_add_resources(${PROJECT_NAME}_SOURCES_QRC ${${PROJECT_NAME}_SOURCES_RCC})
+qt5_add_resources(${PROJECT_NAME}_SOURCES_QRC ${${PROJECT_NAME}_SOURCES_QRC})
 
 add_library(${PROJECT_NAME} SHARED
   ${${PROJECT_NAME}_SOURCES}
   ${${PROJECT_NAME}_HEADERS}
   ${${PROJECT_NAME}_SOURCES_QRC})
 
-#target_link_libraries(${PROJECT_NAME}
-#  dtkCoreSupport)
-
-if(DTK_BUILD_SCRIPT)
-  target_link_libraries(${PROJECT_NAME}
-    dtkScript)
-endif(DTK_BUILD_SCRIPT)
-
-if(APPLE)
-  target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
-endif(APPLE)
+target_link_libraries(${PROJECT_NAME}
+  ${QWT_LIBRARIES}
+# dtkCoreSupport
+#  dtkGuiSupport
+  dtkWidgets)
 
 ## ###################################################################
 ## Link rules
 ## ###################################################################
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
-target_link_libraries(${PROJECT_NAME} Qt5::Gui)
-#target_link_libraries(${PROJECT_NAME} Qt5::Quick)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
 ## #################################################################
@@ -132,8 +101,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES INSTALL_RPATH    "${CMAKE_INSTA
 ## Export header file
 ## #################################################################
 
-##generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
-##generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
 
 set(${PROJECT_NAME}_HEADERS
   ${${PROJECT_NAME}_HEADERS}
@@ -152,10 +121,9 @@ endforeach(header)
 install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION include/${PROJECT_NAME})
 install(FILES ${${PROJECT_NAME}_HEADERS_QTS} DESTINATION include/${PROJECT_NAME})
 
-#install(TARGETS ${PROJECT_NAME}
-#  DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#      COMPONENT guisupport
-#         EXPORT dtkDepends)
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT plotsupport
+         EXPORT dtkDepends)
 
-######################################################################
-### CMakeLists.txt ends here
+endif(QWT_FOUND)
