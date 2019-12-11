@@ -25,13 +25,25 @@ set(${PROJECT_NAME}_HEADERS
   dtkIoSettings
   dtkIoSettings.h
   dtkIoDataModel
-  dtkIoDataModel.h)
+  dtkIoDataModel.h
+  PacketReceiver.h
+  NetworkPacket.h
+  NetworkSource.h
+  PacketConsumer.h
+  PacketFileWriter.h
+  )
   #dtkIoDataModelHdf5.h)
 
 set(${PROJECT_NAME}_SOURCES
   dtkIo.cpp
   dtkIoSettings.cpp
-  dtkIoDataModel.cpp)
+  dtkIoDataModel.cpp
+  PacketReceiver.cpp
+  NetworkPacket.cpp
+  NetworkSource.cpp
+  PacketConsumer.cpp
+  PacketFileWriter.cpp
+  )
   #dtkIoDataModelHdf5.cpp)
 
 # if(DTK_BUILD_DISTRIBUTED)
