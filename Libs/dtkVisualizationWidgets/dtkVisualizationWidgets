@@ -1,0 +1,3 @@
+#include "dtkVisualizationWidgetsClutEditor.h"
+#include "dtkVisualizationWidgetsSliceControls.h"
+#include "dtkVisualizationWidgetsVideoControls.h"

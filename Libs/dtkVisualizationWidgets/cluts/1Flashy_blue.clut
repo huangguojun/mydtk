@@ -1,0 +1,6 @@
+<!DOCTYPE clut>
+<clut min="0" max="255" log="0">
+ <vertex v="0" r="17" g="0" b="51" a="255"/>
+ <vertex v="127" r="0" g="26" b="153" a="255"/>
+ <vertex v="255" r="0" g="170" b="255" a="255"/>
+</clut>
