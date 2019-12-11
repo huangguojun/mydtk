@@ -14,7 +14,7 @@ add_subdirectory(dtkFonts)
 add_subdirectory(dtkThemes)
 add_subdirectory(dtkIo)
 add_subdirectory(dtkVisualization)
-add_subdirectory(dtkPlotSupport)
+add_subdirectory(dtkPlot)
 #add_subdirectory(dtkCoreSupport)
 #add_subdirectory(dtkMathSupport)
 
