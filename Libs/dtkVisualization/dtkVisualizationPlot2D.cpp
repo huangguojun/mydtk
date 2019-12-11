@@ -39,7 +39,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkWindowToImageFilter.h>
 
-#include <QVTKOpenGLWidget.h>
+//#include <QVTKOpenGLWidget.h>
 
 
 //needed to override the paintEvent and put state_sunken when checked

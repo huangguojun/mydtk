@@ -22,7 +22,7 @@
 #include "dtkPlotView.h"
 #include "dtkPlotCurve.h"
 
-#include <dtkGuiSupport/dtkColorButton.h>
+#include <dtkGui/dtkColorButton.h>
 
 class dtkPlotViewSettingsPrivate
 {

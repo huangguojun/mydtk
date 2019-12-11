@@ -20,7 +20,8 @@
 #include <QtGui>
 #include <QtWidgets>
 
-#include <QVTKOpenGLWidget.h>
+//#include <QVTKOpenGLWidget.h>
+#include <QVTKWidget.h>
 
 #include <vtkCamera.h>
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -34,7 +35,7 @@
 // dtkVisualizationCanvasPrivate
 // ///////////////////////////////////////////////////////////////////
 
-class dtkVisualizationCanvasPrivate : public QVTKOpenGLWidget
+class dtkVisualizationCanvasPrivate : public QVTKWidget //public QVTKOpenGLWidget
 {
     Q_OBJECT
 
@@ -72,9 +73,9 @@ public:
 
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationCanvasPrivate::dtkVisualizationCanvasPrivate(QWidget *parent) : QVTKOpenGLWidget(parent)
+dtkVisualizationCanvasPrivate::dtkVisualizationCanvasPrivate(QWidget *parent) : QVTKWidget(parent)
 {
-    this->setFormat(QVTKOpenGLWidget::defaultFormat());
+   // this->setFormat(QVTKWidget::defaultFormat());
 
     this->renderer = vtkSmartPointer<vtkRenderer>::New();
     this->renderer->SetBackground(0.290, 0.295, 0.300);
@@ -83,9 +84,9 @@ dtkVisualizationCanvasPrivate::dtkVisualizationCanvasPrivate(QWidget *parent) : 
     this->window->AddRenderer(this->renderer);
 
     this->SetRenderWindow(this->window);
-    this->setEnableHiDPI(true);
+   // this->setEnableHiDPI(true);
 
-    this->hud = new dtkWidgetsHUD(parent);
+   // this->hud = new dtkWidgetsHUD(parent);
 
     this->setAcceptDrops(true);
 }
@@ -111,16 +112,16 @@ QSize dtkVisualizationCanvasPrivate::sizeHint(void) const
 
 void dtkVisualizationCanvasPrivate::resizeEvent(QResizeEvent *event)
 {
-    QVTKOpenGLWidget::resizeEvent(event);
+    //QVTKOpenGLWidget::resizeEvent(event);
 
-    this->hud->resize(event->size());
+    //this->hud->resize(event->size());
 }
 
 void dtkVisualizationCanvasPrivate::mousePressEvent(QMouseEvent *event)
 {
-    q->emit focused();
+    //q->emit focused();
 
-    QVTKOpenGLWidget::mousePressEvent(event);
+  //  QVTKOpenGLWidget::mousePressEvent(event);
 }
 
 void dtkVisualizationCanvasPrivate::onFocus(void)
@@ -132,7 +133,7 @@ void dtkVisualizationCanvasPrivate::onFocus(void)
 // dtkVisualizationCanvas
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : dtkWidgetsWidget(parent), d(new dtkVisualizationCanvasPrivate(this))
+dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : QWidget(parent), d(new dtkVisualizationCanvasPrivate(this))
 {
     d->q = this;
 
@@ -143,7 +144,7 @@ dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : dtkWidgetsWidg
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d);
 
-    connect(this, &dtkVisualizationCanvas::focused, d, &dtkVisualizationCanvasPrivate::onFocus);
+   // connect(this, &dtkVisualizationCanvas::focused, d, &dtkVisualizationCanvasPrivate::onFocus);
 }
 
 dtkVisualizationCanvas::~dtkVisualizationCanvas(void)
@@ -162,7 +163,7 @@ void dtkVisualizationCanvas::link(dtkVisualizationCanvas *other)
 
     other->d->window->AddObserver(vtkCommand::RenderEvent, this, &dtkVisualizationCanvas::update);
 
-    d->hud->addInfo("Linked");
+    //d->hud->addInfo("Linked");
 
     this->update();
 }
@@ -174,7 +175,7 @@ void dtkVisualizationCanvas::unlink(void)
 
     d->renderer->SetActiveCamera(camera);
 
-    d->hud->addInfo("Unlinked");
+   // d->hud->addInfo("Unlinked");
 
     this->update();
 }

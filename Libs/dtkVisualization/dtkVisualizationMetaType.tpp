@@ -23,7 +23,7 @@
 
 #include <QtCore>
 
-#include <dtkCore/dtkCoreMetaType>
+//#include <dtkCore/dtkCoreMetaType>
 
 Q_DECLARE_METATYPE(vtkDataSet *);
 Q_DECLARE_METATYPE(vtkImageData *);
@@ -35,7 +35,7 @@ Q_DECLARE_METATYPE(vtkStructuredGrid *);
 Q_DECLARE_METATYPE(vtkUnstructuredGrid *);
 
 namespace dtk {
-
+/*
     namespace detail
     {
         // Custom fallback to create QVariant from vtkDataSet data
@@ -53,6 +53,7 @@ namespace dtk {
             }
         };
     }
+    */
 }
 
 //

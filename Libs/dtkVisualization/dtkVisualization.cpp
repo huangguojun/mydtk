@@ -24,10 +24,11 @@ namespace dtk { namespace visualization {
 
     DTK_DEFINE_LAYER_MANAGER;
 
-    void activateObjectManager(void) {
+ /*   void activateObjectManager(void) {
         manager().setObjectManager(dtkCoreObjectManager::instance());
     }
 
+ */
     void initialize(void)
     {
         initialize(QString());

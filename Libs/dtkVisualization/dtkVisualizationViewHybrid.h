@@ -16,7 +16,8 @@
 
 #include <dtkVisualizationExport>
 
-#include <dtkWidgets/dtkWidgetsWidget>
+//#include <dtkWidgets/dtkWidgetsWidget>
+#include <QWidget>
 
 #include <dtkFonts/dtkFontAwesome>
 
@@ -28,7 +29,7 @@ class dtkVisualizationWidgetsClutEditor;
 
 class QSlider;
 
-class DTKVISUALIZATION_EXPORT dtkVisualizationViewHybrid : public dtkWidgetsWidget
+class DTKVISUALIZATION_EXPORT dtkVisualizationViewHybrid : public QWidget
 {
     Q_OBJECT
 

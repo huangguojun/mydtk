@@ -21,8 +21,8 @@ project(dtkVisualization VERSION ${dtkVisualization_VERSION})
 set(${PROJECT_NAME}_HEADERS
   dtkVisualization
   dtkVisualization.h
-#  dtkVisualizationCanvas
-#  dtkVisualizationCanvas.h
+  dtkVisualizationCanvas
+  dtkVisualizationCanvas.h
 #  dtkVisualizationDecorator
 #  dtkVisualizationDecorator.h
 #  dtkVisualizationDecoratorAxes
@@ -68,14 +68,14 @@ set(${PROJECT_NAME}_HEADERS
   dtkVisualizationTypeTraits.h
   dtkVisualizationVTKReader
   dtkVisualizationVTKReader.h
-#  dtkVisualizationViewHybrid
-#  dtkVisualizationViewHybrid.h
+  dtkVisualizationViewHybrid
+  dtkVisualizationViewHybrid.h
 #  dtkVisualizationViewOverlay
 #  dtkVisualizationViewOverlay.h
-#  dtkVisualizationView2D
-#  dtkVisualizationView2D.h
-#  dtkVisualizationView3D
-#  dtkVisualizationView3D.h
+  dtkVisualizationView2D
+  dtkVisualizationView2D.h
+  dtkVisualizationView3D
+  dtkVisualizationView3D.h
 # dtkVisualizationViewVideo
 # dtkVisualizationViewVideo.h
 #  dtkVisualizationViewVideoGL
@@ -87,8 +87,8 @@ set(${PROJECT_NAME}_HEADERS
   )
 
 set(${PROJECT_NAME}_SOURCES
-#  dtkVisualization.cpp
-# dtkVisualizationCanvas.cpp
+  dtkVisualization.cpp
+  dtkVisualizationCanvas.cpp
 #  dtkVisualizationDecorator.cpp
 #  dtkVisualizationDecoratorAxes.cpp
 #  dtkVisualizationDecoratorClutEditor.cpp
@@ -111,8 +111,8 @@ set(${PROJECT_NAME}_SOURCES
   dtkVisualizationVTKReader.cpp
 #  dtkVisualizationViewHybrid.cpp
   dtkVisualizationViewOverlay.cpp
-#  dtkVisualizationView2D.cpp
-#  dtkVisualizationView3D.cpp
+  dtkVisualizationView2D.cpp
+  dtkVisualizationView3D.cpp
 #  dtkVisualizationViewVideo.cpp
 #  dtkVisualizationViewVideoGL.cpp
 #  dtkVisualizationViewVideoPlayer.cpp

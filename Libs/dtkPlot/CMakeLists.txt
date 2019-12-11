@@ -46,7 +46,7 @@ set(${PROJECT_NAME}_HEADERS
   dtkPlotViewLegend.h
   dtkPlotViewLegend_p.h
   dtkPlotViewGrid.h
-#  dtkPlotViewSettings.h
+  dtkPlotViewSettings.h
   dtkPlotViewToolBar.h)
 
 set(${PROJECT_NAME}_SOURCES
@@ -58,7 +58,7 @@ set(${PROJECT_NAME}_SOURCES
   dtkPlotViewZoomer.cpp
   dtkPlotViewLegend.cpp
   dtkPlotViewGrid.cpp
-#  dtkPlotViewSettings.cpp
+  dtkPlotViewSettings.cpp
   dtkPlotViewToolBar.cpp)
 
 set(${PROJECT_NAME}_SOURCES_QRC dtkPlot.qrc)
