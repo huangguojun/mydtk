@@ -4,6 +4,9 @@
 ##################################################
 
 cmake_minimum_required(VERSION 3.2.0)
+######################################################################
+
+project(mydtk)
 
 ## ###################################################################
 ## Version setup
@@ -19,6 +22,12 @@ set(dtk_VERSION ${dtk_VERSION_MAJOR}.${dtk_VERSION_MINOR}.${dtk_VERSION_PATCH})
 ## Build setup
 ## ###################################################################
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+endif()
+
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -31,8 +40,6 @@ endif(UNIX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-#set(CMAKE_BUILD_TYPE RELEASE)
-set(CMAKE_BUILD_TYPE DEBUG)
 
 
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets OpenGL Xml )
@@ -87,6 +94,10 @@ option(DTK_BUILD_SUPPORT_CORE        "Build support layer"    ON)
 option(DTK_BUILD_SUPPORT_GUI         "Build support layer"    ON)
 option(DTK_BUILD_SUPPORT_MATH        "Build support layer"    ON)
 option(DTK_BUILD_SUPPORT_PLOT        "Build support layer"    ON)
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfig.h.in"
+  "${PROJECT_BINARY_DIR}/dtkConfig.h")
 
 ## #################################################################
 ## Dependencies - internal
