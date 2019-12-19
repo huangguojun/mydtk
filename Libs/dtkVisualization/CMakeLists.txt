@@ -89,11 +89,11 @@ set(${PROJECT_NAME}_HEADERS
 set(${PROJECT_NAME}_SOURCES
   dtkVisualization.cpp
   dtkVisualizationCanvas.cpp
-# dtkVisualizationDecorator.cpp
-#  dtkVisualizationDecoratorAxes.cpp
+#  dtkVisualizationDecorator.cpp
+# dtkVisualizationDecoratorAxes.cpp
 #  dtkVisualizationDecoratorClutEditor.cpp
 #  dtkVisualizationDecoratorClutEditorSimple.cpp
-#  dtkVisualizationDecoratorCollection.cpp
+   dtkVisualizationDecoratorCollection.cpp
 #  dtkVisualizationDecoratorDelaunay2D.cpp
 #   dtkVisualizationDecoratorInfo.cpp
 #  dtkVisualizationDecoratorPoints.cpp
@@ -105,12 +105,12 @@ set(${PROJECT_NAME}_SOURCES
 #  dtkVisualizationDecoratorVectorStreamlines.cpp
 # dtkVisualizationDecoratorVolume.cpp
 # dtkVisualizationDecoratorWithClut.cpp
-#  dtkVisualizationMetaType.cpp
-   dtkVisualizationPlot2D.cpp
+  dtkVisualizationMetaType.cpp
+  dtkVisualizationPlot2D.cpp
   dtkVisualizationPlot3D.cpp
-#  dtkVisualizationVTKReader.cpp
-#  dtkVisualizationViewHybrid.cpp
-#  dtkVisualizationViewOverlay.cpp
+  dtkVisualizationVTKReader.cpp
+  dtkVisualizationViewHybrid.cpp
+  dtkVisualizationViewOverlay.cpp
   dtkVisualizationView2D.cpp
   dtkVisualizationView3D.cpp
   dtkVisualizationViewVideo.cpp
