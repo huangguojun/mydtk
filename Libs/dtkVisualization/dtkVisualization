@@ -1,4 +1,6 @@
 #include "dtkVisualization.h"
+#include "dtkVisualizationPlot2D.h"
+#include "dtkVisualizationPlot3D.h"
 #include "dtkVisualizationCanvas.h"
 #include "dtkVisualizationDecorator.h"
 #include "dtkVisualizationDecoratorAxes.h"
@@ -18,8 +20,6 @@
 #include "dtkVisualizationDecoratorVolume.h"
 #include "dtkVisualizationDecoratorWithClut.h"
 #include "dtkVisualizationMetaType.h"
-#include "dtkVisualizationPlot2D.h"
-#include "dtkVisualizationPlot3D.h"
 #include "dtkVisualizationTypeTraits.h"
 #include "dtkVisualizationVTKReader.h"
 #include "dtkVisualizationView2D.h"
@@ -29,3 +29,4 @@
 #include "dtkVisualizationViewVideoGL.h"
 #include "dtkVisualizationViewVideoPlayer.h"
 #include "dtkVisualizationViewVideoRaster.h"
+

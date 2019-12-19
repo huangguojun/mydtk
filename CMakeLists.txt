@@ -113,6 +113,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkMeta)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkScript)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkTest)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkWidgets)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkFonts)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkThemes)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkCoreSupport)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Libs/dtkMathSupport)
 

@@ -33,51 +33,51 @@ set(${PROJECT_NAME}_HEADERS
 # dtkVisualizationDecoratorClutEditorBase.h
 #  dtkVisualizationDecoratorClutEditorSimple
 #  dtkVisualizationDecoratorClutEditorSimple.h
-  dtkVisualizationDecoratorCollection
-  dtkVisualizationDecoratorCollection.h
-  dtkVisualizationDecoratorDelaunay2D
-  dtkVisualizationDecoratorDelaunay2D.h
-  dtkVisualizationDecoratorInfo
-  dtkVisualizationDecoratorInfo.h
-  dtkVisualizationDecoratorPoints
-  dtkVisualizationDecoratorPoints.h
-  dtkVisualizationDecoratorScalarColorMap
-  dtkVisualizationDecoratorScalarColorMap.h
-  dtkVisualizationDecoratorScalarGlyphs
-  dtkVisualizationDecoratorScalarGlyphs.h
-  dtkVisualizationDecoratorScalarIsolines
-  dtkVisualizationDecoratorScalarIsolines.h
-  dtkVisualizationDecoratorSlices
-  dtkVisualizationDecoratorSlices.h
-  dtkVisualizationDecoratorSnapshot
-  dtkVisualizationDecoratorSnapshot.h
-  dtkVisualizationDecoratorVectorStreamlines
-  dtkVisualizationDecoratorVectorStreamlines.h
-  dtkVisualizationDecoratorVolume
-  dtkVisualizationDecoratorVolume.h
-  dtkVisualizationDecoratorWithClut
-  dtkVisualizationDecoratorWithClut.h
+#  dtkVisualizationDecoratorCollection
+#  dtkVisualizationDecoratorCollection.h
+#  dtkVisualizationDecoratorDelaunay2D
+#  dtkVisualizationDecoratorDelaunay2D.h
+#  dtkVisualizationDecoratorInfo
+#  dtkVisualizationDecoratorInfo.h
+#  dtkVisualizationDecoratorPoints
+#  dtkVisualizationDecoratorPoints.h
+#  dtkVisualizationDecoratorScalarColorMap
+# dtkVisualizationDecoratorScalarColorMap.h
+#  dtkVisualizationDecoratorScalarGlyphs
+#  dtkVisualizationDecoratorScalarGlyphs.h
+#  dtkVisualizationDecoratorScalarIsolines
+#  dtkVisualizationDecoratorScalarIsolines.h
+#  dtkVisualizationDecoratorSlices
+#  dtkVisualizationDecoratorSlices.h
+#  dtkVisualizationDecoratorSnapshot
+#  dtkVisualizationDecoratorSnapshot.h
+#  dtkVisualizationDecoratorVectorStreamlines
+#  dtkVisualizationDecoratorVectorStreamlines.h
+#  dtkVisualizationDecoratorVolume
+#  dtkVisualizationDecoratorVolume.h
+#  dtkVisualizationDecoratorWithClut
+#  dtkVisualizationDecoratorWithClut.h
 #  dtkVisualizationMetaType
 # dtkVisualizationMetaType.h
 #  dtkVisualizationMetaType.tpp
-#  dtkVisualizationPlot2D
-#  dtkVisualizationPlot2D.h
+   dtkVisualizationPlot2D
+   dtkVisualizationPlot2D.h
 #  dtkVisualizationPlot3D
 #  dtkVisualizationPlot3D.h
-  dtkVisualizationTypeTraits
-  dtkVisualizationTypeTraits.h
-  dtkVisualizationVTKReader
-  dtkVisualizationVTKReader.h
-  dtkVisualizationViewHybrid
-  dtkVisualizationViewHybrid.h
+#  dtkVisualizationTypeTraits
+#  dtkVisualizationTypeTraits.h
+#  dtkVisualizationVTKReader
+#  dtkVisualizationVTKReader.h
+#  dtkVisualizationViewHybrid
+#  dtkVisualizationViewHybrid.h
 #  dtkVisualizationViewOverlay
 #  dtkVisualizationViewOverlay.h
   dtkVisualizationView2D
   dtkVisualizationView2D.h
   dtkVisualizationView3D
   dtkVisualizationView3D.h
-# dtkVisualizationViewVideo
-# dtkVisualizationViewVideo.h
+  dtkVisualizationViewVideo
+  dtkVisualizationViewVideo.h
 #  dtkVisualizationViewVideoGL
 #  dtkVisualizationViewVideoGL.h
 #  dtkVisualizationViewVideoPlayer
@@ -89,13 +89,13 @@ set(${PROJECT_NAME}_HEADERS
 set(${PROJECT_NAME}_SOURCES
   dtkVisualization.cpp
   dtkVisualizationCanvas.cpp
-#  dtkVisualizationDecorator.cpp
+# dtkVisualizationDecorator.cpp
 #  dtkVisualizationDecoratorAxes.cpp
 #  dtkVisualizationDecoratorClutEditor.cpp
-# dtkVisualizationDecoratorClutEditorSimple.cpp
+#  dtkVisualizationDecoratorClutEditorSimple.cpp
 #  dtkVisualizationDecoratorCollection.cpp
 #  dtkVisualizationDecoratorDelaunay2D.cpp
-#  dtkVisualizationDecoratorInfo.cpp
+#   dtkVisualizationDecoratorInfo.cpp
 #  dtkVisualizationDecoratorPoints.cpp
 #  dtkVisualizationDecoratorScalarColorMap.cpp
 #  dtkVisualizationDecoratorScalarGlyphs.cpp
@@ -106,16 +106,16 @@ set(${PROJECT_NAME}_SOURCES
 # dtkVisualizationDecoratorVolume.cpp
 # dtkVisualizationDecoratorWithClut.cpp
 #  dtkVisualizationMetaType.cpp
-#  dtkVisualizationPlot2D.cpp
-#  dtkVisualizationPlot3D.cpp
-  dtkVisualizationVTKReader.cpp
+   dtkVisualizationPlot2D.cpp
+  dtkVisualizationPlot3D.cpp
+#  dtkVisualizationVTKReader.cpp
 #  dtkVisualizationViewHybrid.cpp
-  dtkVisualizationViewOverlay.cpp
+#  dtkVisualizationViewOverlay.cpp
   dtkVisualizationView2D.cpp
   dtkVisualizationView3D.cpp
-#  dtkVisualizationViewVideo.cpp
+  dtkVisualizationViewVideo.cpp
 #  dtkVisualizationViewVideoGL.cpp
-#  dtkVisualizationViewVideoPlayer.cpp
+# dtkVisualizationViewVideoPlayer.cpp
 #  dtkVisualizationViewVideoRaster.cpp
   )
 
@@ -149,7 +149,6 @@ add_library(${PROJECT_NAME} SHARED
   ${${PROJECT_NAME}_HEADERS})
 
 #target_link_libraries(${PROJECT_NAME} PRIVATE QtMultimedia_Private)
-
 #target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Multimedia)
 #target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::MultimediaWidgets)
 

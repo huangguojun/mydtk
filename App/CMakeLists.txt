@@ -6,3 +6,4 @@
 
 add_subdirectory(dtkApp1)
 add_subdirectory(dtkApp2)
+add_subdirectory(dtkApp3)

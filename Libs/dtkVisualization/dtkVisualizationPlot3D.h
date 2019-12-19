@@ -38,8 +38,8 @@ public slots:
     void update(void) override;
 
 public:
-    dtkWidgetsOverlayPane *overlay(void);
-    dtkWidgetsHUD *hud(void);
+  //  dtkWidgetsOverlayPane *overlay(void);
+ //   dtkWidgetsHUD *hud(void);
 
 public:
     vtkRenderer *renderer(void);

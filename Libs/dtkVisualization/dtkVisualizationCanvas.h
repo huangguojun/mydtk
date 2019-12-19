@@ -15,8 +15,7 @@
 #pragma once
 
 #include <dtkVisualizationExport>
-#include <QWidget>
-//#include <dtkWidgets/dtkWidgetsWidget>
+#include <dtkWidgets/dtkWidgetsWidget>
 
 class vtkRenderer;
 class vtkRenderWindowInteractor;
@@ -25,7 +24,7 @@ class vtkScalarBarActor;
 class dtkWidgetsHUD;
 class QWidget;
 
-class DTKVISUALIZATION_EXPORT dtkVisualizationCanvas : public QWidget
+class DTKVISUALIZATION_EXPORT dtkVisualizationCanvas : public dtkWidgetsWidget
 {
     Q_OBJECT
 

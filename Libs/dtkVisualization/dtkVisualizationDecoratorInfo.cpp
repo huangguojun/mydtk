@@ -19,7 +19,7 @@
 #include "dtkVisualizationView2D.h"
 
 #include <dtkThemes/dtkThemesEngine>
-
+#include <dtkMeta>
 #include <QtWidgets>
 
 #include <vtkCellData.h>
@@ -241,12 +241,13 @@ void dtkVisualizationDecoratorInfo::unsetCanvas(void)
 
 QVariant dtkVisualizationDecoratorInfo::data(void) const
 {
+    /*
     if (d->dataset) {
         return dtk::variantFromValue(d->dataset);
 
     } else {
         return QVariant();
-    }
+    }*/
 }
 
 dtkVisualizationCanvas *dtkVisualizationDecoratorInfo::canvas(void) const

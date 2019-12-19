@@ -39,6 +39,8 @@
 #include "dtkWidgetsTagCloudList.h"
 #include "dtkWidgetsTagCloudScope.h"
 #include "dtkWidgetsTagCloudView.h"
-
+#include "dtkWidgetsLayout.h"
+#include "dtkWidgetsMainWindow.h"
+#include "dtkWidgetsLayoutItem.h"
 //
 // dtkWidgets ends here

@@ -62,7 +62,9 @@ set(${PROJECT_NAME}_HEADERS
   dtkObjectManager.h
   dtkSpinLock.h
   dtkStaticArray
-  dtkStaticArray.h)
+  dtkStaticArray.h
+# dtkCoreParameter.h
+  )
 
 set(${PROJECT_NAME}_SOURCES
   dtkApplicationPrivate.cpp
@@ -76,7 +78,9 @@ set(${PROJECT_NAME}_SOURCES
   dtkCorePluginManagerHandler.cpp
   dtkCorePluginManagerRecorder.cpp
   dtkCorePluginWidgetManager.cpp
-  dtkObjectManager.cpp)
+  dtkObjectManager.cpp
+#dtkCoreParameter.cpp
+  )
 
 ## #################################################################
 ## Deps

@@ -60,13 +60,13 @@
 #include <vtkMetaImageReader.h>
 
 #include <QVTKInteractor.h>
-#include <QVTKOpenGLWidget.h>
+#include <QVTKWidget.h>
 
 // ///////////////////////////////////////////////////////////////////
 //
 // ///////////////////////////////////////////////////////////////////
 
-class dtkVisualizationViewHybridPrivate : public QVTKOpenGLWidget
+class dtkVisualizationViewHybridPrivate : public QVTKWidget
 {
     Q_OBJECT
 
@@ -153,9 +153,9 @@ signals:
     void sliceOrientationChanged(int);
 };
 
-dtkVisualizationViewHybridPrivate::dtkVisualizationViewHybridPrivate(QWidget *parent) : QVTKOpenGLWidget(parent)
+dtkVisualizationViewHybridPrivate::dtkVisualizationViewHybridPrivate(QWidget *parent) : QVTKWidget(parent)
 {
-    this->setFormat(QVTKOpenGLWidget::defaultFormat());
+    //this->setFormat(QVTKOpenGLWidget::defaultFormat());
 
     this->renderer2D = vtkSmartPointer<vtkRenderer>::New();
     this->renderer2D->SetBackground(0.290, 0.295, 0.300);
@@ -168,7 +168,7 @@ dtkVisualizationViewHybridPrivate::dtkVisualizationViewHybridPrivate(QWidget *pa
     this->window->AddRenderer(this->renderer3D);
 
     this->SetRenderWindow(this->window);
-    this->setEnableHiDPI(true);
+    //this->setEnableHiDPI(true);
 
     this->renderer2D_button = new dtkVisualizationViewOverlay(fa::square, "", this);
     this->renderer2D_button->toggle(true);
@@ -256,7 +256,7 @@ void dtkVisualizationViewHybridPrivate::resizeEvent(QResizeEvent *event)
 
     this->sync->move(event->size().width() - 50, 10);
 
-    QVTKOpenGLWidget::resizeEvent(event);
+    QVTKWidget::resizeEvent(event);
 }
 
 dtkVisualizationViewHybridPrivate::Orientation dtkVisualizationViewHybridPrivate::orientation(void)
@@ -425,7 +425,7 @@ void dtkVisualizationViewHybridPrivate::addImageActors(vtkImageData *image)
 }
 
 
-dtkVisualizationViewHybrid::dtkVisualizationViewHybrid(QWidget *parent) : dtkWidgetsWidget(parent)
+dtkVisualizationViewHybrid::dtkVisualizationViewHybrid(QWidget *parent) : QWidget(parent)
 {
     d = new dtkVisualizationViewHybridPrivate;
     d->q = this;

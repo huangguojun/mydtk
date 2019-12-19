@@ -31,11 +31,15 @@
 #include <vtkSmartPointer.h>
 #include <vtkTransform.h>
 
+#include <vtkAutoInit.h> 
+VTK_MODULE_INIT(vtkRenderingOpenGL)
+VTK_MODULE_INIT(vtkRenderingContextOpenGL)
+
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationCanvasPrivate
 // ///////////////////////////////////////////////////////////////////
 
-class dtkVisualizationCanvasPrivate : public QVTKWidget //public QVTKOpenGLWidget
+class dtkVisualizationCanvasPrivate : public QVTKWidget
 {
     Q_OBJECT
 
@@ -58,7 +62,8 @@ public slots:
     void onFocus(void);
 
 public:
-    vtkSmartPointer<vtkGenericOpenGLRenderWindow> window;
+    //vtkSmartPointer<vtkGenericOpenGLRenderWindow> window;
+    vtkSmartPointer<vtkRenderWindow> window;
     vtkSmartPointer<vtkRenderer> renderer;
 
 public:
@@ -76,19 +81,17 @@ public:
 dtkVisualizationCanvasPrivate::dtkVisualizationCanvasPrivate(QWidget *parent) : QVTKWidget(parent)
 {
    // this->setFormat(QVTKWidget::defaultFormat());
-
     this->renderer = vtkSmartPointer<vtkRenderer>::New();
     this->renderer->SetBackground(0.290, 0.295, 0.300);
 
-    this->window = vtkGenericOpenGLRenderWindow::New();
+    this->window = vtkRenderWindow::New();
     this->window->AddRenderer(this->renderer);
 
     this->SetRenderWindow(this->window);
    // this->setEnableHiDPI(true);
-
    // this->hud = new dtkWidgetsHUD(parent);
-
     this->setAcceptDrops(true);
+    
 }
 
 dtkVisualizationCanvasPrivate::~dtkVisualizationCanvasPrivate()
@@ -112,16 +115,16 @@ QSize dtkVisualizationCanvasPrivate::sizeHint(void) const
 
 void dtkVisualizationCanvasPrivate::resizeEvent(QResizeEvent *event)
 {
-    //QVTKOpenGLWidget::resizeEvent(event);
+    QVTKWidget::resizeEvent(event);
 
     //this->hud->resize(event->size());
 }
 
 void dtkVisualizationCanvasPrivate::mousePressEvent(QMouseEvent *event)
 {
-    //q->emit focused();
+    q->emit focused();
 
-  //  QVTKOpenGLWidget::mousePressEvent(event);
+    QVTKWidget::mousePressEvent(event);
 }
 
 void dtkVisualizationCanvasPrivate::onFocus(void)
@@ -133,7 +136,7 @@ void dtkVisualizationCanvasPrivate::onFocus(void)
 // dtkVisualizationCanvas
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : QWidget(parent), d(new dtkVisualizationCanvasPrivate(this))
+dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : dtkWidgetsWidget(parent), d(new dtkVisualizationCanvasPrivate(this))
 {
     d->q = this;
 
@@ -159,6 +162,7 @@ QWidget *dtkVisualizationCanvas::widget(void)
 
 void dtkVisualizationCanvas::link(dtkVisualizationCanvas *other)
 {
+    
     d->renderer->SetActiveCamera(other->d->renderer->GetActiveCamera());
 
     other->d->window->AddObserver(vtkCommand::RenderEvent, this, &dtkVisualizationCanvas::update);
@@ -166,10 +170,12 @@ void dtkVisualizationCanvas::link(dtkVisualizationCanvas *other)
     //d->hud->addInfo("Linked");
 
     this->update();
+    
 }
 
 void dtkVisualizationCanvas::unlink(void)
 {
+    
     vtkSmartPointer<vtkCamera> camera = vtkCamera::New();
     camera->ShallowCopy(d->renderer->GetActiveCamera());
 
@@ -187,6 +193,7 @@ dtkWidgetsHUD *dtkVisualizationCanvas::hud(void)
 
 void dtkVisualizationCanvas::reset(void)
 {
+    
     if (d->renderer) {
         d->renderer->ResetCamera();
     }
@@ -198,9 +205,10 @@ void dtkVisualizationCanvas::draw(void)
         d->GetInteractor()->Render();
     }
 
-    // if (d->renderer) {
-    //     d->renderer->GetRenderWindow()->Render();
-    // }
+    if (d->renderer) {
+         d->renderer->GetRenderWindow()->Render();
+     }
+     
 }
 
 vtkRenderer *dtkVisualizationCanvas::renderer(void)
@@ -215,6 +223,7 @@ vtkRenderWindowInteractor *dtkVisualizationCanvas::interactor(void)
 
 void dtkVisualizationCanvas::addScalarBar(vtkScalarBarActor *scalar_bar)
 {
+    
     ++d->nb_scalar_bars;
 
     std::size_t orientation = d->nb_scalar_bars % 2; // 0: horizontal, 1: vertical
@@ -245,10 +254,12 @@ void dtkVisualizationCanvas::addScalarBar(vtkScalarBarActor *scalar_bar)
     if(this->renderer()) {
         this->renderer()->AddActor2D(scalar_bar);
     }
+    
 }
 
 void dtkVisualizationCanvas::scale(double x, double y, double z)
 {
+    
     if (x >= 0.01 && y >=0.01 && z >= 0.01)  {
         vtkCamera *camera = d->renderer->GetActiveCamera();
         vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
@@ -260,6 +271,7 @@ void dtkVisualizationCanvas::scale(double x, double y, double z)
 
 void dtkVisualizationCanvas::removeScalarBar(vtkScalarBarActor *scalar_bar)
 {
+    
     if(this->renderer()) {
         this->renderer()->RemoveActor2D(scalar_bar);
     }

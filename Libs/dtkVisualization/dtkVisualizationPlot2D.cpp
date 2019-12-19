@@ -156,8 +156,8 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
     // ///////////////
     // create menu
     // ///////////////
-    dtkWidgetsMenuBar *menu_bar = dtkApp->window()->menubar();
-    dtkWidgetsMenu *menu = menu_bar->addMenu(fa::delicious, "View " + this->objectName());
+    //dtkWidgetsMenuBar *menu_bar = dtkApp->window()->menubar();
+    //dtkWidgetsMenu *menu = menu_bar->addMenu(fa::delicious, "View " + this->objectName());
 
     // ///////////////
     // fields selection
@@ -180,7 +180,7 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
                 i->setSelected(false);
 
             QGuiApplication::setOverrideCursor(QCursor(Qt::PointingHandCursor));
-            this->hud()->addInfo("Select a field or press 'Escape'");
+            //this->hud()->addInfo("Select a field or press 'Escape'");
          }
     });
 
@@ -194,7 +194,7 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
                 i->setSelected(false);
 
             QGuiApplication::setOverrideCursor(QCursor(Qt::PointingHandCursor));
-            this->hud()->addInfo("Select a field or press 'Escape'");
+            //this->hud()->addInfo("Select a field or press 'Escape'");
         }
     });
 
@@ -213,11 +213,12 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
     QFormLayout *fields_layout = new QFormLayout();
     fields_layout->addRow(d->field_x->objectName(), d->field_x);
     fields_layout->addRow(d->field_y->objectName(), d->field_y);
-    dtkWidgetsMenuItemDIY *fields_diy = new dtkWidgetsMenuItemDIY("fields selection");
-    fields_diy->addLayout(fields_buttons_layout);
-    fields_diy->addLayout(fields_layout);
+    
+    //dtkWidgetsMenuItemDIY *fields_diy = new dtkWidgetsMenuItemDIY("fields selection");
+    //fields_diy->addLayout(fields_buttons_layout);
+    //fields_diy->addLayout(fields_layout);
 
-    menu->addItem(fields_diy);
+    //menu->addItem(fields_diy);
 
     // ///////////////
     // range
@@ -250,8 +251,8 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
     range_layout->addRow(d->x_max->objectName(), d->x_max);
     range_layout->addRow(d->y_min->objectName(), d->y_min);
     range_layout->addRow(d->y_max->objectName(), d->y_max);
-    dtkWidgetsMenuItemDIY *range_diy = new dtkWidgetsMenuItemDIY("Range", range_w);
-    menu->addItem(range_diy);
+    //dtkWidgetsMenuItemDIY *range_diy = new dtkWidgetsMenuItemDIY("Range", range_w);
+    //menu->addItem(range_diy);
 
     connect(d->field_x, &QComboBox::currentTextChanged, [=] ()
     {
@@ -261,7 +262,7 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
         if(d->old_field_x != d->field_x->currentText()) {
             for(vtkIdType i=0; i < d->old_fields->GetNumberOfArrays() ; ++i) {
                 d->fields_table->RemoveColumnByName(d->old_fields->GetArray(i)->GetName());
-                d->old_fields->RemoveArray(i);
+                //d->old_fields->RemoveArray(i);
             }
             d->old_fields_param.clear();
         }
@@ -392,9 +393,9 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
     QFormLayout *export_layout = new QFormLayout();
     export_layout->addRow(export_as_csv->objectName(), export_as_csv);
     export_layout->addRow(export_as_png->objectName(), export_as_png);
-    dtkWidgetsMenuItemDIY *export_diy = new dtkWidgetsMenuItemDIY("Export");
-    export_diy->addLayout(export_layout);
-    menu->addItem(export_diy);
+   // dtkWidgetsMenuItemDIY *export_diy = new dtkWidgetsMenuItemDIY("Export");
+   // export_diy->addLayout(export_layout);
+    //menu->addItem(export_diy);
 
     connect(export_as_png, &QPushButton::clicked, [=] ()
     {
@@ -448,7 +449,7 @@ dtkVisualizationPlot2D::dtkVisualizationPlot2D(QWidget *parent) : dtkVisualizati
     d->context_view->GetInteractor()->Initialize();
     d->context_view->GetInteractor()->Start();
 
-    this->hud()->addInfo("Start by selecting x-axis and y-axis");
+    //this->hud()->addInfo("Start by selecting x-axis and y-axis");
 }
 
 dtkVisualizationPlot2D::~dtkVisualizationPlot2D(void)

@@ -60,7 +60,13 @@ set(${PROJECT_NAME}_HEADERS
   dtkWidgetsTagCloudList.h
   dtkWidgetsTagCloudScope.h
   dtkWidgetsTagCloudScopeItem.h
-  dtkWidgetsTagCloudView.h)
+  dtkWidgetsTagCloudView.h
+  dtkWidgetsLayout.h
+  dtkWidgetsController.h
+  dtkWidgetsLayoutItem.h
+#dtkWidgetsMainWindow.h
+  dtkWidgetsWidget.h
+  )
 
 if(DTK_BUILD_SCRIPT)
   set(${PROJECT_NAME}_HEADERS ${${PROJECT_NAME}_HEADERS} dtkInterpreter.h)
@@ -98,7 +104,13 @@ set(${PROJECT_NAME}_SOURCES
   dtkWidgetsTagCloudList.cpp
   dtkWidgetsTagCloudScope.cpp
   dtkWidgetsTagCloudScopeItem.cpp
-  dtkWidgetsTagCloudView.cpp)
+  dtkWidgetsTagCloudView.cpp
+  dtkWidgetsLayout.cpp
+  dtkWidgetsController.cpp
+  dtkWidgetsLayoutItem.cpp
+# dtkWidgetsMainWindow.cpp
+  dtkWidgetsWidget.cpp
+  )
 
 if(DTK_BUILD_SCRIPT)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES} dtkInterpreter.cpp)
@@ -171,6 +183,8 @@ add_library(${PROJECT_NAME} SHARED
 target_link_libraries(${PROJECT_NAME}
   dtkCore
   dtkLog
+  dtkThemes
+  dtkFonts
 #dtkDistributed
   )
 

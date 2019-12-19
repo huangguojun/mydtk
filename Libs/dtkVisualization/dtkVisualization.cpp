@@ -14,15 +14,16 @@
 
 #include "dtkVisualization.h"
 
-#include "dtkVisualizationMetaType.h"
+//#include "dtkVisualizationMetaType.h"
 
-#include <dtkVisualizationConfig.h>
+//#include <dtkVisualizationConfig.h>
 
-#include <dtkCore>
+//#include <dtkCore>
 
-namespace dtk { namespace visualization {
+namespace dtk { 
+namespace visualization {
 
-    DTK_DEFINE_LAYER_MANAGER;
+  //  DTK_DEFINE_LAYER_MANAGER;
 
  /*   void activateObjectManager(void) {
         manager().setObjectManager(dtkCoreObjectManager::instance());
@@ -31,11 +32,12 @@ namespace dtk { namespace visualization {
  */
     void initialize(void)
     {
-        initialize(QString());
+        //initialize(QString());
     }
 
     void initialize(const QString& s)
     {
+        /*
         dtk::visualization::registerVTKToMetaType();
 
         QString path = s;
@@ -59,16 +61,17 @@ namespace dtk { namespace visualization {
         for (auto p : pathslist) {
             manager().initialize(p);
         }
+        */
     }
 
     void uninitialize(void)
     {
-        manager().uninitialize();
+       // manager().uninitialize();
     }
 
     void setVerboseLoading(bool b)
     {
-        manager().setVerboseLoading(b);
+        //manager().setVerboseLoading(b);
     }
 } };
 
