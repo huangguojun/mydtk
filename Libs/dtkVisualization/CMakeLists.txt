@@ -62,35 +62,35 @@ set(${PROJECT_NAME}_HEADERS
 #  dtkVisualizationMetaType.tpp
    dtkVisualizationPlot2D
    dtkVisualizationPlot2D.h
-#  dtkVisualizationPlot3D
-#  dtkVisualizationPlot3D.h
-#  dtkVisualizationTypeTraits
-#  dtkVisualizationTypeTraits.h
-#  dtkVisualizationVTKReader
-#  dtkVisualizationVTKReader.h
-#  dtkVisualizationViewHybrid
-#  dtkVisualizationViewHybrid.h
-#  dtkVisualizationViewOverlay
-#  dtkVisualizationViewOverlay.h
+   dtkVisualizationPlot3D
+   dtkVisualizationPlot3D.h
+   dtkVisualizationTypeTraits
+   dtkVisualizationTypeTraits.h
+   dtkVisualizationVTKReader
+   dtkVisualizationVTKReader.h
+   dtkVisualizationViewHybrid
+   dtkVisualizationViewHybrid.h
+   dtkVisualizationViewOverlay
+   dtkVisualizationViewOverlay.h
   dtkVisualizationView2D
   dtkVisualizationView2D.h
   dtkVisualizationView3D
   dtkVisualizationView3D.h
   dtkVisualizationViewVideo
   dtkVisualizationViewVideo.h
-#  dtkVisualizationViewVideoGL
-#  dtkVisualizationViewVideoGL.h
-#  dtkVisualizationViewVideoPlayer
-#  dtkVisualizationViewVideoPlayer.h
-#  dtkVisualizationViewVideoRaster
-#  dtkVisualizationViewVideoRaster.h
+  dtkVisualizationViewVideoGL
+  dtkVisualizationViewVideoGL.h
+  dtkVisualizationViewVideoPlayer
+  dtkVisualizationViewVideoPlayer.h
+  dtkVisualizationViewVideoRaster
+  dtkVisualizationViewVideoRaster.h
   )
 
 set(${PROJECT_NAME}_SOURCES
   dtkVisualization.cpp
   dtkVisualizationCanvas.cpp
 #  dtkVisualizationDecorator.cpp
-# dtkVisualizationDecoratorAxes.cpp
+#  dtkVisualizationDecoratorAxes.cpp
 #  dtkVisualizationDecoratorClutEditor.cpp
 #  dtkVisualizationDecoratorClutEditorSimple.cpp
    dtkVisualizationDecoratorCollection.cpp
@@ -104,7 +104,7 @@ set(${PROJECT_NAME}_SOURCES
 #  dtkVisualizationDecoratorSnapshot.cpp
 #  dtkVisualizationDecoratorVectorStreamlines.cpp
 # dtkVisualizationDecoratorVolume.cpp
-# dtkVisualizationDecoratorWithClut.cpp
+#  dtkVisualizationDecoratorWithClut.cpp
   dtkVisualizationMetaType.cpp
   dtkVisualizationPlot2D.cpp
   dtkVisualizationPlot3D.cpp
@@ -114,9 +114,9 @@ set(${PROJECT_NAME}_SOURCES
   dtkVisualizationView2D.cpp
   dtkVisualizationView3D.cpp
   dtkVisualizationViewVideo.cpp
-#  dtkVisualizationViewVideoGL.cpp
-# dtkVisualizationViewVideoPlayer.cpp
-#  dtkVisualizationViewVideoRaster.cpp
+  dtkVisualizationViewVideoGL.cpp
+  dtkVisualizationViewVideoPlayer.cpp
+  dtkVisualizationViewVideoRaster.cpp
   )
 
 set(${PROJECT_NAME}_SOURCES_QRC dtkVisualization.qrc)
@@ -149,7 +149,7 @@ add_library(${PROJECT_NAME} SHARED
   ${${PROJECT_NAME}_HEADERS})
 
 #target_link_libraries(${PROJECT_NAME} PRIVATE QtMultimedia_Private)
-#target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Multimedia)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Multimedia)
 #target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::MultimediaWidgets)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Core)

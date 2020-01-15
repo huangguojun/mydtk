@@ -42,8 +42,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets OpenGL Xml )
-set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::OpenGL Qt5::Xml)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets OpenGL Xml Multimedia MultimediaWidgets)
+set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::OpenGL Qt5::Xml Qt5::Multimedia Qt5::MultimediaWidgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON) 

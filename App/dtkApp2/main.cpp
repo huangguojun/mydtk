@@ -1,57 +1,76 @@
-/* main.cpp ---
- *
- * Author: Julien Wintz
- * Copyright (C) 2008-2011 - Julien Wintz, Inria.
- * Created: Sat Jun  2 01:14:10 2012 (+0200)
- * Version: $Id$
- * Last-Updated: Sat Jun  2 01:45:46 2012 (+0200)
- *           By: Julien Wintz
- *     Update #: 13
- */
+// Version: $Id$
+//
+//
 
-/* Commentary:
- *
- */
+// Commentary:
+//
+//
 
-/* Change log:
- *
- */
+// Change Log:
+//
+//
 
-#include "ccMainWindow.h"
+// Code:
 
-//#include <dtkCore/dtkGlobal.h>
-//#include <dtkCore/dtkPluginManager.h>
-
-#include <dtkLog/dtkLog.h>
-#include <dtkLog/dtkLogger.h>
-
-#include <QtCore>
 #include <QtGui>
+
+#include <QVTKWidget.h>
+//#include <vtkGenericOpenGLRenderWindow.h>
+
+#include <dtkCore>
+//#include <dtkCoreRuntime>
+
+//#include <dtkThemes/dtkThemesEngine>
+
 #include <dtkWidgets>
+
+#include "dtkVisualizationViewer.h"
+
+// ///////////////////////////////////////////////////////////////////
+//
+// ///////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv)
 {
-    //QApplication application(argc, argv);
+    //dtk::core::registerParameters();
+    //dtk::widgets::initialize();
+ //   dtkThemesEngine::instance()->apply();
+
+   // QSurfaceFormat::setDefaultFormat(QVTKOpenGLWidget::defaultFormat());
+  //  vtkOpenGLRenderWindow::SetGlobalMaximumNumberOfMultiSamples(0);
+  //  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
     dtkApplication *application = dtkApplication::create(argc, argv);
+    application->setApplicationName("dtkVisualizationViewer");
+    application->setOrganizationName("inria");
+    application->setOrganizationDomain("fr");
 
- //   dtkLogger::instance().setLevel(dtkLog::Debug);
-  //  dtkLogger::instance().attachConsole();
-   // dtkLogger::instance().attachFile(dtkLogPath(&application));
+    dtkWidgetsLayoutItem::Actions actions;
+  
+    actions.insert("Plot2D", "Plot 2D");
+    actions.insert("Plot3D", "Plot 3D");
+    actions.insert("View2D", "View 2D");
+    actions.insert("View3D", "View 3D");
+    actions.insert("ViewVideoPlayer", "Video player");
 
-    /*
-    dtkPluginManager::instance()->setVerboseLoading(true);
-    dtkPluginManager::instance()->initialize();
-    */
+    dtkWidgetsLayoutItem::setActions(actions);
 
-    ccMainWindow *window = new ccMainWindow;
-    window->show();
-    window->raise();
+    
+    dtkVisualizationViewer *viewer = new dtkVisualizationViewer;
+
+    //application->setWindow(viewer);
+    viewer->show();
+
+    application->initialize();
 
     int status = application->exec();
 
-    delete window;
-
-    //dtkPluginManager::instance()->uninitialize();
+   // dtkWidgetsController::instance()->clear();
 
     return status;
 }
+
+// ///////////////////////////////////////////////////////////////////
+
+//
+// main.cpp ends here
