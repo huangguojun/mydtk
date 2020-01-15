@@ -1,0 +1,50 @@
+// Version: $Id$
+//
+//
+
+// Commentary:
+//
+//
+
+// Change Log:
+//
+//
+
+// Code:
+
+#pragma once
+
+#define dtk_VERSION_MAJOR @dtk_VERSION_MAJOR@
+#define dtk_VERSION_MINOR @dtk_VERSION_MINOR@
+#define dtk_VERSION_PATCH @dtk_VERSION_PATCH@
+
+#include <QString>
+
+static const QString DTK_INSTALL_PREFIX = "@CMAKE_INSTALL_PREFIX@";
+
+#cmakedefine DTK_HAVE_MPI
+#cmakedefine DTK_HAVE_ZLIB
+#cmakedefine DTK_HAVE_PLOT
+
+#cmakedefine DTK_BUILD_COMPOSER
+#cmakedefine DTK_BUILD_DISTRIBUTED
+#cmakedefine DTK_BUILD_SCRIPT
+#cmakedefine DTK_BUILD_WRAPPERS
+#cmakedefine DTK_BUILD_WIDGETS
+
+#cmakedefine DTK_BUILD_SUPPORT_CORE
+#cmakedefine DTK_BUILD_SUPPORT_COMPOSER
+#cmakedefine DTK_BUILD_SUPPORT_CONTAINER
+#cmakedefine DTK_BUILD_SUPPORT_DISTRIBUTED
+#cmakedefine DTK_BUILD_SUPPORT_GUI
+#cmakedefine DTK_BUILD_SUPPORT_MATH
+#cmakedefine DTK_BUILD_SUPPORT_PLOT
+#cmakedefine DTK_BUILD_SUPPORT_VR
+
+#cmakedefine DTK_BUILD_32
+#cmakedefine DTK_BUILD_64
+
+#cmakedefine COMPILER_SUPPORTS_CXX11
+
+//
+// dtkConfig.h.in ends here
