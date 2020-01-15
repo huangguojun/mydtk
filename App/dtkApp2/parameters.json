@@ -1,0 +1,38 @@
+{
+    "contents": {
+        "open": {
+            "label": "open",
+            "doc": "Open a VTK file.",
+            "path": ".",
+            "filters": [
+                "all VTK (*.vtk *.vti *.vtp *.vtu)",
+                "VTK (*.vtk)",
+                "VTI (*.vti)",
+                "VTP (*.vtp)",
+                "VTU (*.vtu)"
+            ],
+            "type": "dtk::d_path"
+        },
+        "plotdata": {
+            "label": "Create Plot data",
+            "doc": "Ruuun",
+            "value": false,
+            "type": "dtk::d_bool"
+        },
+        "drunkdata": {
+            "label": "Moving data",
+            "doc": "yaaaaah",
+            "value": false,
+            "type": "dtk::d_bool"
+        },
+        "zscale": {
+            "label": "Z scaling",
+            "doc": "apply scaling factor to Z axes",
+            "value": 1.0,
+            "min": 0.0,
+            "max": 10000.0,
+            "decimals": 2,
+            "type": "dtk::d_real"
+        }
+    }
+}

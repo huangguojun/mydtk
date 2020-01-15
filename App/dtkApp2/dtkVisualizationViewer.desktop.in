@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Application
+Exec=@CMAKE_INSTALL_PREFIX@/bin/@PROJECT_NAME@ %u
+Icon=@CMAKE_CURRENT_SOURCE_DIR@/@PROJECT_NAME@.png
+Terminal=false
+Name=@PROJECT_NAME@
+GenericName=@PROJECT_NAME@
+Categories=Science, Mathematics, Visualization

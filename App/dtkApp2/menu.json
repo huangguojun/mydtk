@@ -1,0 +1,41 @@
+{
+    "contents": [
+        {
+            "group": {
+                "uid": "input",
+                "icon": "file",
+                "advanced": false,
+                "contents": [
+                    {
+                        "parameter": {
+                            "uid": "open",
+                            "widget": "dtkWidgetsParameterFileBrowse",
+                            "advanced": false
+                        }
+                    },
+                    {
+                        "parameter": {
+                            "uid": "plotdata",
+                            "widget": "dtkWidgetsParameterBoolPushButton",
+                            "advanced": false
+                        }
+                    },
+                    {
+                        "parameter": {
+                            "uid": "drunkdata",
+                            "widget": "dtkWidgetsParameterBoolPushButton",
+                            "advanced": false
+                        }
+                    },
+                    {
+                        "parameter": {
+                            "uid": "zscale",
+                            "widget": "dtkWidgetsParameterDoubleSpinBox",
+                            "advanced": false
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

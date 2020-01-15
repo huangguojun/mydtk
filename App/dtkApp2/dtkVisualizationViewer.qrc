@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource prefix="">
+    <file>menu.json</file>
+    <file>parameters.json</file>
+  </qresource>
+</RCC>
