@@ -20,14 +20,14 @@
 #ifndef DTKPLOTVIEWTOOLBAR_H
 #define DTKPLOTVIEWTOOLBAR_H
 
-#include <dtkPlotSupportExport.h>
+#include <dtkPlotExport.h>
 
 #include <QFrame>
 
 class dtkPlotView;
 class dtkPlotViewToolBarPrivate;
 
-class DTKPLOTSUPPORT_EXPORT dtkPlotViewToolBar : public QFrame
+class DTKPLOT_EXPORT dtkPlotViewToolBar : public QFrame
 {
     Q_OBJECT
 

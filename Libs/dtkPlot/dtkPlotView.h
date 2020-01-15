@@ -20,7 +20,7 @@
 #ifndef DTKPLOTVIEW_H
 #define DTKPLOTVIEW_H
 
-#include <dtkPlotSupportExport.h>
+#include <dtkPlotExport.h>
 
 #include "dtkPlotViewLegend.h"
 
@@ -32,7 +32,7 @@
 class dtkPlotCurve;
 class dtkPlotViewPrivate;
 
-class DTKPLOTSUPPORT_EXPORT dtkPlotView : public dtkAbstractView
+class DTKPLOT_EXPORT dtkPlotView : public dtkAbstractView
 {
     Q_OBJECT
 
@@ -169,6 +169,6 @@ private:
 //
 // /////////////////////////////////////////////////////////////////
 
-DTKPLOTSUPPORT_EXPORT dtkAbstractView *createPlotView(void);
+DTKPLOT_EXPORT dtkAbstractView *createPlotView(void);
 
 #endif

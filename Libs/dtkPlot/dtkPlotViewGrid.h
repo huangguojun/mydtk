@@ -20,7 +20,7 @@
 #ifndef DTKPLOTVIEWGRID_H
 #define DTKPLOTVIEWGRID_H
 
-#include <dtkPlotSupportExport.h>
+#include <dtkPlotExport.h>
 
 #include <QtCore/QObject>
 
@@ -29,7 +29,7 @@
 class dtkPlotView;
 class dtkPlotViewGridPrivate;
 
-class DTKPLOTSUPPORT_EXPORT dtkPlotViewGrid : public QObject
+class DTKPLOT_EXPORT dtkPlotViewGrid : public QObject
 {
     Q_OBJECT
 

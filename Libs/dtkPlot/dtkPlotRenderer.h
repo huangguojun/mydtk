@@ -20,13 +20,13 @@
 #ifndef DTKPLOTRENDERER_H
 #define DTKPLOTRENDERER_H
 
-#include <dtkPlotSupportExport.h>
+#include <dtkPlotExport.h>
 
 
 class dtkPlotRendererPrivate;
 class dtkPlotView;
 
-class DTKPLOTSUPPORT_EXPORT dtkPlotRenderer
+class DTKPLOT_EXPORT dtkPlotRenderer
 {
 public:
     dtkPlotRenderer(void);

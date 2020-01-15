@@ -20,14 +20,14 @@
 #ifndef DTKPLOTVIEWSETTINGS_H
 #define DTKPLOTVIEWSETTINGS_H
 
-#include <dtkPlotSupportExport.h>
+#include <dtkPlotExport.h>
 
 #include <dtkWidgets/dtkToolBox.h>
 
 class dtkPlotView;
 class dtkPlotViewSettingsPrivate;
 
-class DTKPLOTSUPPORT_EXPORT dtkPlotViewSettings : public dtkToolBox
+class DTKPLOT_EXPORT dtkPlotViewSettings : public dtkToolBox
 {
     Q_OBJECT
 
