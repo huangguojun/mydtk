@@ -19,7 +19,7 @@
 #include <vtkPolyDataAlgorithm.h>
 #include <vtkTransform.h>
 
-#include "vtkLidarPacketInterpreter.h"
+//#include "vtkLidarPacketInterpreter.h"
 
 /**
  * @brief The vtkLidarProvider class is a pure abstract class which provides a
@@ -52,11 +52,9 @@ public:
    */
   void SetDummyProperty(int);
 
-  /**
-   * @copydoc vtkLidarPacketInterpreter
-   */
-  vtkGetObjectMacro(Interpreter, vtkLidarPacketInterpreter)
-  virtual void SetInterpreter(vtkLidarPacketInterpreter *);
+
+  //vtkGetObjectMacro(Interpreter, vtkLidarPacketInterpreter)
+  //virtual void SetInterpreter(vtkLidarPacketInterpreter *);
 
   /**
    * @brief The port the Lidar is listening to
@@ -67,7 +65,7 @@ public:
   vtkGetMacro(DetectFrameDropping, bool)
   vtkSetMacro(DetectFrameDropping, bool)
 
-  vtkMTimeType GetMTime() override;
+ // vtkMTimeType GetMTime() override;
 
   friend class vtkLidarReaderInternal;
   friend class vtkLidarStreamInternal;
@@ -87,7 +85,8 @@ protected:
   int LastFrameProcessed = 0;
 
   //! Interpret the packet to create a frame, all the magic happen here
-  vtkLidarPacketInterpreter* Interpreter = nullptr;
+ 
+  //vtkLidarPacketInterpreter* Interpreter = nullptr;
 
   //! The calibrationFileName to used and set to the Interpreter once one has been set
   std::string CalibrationFileName = "";

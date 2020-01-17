@@ -99,10 +99,7 @@ void dtkVisualizationViewVideoGLPrivate::setVersion(int major, int minor, bool d
     format.setStencilBufferSize(1);
     format.setSamples(1);
     format.setProfile(QSurfaceFormat::CoreProfile);
-#if !defined(Q_OS_MAC)
-    format.setOption(QSurfaceFormat::DeprecatedFunctions);
-    format.setOption(QSurfaceFormat::ResetNotification);
-#endif
+    
     if (debug) {
         format.setOption(QSurfaceFormat::DebugContext);
     }
@@ -355,6 +352,7 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
 
 dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkWidgetsWidget(parent)
 {
+    /*
     d = new dtkVisualizationViewVideoGLPrivate(this);
     d->q = this;
     d->setVersion(4, 3, false);
@@ -363,6 +361,7 @@ dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkW
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(d);
+    */
 }
 
 dtkVisualizationViewVideoGL::~dtkVisualizationViewVideoGL(void)
@@ -389,7 +388,7 @@ QWidget *dtkVisualizationViewVideoGL::widget(void)
 
 void dtkVisualizationViewVideoGL::update(void)
 {
-    dtkWidgetsWidget::update();
+    //dtkWidgetsWidget::update();
 }
 
 void dtkVisualizationViewVideoGL::setTitle(const QString& title)

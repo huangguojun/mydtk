@@ -21,7 +21,7 @@
 class dtkWidgetsHUD;
 class dtkWidgetsOverlayPane;
 
-class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideoPlayer: public dtkVisualizationViewVideoGL
+class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideoPlayer : public dtkVisualizationViewVideoGL
 {
     Q_OBJECT
 

@@ -31,6 +31,7 @@ set(${PROJECT_NAME}_HEADERS
   NetworkSource.h
   PacketConsumer.h
   PacketFileWriter.h
+  vtkLidarStream.h
   )
   #dtkIoDataModelHdf5.h)
 
@@ -43,6 +44,9 @@ set(${PROJECT_NAME}_SOURCES
   NetworkSource.cpp
   PacketConsumer.cpp
   PacketFileWriter.cpp
+  vtkLidarStream.cpp
+  vtkLidarProvider.cpp
+
   )
   #dtkIoDataModelHdf5.cpp)
 
@@ -80,6 +84,9 @@ target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} dtkCore)
 target_link_libraries(${PROJECT_NAME} dtkLog)
 
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+
+
 # if(DTK_BUILD_DISTRIBUTED)
 #   target_link_libraries(${PROJECT_NAME} dtkDistributed)
 #   target_link_libraries(${PROJECT_NAME} ${MPI_LIBRARIES})
@@ -93,17 +100,14 @@ target_link_libraries(${PROJECT_NAME} dtkLog)
 
 #add_compiler_export_flags()
 
-#generate_export_header(${PROJECT_NAME}
-#  EXPORT_FILE_NAME "${PROJECT_NAME}Export.h")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
 
-#add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
-#  COMMAND ${CMAKE_COMMAND} ARGS -E copy_if_different "${${PROJECT_NAME}_BINARY_DIR}/src/${PROJECT_NAME}Export.h" "${CMAKE_BINARY_DIR}"
-#  COMMAND ${CMAKE_COMMAND} ARGS -E copy_if_different "${${PROJECT_NAME}_BINARY_DIR}/src/${PROJECT_NAME}Export.h" "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
+set(${PROJECT_NAME}_HEADERS
+  ${${PROJECT_NAME}_HEADERS}
+ "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export"
+ "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
 
-#set(${PROJECT_NAME}_HEADERS
-#  ${${PROJECT_NAME}_HEADERS}
-# "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export"
-# "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
 
 ## ###################################################################
 ## Install rules - files

@@ -18,11 +18,7 @@
 #ifndef NETWORKPACKET_H
 #define NETWORKPACKET_H
 
-#ifdef _MSC_VER
-#include <winsock2.h>
-#else
 #include <sys/time.h>
-#endif
 #include <vector>
 
 class NetworkPacket

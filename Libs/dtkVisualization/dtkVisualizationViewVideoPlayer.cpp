@@ -271,16 +271,16 @@ void dtkVisualizationViewVideoPlayerPrivate::onStateChanged(QMediaPlayer::State 
 }
 
 
-dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent): dtkVisualizationViewVideoGL(parent)
+dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent) : dtkVisualizationViewVideoGL(parent)
 {
-    d = new dtkVisualizationViewVideoPlayerPrivate(this);
-    d->q = this;
+    //d = new dtkVisualizationViewVideoPlayerPrivate(this);
+    //d->q = this;
 
-    static int count = 1;
+    //static int count = 1;
 
-    this->setObjectName(QString("ViewVideoPlayer - %1").arg(count++));
+    //this->setObjectName(QString("ViewVideoPlayer - %1").arg(count++));
 
-    QLineEdit *text_edit = new QLineEdit("TODO Settings");
+    //QLineEdit *text_edit = new QLineEdit("TODO Settings");
 
     //dtkWidgetsOverlayPaneItem *display_settings_item = new dtkWidgetsOverlayPaneItem(this->widget());
 
@@ -340,10 +340,10 @@ dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent
 
 // /////////////////////////////////////////////////////////////////////////////
 
-    this->setAcceptDrops(true);
-    this->setMouseTracking(true);
+    //this->setAcceptDrops(true);
+    //this->setMouseTracking(true);
 
-    this->widget()->setMouseTracking(true);
+    //this->widget()->setMouseTracking(true);
 }
 
 dtkVisualizationViewVideoPlayer::~dtkVisualizationViewVideoPlayer(void)

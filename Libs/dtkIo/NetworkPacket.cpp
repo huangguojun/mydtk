@@ -2,26 +2,6 @@
 #include <cstring>
 #include <iostream>
 
-#ifdef _MSC_VER
-#include <windows.h>
-
-namespace
-{
-//------------------------------------------------------------------------------
-int gettimeofday(struct timeval* tp, void*)
-{
-  FILETIME ft;
-  ::GetSystemTimeAsFileTime(&ft);
-  long long t = (static_cast<long long>(ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
-  t -= 116444736000000000LL;
-  t /= 10; // microseconds
-  tp->tv_sec = static_cast<long>(t / 1000000UL);
-  tp->tv_usec = static_cast<long>(t % 1000000UL);
-  return 0;
-}
-}
-
-#endif
 
 // in network (big endian) order
 const unsigned char NetworkPacket::EthIP4UDPHeaderDefault[42] = {

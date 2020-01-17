@@ -43,7 +43,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets OpenGL Xml Multimedia MultimediaWidgets)
-set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::OpenGL Qt5::Xml Qt5::Multimedia Qt5::MultimediaWidgets)
+#set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::OpenGL Qt5::Xml Qt5::Multimedia Qt5::MultimediaWidgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON) 
@@ -52,7 +52,10 @@ set(CMAKE_AUTORCC ON)
 find_package(KF5ThreadWeaver REQUIRED)
 
 find_package(DCMTK)
-find_package(Boost)
+
+find_package(Boost REQUIRED COMPONENTS  system filesystem thread)
+include_directories( ${Boost_INCLUDE_DIR} )
+link_directories( ${Boost_LIBRARY_DIRS} )
 
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})

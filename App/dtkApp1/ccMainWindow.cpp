@@ -38,7 +38,7 @@
 #include <dtkGui/dtkSpacer.h>
 #include <dtkGui/dtkSplitter.h>
 #include <dtkGui/dtkViewManager.h>
-
+#include <dtkIo/vtkLidarStream.h>
 //#include <dtkCore/dtkGlobal.h>
 
 #include <dtkLog/dtkLog.h>
@@ -55,6 +55,9 @@
 ccMainWindow::ccMainWindow(QWidget *parent) : QMainWindow(parent), d(new ccMainWindowPrivate)
 {
  
+
+    vtkLidarStream *pLidarStream = new vtkLidarStream();
+    pLidarStream->Start();
     /*
     d->q = this;
 

@@ -28,9 +28,12 @@ add_executable(${PROJECT_NAME} MACOSX_BUNDLE
 
 target_link_libraries(${PROJECT_NAME}
   ${QT_LIBRARIES}
+  ${VTK_LIBRARIES}
+  ${Boost_LIBRARIES}
   dtkLog
   dtkCore
   dtkGui
+  dtkIo
   dtkWidgets
   )
 
@@ -40,4 +43,4 @@ target_link_libraries(${PROJECT_NAME}
 
 install(TARGETS ${PROJECT_NAME}
    BUNDLE DESTINATION bin
-  RUNTIME DESTINATION bin)
+   RUNTIME DESTINATION bin)
