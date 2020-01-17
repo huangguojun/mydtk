@@ -40,7 +40,7 @@ target_link_libraries(${PROJECT_NAME} dtkCore)
 #target_link_libraries(${PROJECT_NAME} dtkCoreRuntime)
 target_link_libraries(${PROJECT_NAME} dtkThemes)
 target_link_libraries(${PROJECT_NAME} dtkVisualization)
-target_link_libraries(${PROJECT_NAME} dtkVisualizationWidgets)
+#target_link_libraries(${PROJECT_NAME} dtkVisualizationWidgets)
 target_link_libraries(${PROJECT_NAME} dtkWidgets)
 
 ## ###################################################################

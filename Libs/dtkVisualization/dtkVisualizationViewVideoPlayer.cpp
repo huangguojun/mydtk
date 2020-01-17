@@ -14,7 +14,7 @@
 
 #include "dtkVisualizationViewVideoPlayer.h"
 
-#include <dtkVisualizationWidgets/dtkVisualizationWidgetsVideoControls>
+#include <dtkWidgets/dtkVisualizationWidgetsVideoControls>
 
 //#include <dtkWidgets/dtkWidgetsHUD>
 //#include <dtkWidgets/dtkWidgetsHUDItem>

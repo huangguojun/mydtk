@@ -110,6 +110,13 @@ set(${PROJECT_NAME}_SOURCES
   dtkWidgetsLayoutItem.cpp
 # dtkWidgetsMainWindow.cpp
   dtkWidgetsWidget.cpp
+  dtkVisualizationWidgetsActorList.cpp
+  dtkVisualizationWidgetsClutEditor.cpp
+  dtkVisualizationWidgetsColorMapEditor.cpp
+  dtkVisualizationWidgetsFieldScalar.cpp
+  dtkVisualizationWidgetsSliceControls.cpp
+  dtkVisualizationWidgetsVideoControls.cpp
+
   )
 
 if(DTK_BUILD_SCRIPT)
@@ -118,7 +125,8 @@ endif(DTK_BUILD_SCRIPT)
 
 set(${PROJECT_NAME}_SOURCES_RCC
   dtkNotification.qrc
-  dtkWidgetsTagCloud.qrc)
+  dtkWidgetsTagCloud.qrc
+  dtkVisualizationWidgets.qrc)
 
 set_property(SOURCE qrc_dtkNotification.cpp PROPERTY SKIP_AUTOMOC ON)
 set_property(SOURCE qrc_dtkWidgetsTagCloud.cpp PROPERTY SKIP_AUTOMOC ON)
@@ -210,6 +218,7 @@ endif(DTK_BUILD_WRAPPERS)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
+target_link_libraries(${PROJECT_NAME} Qt5::Xml)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
 ## ###################################################################

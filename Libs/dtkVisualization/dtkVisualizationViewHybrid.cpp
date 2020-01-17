@@ -16,7 +16,7 @@
 
 #include "dtkVisualizationViewOverlay.h"
 
-#include <dtkVisualizationWidgets/dtkVisualizationWidgetsClutEditor>
+#include <dtkWidgets/dtkVisualizationWidgetsClutEditor>
 
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QSlider>

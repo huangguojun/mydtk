@@ -21,7 +21,7 @@
 
 #include <dtkVisualization>
 
-#include <dtkVisualizationWidgets/dtkVisualizationWidgetsClutEditor>
+#include <dtkWidgets/dtkVisualizationWidgetsClutEditor>
 
 #include <vtkCamera.h>
 #include <vtkCellData.h>
