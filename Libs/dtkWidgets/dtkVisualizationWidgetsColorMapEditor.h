@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtWidgets/QWidget>
 
@@ -8,7 +8,7 @@
 // dtkVisualizationWidgetsColorMapEditor
 // /////////////////////////////////////////////////////////////////
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsColorMapEditor : public QWidget
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsColorMapEditor : public QWidget
 {
     Q_OBJECT
 

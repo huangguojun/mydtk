@@ -15,11 +15,11 @@
 
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtWidgets/QFrame>
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsVideoControls : public QFrame
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsVideoControls : public QFrame
 {
     Q_OBJECT
 

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtWidgets/QFrame>
 
 class vtkRenderer;
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsActorList : public QFrame
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsActorList : public QFrame
 {
     Q_OBJECT
 

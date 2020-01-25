@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtCore/QObject>
 
@@ -27,7 +27,7 @@
 // dtkVisualizationWidgetsClutEditorVertex
 // /////////////////////////////////////////////////////////////////
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorVertex : public QObject, public QGraphicsItem
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorVertex : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -60,7 +60,7 @@ private:
 // dtkVisualizationWidgetsClutEditorScene
 // /////////////////////////////////////////////////////////////////
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorScene : public QGraphicsScene
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorScene : public QGraphicsScene
 {
     Q_OBJECT
 
@@ -87,7 +87,7 @@ private:
 // dtkVisualizationWidgetsClutEditorView
 // /////////////////////////////////////////////////////////////////
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorView : public QGraphicsView
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorView : public QGraphicsView
 {
 public:
      dtkVisualizationWidgetsClutEditorView(QWidget *parent = nullptr);
@@ -104,7 +104,7 @@ private:
 class vtkColorTransferFunction;
 class vtkPiecewiseFunction;
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsClutEditor : public QWidget
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditor : public QWidget
 {
     Q_OBJECT
 

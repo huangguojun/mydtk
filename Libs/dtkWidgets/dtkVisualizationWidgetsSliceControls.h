@@ -1,10 +1,10 @@
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtWidgets/QWidget>
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsSliceControls : public QWidget
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsSliceControls : public QWidget
 {
     Q_OBJECT
 

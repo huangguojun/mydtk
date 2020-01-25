@@ -14,14 +14,14 @@
 
 #pragma once
 
-#include <dtkVisualizationWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include <QtWidgets/QWidget>
 
 class vtkActor;
 class vtkVolume;
 
-class DTKVISUALIZATIONWIDGETS_EXPORT dtkVisualizationWidgetsFieldScalar : public QWidget
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsFieldScalar : public QWidget
 {
     Q_OBJECT
 
