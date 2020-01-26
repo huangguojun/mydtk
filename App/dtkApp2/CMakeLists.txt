@@ -14,7 +14,7 @@ set(${PROJECT_NAME}_HEADERS
 )
 
 set(${PROJECT_NAME}_SOURCES
- dtkVisualizationViewer.cpp
+  dtkVisualizationViewer.cpp
   dtkVisualizationViewerStack.cpp
   main.cpp)
 

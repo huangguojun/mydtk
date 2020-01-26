@@ -1,21 +1,9 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #pragma once
 
 //#include <dtkWidgets/dtkWidgetsMainWindaow>
 #include <QMainWindow>
+
 class dtkVisualizationViewer : public QMainWindow
 {
     Q_OBJECT

@@ -1,16 +1,3 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #include "dtkVisualizationViewer.h"
 #include "dtkVisualizationViewerStack.h"

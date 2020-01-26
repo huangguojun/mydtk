@@ -32,8 +32,9 @@
 #include <vtkTransform.h>
 
 #include <vtkAutoInit.h> 
-VTK_MODULE_INIT(vtkRenderingOpenGL)
-VTK_MODULE_INIT(vtkRenderingContextOpenGL)
+
+//VTK_MODULE_INIT(vtkRenderingOpenGL)
+//VTK_MODULE_INIT(vtkRenderingContextOpenGL)
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationCanvasPrivate
