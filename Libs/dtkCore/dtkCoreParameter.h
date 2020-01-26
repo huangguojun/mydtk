@@ -25,6 +25,7 @@
 
 class dtkCoreParameter;
 
+/*
 namespace dtk {
     template <typename U, typename V = void>
     using parameter_arithmetic = std::enable_if_t<std::is_arithmetic<U>::value, V>;
@@ -41,6 +42,8 @@ namespace dtk {
         DTKCORE_EXPORT dtkCoreParameters readParameters(const QString&);
     }
 }
+
+*/
 
 // ///////////////////////////////////////////////////////////////////
 // Helper class managing connection

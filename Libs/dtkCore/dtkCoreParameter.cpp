@@ -26,6 +26,7 @@ namespace dtk {
 
         void registerParameters(void)
         {
+            /*
             qRegisterMetaType<dtk::d_uchar>();
             qRegisterMetaType<dtk::d_char>();
             qRegisterMetaType<dtk::d_uint>();
@@ -110,10 +111,12 @@ namespace dtk {
             qRegisterMetaTypeStreamOperators<dtk::d_path>("dtk::d_path");
 
             QMetaType::registerDebugStreamOperator<dtk::d_path>();
+            */
         }
 
         dtkCoreParameters readParameters(const QString& filename)
         {
+            /*
             QFile definition_file(filename);
 
             dtkCoreParameters parameters;
@@ -169,7 +172,7 @@ namespace dtk {
                 }
             }
             return parameters;
-        }
+        }*/
     }
 }
 

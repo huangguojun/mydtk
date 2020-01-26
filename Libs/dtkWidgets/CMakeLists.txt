@@ -108,7 +108,7 @@ set(${PROJECT_NAME}_SOURCES
   dtkWidgetsLayout.cpp
   dtkWidgetsController.cpp
   dtkWidgetsLayoutItem.cpp
-# dtkWidgetsMainWindow.cpp
+  dtkWidgetsMainWindow.cpp
   dtkWidgetsWidget.cpp
   dtkVisualizationWidgetsActorList.cpp
   dtkVisualizationWidgetsClutEditor.cpp
@@ -121,6 +121,17 @@ set(${PROJECT_NAME}_SOURCES
   dtkWidgetsHUDInfo.cpp
   dtkWidgetsOverlayPane.cpp
   dtkWidgetsOverlayPaneItem.cpp
+  dtkWidgetsMenu.cpp
+  dtkWidgetsMenuItem.cpp
+ #dtkWidgetsMenuItemTheme.cpp
+  dtkWidgetsMenuBar.cpp
+  dtkWidgetsOverlayPaneSlider.cpp
+  dtkWidgetsMenuSpy.cpp
+  dtkWidgetsMenuItem+custom.cpp  
+  dtkWidgetsMenu+ux.cpp
+  dtkWidgetsParameter.cpp 
+  dtkWidgetsParameterFactory.cpp
+
   )
 
 if(DTK_BUILD_SCRIPT)
@@ -134,7 +145,7 @@ set(${PROJECT_NAME}_SOURCES_RCC
 
 set_property(SOURCE qrc_dtkNotification.cpp PROPERTY SKIP_AUTOMOC ON)
 set_property(SOURCE qrc_dtkWidgetsTagCloud.cpp PROPERTY SKIP_AUTOMOC ON)
-
+ 
 ## #################################################################
 ## Wrapping
 ## #################################################################

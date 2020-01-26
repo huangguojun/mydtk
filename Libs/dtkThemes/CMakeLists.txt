@@ -30,7 +30,9 @@ set(${PROJECT_NAME}_HEADERS
 set(${PROJECT_NAME}_SOURCES
   dtkTheme.cpp
   dtkThemesEngine.cpp
-  dtkThemesParser.cpp)
+  dtkThemesParser.cpp
+  dtkThemesWidget.cpp 
+)
 
 set(${PROJECT_NAME}_SOURCES_RCC
   dtkThemes.qrc)

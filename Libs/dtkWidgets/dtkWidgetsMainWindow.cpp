@@ -1,24 +1,11 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #include "dtkWidgetsMainWindow.h"
 
 #include "dtkApplication.h"
-//#include "dtkWidgetsMenu.h"
-//#include "dtkWidgetsMenuBar.h"
-//#include "dtkWidgetsMenuItem.h"
-//#include "dtkWidgetsMenuItem+custom.h"
+#include "dtkWidgetsMenu.h"
+#include "dtkWidgetsMenuBar.h"
+#include "dtkWidgetsMenuItem.h"
+#include "dtkWidgetsMenuItem+custom.h"
 
 #include <dtkThemes/dtkThemesEngine>
 #include <dtkFonts/dtkFontAwesome>
@@ -42,9 +29,9 @@ public:
 // dtkWidgetsMainWindow
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMainWindow::dtkWidgetsMainWindow(QWidget *parent) : dtkThemesWidgetsMainWindow(parent), d(new dtkWidgetsMainWindowPrivate)
+dtkWidgetsMainWindow::dtkWidgetsMainWindow(QWidget *parent) : QMainWindow(parent), d(new dtkWidgetsMainWindowPrivate)
 {
-    dtkApp->setWindow(this);
+    //dtkApp->setWindow(this);
 }
 
 dtkWidgetsMainWindow::~dtkWidgetsMainWindow(void)
@@ -115,7 +102,8 @@ dtkWidgetsMenu *dtkWidgetsMainWindow::populateAboutMenu(void)
 
 void dtkWidgetsMainWindow::resizeEvent(QResizeEvent *event)
 {
-    dtkThemesWidgetsMainWindow::resizeEvent(event);
+    //dtkThemesWidgetsMainWindow::resizeEvent(event);
+    QMainWindow::resizeEvent(event);
 
     if (d->menubar)
         d->menubar->setFixedHeight(event->size().height());
