@@ -41,7 +41,6 @@
 
 //#include <QVTKOpenGLWidget.h>
 
-
 //needed to override the paintEvent and put state_sunken when checked
 class buttonStayDown : public QPushButton
 {

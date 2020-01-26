@@ -16,10 +16,10 @@
 
 #include <dtkWidgets/dtkVisualizationWidgetsVideoControls>
 
-//#include <dtkWidgets/dtkWidgetsHUD>
-//#include <dtkWidgets/dtkWidgetsHUDItem>
-//#include <dtkWidgets/dtkWidgetsOverlayPane>
-//#include <dtkWidgets/dtkWidgetsOverlayPaneItem>
+#include <dtkWidgets/dtkWidgetsHUD>
+#include <dtkWidgets/dtkWidgetsHUDItem>
+#include <dtkWidgets/dtkWidgetsOverlayPane>
+#include <dtkWidgets/dtkWidgetsOverlayPaneItem>
 
 #include <dtkFonts/dtkFontAwesome>
 
@@ -152,6 +152,7 @@ void VideoFrameGrabber::stop(void)
 
 bool VideoFrameGrabber::present(const QVideoFrame& input_frame)
 {
+#if 0
     if (input_frame.isValid()) {
 
         QVideoFrame frame(input_frame); // clone frame
@@ -216,6 +217,7 @@ bool VideoFrameGrabber::present(const QVideoFrame& input_frame)
     this->currentFrame = input_frame;
 
     return true;
+#endif
 }
 
 class dtkVisualizationViewVideoPlayerPrivate: public QObject
@@ -233,8 +235,8 @@ public:
     VideoFrameGrabber *grabber = nullptr;
 
 public:
-   // dtkWidgetsOverlayPane *overlay = nullptr;
-   // dtkWidgetsHUD *hud = nullptr;
+    dtkWidgetsOverlayPane *overlay = nullptr;
+    dtkWidgetsHUD *hud = nullptr;
 
 public slots:
     void onStateChanged(QMediaPlayer::State);
@@ -273,22 +275,22 @@ void dtkVisualizationViewVideoPlayerPrivate::onStateChanged(QMediaPlayer::State 
 
 dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent) : dtkVisualizationViewVideoGL(parent)
 {
-    //d = new dtkVisualizationViewVideoPlayerPrivate(this);
-    //d->q = this;
+    d = new dtkVisualizationViewVideoPlayerPrivate(this);
+    d->q = this;
 
-    //static int count = 1;
+    static int count = 1;
 
-    //this->setObjectName(QString("ViewVideoPlayer - %1").arg(count++));
+    this->setObjectName(QString("ViewVideoPlayer - %1").arg(count++));
 
-    //QLineEdit *text_edit = new QLineEdit("TODO Settings");
+    QLineEdit *text_edit = new QLineEdit("TODO Settings");
 
-    //dtkWidgetsOverlayPaneItem *display_settings_item = new dtkWidgetsOverlayPaneItem(this->widget());
+    dtkWidgetsOverlayPaneItem *display_settings_item = new dtkWidgetsOverlayPaneItem(this->widget());
 
-    //display_settings_item->setTitle("Display Settings");
-    //display_settings_item->layout()->setContentsMargins(0, 0, 0, 0);
-    //display_settings_item->addWidget(text_edit);
+    display_settings_item->setTitle("Display Settings");
+    display_settings_item->layout()->setContentsMargins(0, 0, 0, 0);
+    display_settings_item->addWidget(text_edit);
 
-    /*
+    
     d->overlay  = new dtkWidgetsOverlayPane(this->widget());
     d->hud      = new dtkWidgetsHUD(this->widget());
     d->controls = new dtkVisualizationWidgetsVideoControls(this->widget());
@@ -300,12 +302,12 @@ dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent
 
     dtkWidgetsHUDItem *settings = d->hud->addItem(fa::sliders);
     dtkWidgetsHUDItem *open     = d->hud->addItem(fa::folderopen);
-*/
- //   open->setToolTip("Open File");
- //   settings->setToolTip("Settings");
 
-  //  connect(settings, SIGNAL(clicked()), d->overlay, SLOT(toggle()));
-   /*
+    open->setToolTip("Open File");
+    settings->setToolTip("Settings");
+
+    connect(settings, SIGNAL(clicked()), d->overlay, SLOT(toggle()));
+   
     connect(open, SIGNAL(clicked()), this, SLOT(open()));
 
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this);
@@ -330,7 +332,7 @@ dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent
             d->player->play();
             d->controls->toggle();
         });
-        */
+        
 
 // /////////////////////////////////////////////////////////////////////////////
 // TODO: Make this no async
@@ -340,10 +342,11 @@ dtkVisualizationViewVideoPlayer::dtkVisualizationViewVideoPlayer(QWidget *parent
 
 // /////////////////////////////////////////////////////////////////////////////
 
-    //this->setAcceptDrops(true);
-    //this->setMouseTracking(true);
+    this->setAcceptDrops(true);
+    this->setMouseTracking(true);
 
-    //this->widget()->setMouseTracking(true);
+    this->widget()->setMouseTracking(true);
+    
 }
 
 dtkVisualizationViewVideoPlayer::~dtkVisualizationViewVideoPlayer(void)
@@ -375,7 +378,7 @@ void dtkVisualizationViewVideoPlayer::open(void)
     }
 }
 
-/*
+
 dtkWidgetsOverlayPane *dtkVisualizationViewVideoPlayer::overlay(void)
 {
     return d->overlay;
@@ -384,7 +387,7 @@ dtkWidgetsOverlayPane *dtkVisualizationViewVideoPlayer::overlay(void)
 dtkWidgetsHUD *dtkVisualizationViewVideoPlayer::hud(void)
 {
     return d->hud;
-}*/
+}
 
 void dtkVisualizationViewVideoPlayer::dragEnterEvent(QDragEnterEvent *event)
 {
@@ -442,9 +445,9 @@ void dtkVisualizationViewVideoPlayer::resizeEvent(QResizeEvent *event)
 {
     dtkVisualizationViewVideoGL::resizeEvent(event);
 
-   // d->hud->resize(event->size());
+    d->hud->resize(event->size());
 
-   // d->overlay->resize(event->size());
+    d->overlay->resize(event->size());
 
     d->controls->setFixedWidth(event->size().width());
     d->controls->move(0, event->size().height() - 64);

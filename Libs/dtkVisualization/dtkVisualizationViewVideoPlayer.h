@@ -1,16 +1,3 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #pragma once
 
@@ -33,8 +20,8 @@ public slots:
     void open(void);
 
 public:
- //   dtkWidgetsOverlayPane *overlay(void);
-  //  dtkWidgetsHUD *hud(void) ;
+    dtkWidgetsOverlayPane *overlay(void);
+    dtkWidgetsHUD *hud(void) ;
 
 protected:
     void dragEnterEvent(QDragEnterEvent *) override;

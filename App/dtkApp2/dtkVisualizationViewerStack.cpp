@@ -3,6 +3,10 @@
 
 #include <dtkWidgets>
 #include <dtkVisualization>
+#include <vtkAutoInit.h>
+
+VTK_MODULE_INIT(vtkRenderingOpenGL2)
+//VTK_MODULE_INIT(vtkContextDevice2D)
 
 class dtkVisualizationViewerStackPrivate
 {

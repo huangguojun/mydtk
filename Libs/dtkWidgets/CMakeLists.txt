@@ -116,7 +116,11 @@ set(${PROJECT_NAME}_SOURCES
   dtkVisualizationWidgetsFieldScalar.cpp
   dtkVisualizationWidgetsSliceControls.cpp
   dtkVisualizationWidgetsVideoControls.cpp
-
+  dtkWidgetsHUD.cpp
+  dtkWidgetsHUDItem.cpp
+  dtkWidgetsHUDInfo.cpp
+  dtkWidgetsOverlayPane.cpp
+  dtkWidgetsOverlayPaneItem.cpp
   )
 
 if(DTK_BUILD_SCRIPT)

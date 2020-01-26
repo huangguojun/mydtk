@@ -352,7 +352,7 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
 
 dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkWidgetsWidget(parent)
 {
-    /*
+    
     d = new dtkVisualizationViewVideoGLPrivate(this);
     d->q = this;
     d->setVersion(4, 3, false);
@@ -361,7 +361,7 @@ dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkW
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(d);
-    */
+    
 }
 
 dtkVisualizationViewVideoGL::~dtkVisualizationViewVideoGL(void)
@@ -388,7 +388,7 @@ QWidget *dtkVisualizationViewVideoGL::widget(void)
 
 void dtkVisualizationViewVideoGL::update(void)
 {
-    //dtkWidgetsWidget::update();
+    dtkWidgetsWidget::update();
 }
 
 void dtkVisualizationViewVideoGL::setTitle(const QString& title)
