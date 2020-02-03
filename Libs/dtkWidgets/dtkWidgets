@@ -1,16 +1,3 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #include "dtkApplication.h"
 #include "dtkDistributedGuiApplication.h"
@@ -42,5 +29,6 @@
 #include "dtkWidgetsLayout.h"
 #include "dtkWidgetsMainWindow.h"
 #include "dtkWidgetsLayoutItem.h"
+#include "dtkWidgetsHUD.h"
 //
 // dtkWidgets ends here

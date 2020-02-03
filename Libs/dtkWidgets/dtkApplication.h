@@ -1,16 +1,3 @@
-// Version: $Id: a3997e6b1600ea62b311cddb3f0a5c2e90d61b5b $
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #pragma once
 
@@ -35,9 +22,12 @@ public:
     virtual bool noGui(void);
 
 public:
-    static dtkApplication *create(int& argc, char *argv[]) {
-        for (int i = 0; i < argc; i++) {
-            if (!qstrcmp(argv[i], "-nw") || !qstrcmp(argv[i], "--nw") ||  !qstrcmp(argv[i], "-no-window") || !qstrcmp(argv[i], "--no-window") || !qstrcmp(argv[i], "-h") || !qstrcmp(argv[i], "--help") || !qstrcmp(argv[i], "--version")) {
+    static dtkApplication *create(int& argc, char *argv[]) 
+    {
+        for (int i = 0; i < argc; i++) 
+        {
+            if (!qstrcmp(argv[i], "-nw") || !qstrcmp(argv[i], "--nw") ||  !qstrcmp(argv[i], "-no-window") || !qstrcmp(argv[i], "--no-window") || !qstrcmp(argv[i], "-h") || !qstrcmp(argv[i], "--help") || !qstrcmp(argv[i], "--version")) 
+            {
                 qputenv("QT_QPA_PLATFORM", QByteArrayLiteral("minimal"));
             }
         }

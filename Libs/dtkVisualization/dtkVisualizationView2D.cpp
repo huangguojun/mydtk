@@ -1,16 +1,3 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #include "dtkVisualizationView2D.h"
 
@@ -52,7 +39,8 @@ void dtkVisualizationView2D::setCameraViewNegativeX(void)
 
 void dtkVisualizationView2D::setCameraViewPositiveX(void)
 {
-    double bounds[6]; this->renderer()->ComputeVisiblePropBounds(bounds);
+    double bounds[6]; 
+    this->renderer()->ComputeVisiblePropBounds(bounds);
 
     double side = std::abs(bounds[1]-bounds[0]);
 

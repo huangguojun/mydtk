@@ -1,4 +1,4 @@
-project(app2)
+project(app1)
 
 ## #################################################################
 ## Sources
@@ -8,8 +8,7 @@ set(${PROJECT_NAME}_HEADERS
   ccMainWindow.h)
 
 set(${PROJECT_NAME}_HEADERS_MOC
-  ccMainWindow.h
-  ccMainWindow_p.h)
+  ccMainWindow.h)
 
 set(${PROJECT_NAME}_SOURCES
   ccMainWindow.cpp
@@ -33,9 +32,9 @@ target_link_libraries(${PROJECT_NAME}
   dtkLog
   dtkCore
   dtkGui
-  dtkIo
   dtkWidgets
   )
+target_link_libraries(${PROJECT_NAME} dtkVisualization)
 
 ## #################################################################
 ## Installation

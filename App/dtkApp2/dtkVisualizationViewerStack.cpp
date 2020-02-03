@@ -3,10 +3,6 @@
 
 #include <dtkWidgets>
 #include <dtkVisualization>
-#include <vtkAutoInit.h>
-
-VTK_MODULE_INIT(vtkRenderingOpenGL2)
-//VTK_MODULE_INIT(vtkContextDevice2D)
 
 class dtkVisualizationViewerStackPrivate
 {
@@ -62,6 +58,7 @@ dtkWidgetsWidget *dtkVisualizationViewerStack::create(const QString& type)
     /*
     dtkWidgetsMenuBar *menu_bar = dtkApp->window()->menubar();
 
+    
     dtkWidgetsMenu *menu = nullptr;
     menu = menu_bar->menu("View " + view->objectName());
 

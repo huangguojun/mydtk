@@ -1,0 +1,25 @@
+// Version: $Id$
+//
+//
+
+// Commentary:
+//
+//
+
+// Change Log:
+//
+//
+
+// Code:
+
+/*!
+
+  \module dtkWidgets
+  \title Widgets C++ Classes
+
+  \brief A set of widgets tailored for scientifi visualization.
+
+*/
+
+//
+// dtkWidgets.qdoc ends here

@@ -1,0 +1,9 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="dtk-widgets">
+        <file>dtkWidgetsWorkspaceBar.qml</file>
+
+        <file>../../ast/next.png</file>
+        <file>../../ast/prev.png</file>
+    </qresource>
+</RCC>

@@ -17,13 +17,11 @@
 #include <dtkWidgetsExport>
 #include <QMainWindow>
 
-//#include <dtkThemesWidgets/dtkThemesWidgetsMainWindow>
 
 class dtkWidgetsMenu;
 class dtkWidgetsMenuBar;
 class QResizeEvent;
 
-//class DTKWIDGETS_EXPORT dtkWidgetsMainWindow : public dtkThemesWidgetsMainWindow
 class DTKWIDGETS_EXPORT dtkWidgetsMainWindow : public QMainWindow
 {
     Q_OBJECT

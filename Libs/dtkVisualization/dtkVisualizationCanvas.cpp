@@ -1,21 +1,7 @@
-// Version: $Id$
-//
-//
-
-// Commentary:
-//
-//
-
-// Change Log:
-//
-//
-
-// Code:
 
 #include "dtkVisualizationCanvas.h"
 
 #include <dtkWidgets>
-
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
@@ -63,7 +49,7 @@ public slots:
     void onFocus(void);
 
 public:
-    //vtkSmartPointer<vtkGenericOpenGLRenderWindow> window;
+ //   vtkSmartPointer<vtkGenericOpenGLRenderWindow> window;
     vtkSmartPointer<vtkRenderWindow> window;
     vtkSmartPointer<vtkRenderer> renderer;
 
@@ -89,8 +75,9 @@ dtkVisualizationCanvasPrivate::dtkVisualizationCanvasPrivate(QWidget *parent) : 
     this->window->AddRenderer(this->renderer);
 
     this->SetRenderWindow(this->window);
-   // this->setEnableHiDPI(true);
-   // this->hud = new dtkWidgetsHUD(parent);
+    //this->setEnableHiDPI(true);
+    this->hud = new dtkWidgetsHUD(parent);
+    this->hud->hide();
     this->setAcceptDrops(true);
     
 }
@@ -148,7 +135,7 @@ dtkVisualizationCanvas::dtkVisualizationCanvas(QWidget *parent) : dtkWidgetsWidg
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d);
 
-   // connect(this, &dtkVisualizationCanvas::focused, d, &dtkVisualizationCanvasPrivate::onFocus);
+     connect(this, &dtkVisualizationCanvas::focused, d, &dtkVisualizationCanvasPrivate::onFocus);
 }
 
 dtkVisualizationCanvas::~dtkVisualizationCanvas(void)
@@ -168,7 +155,7 @@ void dtkVisualizationCanvas::link(dtkVisualizationCanvas *other)
 
     other->d->window->AddObserver(vtkCommand::RenderEvent, this, &dtkVisualizationCanvas::update);
 
-    //d->hud->addInfo("Linked");
+    d->hud->addInfo("Linked");
 
     this->update();
     
@@ -182,7 +169,7 @@ void dtkVisualizationCanvas::unlink(void)
 
     d->renderer->SetActiveCamera(camera);
 
-   // d->hud->addInfo("Unlinked");
+    d->hud->addInfo("Unlinked");
 
     this->update();
 }
