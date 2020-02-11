@@ -352,10 +352,10 @@ install(FILES ${${PROJECT_NAME}_HEADERS}
 ## Install rules - targets
 ## ###################################################################
 
-#install(TARGETS ${PROJECT_NAME}
-#    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#      COMPONENT widgets
-#         EXPORT dtkDepends)
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT widgets
+         EXPORT dtkDepends)
 
 ## ###################################################################
 ## Install rules - modules

@@ -17,6 +17,25 @@ set(dtk_VERSION_MINOR 7)
 set(dtk_VERSION_PATCH 1)
 set(dtk_VERSION ${dtk_VERSION_MAJOR}.${dtk_VERSION_MINOR}.${dtk_VERSION_PATCH})
 
+## ###################################################################
+## Path setup
+## ###################################################################
+
+include(GNUInstallDirs)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+## #################################################################
+## Install prefix
+## #################################################################
+
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/install" CACHE PATH "${PROJECT_NAME} install prefix" FORCE)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 ## ###################################################################
 ## Build setup
@@ -148,4 +167,27 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfigVersion.cmake.in
 #######################################
 add_subdirectory(App)
 add_subdirectory(Libs)
+
+########################################
+## Install
+#######################################
+#set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/Install)
+
+#install(FILES Script/nvCT.desktop DESTINATION /usr/share/applications)
+#install(FILES Script/nvCT.png DESTINATION /usr/share/pixmaps)
+
+########################################
+## Package
+#######################################
+include (InstallRequiredSystemLibraries)
+#set (CPACK_RESOURCE_FILE_LICENSE   "${CMAKE_CURRENT_SOURCE_DIR}/RELEASE_NOTES.txt")
+#set (CMAKE_INSTALL_LIBDIR lib)
+set (CPACK_GENERATOR "DEB")
+set (CPACK_PACKAGE_VERSION_MAJOR "${dtk_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${dtk_VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${dtk_VERSION_PATCH}")
+set (CPACK_DEBIAN_PACKAGE_DEPENDS " libdcmtk (>= 12.3.1)")
+set (CPACK_DEBIAN_PACKAGE_DEPENDS " libtinyxml-dev ")
+set (CPACK_PACKAGE_CONTACT "guojun.huang@nanovision.com.cn")
+include (CPack)
 

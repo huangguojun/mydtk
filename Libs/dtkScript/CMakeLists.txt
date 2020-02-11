@@ -87,8 +87,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES VERSION   ${dtk_VERSION}
 ## Export header file
 ## #################################################################
 
-#generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
-#generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export.h")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Export")
 
 set(${PROJECT_NAME}_HEADERS
   ${${PROJECT_NAME}_HEADERS}
@@ -107,10 +107,10 @@ install(FILES ${${PROJECT_NAME}_HEADERS}
 ## Install rules - targets
 ## ###################################################################
 
-#install(TARGETS ${PROJECT_NAME}
-#    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#      COMPONENT script
-#         EXPORT dtkDepends)
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT script
+         EXPORT dtkDepends)
 
 ######################################################################
 ### CMakeLists.txt ends here

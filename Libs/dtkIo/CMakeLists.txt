@@ -121,10 +121,10 @@ install(FILES ${${PROJECT_NAME}_HEADERS}
 ## Install rules - targets
 ## ###################################################################
 
-#install(TARGETS ${PROJECT_NAME}
-#    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#      COMPONENT io
-#         EXPORT dtkIoDepends)
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT io
+         EXPORT dtkIoDepends)
 
 ######################################################################
 ### CMakeLists.txt ends here
