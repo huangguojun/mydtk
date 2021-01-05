@@ -12,9 +12,9 @@
 
 // Code:
 
+#include "dtkViewLayoutItem.h"
 #include "dtkViewController.h"
 #include "dtkViewLayout.h"
-#include "dtkViewLayoutItem.h"
 #include "dtkViewWidget.h"
 
 #include <QtWidgets>
@@ -75,7 +75,8 @@ public:
 // dtkViewLayoutItemProxy
 // /////////////////////////////////////////////////////////////////
 
-dtkViewLayoutItemProxy::dtkViewLayoutItemProxy(QWidget *parent) : QFrame(parent), d(new dtkViewLayoutItemProxyPrivate)
+dtkViewLayoutItemProxy::dtkViewLayoutItemProxy(QWidget *parent)
+    : QFrame(parent), d(new dtkViewLayoutItemProxyPrivate)
 {
     d->view = NULL;
 
@@ -97,7 +98,8 @@ dtkViewLayoutItemProxy::~dtkViewLayoutItemProxy(void)
     if (!d->view->widget()->parentWidget())
         goto finalize;
 
-    if (dtkViewLayoutItemProxy *proxy = dynamic_cast<dtkViewLayoutItemProxy *>(d->view->widget()->parentWidget())) {
+    if (dtkViewLayoutItemProxy *proxy =
+                dynamic_cast<dtkViewLayoutItemProxy *>(d->view->widget()->parentWidget())) {
 
         if (proxy == this) {
 
@@ -128,11 +130,13 @@ void dtkViewLayoutItemProxy::setView(dtkViewWidget *view)
     if (!view)
         return;
 
-    if (dtkViewLayoutItemProxy *proxy = dynamic_cast<dtkViewLayoutItemProxy *>(view->widget()->parentWidget())) {
+    if (dtkViewLayoutItemProxy *proxy =
+                dynamic_cast<dtkViewLayoutItemProxy *>(view->widget()->parentWidget())) {
         proxy->layout()->removeWidget(view->widget());
         proxy->d->view = NULL;
 
-        if (dtkViewLayoutItem *item = dynamic_cast<dtkViewLayoutItem *>(proxy->parentWidget()->parentWidget())) {
+        if (dtkViewLayoutItem *item =
+                    dynamic_cast<dtkViewLayoutItem *>(proxy->parentWidget()->parentWidget())) {
             item->d->label->clear();
         }
 
@@ -145,7 +149,8 @@ void dtkViewLayoutItemProxy::setView(dtkViewWidget *view)
 
     connect(view, SIGNAL(focused()), this, SIGNAL(focusedIn()));
 
-    if (dtkViewLayoutItem *item = dynamic_cast<dtkViewLayoutItem *>(this->parentWidget()->parentWidget())) {
+    if (dtkViewLayoutItem *item =
+                dynamic_cast<dtkViewLayoutItem *>(this->parentWidget()->parentWidget())) {
 
         item->d->label->setText(d->view->objectName());
         item->d->close->setEnabled(true);
@@ -193,7 +198,8 @@ dtkViewLayoutItemProxy *dtkViewLayoutItemPrivate::firstViewChild(dtkViewLayoutIt
 // dtkViewLayoutItem
 // /////////////////////////////////////////////////////////////////
 
-dtkViewLayoutItem::dtkViewLayoutItem(dtkViewLayoutItem *parent) : QFrame(parent), d(new dtkViewLayoutItemPrivate)
+dtkViewLayoutItem::dtkViewLayoutItem(dtkViewLayoutItem *parent)
+    : QFrame(parent), d(new dtkViewLayoutItemPrivate)
 {
     d->a = NULL;
     d->b = NULL;
@@ -416,8 +422,10 @@ void dtkViewLayoutItem::unsplit(void)
 
         if (d->b->d->a && d->b->d->b) {
 
-            dtkViewLayoutItem *a = d->b->d->a; a->d->parent = this;
-            dtkViewLayoutItem *b = d->b->d->b; b->d->parent = this;
+            dtkViewLayoutItem *a = d->b->d->a;
+            a->d->parent = this;
+            dtkViewLayoutItem *b = d->b->d->b;
+            b->d->parent = this;
 
             a->setParent(this);
             b->setParent(this);
@@ -471,8 +479,10 @@ void dtkViewLayoutItem::unsplit(void)
 
         if (d->a->d->a && d->a->d->b) {
 
-            dtkViewLayoutItem *a = d->a->d->a; a->d->parent = this;
-            dtkViewLayoutItem *b = d->a->d->b; b->d->parent = this;
+            dtkViewLayoutItem *a = d->a->d->a;
+            a->d->parent = this;
+            dtkViewLayoutItem *b = d->a->d->b;
+            b->d->parent = this;
 
             a->setParent(this);
             b->setParent(this);
@@ -519,7 +529,6 @@ void dtkViewLayoutItem::unsplit(void)
     } else {
 
         qDebug() << Q_FUNC_INFO << "Unhandled case.";
-
     }
 
     d->root->setUpdatesEnabled(true);

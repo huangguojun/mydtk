@@ -11,20 +11,20 @@ class dtkVisualizationViewerStack : public QStackedWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationViewerStack(QWidget *parent = nullptr);
+    dtkVisualizationViewerStack(QWidget *parent = nullptr);
     ~dtkVisualizationViewerStack(void);
 
 public:
     dtkWidgetsLayout *layout(void);
 
 public:
-    static dtkWidgetsWidget *create(const QString& name);
+    static dtkWidgetsWidget *create(const QString &name);
 
 protected:
     void keyPressEvent(QKeyEvent *);
 
 private:
-    void importDataSet(const QString&);
+    void importDataSet(const QString &);
 
 private:
     class dtkVisualizationViewerStackPrivate *d;

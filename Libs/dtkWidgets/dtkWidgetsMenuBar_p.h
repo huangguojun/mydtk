@@ -40,17 +40,17 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuBarContainer : public dtkWidgetsOverlayPan
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuBarContainer(QWidget *parent = nullptr);
+    dtkWidgetsMenuBarContainer(QWidget *parent = nullptr);
     ~dtkWidgetsMenuBarContainer(void);
 
 signals:
     void indexVisible(int);
 
 public slots:
-    void setCurrentIndex(int, std::function<void ()>&);
+    void setCurrentIndex(int, std::function<void()> &);
 
 public slots:
-    void switchToRoot(std::function<void ()>&);
+    void switchToRoot(std::function<void()> &);
     void switchToPrevSlide(dtkWidgetsMenu *);
     void switchToNextSlide(dtkWidgetsMenu *);
 
@@ -58,7 +58,7 @@ public:
     void decr(void); // NOTE: Use with caution
 
 public:
-    void build(const QVector<dtkWidgetsMenu *>&);
+    void build(const QVector<dtkWidgetsMenu *> &);
     void buildChildSlide(dtkWidgetsMenu *);
 
 public:
@@ -77,14 +77,14 @@ public:
     dtkWidgetsMenuBarContainerSlide *master_slide = nullptr;
     dtkWidgetsMenuNavigationFacade *navigator = nullptr;
 
-// /////////////////////////////////////////////////////////////////////////////
-// TODO: Special case of a container used standalone
-// /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // TODO: Special case of a container used standalone
+    // /////////////////////////////////////////////////////////////////////////////
 
 public:
     QVector<dtkWidgetsMenu *> master_menus;
 
-// /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
 
 private:
     friend class dtkWidgetsMenuBarButton;
@@ -99,12 +99,14 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuBarContainerSlide : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenu *, dtkWidgetsMenuBarContainer * = nullptr);
-     dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenuBar *, dtkWidgetsMenuBarContainer * = nullptr);
+    dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenu *,
+                                    dtkWidgetsMenuBarContainer * = nullptr);
+    dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenuBar *,
+                                    dtkWidgetsMenuBarContainer * = nullptr);
     ~dtkWidgetsMenuBarContainerSlide(void);
 
 protected:
-     dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenuBarContainer *);
+    dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *, dtkWidgetsMenuBarContainer *);
 
 public:
     bool isMaster(void) const { return (menu_bar != nullptr); }
@@ -112,7 +114,7 @@ public:
 public:
     void touch(dtkWidgetsMenuBar *, dtkWidgetsMenuBarContainer *);
     void touch(dtkWidgetsMenu *, dtkWidgetsMenuBarContainer *);
-    void touch(const QVector<dtkWidgetsMenu *>&, dtkWidgetsMenuBarContainer *);
+    void touch(const QVector<dtkWidgetsMenu *> &, dtkWidgetsMenuBarContainer *);
 
 private:
     dtkWidgetsMenu *menu = nullptr;

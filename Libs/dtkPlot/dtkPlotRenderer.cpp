@@ -17,11 +17,10 @@
  *
  */
 
-#include "dtkPlotView.h"
 #include "dtkPlotRenderer.h"
+#include "dtkPlotView.h"
 
 #include <qwt_plot_renderer.h>
-
 
 class dtkPlotRendererPrivate : public QwtPlotRenderer
 {
@@ -56,12 +55,12 @@ void dtkPlotRenderer::setView(dtkPlotView *view)
     d->view = view;
 }
 
-void dtkPlotRenderer::setSize(const QSize& size)
+void dtkPlotRenderer::setSize(const QSize &size)
 {
     d->size = size;
 }
 
-void dtkPlotRenderer::setPath(const QString& path)
+void dtkPlotRenderer::setPath(const QString &path)
 {
     d->path = path;
 }

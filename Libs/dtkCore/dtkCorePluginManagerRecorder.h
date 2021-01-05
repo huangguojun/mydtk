@@ -28,8 +28,10 @@ class dtkCoreLayerManager;
 class DTKCORE_EXPORT dtkCorePluginManagerRecorder
 {
 public:
-    explicit dtkCorePluginManagerRecorder(dtkCoreLayerManager *layer_manager, dtkCorePluginManagerBase *plugin_manager, const QString& plugin_manager_name);
-            ~dtkCorePluginManagerRecorder(void) = default;
+    explicit dtkCorePluginManagerRecorder(dtkCoreLayerManager *layer_manager,
+                                          dtkCorePluginManagerBase *plugin_manager,
+                                          const QString &plugin_manager_name);
+    ~dtkCorePluginManagerRecorder(void) = default;
 };
 
 //

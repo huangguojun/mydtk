@@ -14,8 +14,8 @@
 
 #include "dtkVisualizationDecoratorScalarIsolines.h"
 
-#include "dtkVisualizationDecoratorWithClut_p.h"
 #include "dtkVisualizationCanvas.h"
+#include "dtkVisualizationDecoratorWithClut_p.h"
 #include "dtkVisualizationMetaType.h"
 #include "dtkVisualizationView2D.h"
 
@@ -25,8 +25,8 @@
 #include <QtWidgets>
 
 #include <vtkActor.h>
-#include <vtkCellDataToPointData.h>
 #include <vtkCellData.h>
+#include <vtkCellDataToPointData.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkContourFilter.h>
 #include <vtkDataSet.h>
@@ -35,9 +35,9 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 
 // ///////////////////////////////////////////////////////////////////
@@ -69,7 +69,8 @@ public:
 // dtkVisualizationDecoratorScalarIsolines implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorScalarIsolines::dtkVisualizationDecoratorScalarIsolines(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarIsolinesPrivate())
+dtkVisualizationDecoratorScalarIsolines::dtkVisualizationDecoratorScalarIsolines(void)
+    : dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarIsolinesPrivate())
 {
     d->isolines = vtkSmartPointer<vtkContourFilter>::New();
 
@@ -95,17 +96,17 @@ dtkVisualizationDecoratorScalarIsolines::dtkVisualizationDecoratorScalarIsolines
     //////////
     // Inspectors connections
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("visibility",state == Qt::Checked);
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
-    connect(d->isolines_counts_sb, QOverload<int>::of(&QSpinBox::valueChanged), [=] (int value) {
-            this->saveSettings("isolines_count", value);
-            this->setCurrentIsolinesCount(value);
-            this->draw();
-        });
+    connect(d->isolines_counts_sb, QOverload<int>::of(&QSpinBox::valueChanged), [=](int value) {
+        this->saveSettings("isolines_count", value);
+        this->setCurrentIsolinesCount(value);
+        this->draw();
+    });
 
     this->setObjectName("Scalar Isolines");
     d->show_actor_cb->setObjectName("Display");
@@ -136,7 +137,7 @@ void dtkVisualizationDecoratorScalarIsolines::restoreSettings(void)
 
     QSettings settings;
     settings.beginGroup("canvas");
-    d->default_isolines_count = settings.value(name+"_isolines_count", 10).toInt();
+    d->default_isolines_count = settings.value(name + "_isolines_count", 10).toInt();
     settings.endGroup();
 
     this->setCurrentIsolinesCount(d->default_isolines_count);
@@ -158,7 +159,7 @@ void dtkVisualizationDecoratorScalarIsolines::touch(void)
     if (field_name.isEmpty() || !d_func()->dataset)
         return;
 
-    auto&& isoline_range = d_func()->ranges[field_name];
+    auto &&isoline_range = d_func()->ranges[field_name];
 
     auto count = d->isolines_counts[field_name];
 
@@ -170,7 +171,7 @@ void dtkVisualizationDecoratorScalarIsolines::touch(void)
     d->isolines->Modified();
 }
 
-void dtkVisualizationDecoratorScalarIsolines::setData(const QVariant& data)
+void dtkVisualizationDecoratorScalarIsolines::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -204,7 +205,7 @@ void dtkVisualizationDecoratorScalarIsolines::setData(const QVariant& data)
     d_func()->sortEligibleFields();
     this->setCurrentFieldName(d_func()->current_field_name);
 
-    if(this->canvas()) {
+    if (this->canvas()) {
         this->canvas()->renderer()->AddActor(d->actor);
     }
 
@@ -217,11 +218,13 @@ void dtkVisualizationDecoratorScalarIsolines::setCanvas(dtkVisualizationCanvas *
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
-    if(d->isolines->GetInput()) {
+    if (d->isolines->GetInput()) {
         d_func()->view->renderer()->AddActor(d->actor);
     }
 
@@ -244,7 +247,6 @@ void dtkVisualizationDecoratorScalarIsolines::setVisibility(bool b)
     d->isolines_counts_sb->setEnabled(b);
     dtkVisualizationDecoratorWithClut::setVisibility(b);
     d->actor->SetVisibility(b);
-
 }
 
 void dtkVisualizationDecoratorScalarIsolines::setCurrentRange(double min, double max)
@@ -263,7 +265,7 @@ void dtkVisualizationDecoratorScalarIsolines::setCurrentRange(double min, double
 
 void dtkVisualizationDecoratorScalarIsolines::setCurrentIsolinesCount(std::size_t count)
 {
-    QString& field_name = d_func()->current_field_name;
+    QString &field_name = d_func()->current_field_name;
     if (field_name.isEmpty()) {
         if (d_func()->default_field_name.isEmpty())
             return;
@@ -274,7 +276,7 @@ void dtkVisualizationDecoratorScalarIsolines::setCurrentIsolinesCount(std::size_
     this->touch();
 }
 
-bool dtkVisualizationDecoratorScalarIsolines::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorScalarIsolines::setCurrentFieldName(const QString &field_name)
 {
     if (field_name.isEmpty()) {
         dtkWarn() << Q_FUNC_INFO << "Field name is empty, nothing is done.";
@@ -282,25 +284,31 @@ bool dtkVisualizationDecoratorScalarIsolines::setCurrentFieldName(const QString&
     }
 
     if (!d_func()->dataset) {
-        dtkWarn() << Q_FUNC_INFO << "Before calling setCurrentFieldName, setDataSet must be called.";
+        dtkWarn() << Q_FUNC_INFO
+                  << "Before calling setCurrentFieldName, setDataSet must be called.";
         return false;
     }
 
-    if(!d_func()->eligible_field_names.contains(field_name)) {
-        dtkWarn() << Q_FUNC_INFO << "The field name :" << field_name << "that was specified doesn't match any of the eligible scalar field names";
+    if (!d_func()->eligible_field_names.contains(field_name)) {
+        dtkWarn() << Q_FUNC_INFO << "The field name :" << field_name
+                  << "that was specified doesn't match any of the eligible "
+                     "scalar field names";
 
         return false;
     }
 
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
-    if(support == Support::Point) {
+    if (support == Support::Point) {
         d->isolines->SetInputData(d_func()->dataset);
-        d->isolines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS, qPrintable(field_name));
-    } else if(support == Support::Cell) {
-        d->c2p_filter->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS, qPrintable(field_name));
+        d->isolines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS,
+                                            qPrintable(field_name));
+    } else if (support == Support::Cell) {
+        d->c2p_filter->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS,
+                                              qPrintable(field_name));
         d->isolines->SetInputConnection(d->c2p_filter->GetOutputPort());
-        d->isolines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS, qPrintable(field_name));
+        d->isolines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS,
+                                            qPrintable(field_name));
         d->c2p_filter->Modified();
     }
     d->isolines->Modified();
@@ -308,17 +316,17 @@ bool dtkVisualizationDecoratorScalarIsolines::setCurrentFieldName(const QString&
     return dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name);
 }
 
-void dtkVisualizationDecoratorScalarIsolines::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorScalarIsolines::setColorMap(const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 
     d->mapper->SetLookupTable(d_func()->color_function);
     d->mapper->SelectColorArray(qPrintable(d_func()->current_field_name));
-    auto&& range = d_func()->ranges[d_func()->current_field_name];
+    auto &&range = d_func()->ranges[d_func()->current_field_name];
     d->mapper->SetScalarRange(range[0], range[1]);
     d->mapper->Modified();
 
-    //set opacity
+    // set opacity
     // int size = opacity_function->GetSize();
 
     // double val[4];

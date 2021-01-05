@@ -14,8 +14,8 @@
 
 #pragma once
 
-#include <dtkWidgetsExport.h>
 #include <QEvent>
+#include <dtkWidgetsExport.h>
 
 class dtkNotificationEvent;
 // /////////////////////////////////////////////////////////////////
@@ -28,8 +28,8 @@ static const int dtkNotificationEventType = QEvent::User + 1003;
 // Helper functions
 // /////////////////////////////////////////////////////////////////
 
-DTKWIDGETS_EXPORT void dtkNotify(const QString& message);
-DTKWIDGETS_EXPORT void dtkNotify(const QString& message, int duration);
+DTKWIDGETS_EXPORT void dtkNotify(const QString &message);
+DTKWIDGETS_EXPORT void dtkNotify(const QString &message, int duration);
 DTKWIDGETS_EXPORT void dtkNotify(dtkNotificationEvent *event);
 DTKWIDGETS_EXPORT void dtkClearNotifications(void);
 

@@ -20,11 +20,11 @@
 #include <QtXml>
 
 #include <vtkColorTransferFunction.h>
+#include <vtkGPUVolumeRayCastMapper.h>
 #include <vtkLookupTable.h>
 #include <vtkMapper.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkScalarsToColors.h>
-#include <vtkGPUVolumeRayCastMapper.h>
 #include <vtkVolume.h>
 #include <vtkVolumeProperty.h>
 
@@ -32,8 +32,10 @@
 // dtkVisualizationWidgetsClutEditor - Helper functions
 // /////////////////////////////////////////////////////////////////
 
-QPointF dtkVisualizationWidgetsClutEditorMap   (QPointF vertex, qreal min, qreal max, int width, int height, bool logScale);
-QPointF dtkVisualizationWidgetsClutEditorMapInv(QPointF vertex, qreal min, qreal max, int width, int height, bool logScale);
+QPointF dtkVisualizationWidgetsClutEditorMap(QPointF vertex, qreal min, qreal max, int width,
+                                             int height, bool logScale);
+QPointF dtkVisualizationWidgetsClutEditorMapInv(QPointF vertex, qreal min, qreal max, int width,
+                                                int height, bool logScale);
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationWidgetsClutEditorInterpolator
@@ -46,7 +48,7 @@ public:
 
 public:
     void setStart(dtkVisualizationWidgetsClutEditorVertex *vertex);
-    void  setStop(dtkVisualizationWidgetsClutEditorVertex *vertex);
+    void setStop(dtkVisualizationWidgetsClutEditorVertex *vertex);
 
     virtual QColor interpolate(dtkVisualizationWidgetsClutEditorVertex *vertex) const = 0;
 
@@ -55,12 +57,14 @@ protected:
     dtkVisualizationWidgetsClutEditorVertex *stop;
 };
 
-void dtkVisualizationWidgetsClutEditorInterpolator::setStart(dtkVisualizationWidgetsClutEditorVertex *vertex)
+void dtkVisualizationWidgetsClutEditorInterpolator::setStart(
+        dtkVisualizationWidgetsClutEditorVertex *vertex)
 {
     this->start = vertex;
 }
 
-void dtkVisualizationWidgetsClutEditorInterpolator::setStop(dtkVisualizationWidgetsClutEditorVertex *vertex)
+void dtkVisualizationWidgetsClutEditorInterpolator::setStop(
+        dtkVisualizationWidgetsClutEditorVertex *vertex)
 {
     this->stop = vertex;
 }
@@ -69,7 +73,8 @@ void dtkVisualizationWidgetsClutEditorInterpolator::setStop(dtkVisualizationWidg
 // dtkVisualizationWidgetsClutEditorInterpolatorHSV
 // /////////////////////////////////////////////////////////////////
 
-class dtkVisualizationWidgetsClutEditorInterpolatorHSV : public dtkVisualizationWidgetsClutEditorInterpolator
+class dtkVisualizationWidgetsClutEditorInterpolatorHSV
+    : public dtkVisualizationWidgetsClutEditorInterpolator
 {
 public:
     QColor interpolate(dtkVisualizationWidgetsClutEditorVertex *vertex) const;
@@ -78,29 +83,31 @@ private:
     static qreal computeHue(double x, double x0, qreal h0, double x1, qreal h1);
 };
 
-qreal dtkVisualizationWidgetsClutEditorInterpolatorHSV::computeHue(double x, double x0, qreal h0, double x1, qreal h1)
+qreal dtkVisualizationWidgetsClutEditorInterpolatorHSV::computeHue(double x, double x0, qreal h0,
+                                                                   double x1, qreal h1)
 {
     if (x1 == x0)
-        return (h0 + h1)/2.0;
+        return (h0 + h1) / 2.0;
 
-    double alpha = (x-x0)/(x1-x0);
+    double alpha = (x - x0) / (x1 - x0);
 
-    return h1*alpha + h0*(1.0-alpha);
+    return h1 * alpha + h0 * (1.0 - alpha);
 }
 
-QColor dtkVisualizationWidgetsClutEditorInterpolatorHSV::interpolate(dtkVisualizationWidgetsClutEditorVertex *vertex) const
+QColor dtkVisualizationWidgetsClutEditorInterpolatorHSV::interpolate(
+        dtkVisualizationWidgetsClutEditorVertex *vertex) const
 {
-    if(!this->start) {
+    if (!this->start) {
         qWarning() << "No start value set for interpolation";
         return vertex->color();
     }
 
-    if(!this->stop) {
+    if (!this->stop) {
         qWarning() << "No stop value set for interpolation";
         return vertex->color();
     }
 
-    qreal x    = vertex->scenePos().x();
+    qreal x = vertex->scenePos().x();
     qreal xmin = start->scenePos().x();
     qreal xmax = stop->scenePos().x();
 
@@ -118,20 +125,22 @@ QColor dtkVisualizationWidgetsClutEditorInterpolatorHSV::interpolate(dtkVisualiz
 // dtkVisualizationWidgetsClutEditorInterpolatorRGB
 // /////////////////////////////////////////////////////////////////
 
-class dtkVisualizationWidgetsClutEditorInterpolatorRGB : public dtkVisualizationWidgetsClutEditorInterpolator
+class dtkVisualizationWidgetsClutEditorInterpolatorRGB
+    : public dtkVisualizationWidgetsClutEditorInterpolator
 {
 public:
     QColor interpolate(dtkVisualizationWidgetsClutEditorVertex *vertex) const;
 };
 
-QColor dtkVisualizationWidgetsClutEditorInterpolatorRGB::interpolate(dtkVisualizationWidgetsClutEditorVertex *vertex) const
+QColor dtkVisualizationWidgetsClutEditorInterpolatorRGB::interpolate(
+        dtkVisualizationWidgetsClutEditorVertex *vertex) const
 {
-    if(!this->start) {
+    if (!this->start) {
         qWarning() << Q_FUNC_INFO << "No start value set for interpolation";
         return vertex->color();
     }
 
-    if(!this->stop) {
+    if (!this->stop) {
         qWarning() << Q_FUNC_INFO << "No stop value set for interpolation";
         return vertex->color();
     }
@@ -150,36 +159,36 @@ QColor dtkVisualizationWidgetsClutEditorInterpolatorRGB::interpolate(dtkVisualiz
 // dtkVisualizationWidgetsClutEditorHistogram
 // ///////////////////////////////////////////////////////////////////
 
-class dtkVisualizationWidgetsClutEditorHistogram: public QGraphicsItem
+class dtkVisualizationWidgetsClutEditorHistogram : public QGraphicsItem
 {
 public:
-     dtkVisualizationWidgetsClutEditorHistogram(QGraphicsItem *parent = Q_NULLPTR);
+    dtkVisualizationWidgetsClutEditorHistogram(QGraphicsItem *parent = Q_NULLPTR);
     ~dtkVisualizationWidgetsClutEditorHistogram();
 
 public:
-    void setup(const dtkVisualizationWidgetsClutEditor::Histogram& histogram);
+    void setup(const dtkVisualizationWidgetsClutEditor::Histogram &histogram);
 
 public:
-    QRectF boundingRect(void) const ;
+    QRectF boundingRect(void) const;
 
 public:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget = Q_NULLPTR);
 
 public:
     QList<double> normalizedHistogram;
 };
 
-dtkVisualizationWidgetsClutEditorHistogram::dtkVisualizationWidgetsClutEditorHistogram(QGraphicsItem *parent) : QGraphicsItem(parent)
+dtkVisualizationWidgetsClutEditorHistogram::dtkVisualizationWidgetsClutEditorHistogram(
+        QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
-
 }
 
-dtkVisualizationWidgetsClutEditorHistogram::~dtkVisualizationWidgetsClutEditorHistogram()
-{
+dtkVisualizationWidgetsClutEditorHistogram::~dtkVisualizationWidgetsClutEditorHistogram() {}
 
-}
-
-void dtkVisualizationWidgetsClutEditorHistogram::setup(const dtkVisualizationWidgetsClutEditor::Histogram &histogram)
+void dtkVisualizationWidgetsClutEditorHistogram::setup(
+        const dtkVisualizationWidgetsClutEditor::Histogram &histogram)
 {
     static const double epsilon = 1e-6;
 
@@ -188,23 +197,22 @@ void dtkVisualizationWidgetsClutEditorHistogram::setup(const dtkVisualizationWid
 
     double max = 0;
 
-    for(int i = 0; i < histogram.count(); ++i) {
+    for (int i = 0; i < histogram.count(); ++i) {
         if (histogram.at(i) < 0) {
             qWarning() << Q_FUNC_INFO << "bad value at:" << i;
             this->normalizedHistogram.append(0.0);
-        }
-        else {
+        } else {
             max = qMax(max, (double)histogram.at(i));
             this->normalizedHistogram.append((double)histogram.at(i));
         }
     }
 
     if (max < epsilon) {
-        qWarning() << Q_FUNC_INFO << "histogram is null" ;
+        qWarning() << Q_FUNC_INFO << "histogram is null";
         return;
     }
 
-    for(int i = 0; i < this->normalizedHistogram.count() ; ++i) {
+    for (int i = 0; i < this->normalizedHistogram.count(); ++i) {
         this->normalizedHistogram.replace(i, this->normalizedHistogram.at(i) / max);
     }
 }
@@ -214,7 +222,9 @@ QRectF dtkVisualizationWidgetsClutEditorHistogram::boundingRect(void) const
     return this->parentItem()->boundingRect();
 }
 
-void dtkVisualizationWidgetsClutEditorHistogram::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void dtkVisualizationWidgetsClutEditorHistogram::paint(QPainter *painter,
+                                                       const QStyleOptionGraphicsItem *option,
+                                                       QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -232,12 +242,12 @@ void dtkVisualizationWidgetsClutEditorHistogram::paint(QPainter *painter, const 
     qreal p_h = this->boundingRect().height();
     qreal b_w = p_w / this->normalizedHistogram.count();
 
-    for(int i = 0 ; i < this->normalizedHistogram.count() ; ++i) {
-        qreal v = this->normalizedHistogram.at(i) * 0.95 ;
+    for (int i = 0; i < this->normalizedHistogram.count(); ++i) {
+        qreal v = this->normalizedHistogram.at(i) * 0.95;
         qreal x = i * b_w;
-        qreal y = ( 1.0 - v ) * p_h;
+        qreal y = (1.0 - v) * p_h;
         qreal w = b_w;
-        qreal h = v * p_h ;
+        qreal h = v * p_h;
 
         painter->drawRect(x, y, w, h);
     }
@@ -247,7 +257,9 @@ void dtkVisualizationWidgetsClutEditorHistogram::paint(QPainter *painter, const 
 // dtkVisualizationWidgetsClutEditorVertex
 // /////////////////////////////////////////////////////////////////
 
-dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex(int x, int y, QColor color, QGraphicsItem *parent) : QGraphicsItem(parent)
+dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex(
+        int x, int y, QColor color, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
     this->fgColor = color;
     this->bgColor = QColor(0xc0, 0xc0, 0xc0);
@@ -259,7 +271,9 @@ dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
 }
 
-dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex(QPointF point, QColor color, QGraphicsItem *parent) : QGraphicsItem(parent)
+dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex(
+        QPointF point, QColor color, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
     this->fgColor = color;
     this->bgColor = QColor(0xc0, 0xc0, 0xc0);
@@ -270,23 +284,24 @@ dtkVisualizationWidgetsClutEditorVertex::dtkVisualizationWidgetsClutEditorVertex
     this->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 }
 
-dtkVisualizationWidgetsClutEditorVertex::~dtkVisualizationWidgetsClutEditorVertex(void)
-{
+dtkVisualizationWidgetsClutEditorVertex::~dtkVisualizationWidgetsClutEditorVertex(void) {}
 
-}
-
-void dtkVisualizationWidgetsClutEditorVertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void dtkVisualizationWidgetsClutEditorVertex::paint(QPainter *painter,
+                                                    const QStyleOptionGraphicsItem *option,
+                                                    QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    if(this->isSelected())
+    if (this->isSelected())
         painter->setPen(Qt::magenta);
     else
         painter->setPen(Qt::black);
 
-    painter->setBrush(bgColor); painter->drawEllipse(-10, -10, 20, 20);
-    painter->setBrush(fgColor); painter->drawEllipse(-5, -5, 10, 10);
+    painter->setBrush(bgColor);
+    painter->drawEllipse(-10, -10, 20, 20);
+    painter->setBrush(fgColor);
+    painter->drawEllipse(-5, -5, 10, 10);
 }
 
 QRectF dtkVisualizationWidgetsClutEditorVertex::boundingRect(void) const
@@ -304,7 +319,7 @@ QColor dtkVisualizationWidgetsClutEditorVertex::color(void) const
     return fgColor;
 }
 
-void dtkVisualizationWidgetsClutEditorVertex::setColor(const QColor& color)
+void dtkVisualizationWidgetsClutEditorVertex::setColor(const QColor &color)
 {
     fgColor = color;
 
@@ -322,7 +337,10 @@ void dtkVisualizationWidgetsClutEditorVertex::mouseMoveEvent(QGraphicsSceneMouse
 // dtkVisualizationWidgetsClutEditorTable - helper functions
 // /////////////////////////////////////////////////////////////////
 
-static bool dtkVisualizationWidgetsClutEditorVertexLessThan(const dtkVisualizationWidgetsClutEditorVertex *v1, const dtkVisualizationWidgetsClutEditorVertex *v2) {
+static bool
+dtkVisualizationWidgetsClutEditorVertexLessThan(const dtkVisualizationWidgetsClutEditorVertex *v1,
+                                                const dtkVisualizationWidgetsClutEditorVertex *v2)
+{
     return (v1->position().x() < v2->position().x());
 }
 
@@ -333,7 +351,7 @@ static bool dtkVisualizationWidgetsClutEditorVertexLessThan(const dtkVisualizati
 class dtkVisualizationWidgetsClutEditorTable : public QGraphicsItem
 {
 public:
-     dtkVisualizationWidgetsClutEditorTable(QGraphicsItem *parent = 0);
+    dtkVisualizationWidgetsClutEditorTable(QGraphicsItem *parent = 0);
     ~dtkVisualizationWidgetsClutEditorTable(void);
 
     void addVertex(dtkVisualizationWidgetsClutEditorVertex *vertex);
@@ -355,18 +373,18 @@ public:
     QList<dtkVisualizationWidgetsClutEditorVertex *> vertices;
 };
 
-dtkVisualizationWidgetsClutEditorTable::dtkVisualizationWidgetsClutEditorTable(QGraphicsItem *parent) : QGraphicsItem(parent)
+dtkVisualizationWidgetsClutEditorTable::dtkVisualizationWidgetsClutEditorTable(
+        QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
     this->setZValue(1);
 }
 
-dtkVisualizationWidgetsClutEditorTable::~dtkVisualizationWidgetsClutEditorTable(void)
-{
+dtkVisualizationWidgetsClutEditorTable::~dtkVisualizationWidgetsClutEditorTable(void) {}
 
-}
-
-void dtkVisualizationWidgetsClutEditorTable::addVertex(dtkVisualizationWidgetsClutEditorVertex *vertex)
+void dtkVisualizationWidgetsClutEditorTable::addVertex(
+        dtkVisualizationWidgetsClutEditorVertex *vertex)
 {
     vertices << vertex;
 
@@ -375,7 +393,8 @@ void dtkVisualizationWidgetsClutEditorTable::addVertex(dtkVisualizationWidgetsCl
     this->sort();
 }
 
-void dtkVisualizationWidgetsClutEditorTable::removeVertex(dtkVisualizationWidgetsClutEditorVertex *vertex)
+void dtkVisualizationWidgetsClutEditorTable::removeVertex(
+        dtkVisualizationWidgetsClutEditorVertex *vertex)
 {
     vertices.removeOne(vertex);
 
@@ -387,20 +406,25 @@ void dtkVisualizationWidgetsClutEditorTable::sort(void)
     qSort(vertices.begin(), vertices.end(), dtkVisualizationWidgetsClutEditorVertexLessThan);
 }
 
-void dtkVisualizationWidgetsClutEditorTable::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void dtkVisualizationWidgetsClutEditorTable::paint(QPainter *painter,
+                                                   const QStyleOptionGraphicsItem *option,
+                                                   QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    int n_points = vertices.size()+4;
+    int n_points = vertices.size() + 4;
 
     QPoint *points = new QPoint[n_points];
     points[0] = this->mapFromScene(QPoint(0, 0)).toPoint();
     points[1] = this->mapFromScene(QPoint(0, vertices.first()->position().y())).toPoint();
-    for(int i = 0 ; i < vertices.count() ; i++)
-        points[i+2] = vertices.at(i)->position();
-    points[vertices.count()+2] = this->mapFromScene(QPoint(this->scene()->sceneRect().width(), vertices.last()->position().y())).toPoint();
-    points[vertices.count()+3] = this->mapFromScene(QPoint(this->scene()->sceneRect().width(), 0)).toPoint();
+    for (int i = 0; i < vertices.count(); i++)
+        points[i + 2] = vertices.at(i)->position();
+    points[vertices.count() + 2] = this->mapFromScene(QPoint(this->scene()->sceneRect().width(),
+                                                             vertices.last()->position().y()))
+                                           .toPoint();
+    points[vertices.count() + 3] =
+            this->mapFromScene(QPoint(this->scene()->sceneRect().width(), 0)).toPoint();
 
     QPen pen(Qt::black, 1);
 
@@ -409,23 +433,26 @@ void dtkVisualizationWidgetsClutEditorTable::paint(QPainter *painter, const QSty
 
     QLinearGradient linearGradient(xmin, 0, xmax, 0);
     {
-        QColor color = vertices.first()->color(); color.setAlpha(128);
+        QColor color = vertices.first()->color();
+        color.setAlpha(128);
         linearGradient.setColorAt(0.0, color);
     }
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : vertices) {
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : vertices) {
         qreal position;
-        position = (vertex->pos().x()-xmin)/(xmax-xmin);
+        position = (vertex->pos().x() - xmin) / (xmax - xmin);
         position = qMax(0.0, position);
         position = qMin(position, 1.0);
 
-        QColor color = vertex->color(); color.setAlpha(128);
+        QColor color = vertex->color();
+        color.setAlpha(128);
 
         linearGradient.setColorAt(position, color);
     }
 
     {
-        QColor color = vertices.last()->color(); color.setAlpha(128);
+        QColor color = vertices.last()->color();
+        color.setAlpha(128);
         linearGradient.setColorAt(1.0, color);
     }
 
@@ -443,14 +470,18 @@ QRectF dtkVisualizationWidgetsClutEditorTable::boundingRect(void) const
     xmin = ymin = INT_MAX;
     xmax = ymax = INT_MIN;
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : vertices) {
-        if(vertex->x() < xmin) xmin = vertex->x();
-        if(vertex->x() > xmax) xmax = vertex->x();
-        if(vertex->y() < ymin) ymin = vertex->y();
-        if(vertex->y() > ymax) ymax = vertex->y();
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : vertices) {
+        if (vertex->x() < xmin)
+            xmin = vertex->x();
+        if (vertex->x() > xmax)
+            xmax = vertex->x();
+        if (vertex->y() < ymin)
+            ymin = vertex->y();
+        if (vertex->y() > ymax)
+            ymax = vertex->y();
     }
 
-    return QRectF(xmin, ymin, xmax-xmin, qAbs(ymin));
+    return QRectF(xmin, ymin, xmax - xmin, qAbs(ymin));
 }
 
 void dtkVisualizationWidgetsClutEditorTable::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -458,25 +489,26 @@ void dtkVisualizationWidgetsClutEditorTable::mouseMoveEvent(QGraphicsSceneMouseE
     QVector<QPointF> points;
 
     points << QPointF(vertices.first()->position().x(), 0);
-    for(int i = 0 ; i < vertices.count() ; i++)
+    for (int i = 0; i < vertices.count(); i++)
         points << QPointF(vertices.at(i)->position());
     points << QPointF(vertices.last()->position().x(), 0);
 
     QPolygonF polygon = QPolygonF(points);
 
-    if(!polygon.containsPoint(event->pos(), Qt::OddEvenFill)) {
+    if (!polygon.containsPoint(event->pos(), Qt::OddEvenFill)) {
         event->ignore();
         return;
     }
 
     QPointF delta = event->pos() - event->lastPos();
 
-    if(mapRectToScene(this->boundingRect()).left() + delta.x() < 0) {
+    if (mapRectToScene(this->boundingRect()).left() + delta.x() < 0) {
         event->ignore();
         return;
     }
 
-    if(mapRectToScene(this->boundingRect()).right() + delta.x() > this->scene()->views().first()->width()) {
+    if (mapRectToScene(this->boundingRect()).right() + delta.x()
+        > this->scene()->views().first()->width()) {
         event->ignore();
         return;
     }
@@ -503,7 +535,8 @@ public:
     dtkVisualizationWidgetsClutEditorTable *table;
 };
 
-dtkVisualizationWidgetsClutEditorScene::dtkVisualizationWidgetsClutEditorScene(QObject *parent) : QGraphicsScene(parent), d(new dtkVisualizationWidgetsClutEditorScenePrivate)
+dtkVisualizationWidgetsClutEditorScene::dtkVisualizationWidgetsClutEditorScene(QObject *parent)
+    : QGraphicsScene(parent), d(new dtkVisualizationWidgetsClutEditorScenePrivate)
 {
 }
 
@@ -516,7 +549,8 @@ dtkVisualizationWidgetsClutEditorScene::~dtkVisualizationWidgetsClutEditorScene(
 
 void dtkVisualizationWidgetsClutEditorScene::addItem(QGraphicsItem *item)
 {
-    if(dtkVisualizationWidgetsClutEditorTable *table = dynamic_cast<dtkVisualizationWidgetsClutEditorTable *>(item))
+    if (dtkVisualizationWidgetsClutEditorTable *table =
+                dynamic_cast<dtkVisualizationWidgetsClutEditorTable *>(item))
         d->table = table;
 
     QGraphicsScene::addItem(item);
@@ -524,9 +558,10 @@ void dtkVisualizationWidgetsClutEditorScene::addItem(QGraphicsItem *item)
 
 void dtkVisualizationWidgetsClutEditorScene::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {
-        for(QGraphicsItem *item : this->selectedItems()) {
-            if(dtkVisualizationWidgetsClutEditorVertex *vertex = dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item)) {
+    if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {
+        for (QGraphicsItem *item : this->selectedItems()) {
+            if (dtkVisualizationWidgetsClutEditorVertex *vertex =
+                        dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item)) {
                 d->table->removeVertex(vertex);
                 d->table->update();
                 this->removeItem(vertex);
@@ -540,22 +575,24 @@ void dtkVisualizationWidgetsClutEditorScene::keyPressEvent(QKeyEvent *event)
 
 void dtkVisualizationWidgetsClutEditorScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(!this->sceneRect().adjusted(0.0, 50.0, 0.0, 0.0).contains(event->scenePos()))
+    if (!this->sceneRect().adjusted(0.0, 50.0, 0.0, 0.0).contains(event->scenePos()))
         return;
 
-    if(QGraphicsItem *item = this->itemAt(event->scenePos(),QTransform()))
-        if(dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item))
+    if (QGraphicsItem *item = this->itemAt(event->scenePos(), QTransform()))
+        if (dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item))
             return;
 
     if (d->table) {
 
-        dtkVisualizationWidgetsClutEditorVertex *vertex = new dtkVisualizationWidgetsClutEditorVertex(d->table->mapFromScene(QPointF(event->scenePos().x(), -event->scenePos().y())));
+        dtkVisualizationWidgetsClutEditorVertex *vertex =
+                new dtkVisualizationWidgetsClutEditorVertex(d->table->mapFromScene(
+                        QPointF(event->scenePos().x(), -event->scenePos().y())));
         d->table->addVertex(vertex);
         d->table->update();
 
         vertex->setSelected(true);
 
-        connect(vertex, SIGNAL(moved(const QPointF&)), this, SIGNAL(moved(const QPointF&)));
+        connect(vertex, SIGNAL(moved(const QPointF &)), this, SIGNAL(moved(const QPointF &)));
     }
 }
 
@@ -563,26 +600,28 @@ void dtkVisualizationWidgetsClutEditorScene::mouseMoveEvent(QGraphicsSceneMouseE
 {
     QPointF delta = event->scenePos() - event->lastScenePos();
 
-    for(QGraphicsItem *item : this->selectedItems()) {
+    for (QGraphicsItem *item : this->selectedItems()) {
 
-        if(dtkVisualizationWidgetsClutEditorVertex *vertex = dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item)) {
+        if (dtkVisualizationWidgetsClutEditorVertex *vertex =
+                    dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item)) {
 
-            if((vertex->scenePos().x() + delta.x() < 0) && (delta.x() <= 0)) {
+            if ((vertex->scenePos().x() + delta.x() < 0) && (delta.x() <= 0)) {
                 event->ignore();
                 return;
             }
 
-            if((vertex->scenePos().x() + delta.x() > this->views().first()->width()) && (delta.x() >= 0)) {
+            if ((vertex->scenePos().x() + delta.x() > this->views().first()->width())
+                && (delta.x() >= 0)) {
                 event->ignore();
                 return;
             }
 
-            if((vertex->scenePos().y() + delta.y() <= -100) && (delta.y() <= 0)) {
+            if ((vertex->scenePos().y() + delta.y() <= -100) && (delta.y() <= 0)) {
                 event->ignore();
                 return;
             }
 
-            if((vertex->scenePos().y() + delta.y() >= 0) && (delta.y() >= 0)) {
+            if ((vertex->scenePos().y() + delta.y() >= 0) && (delta.y() >= 0)) {
                 event->ignore();
                 return;
             }
@@ -604,14 +643,16 @@ class dtkVisualizationWidgetsClutEditorViewPrivate
 public:
 };
 
-dtkVisualizationWidgetsClutEditorView::dtkVisualizationWidgetsClutEditorView(QWidget *parent) : QGraphicsView(parent), d(new dtkVisualizationWidgetsClutEditorViewPrivate)
+dtkVisualizationWidgetsClutEditorView::dtkVisualizationWidgetsClutEditorView(QWidget *parent)
+    : QGraphicsView(parent), d(new dtkVisualizationWidgetsClutEditorViewPrivate)
 {
     this->setAttribute(Qt::WA_MacShowFocusRect, false);
     this->setDragMode(QGraphicsView::RubberBandDrag);
     this->setFrameShape(QFrame::NoFrame);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
+    this->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform
+                         | QPainter::TextAntialiasing);
     this->setViewportUpdateMode(FullViewportUpdate);
 }
 
@@ -630,7 +671,7 @@ class dtkVisualizationWidgetsClutEditorPrivate
 {
 public:
     dtkVisualizationWidgetsClutEditorScene *scene = nullptr;
-    dtkVisualizationWidgetsClutEditorView  *view  = nullptr;
+    dtkVisualizationWidgetsClutEditorView *view = nullptr;
 
 public:
     double min;
@@ -646,8 +687,8 @@ public:
     QGraphicsRectItem *bg = nullptr;
 
 public:
-    vtkColorTransferFunction *colorTransferFunction   = nullptr;
-    vtkPiecewiseFunction     *opacityTransferFunction = nullptr;
+    vtkColorTransferFunction *colorTransferFunction = nullptr;
+    vtkPiecewiseFunction *opacityTransferFunction = nullptr;
 
 public:
     dtkVisualizationWidgetsClutEditor::ColorSpace color_space;
@@ -663,10 +704,11 @@ public:
     QPushButton *button_color;
     QPushButton *button_export;
     QPushButton *button_import;
-    QComboBox   *button_presets;
+    QComboBox *button_presets;
 };
 
-dtkVisualizationWidgetsClutEditor::dtkVisualizationWidgetsClutEditor(QWidget *parent) : QWidget(parent), d(new dtkVisualizationWidgetsClutEditorPrivate)
+dtkVisualizationWidgetsClutEditor::dtkVisualizationWidgetsClutEditor(QWidget *parent)
+    : QWidget(parent), d(new dtkVisualizationWidgetsClutEditorPrivate)
 {
     d->min = 100.0;
     d->max = 200.0;
@@ -694,7 +736,7 @@ dtkVisualizationWidgetsClutEditor::dtkVisualizationWidgetsClutEditor(QWidget *pa
 
     // --
 
-    QPalette palette ;
+    QPalette palette;
     palette.setBrush(QPalette::Background, Qt::transparent);
 
     d->button_log = new QCheckBox;
@@ -833,7 +875,7 @@ dtkVisualizationWidgetsClutEditor::dtkVisualizationWidgetsClutEditor(QWidget *pa
 
     // --
 
-    connect(d->scene, SIGNAL(moved(const QPointF&)), this, SLOT(onVertexMoved(const QPointF&)));
+    connect(d->scene, SIGNAL(moved(const QPointF &)), this, SLOT(onVertexMoved(const QPointF &)));
     connect(d->scene, SIGNAL(removed()), this, SLOT(onApply()));
     connect(d->scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
 
@@ -841,10 +883,11 @@ dtkVisualizationWidgetsClutEditor::dtkVisualizationWidgetsClutEditor(QWidget *pa
     connect(d->button_color, SIGNAL(clicked()), this, SLOT(onColorChoose()));
     connect(d->button_import, SIGNAL(clicked()), this, SLOT(importClut()));
     connect(d->button_export, SIGNAL(clicked()), this, SLOT(exportClut()));
-    //connect(d->button_apply, SIGNAL(clicked()), this, SLOT(onApply()));
+    // connect(d->button_apply, SIGNAL(clicked()), this, SLOT(onApply()));
     connect(d->button_apply, SIGNAL(toggled(bool)), this, SLOT(onApply()));
     connect(d->button_log, SIGNAL(toggled(bool)), this, SLOT(onApply()));
-    connect(d->button_presets, SIGNAL(currentTextChanged(const QString&)), this, SLOT(importClut(const QString&)));
+    connect(d->button_presets, SIGNAL(currentTextChanged(const QString &)), this,
+            SLOT(importClut(const QString &)));
 }
 
 dtkVisualizationWidgetsClutEditor::~dtkVisualizationWidgetsClutEditor(void)
@@ -854,7 +897,7 @@ dtkVisualizationWidgetsClutEditor::~dtkVisualizationWidgetsClutEditor(void)
     d = NULL;
 }
 
-void dtkVisualizationWidgetsClutEditor::importClut(const QString& clut)
+void dtkVisualizationWidgetsClutEditor::importClut(const QString &clut)
 {
     QString fileName = QString(":dtk-visualization/cluts/%1.clut").arg(clut);
     QDomDocument doc("clut");
@@ -871,7 +914,7 @@ void dtkVisualizationWidgetsClutEditor::importClut(const QString& clut)
 
     file.close();
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
         d->table->removeVertex(vertex);
         d->scene->removeItem(vertex);
         delete vertex;
@@ -880,23 +923,29 @@ void dtkVisualizationWidgetsClutEditor::importClut(const QString& clut)
     QDomElement root = doc.documentElement();
     double min = root.attribute("min").toDouble();
     double max = root.attribute("max").toDouble();
-    int    log = root.attribute("log").toInt();
+    int log = root.attribute("log").toInt();
 
     QDomNode n = root.firstChild();
-    while(!n.isNull()) {
+    while (!n.isNull()) {
         QDomElement e = n.toElement();
-        if(!e.isNull()) {
+        if (!e.isNull()) {
 
-            qreal v = d->min + (e.attribute("v").toDouble() - min) / (max - min) * (d->max - d->min);
+            qreal v =
+                    d->min + (e.attribute("v").toDouble() - min) / (max - min) * (d->max - d->min);
             qreal a = e.attribute("a").toDouble();
             int r = e.attribute("r").toInt();
             int g = e.attribute("g").toInt();
             int b = e.attribute("b").toInt();
-            dtkVisualizationWidgetsClutEditorVertex *vertex = new dtkVisualizationWidgetsClutEditorVertex(dtkVisualizationWidgetsClutEditorMap(QPointF(v, a), d->min, d->max, this->width(), 100, log), QColor(r, g, b));
+            dtkVisualizationWidgetsClutEditorVertex *vertex =
+                    new dtkVisualizationWidgetsClutEditorVertex(
+                            dtkVisualizationWidgetsClutEditorMap(QPointF(v, a), d->min, d->max,
+                                                                 this->width(), 100, log),
+                            QColor(r, g, b));
 
             d->table->addVertex(vertex);
 
-            connect(vertex, SIGNAL(moved(const QPointF&)), d->scene, SIGNAL(moved(const QPointF&)));
+            connect(vertex, SIGNAL(moved(const QPointF &)), d->scene,
+                    SIGNAL(moved(const QPointF &)));
         }
         n = n.nextSibling();
     }
@@ -905,21 +954,22 @@ void dtkVisualizationWidgetsClutEditor::importClut(const QString& clut)
 
     d->button_log->setChecked(log);
 
-    if(d->button_apply->isChecked())
+    if (d->button_apply->isChecked())
         this->onApply();
 
     d->view->fitInView(d->view->sceneRect());
 }
-
 
 void *dtkVisualizationWidgetsClutEditor::colorTransferFunction(void)
 {
     return d->colorTransferFunction;
 }
 
-void dtkVisualizationWidgetsClutEditor::setColorTransferFunction(vtkColorTransferFunction *color_transfer_function)
+void dtkVisualizationWidgetsClutEditor::setColorTransferFunction(
+        vtkColorTransferFunction *color_transfer_function)
 {
-    if(!d->colorTransferFunction) d->colorTransferFunction = vtkColorTransferFunction::New();
+    if (!d->colorTransferFunction)
+        d->colorTransferFunction = vtkColorTransferFunction::New();
 
     d->colorTransferFunction->DeepCopy(color_transfer_function);
 
@@ -933,9 +983,11 @@ void *dtkVisualizationWidgetsClutEditor::opacityTransferFunction(void)
     return d->opacityTransferFunction;
 }
 
-void dtkVisualizationWidgetsClutEditor::setOpacityTransferFunction(vtkPiecewiseFunction *opacity_transfer_function)
+void dtkVisualizationWidgetsClutEditor::setOpacityTransferFunction(
+        vtkPiecewiseFunction *opacity_transfer_function)
 {
-    if(!d->opacityTransferFunction) d->opacityTransferFunction = vtkPiecewiseFunction::New();
+    if (!d->opacityTransferFunction)
+        d->opacityTransferFunction = vtkPiecewiseFunction::New();
 
     d->opacityTransferFunction->DeepCopy(opacity_transfer_function);
 
@@ -946,10 +998,10 @@ void dtkVisualizationWidgetsClutEditor::setOpacityTransferFunction(vtkPiecewiseF
 
 void dtkVisualizationWidgetsClutEditor::updateTable(void)
 {
-    if(!d->colorTransferFunction)
+    if (!d->colorTransferFunction)
         return;
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
         d->table->removeVertex(vertex);
         d->scene->removeItem(vertex);
         delete vertex;
@@ -963,19 +1015,27 @@ void dtkVisualizationWidgetsClutEditor::updateTable(void)
     double alpha = 0;
 
     d->colorTransferFunction->GetRange(vtk_range);
-    for(int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) {
         d->colorTransferFunction->GetNodeValue(i, vtk_node);
 
-        double value = d->min + (vtk_node[0] - vtk_range[0]) / (vtk_range[1] - vtk_range[0]) * (d->max - d->min);
+        double value = d->min
+                + (vtk_node[0] - vtk_range[0]) / (vtk_range[1] - vtk_range[0]) * (d->max - d->min);
 
-        if(d->opacityTransferFunction) alpha = d->opacityTransferFunction->GetValue(vtk_node[0]);
-        else                           alpha = 1.;
+        if (d->opacityTransferFunction)
+            alpha = d->opacityTransferFunction->GetValue(vtk_node[0]);
+        else
+            alpha = 1.;
 
-        dtkVisualizationWidgetsClutEditorVertex *new_vertex = new dtkVisualizationWidgetsClutEditorVertex(dtkVisualizationWidgetsClutEditorMap(QPointF(value, alpha), d->min, d->max, this->width(), 100, d->button_log->isChecked()), QColor(vtk_node[1] *255, vtk_node[2] * 255, vtk_node[3] * 255));
+        dtkVisualizationWidgetsClutEditorVertex *new_vertex =
+                new dtkVisualizationWidgetsClutEditorVertex(
+                        dtkVisualizationWidgetsClutEditorMap(QPointF(value, alpha), d->min, d->max,
+                                                             this->width(), 100,
+                                                             d->button_log->isChecked()),
+                        QColor(vtk_node[1] * 255, vtk_node[2] * 255, vtk_node[3] * 255));
         d->table->addVertex(new_vertex);
-        connect(new_vertex, SIGNAL(moved(const QPointF&)), d->scene, SIGNAL(moved(const QPointF&)));
+        connect(new_vertex, SIGNAL(moved(const QPointF &)), d->scene,
+                SIGNAL(moved(const QPointF &)));
     }
-
 }
 
 void dtkVisualizationWidgetsClutEditor::setRange(double min, double max)
@@ -988,9 +1048,9 @@ void dtkVisualizationWidgetsClutEditor::setRange(double min, double max)
     this->onApply();
 }
 
-void dtkVisualizationWidgetsClutEditor::setHistogram(const Histogram& histogram)
+void dtkVisualizationWidgetsClutEditor::setHistogram(const Histogram &histogram)
 {
-    if(!d->histogram)
+    if (!d->histogram)
         d->histogram = new dtkVisualizationWidgetsClutEditorHistogram(d->bg);
 
     d->histogram->setup(histogram);
@@ -1014,7 +1074,7 @@ void dtkVisualizationWidgetsClutEditor::importClut(void)
 
     file.close();
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
         d->table->removeVertex(vertex);
         d->scene->removeItem(vertex);
         delete vertex;
@@ -1023,24 +1083,30 @@ void dtkVisualizationWidgetsClutEditor::importClut(void)
     QDomElement root = doc.documentElement();
     double min = root.attribute("min").toDouble();
     double max = root.attribute("max").toDouble();
-    int    log = root.attribute("log").toInt();
+    int log = root.attribute("log").toInt();
 
     QDomNode n = root.firstChild();
-    while(!n.isNull()) {
+    while (!n.isNull()) {
         QDomElement e = n.toElement();
-        if(!e.isNull()) {
+        if (!e.isNull()) {
 
-            qreal v = d->min + (e.attribute("v").toDouble() - min) / (max - min) * (d->max - d->min);
+            qreal v =
+                    d->min + (e.attribute("v").toDouble() - min) / (max - min) * (d->max - d->min);
             qreal a = e.attribute("a").toDouble();
             int r = e.attribute("r").toInt();
             int g = e.attribute("g").toInt();
             int b = e.attribute("b").toInt();
 
-            dtkVisualizationWidgetsClutEditorVertex *vertex = new dtkVisualizationWidgetsClutEditorVertex(dtkVisualizationWidgetsClutEditorMap(QPointF(v, a), d->min, d->max, this->width(), 100, log), QColor(r, g, b));
+            dtkVisualizationWidgetsClutEditorVertex *vertex =
+                    new dtkVisualizationWidgetsClutEditorVertex(
+                            dtkVisualizationWidgetsClutEditorMap(QPointF(v, a), d->min, d->max,
+                                                                 this->width(), 100, log),
+                            QColor(r, g, b));
 
             d->table->addVertex(vertex);
 
-            connect(vertex, SIGNAL(moved(const QPointF&)), d->scene, SIGNAL(moved(const QPointF&)));
+            connect(vertex, SIGNAL(moved(const QPointF &)), d->scene,
+                    SIGNAL(moved(const QPointF &)));
         }
         n = n.nextSibling();
     }
@@ -1061,8 +1127,9 @@ void dtkVisualizationWidgetsClutEditor::exportClut(void)
     root.setAttribute("log", d->button_log->isChecked() ? "1" : "0");
     document.appendChild(root);
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
-        QPointF mapped = dtkVisualizationWidgetsClutEditorMapInv(vertex->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked());
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
+        QPointF mapped = dtkVisualizationWidgetsClutEditorMapInv(
+                vertex->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked());
 
         QDomElement element = document.createElement("vertex");
         element.setAttribute("v", mapped.x());
@@ -1080,7 +1147,8 @@ void dtkVisualizationWidgetsClutEditor::exportClut(void)
     if (!file.open(QIODevice::WriteOnly))
         return;
 
-    QTextStream out(&file); out << document.toString();
+    QTextStream out(&file);
+    out << document.toString();
 
     file.close();
 }
@@ -1103,25 +1171,30 @@ QSize dtkVisualizationWidgetsClutEditor::sizeHint(void) const
 
 void dtkVisualizationWidgetsClutEditor::onApply(void)
 {
-    if(!d->table->vertices.count())
+    if (!d->table->vertices.count())
         return;
 
-    if(!d->colorTransferFunction)
+    if (!d->colorTransferFunction)
         d->colorTransferFunction = vtkColorTransferFunction::New();
 
     d->colorTransferFunction->RemoveAllPoints();
 
     d->colorTransferFunction->AddRGBPoint(
-            dtkVisualizationWidgetsClutEditorMapInv(QPointF(d->min, 0.0), d->min, d->max, this->width(), 100, d->button_log->isChecked()).x(),
+            dtkVisualizationWidgetsClutEditorMapInv(QPointF(d->min, 0.0), d->min, d->max,
+                                                    this->width(), 100, d->button_log->isChecked())
+                    .x(),
             d->table->vertices.first()->color().redF(),
             d->table->vertices.first()->color().greenF(),
             d->table->vertices.first()->color().blueF());
 
-    for(int i = 0; i < d->table->vertices.count(); i++) {
+    for (int i = 0; i < d->table->vertices.count(); i++) {
 
         dtkVisualizationWidgetsClutEditorVertex *vertex = d->table->vertices.at(i);
 
-        double v = dtkVisualizationWidgetsClutEditorMapInv(vertex->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked()).x();
+        double v = dtkVisualizationWidgetsClutEditorMapInv(vertex->scenePos(), d->min, d->max,
+                                                           this->width(), 100,
+                                                           d->button_log->isChecked())
+                           .x();
         double r = vertex->color().redF();
         double g = vertex->color().greenF();
         double b = vertex->color().blueF();
@@ -1130,24 +1203,34 @@ void dtkVisualizationWidgetsClutEditor::onApply(void)
     }
 
     d->colorTransferFunction->AddRGBPoint(
-            dtkVisualizationWidgetsClutEditorMapInv(QPointF(d->max, 0.0), d->min, d->max, this->width(), 100, d->button_log->isChecked()).x(),
+            dtkVisualizationWidgetsClutEditorMapInv(QPointF(d->max, 0.0), d->min, d->max,
+                                                    this->width(), 100, d->button_log->isChecked())
+                    .x(),
             d->table->vertices.first()->color().redF(),
             d->table->vertices.first()->color().greenF(),
             d->table->vertices.first()->color().blueF());
 
-    if(!d->opacityTransferFunction)
+    if (!d->opacityTransferFunction)
         d->opacityTransferFunction = vtkPiecewiseFunction::New();
 
     d->opacityTransferFunction->RemoveAllPoints();
 
     d->opacityTransferFunction->AddPoint(
             d->min,
-            dtkVisualizationWidgetsClutEditorMapInv(d->table->vertices.first()->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked()).y());
+            dtkVisualizationWidgetsClutEditorMapInv(d->table->vertices.first()->scenePos(), d->min,
+                                                    d->max, this->width(), 100,
+                                                    d->button_log->isChecked())
+                    .y());
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
-        d->opacityTransferFunction->AddPoint(
-             dtkVisualizationWidgetsClutEditorMapInv(vertex->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked()).x(),
-             dtkVisualizationWidgetsClutEditorMapInv(vertex->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked()).y());
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices) {
+        d->opacityTransferFunction->AddPoint(dtkVisualizationWidgetsClutEditorMapInv(
+                                                     vertex->scenePos(), d->min, d->max,
+                                                     this->width(), 100, d->button_log->isChecked())
+                                                     .x(),
+                                             dtkVisualizationWidgetsClutEditorMapInv(
+                                                     vertex->scenePos(), d->min, d->max,
+                                                     this->width(), 100, d->button_log->isChecked())
+                                                     .y());
 
         // ///////////////////////////////////////////////////////////////////
         // Oversampling to tend to logarithmic
@@ -1159,29 +1242,37 @@ void dtkVisualizationWidgetsClutEditor::onApply(void)
         // if(!d->table->vertices.indexOf(vertex))
         //     continue;
 
-        // dtkVisualizationWidgetsClutEditorVertex *start = d->table->vertices.at(d->table->vertices.indexOf(vertex) - 1);
+        // dtkVisualizationWidgetsClutEditorVertex *start =
+        // d->table->vertices.at(d->table->vertices.indexOf(vertex) - 1);
         // dtkVisualizationWidgetsClutEditorVertex *stop = vertex;
 
         // qreal sampling = 100;
 
         // for(int i = 0; i < (int)sampling; i++) {
 
-        //     qreal a = (stop->pos().y() - start->pos().y()) / (stop->pos().x() - start->pos().x());
-        //     qreal b = start->pos().y() - a * start->pos().x();
-        //     qreal v = start->pos().x() + (((stop->pos().x() - start->pos().x()) / sampling) * i);
-        //     qreal l = a*v + b;
+        //     qreal a = (stop->pos().y() - start->pos().y()) / (stop->pos().x()
+        //     - start->pos().x()); qreal b = start->pos().y() - a *
+        //     start->pos().x(); qreal v = start->pos().x() + (((stop->pos().x()
+        //     - start->pos().x()) / sampling) * i); qreal l = a*v + b;
 
         //     d->opacityTransferFunction->AddPoint(
-        //         dtkVisualizationWidgetsClutEditorMapInv(QPointF(v, l), d->min, d->max, this->width(), 100, d->button_log->isChecked()).x(),
-        //         dtkVisualizationWidgetsClutEditorMapInv(QPointF(v, l), d->min, d->max, this->width(), 100, d->button_log->isChecked()).y());
+        //         dtkVisualizationWidgetsClutEditorMapInv(QPointF(v, l),
+        //         d->min, d->max, this->width(), 100,
+        //         d->button_log->isChecked()).x(),
+        //         dtkVisualizationWidgetsClutEditorMapInv(QPointF(v, l),
+        //         d->min, d->max, this->width(), 100,
+        //         d->button_log->isChecked()).y());
         // }
 
         // ///////////////////////////////////////////////////////////////////
     }
 
     d->opacityTransferFunction->AddPoint(
-         d->max,
-         dtkVisualizationWidgetsClutEditorMapInv(d->table->vertices.last()->scenePos(), d->min, d->max, this->width(), 100, d->button_log->isChecked()).y());
+            d->max,
+            dtkVisualizationWidgetsClutEditorMapInv(d->table->vertices.last()->scenePos(), d->min,
+                                                    d->max, this->width(), 100,
+                                                    d->button_log->isChecked())
+                    .y());
 
     emit updated();
 }
@@ -1190,37 +1281,38 @@ void dtkVisualizationWidgetsClutEditor::onColorAuto(void)
 {
     QList<QGraphicsItem *> selection = d->scene->selectedItems();
 
-    if(selection.count() != 1) {
+    if (selection.count() != 1) {
         qWarning() << Q_FUNC_INFO << "Choose only one vertex for automatic color determination";
         return;
     }
 
-    dtkVisualizationWidgetsClutEditorVertex *vertex = dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(selection.first());
+    dtkVisualizationWidgetsClutEditorVertex *vertex =
+            dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(selection.first());
 
-    if(!vertex) {
+    if (!vertex) {
         qWarning() << Q_FUNC_INFO << "Choose only one vertex for automatic color determination";
         return;
     }
 
     QList<dtkVisualizationWidgetsClutEditorVertex *> vertices = d->table->vertices;
 
-    if(vertices.indexOf(vertex) == 0 || vertices.indexOf(vertex) == vertices.count()-1) {
+    if (vertices.indexOf(vertex) == 0 || vertices.indexOf(vertex) == vertices.count() - 1) {
         qWarning() << Q_FUNC_INFO << "Selected vertex must be surrounded by two other vertices";
         return;
     }
 
-    dtkVisualizationWidgetsClutEditorVertex *prev = vertices.at(vertices.indexOf(vertex)-1);
-    dtkVisualizationWidgetsClutEditorVertex *next = vertices.at(vertices.indexOf(vertex)+1);
+    dtkVisualizationWidgetsClutEditorVertex *prev = vertices.at(vertices.indexOf(vertex) - 1);
+    dtkVisualizationWidgetsClutEditorVertex *next = vertices.at(vertices.indexOf(vertex) + 1);
 
     dtkVisualizationWidgetsClutEditorInterpolator *interpolator = Q_NULLPTR;
 
-    if(d->color_space == dtkVisualizationWidgetsClutEditor::HSV)
+    if (d->color_space == dtkVisualizationWidgetsClutEditor::HSV)
         interpolator = new dtkVisualizationWidgetsClutEditorInterpolatorHSV;
 
-    if(d->color_space == dtkVisualizationWidgetsClutEditor::RGB)
+    if (d->color_space == dtkVisualizationWidgetsClutEditor::RGB)
         interpolator = new dtkVisualizationWidgetsClutEditorInterpolatorRGB;
 
-    if(!interpolator)
+    if (!interpolator)
         return;
 
     interpolator->setStart(prev);
@@ -1228,7 +1320,7 @@ void dtkVisualizationWidgetsClutEditor::onColorAuto(void)
 
     vertex->setColor(interpolator->interpolate(vertex));
 
-    if(d->button_apply->isChecked())
+    if (d->button_apply->isChecked())
         this->onApply();
 
     delete interpolator;
@@ -1238,21 +1330,22 @@ void dtkVisualizationWidgetsClutEditor::onColorChoose(void)
 {
     QList<dtkVisualizationWidgetsClutEditorVertex *> selection;
 
-    for(QGraphicsItem *item : d->scene->selectedItems())
-        if(dtkVisualizationWidgetsClutEditorVertex *vertex = dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item))
+    for (QGraphicsItem *item : d->scene->selectedItems())
+        if (dtkVisualizationWidgetsClutEditorVertex *vertex =
+                    dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(item))
             selection << vertex;
 
-    if(selection.count() == 0)
+    if (selection.count() == 0)
         return;
 
     QColorDialog dialog(this);
     dialog.setCurrentColor(selection.first()->color());
 
-    if(dialog.exec())
-        for(dtkVisualizationWidgetsClutEditorVertex * vertex: selection)
+    if (dialog.exec())
+        for (dtkVisualizationWidgetsClutEditorVertex *vertex : selection)
             vertex->setColor(dialog.selectedColor());
 
-    if(d->button_apply->isChecked())
+    if (d->button_apply->isChecked())
         this->onApply();
 }
 
@@ -1260,49 +1353,46 @@ void dtkVisualizationWidgetsClutEditor::onSelectionChanged(void)
 {
     QList<QGraphicsItem *> selection = d->scene->selectedItems();
 
-    if(selection.count() != 1) {
+    if (selection.count() != 1) {
         d->label_value->setText("--");
         d->label_alpha->setText("--");
     } else {
-        if(dtkVisualizationWidgetsClutEditorVertex *vertex = dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(selection.first()))
+        if (dtkVisualizationWidgetsClutEditorVertex *vertex =
+                    dynamic_cast<dtkVisualizationWidgetsClutEditorVertex *>(selection.first()))
             this->onVertexMoved(vertex->scenePos());
     }
 }
 
-void dtkVisualizationWidgetsClutEditor::onVertexMoved(const QPointF& point)
+void dtkVisualizationWidgetsClutEditor::onVertexMoved(const QPointF &point)
 {
-    QPointF mapped = dtkVisualizationWidgetsClutEditorMapInv(point, d->min, d->max, this->width(), 100, d->button_log->isChecked());
+    QPointF mapped = dtkVisualizationWidgetsClutEditorMapInv(point, d->min, d->max, this->width(),
+                                                             100, d->button_log->isChecked());
 
     d->label_value->setText(QString::number(mapped.x(), 'g', 4));
     d->label_alpha->setText(QString::number(mapped.y(), 'g', 4));
 
-    if(d->button_apply->isChecked())
+    if (d->button_apply->isChecked())
         this->onApply();
 }
 
 void dtkVisualizationWidgetsClutEditor::resizeEvent(QResizeEvent *event)
 {
-    d->scene->setSceneRect(0, -event->size().height(), event->size().width(), event->size().height());
+    d->scene->setSceneRect(0, -event->size().height(), event->size().width(),
+                           event->size().height());
 
     d->bg->setPos(0, -100);
     d->bg->setRect(0, 0, event->size().width(), 100);
 
-    if(event->size().height() < 105)
+    if (event->size().height() < 105)
         return;
 
-    for(dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices)
-        vertex->setPos(
-            dtkVisualizationWidgetsClutEditorMap(
+    for (dtkVisualizationWidgetsClutEditorVertex *vertex : d->table->vertices)
+        vertex->setPos(dtkVisualizationWidgetsClutEditorMap(
                 dtkVisualizationWidgetsClutEditorMapInv(
-                    vertex->scenePos(),
-                    d->min,
-                    d->max,
-                    event->oldSize().width(),
-                    event->oldSize().height(), d->button_log->isChecked()),
-                d->min,
-                d->max,
-                event->size().width(),
-                event->size().height(), d->button_log->isChecked()));
+                        vertex->scenePos(), d->min, d->max, event->oldSize().width(),
+                        event->oldSize().height(), d->button_log->isChecked()),
+                d->min, d->max, event->size().width(), event->size().height(),
+                d->button_log->isChecked()));
 }
 
 // /////////////////////////////////////////////////////////////////
@@ -1313,16 +1403,17 @@ void dtkVisualizationWidgetsClutEditor::resizeEvent(QResizeEvent *event)
 
 const double opacityCoefficient = 3;
 
-QPointF dtkVisualizationWidgetsClutEditorMap(QPointF vertex, qreal min, qreal max, int width, int height, bool logScale)
+QPointF dtkVisualizationWidgetsClutEditorMap(QPointF vertex, qreal min, qreal max, int width,
+                                             int height, bool logScale)
 {
     qreal x = vertex.x();
     qreal y = vertex.y();
 
     if (logScale)
-        y = std::pow(y, 1.0/opacityCoefficient);
+        y = std::pow(y, 1.0 / opacityCoefficient);
 
-    x = (x - min)/(max - min) * width;
-    y =  y * height;
+    x = (x - min) / (max - min) * width;
+    y = y * height;
 
     y = qMax(0.0, y);
     y = qMin(y, (double)height);
@@ -1330,10 +1421,11 @@ QPointF dtkVisualizationWidgetsClutEditorMap(QPointF vertex, qreal min, qreal ma
     return QPointF(x, y);
 }
 
-QPointF dtkVisualizationWidgetsClutEditorMapInv(QPointF vertex, qreal min, qreal max, int width, int height, bool logScale)
+QPointF dtkVisualizationWidgetsClutEditorMapInv(QPointF vertex, qreal min, qreal max, int width,
+                                                int height, bool logScale)
 {
-    qreal x = vertex.x()/double(width) * (max - min) + min;
-    qreal y = vertex.y()/double(height) * -1.0 ;
+    qreal x = vertex.x() / double(width) * (max - min) + min;
+    qreal y = vertex.y() / double(height) * -1.0;
 
     if (logScale)
         y = std::pow(y, opacityCoefficient);

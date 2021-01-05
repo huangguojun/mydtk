@@ -28,11 +28,11 @@ class DTKMATH_EXPORT dtkGraph : public QObject
 
 public:
     dtkGraph(void);
-    dtkGraph(const dtkGraph& g);
+    dtkGraph(const dtkGraph &g);
     virtual ~dtkGraph(void);
 
 public:
-    dtkGraph& operator =(const dtkGraph& other);
+    dtkGraph &operator=(const dtkGraph &other);
 
 public:
     virtual void addNode(QObject *o);
@@ -46,14 +46,14 @@ public:
     QList<QObject *> predecessors(QObject *node);
 
 public:
-    QList<QObject *>      nodes(void);
-    QList< dtkGraphEdge > edges(void);
+    QList<QObject *> nodes(void);
+    QList<dtkGraphEdge> edges(void);
 
 public:
     QList<QObject *> topologicalSort(void);
 
 public:
-    bool     contains(QObject *node);
+    bool contains(QObject *node);
     dtkGraph subgraph(QObject *from, QObject *to);
 
 public:
@@ -68,5 +68,3 @@ private:
 
 /* Q_DECLARE_METATYPE(dtkGraph) */
 /* Q_DECLARE_METATYPE(dtkGraph *) */
-
-

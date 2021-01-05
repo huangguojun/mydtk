@@ -16,46 +16,42 @@
 
 #include <QtCore>
 
-class dtkSpinLock: private QAtomicInt
+class dtkSpinLock : private QAtomicInt
 {
 public:
-    dtkSpinLock(void) : QAtomicInt(Unlocked) {
-
-    }
+    dtkSpinLock(void) : QAtomicInt(Unlocked) {}
 
 public:
     class Acquire
     {
     public:
-        Acquire(dtkSpinLock& spinLock): m_spinLock(spinLock) {
-            m_spinLock.lock();
-        }
+        Acquire(dtkSpinLock &spinLock) : m_spinLock(spinLock) { m_spinLock.lock(); }
 
-        ~Acquire(void) {
-            m_spinLock.unlock();
-        }
+        ~Acquire(void) { m_spinLock.unlock(); }
 
     private:
-        dtkSpinLock& m_spinLock;
+        dtkSpinLock &m_spinLock;
 
     public:
-        Acquire& operator=(const Acquire&);
+        Acquire &operator=(const Acquire &);
 
     public:
-        Acquire(const Acquire&);
+        Acquire(const Acquire &);
     };
 
-    void lock() {
-        while (!testAndSetOrdered(Unlocked, Locked));
+    void lock()
+    {
+        while (!testAndSetOrdered(Unlocked, Locked))
+            ;
     }
 
-    void unlock() {
-        while (!testAndSetOrdered(Locked, Unlocked));
+    void unlock()
+    {
+        while (!testAndSetOrdered(Locked, Unlocked))
+            ;
     }
 
-    bool tryLock() {
-        return testAndSetOrdered(Unlocked, Locked);
-    }
+    bool tryLock() { return testAndSetOrdered(Unlocked, Locked); }
 
 private:
     static const int Unlocked = 1;

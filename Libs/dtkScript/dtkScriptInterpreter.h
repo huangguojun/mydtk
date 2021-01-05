@@ -34,21 +34,16 @@ class DTKSCRIPT_EXPORT dtkScriptInterpreter : public QObject
     Q_OBJECT
 
 public:
-    enum Status {
-        Status_Ok,
-        Status_Error,
-        Status_Return,
-        Status_Break,
-        Status_Continue
-    };
+    enum Status { Status_Ok, Status_Error, Status_Return, Status_Break, Status_Continue };
 
 public:
-             dtkScriptInterpreter(QObject *parent = 0);
+    dtkScriptInterpreter(QObject *parent = 0);
     virtual ~dtkScriptInterpreter(void);
 
 public slots:
-    virtual QString interpret(const QString& command, int *stat) = 0;
-    virtual void init(bool redirect_io = false, const QString & settings_file = QString("dtk-script")) {} ;
+    virtual QString interpret(const QString &command, int *stat) = 0;
+    virtual void init(bool redirect_io = false,
+                      const QString &settings_file = QString("dtk-script")){};
 
 private:
     dtkScriptInterpreterPrivate *d;

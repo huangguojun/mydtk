@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include <dtkWidgetsExport.h>
 #include "dtkWidgetsTag.h"
+#include <dtkWidgetsExport.h>
 
 #include <QtWidgets>
 
@@ -22,15 +22,9 @@ class DTKWIDGETS_EXPORT dtkWidgetsTagCloud : public QTextBrowser
     Q_OBJECT
 
 public:
-    enum SortingType {
-        Alpha,
-        Num
-    };
+    enum SortingType { Alpha, Num };
 
-    enum SortingOrder {
-        Asc,
-        Desc
-    };
+    enum SortingOrder { Asc, Desc };
 
 public:
     dtkWidgetsTagCloud(QWidget *parent = 0);
@@ -66,7 +60,7 @@ public slots:
     void render(void);
 
 protected slots:
-    void onLinkClicked(const QUrl& item);
+    void onLinkClicked(const QUrl &item);
 
 protected:
     dtkWidgetsTagCloudPrivate *d;

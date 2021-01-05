@@ -86,7 +86,7 @@ void dtkWidgetsOverlayPane::setBound(int bound)
 {
     d->bound = bound;
 
-    if(this->width() > d->bound) {
+    if (this->width() > d->bound) {
         this->setFixedWidth(d->bound);
     }
 }
@@ -105,8 +105,8 @@ void dtkWidgetsOverlayPane::toggle(void)
     if (d->deactivate)
         return;
 
-    qlonglong stt = d->on ? d->bound :   0;
-    qlonglong end = d->on ?   0 : d->bound;
+    qlonglong stt = d->on ? d->bound : 0;
+    qlonglong end = d->on ? 0 : d->bound;
 
     QPropertyAnimation *animation = new QPropertyAnimation(this, "width");
     animation->setDuration(::duration);
@@ -119,13 +119,13 @@ void dtkWidgetsOverlayPane::toggle(void)
     d->on = !d->on;
 }
 
-void dtkWidgetsOverlayPane::toggle(std::function<void (void)>& callback)
+void dtkWidgetsOverlayPane::toggle(std::function<void(void)> &callback)
 {
     if (d->deactivate)
         return;
 
-    qlonglong stt = d->on ? d->bound :   0;
-    qlonglong end = d->on ?   0 : d->bound;
+    qlonglong stt = d->on ? d->bound : 0;
+    qlonglong end = d->on ? 0 : d->bound;
 
     QPropertyAnimation *animation = new QPropertyAnimation(this, "width");
     animation->setDuration(::duration);
@@ -169,7 +169,8 @@ void dtkWidgetsOverlayPane::paintEvent(QPaintEvent *event)
     color = dtkThemesEngine::instance()->color("@base1");
 
     painter.setPen(color);
-    painter.drawLine(event->rect().topRight() + QPoint(1, 0), event->rect().bottomRight() + QPoint(1, 0));
+    painter.drawLine(event->rect().topRight() + QPoint(1, 0),
+                     event->rect().bottomRight() + QPoint(1, 0));
 }
 
 void dtkWidgetsOverlayPane::addLayout(QLayout *layout)

@@ -19,12 +19,9 @@ dtkMatrix::dtkMatrix(void)
     this->dirty = false;
 }
 
-dtkMatrix::~dtkMatrix(void)
-{
+dtkMatrix::~dtkMatrix(void) {}
 
-}
-
-dtkMatrix& dtkMatrix::operator=(const dtkMatrix& other)
+dtkMatrix &dtkMatrix::operator=(const dtkMatrix &other)
 {
     this->cpy(other);
 
@@ -34,22 +31,22 @@ dtkMatrix& dtkMatrix::operator=(const dtkMatrix& other)
     return (*this);
 }
 
-dtkMatrix& dtkMatrix::operator+=(const dtkMatrix& other)
+dtkMatrix &dtkMatrix::operator+=(const dtkMatrix &other)
 {
     return sum(other);
 }
 
-dtkMatrix& dtkMatrix::operator-=(const dtkMatrix& other)
+dtkMatrix &dtkMatrix::operator-=(const dtkMatrix &other)
 {
     return sub(other);
 }
 
-dtkMatrix& dtkMatrix::operator*=(const dtkMatrix& other)
+dtkMatrix &dtkMatrix::operator*=(const dtkMatrix &other)
 {
     return mul(other);
 }
 
-dtkMatrix& dtkMatrix::lazyClone(void)
+dtkMatrix &dtkMatrix::lazyClone(void)
 {
     if (this->dirty)
         return *this;
@@ -57,9 +54,9 @@ dtkMatrix& dtkMatrix::lazyClone(void)
     return this->cln();
 }
 
-dtkMatrix& operator+(const dtkMatrix& lhs, const dtkMatrix& rhs)
+dtkMatrix &operator+(const dtkMatrix &lhs, const dtkMatrix &rhs)
 {
-    dtkMatrix& r = const_cast<dtkMatrix&>(lhs).lazyClone();
+    dtkMatrix &r = const_cast<dtkMatrix &>(lhs).lazyClone();
     r.dirty = true;
     r.sum(rhs);
 
@@ -69,9 +66,9 @@ dtkMatrix& operator+(const dtkMatrix& lhs, const dtkMatrix& rhs)
     return r;
 }
 
-dtkMatrix& operator-(const dtkMatrix& lhs, const dtkMatrix& rhs)
+dtkMatrix &operator-(const dtkMatrix &lhs, const dtkMatrix &rhs)
 {
-    dtkMatrix& r = const_cast<dtkMatrix&>(lhs).lazyClone();
+    dtkMatrix &r = const_cast<dtkMatrix &>(lhs).lazyClone();
     r.dirty = true;
     r.sub(rhs);
 
@@ -81,9 +78,9 @@ dtkMatrix& operator-(const dtkMatrix& lhs, const dtkMatrix& rhs)
     return r;
 }
 
-dtkMatrix& operator*(const dtkMatrix& lhs, const dtkMatrix& rhs)
+dtkMatrix &operator*(const dtkMatrix &lhs, const dtkMatrix &rhs)
 {
-    dtkMatrix& r = const_cast<dtkMatrix&>(lhs).lazyClone();
+    dtkMatrix &r = const_cast<dtkMatrix &>(lhs).lazyClone();
     r.dirty = true;
     r.mul(rhs);
 
@@ -100,7 +97,7 @@ QDebug operator<<(QDebug debug, const dtkMatrix *matrix)
     return debug;
 }
 
-QDebug operator<<(QDebug debug, const dtkMatrix& matrix)
+QDebug operator<<(QDebug debug, const dtkMatrix &matrix)
 {
     debug.nospace() << "\n";
 
@@ -111,7 +108,8 @@ QDebug operator<<(QDebug debug, const dtkMatrix& matrix)
             debug.nospace() << " " << matrix.at(i, j);
         }
 
-        debug.nospace() << ")" << "\n";
+        debug.nospace() << ")"
+                        << "\n";
     }
 
     return debug.space();

@@ -26,11 +26,11 @@ class dtkWidgetsHUDItem;
 class DTKWIDGETS_EXPORT dtkWidgetsHUD : public QFrame
 {
 public:
-     dtkWidgetsHUD(QWidget *parent = nullptr);
+    dtkWidgetsHUD(QWidget *parent = nullptr);
     ~dtkWidgetsHUD(void);
 
 public:
-    dtkWidgetsHUDInfo *addInfo(const QString& text);
+    dtkWidgetsHUDInfo *addInfo(const QString &text);
     dtkWidgetsHUDItem *addItem(fa::icon icon);
 
 public:

@@ -13,10 +13,10 @@
 class dtkVisualizationWidgetsColorMapTable : public QWidget
 {
 public:
-     dtkVisualizationWidgetsColorMapTable(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsColorMapTable(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsColorMapTable(void) = default;
 
-    void addColorPoint(double value, const QColor& color);
+    void addColorPoint(double value, const QColor &color);
     void removeColorPoints(void);
 
 public:
@@ -26,13 +26,14 @@ public:
     QMap<double, QColor> color_points;
 };
 
-dtkVisualizationWidgetsColorMapTable::dtkVisualizationWidgetsColorMapTable(QWidget *parent) : QWidget(parent)
+dtkVisualizationWidgetsColorMapTable::dtkVisualizationWidgetsColorMapTable(QWidget *parent)
+    : QWidget(parent)
 {
     color_points[0] = Qt::black;
     color_points[1] = Qt::white;
 }
 
-void dtkVisualizationWidgetsColorMapTable::addColorPoint(double value, const QColor& color)
+void dtkVisualizationWidgetsColorMapTable::addColorPoint(double value, const QColor &color)
 {
     color_points[value] = color;
     this->update();
@@ -43,7 +44,7 @@ void dtkVisualizationWidgetsColorMapTable::removeColorPoints(void)
     color_points.clear();
 }
 
-void dtkVisualizationWidgetsColorMapTable::paintEvent(QPaintEvent* event)
+void dtkVisualizationWidgetsColorMapTable::paintEvent(QPaintEvent *event)
 // (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     // Q_UNUSED(option);
@@ -69,13 +70,13 @@ void dtkVisualizationWidgetsColorMapTable::paintEvent(QPaintEvent* event)
         linearGradient.setColorAt(0.0, color);
     }
 
-    for (const auto& val : color_points.keys()) {
+    for (const auto &val : color_points.keys()) {
         QColor color = color_points[val];
         color.setAlpha(255);
         linearGradient.setColorAt(val, color);
     }
 
-    if (color_points.keys().last()<1) {
+    if (color_points.keys().last() < 1) {
         QColor color = color_points[color_points.keys().last()];
         color.setAlpha(255);
         linearGradient.setColorAt(1.0, color);
@@ -106,10 +107,7 @@ public:
     bool busy = false;
 };
 
-StackedComboBox::StackedComboBox(QWidget *parent) : QComboBox(parent)
-{
-
-}
+StackedComboBox::StackedComboBox(QWidget *parent) : QComboBox(parent) {}
 
 void StackedComboBox::showPopup(void)
 {
@@ -130,7 +128,7 @@ void StackedComboBox::hidePopup(void)
 class dtkVisualizationWidgetsColorMapEditorPrivate
 {
 public:
-    QMap<QString, QMap<double, QColor> > colormaps;
+    QMap<QString, QMap<double, QColor>> colormaps;
     QString current_map;
 
 public:
@@ -140,9 +138,10 @@ public:
     dtkVisualizationWidgetsColorMapTable *colormap_table;
 };
 
-dtkVisualizationWidgetsColorMapEditor::dtkVisualizationWidgetsColorMapEditor(QWidget *parent) : QWidget(parent), d(new dtkVisualizationWidgetsColorMapEditorPrivate)
+dtkVisualizationWidgetsColorMapEditor::dtkVisualizationWidgetsColorMapEditor(QWidget *parent)
+    : QWidget(parent), d(new dtkVisualizationWidgetsColorMapEditorPrivate)
 {
-    QPalette palette ;
+    QPalette palette;
     palette.setBrush(QPalette::Background, Qt::transparent);
 
     d->colormap_names.clear();
@@ -201,7 +200,7 @@ dtkVisualizationWidgetsColorMapEditor::dtkVisualizationWidgetsColorMapEditor(QWi
     d->colormap_names.append("viridis");
 
     d->colormap_box = new StackedComboBox(this);
-    for(const auto& name : d->colormap_names) {
+    for (const auto &name : d->colormap_names) {
         d->colormap_box->addItem(name);
     }
 
@@ -223,10 +222,8 @@ dtkVisualizationWidgetsColorMapEditor::dtkVisualizationWidgetsColorMapEditor(QWi
     d->colormap_box->setCurrentText(d->current_map);
     importColorMap(d->current_map);
 
-    connect(d->colormap_box,
-            SIGNAL(currentTextChanged(const QString&)),
-            this,
-            SLOT(importColorMap(const QString&)));
+    connect(d->colormap_box, SIGNAL(currentTextChanged(const QString &)), this,
+            SLOT(importColorMap(const QString &)));
 }
 
 dtkVisualizationWidgetsColorMapEditor::~dtkVisualizationWidgetsColorMapEditor(void)
@@ -243,28 +240,27 @@ void dtkVisualizationWidgetsColorMapEditor::enterEvent(QEvent *e)
 
 void dtkVisualizationWidgetsColorMapEditor::leaveEvent(QEvent *e)
 {
-    if(!d->colormap_box->busy)
+    if (!d->colormap_box->busy)
         d->stacked_w->setCurrentIndex(0);
 }
 
-
-const QString& dtkVisualizationWidgetsColorMapEditor::name(void) const
+const QString &dtkVisualizationWidgetsColorMapEditor::name(void) const
 {
     return d->current_map;
 }
 
-const QMap<double, QColor>& dtkVisualizationWidgetsColorMapEditor::value(void) const
+const QMap<double, QColor> &dtkVisualizationWidgetsColorMapEditor::value(void) const
 {
-    if(!d->colormaps.contains(d->current_map)) {
+    if (!d->colormaps.contains(d->current_map)) {
         qWarning() << Q_FUNC_INFO << "shouldn't happen";
     }
 
     return d->colormaps[d->current_map];
 }
 
-void dtkVisualizationWidgetsColorMapEditor::setValue(const QMap<double, QColor>& value)
+void dtkVisualizationWidgetsColorMapEditor::setValue(const QMap<double, QColor> &value)
 {
-    if(!d->colormaps.key(value, "").isEmpty() ) {
+    if (!d->colormaps.key(value, "").isEmpty()) {
         d->current_map = d->colormaps.key(value);
     } else {
         qWarning() << Q_FUNC_INFO << "insert no_name color map";
@@ -276,23 +272,23 @@ void dtkVisualizationWidgetsColorMapEditor::setValue(const QMap<double, QColor>&
     d->colormap_box->setCurrentText(d->current_map);
     d->colormap_table->removeColorPoints();
 
-    for (const auto& v : value.keys())
-        d->colormap_table->addColorPoint(v,value[v]);
+    for (const auto &v : value.keys())
+        d->colormap_table->addColorPoint(v, value[v]);
     d->colormap_table->update();
 
     emit valueChanged(value);
 }
 
-void dtkVisualizationWidgetsColorMapEditor::setValue(const QString& value)
+void dtkVisualizationWidgetsColorMapEditor::setValue(const QString &value)
 {
-    if(d->colormaps.keys().contains(value)) {
+    if (d->colormaps.keys().contains(value)) {
         this->setValue(d->colormaps[value]);
     } else if (d->colormap_names.contains(value)) {
         this->importColorMap(value);
     }
 }
 
-void dtkVisualizationWidgetsColorMapEditor::importColorMap(const QString& clut)
+void dtkVisualizationWidgetsColorMapEditor::importColorMap(const QString &clut)
 {
     QString fileName = QString(":dtk-visualization/cluts/%1.clut").arg(clut);
     QDomDocument doc("clut");
@@ -314,12 +310,12 @@ void dtkVisualizationWidgetsColorMapEditor::importColorMap(const QString& clut)
     QDomElement root = doc.documentElement();
     double min = root.attribute("min").toDouble();
     double max = root.attribute("max").toDouble();
-    int    log = root.attribute("log").toInt();
+    int log = root.attribute("log").toInt();
 
     QDomNode n = root.firstChild();
-    while(!n.isNull()) {
+    while (!n.isNull()) {
         QDomElement e = n.toElement();
-        if(!e.isNull()) {
+        if (!e.isNull()) {
 
             qreal v = e.attribute("v").toDouble();
             qreal a = e.attribute("a").toDouble();
@@ -328,8 +324,8 @@ void dtkVisualizationWidgetsColorMapEditor::importColorMap(const QString& clut)
             int g = e.attribute("g").toInt();
             int b = e.attribute("b").toInt();
 
-            double val = (v-min)/(max-min);
-            colormap[val] = QColor(r,g,b);
+            double val = (v - min) / (max - min);
+            colormap[val] = QColor(r, g, b);
         }
         n = n.nextSibling();
     }

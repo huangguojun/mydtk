@@ -12,7 +12,6 @@
 
 // Code:
 
-
 #include <Python.h>
 
 #include "dtkScriptInterpreterPython.h"
@@ -22,30 +21,27 @@
 
 #include <QtCore>
 
-
 // /////////////////////////////////////////////////////////////////
 //
 // /////////////////////////////////////////////////////////////////
 
-static const QString dtkScriptInterpreterPythonRedirector_declare =
-    "import sys\n"
-    "\n"
-    "class Redirector:\n"
-    "    def __init__(self):\n"
-    "        self.data = ''\n"
-    "    def write(self, stuff):\n"
-    "        self.data+= stuff\n"
-    "    def flush(self):\n"
-    "        pass\n"
-    "    def isatty(self):\n"
-    "        return False\n"
-    "    def reset(self):\n"
-    "        self.data = ''\n";
+static const QString dtkScriptInterpreterPythonRedirector_declare = "import sys\n"
+                                                                    "\n"
+                                                                    "class Redirector:\n"
+                                                                    "    def __init__(self):\n"
+                                                                    "        self.data = ''\n"
+                                                                    "    def write(self, stuff):\n"
+                                                                    "        self.data+= stuff\n"
+                                                                    "    def flush(self):\n"
+                                                                    "        pass\n"
+                                                                    "    def isatty(self):\n"
+                                                                    "        return False\n"
+                                                                    "    def reset(self):\n"
+                                                                    "        self.data = ''\n";
 
-static const QString dtkScriptInterpreterPythonRedirector_define =
-    "redirector = Redirector()\n"
-    "sys.stdout = redirector\n"
-    "sys.stderr = redirector\n";
+static const QString dtkScriptInterpreterPythonRedirector_define = "redirector = Redirector()\n"
+                                                                   "sys.stdout = redirector\n"
+                                                                   "sys.stderr = redirector\n";
 
 // /////////////////////////////////////////////////////////////////
 //
@@ -64,9 +60,7 @@ public:
 
 public:
     PyObject *module = nullptr;
-
 };
-
 
 // /////////////////////////////////////////////////////////////////
 //
@@ -82,8 +76,8 @@ dtkScriptInterpreterPython *dtkScriptInterpreterPython::instance(void)
 
 dtkScriptInterpreterPython *dtkScriptInterpreterPython::s_instance = nullptr;
 
-
-dtkScriptInterpreterPython::dtkScriptInterpreterPython(void) : dtkScriptInterpreter(), d(new dtkScriptInterpreterPythonPrivate)
+dtkScriptInterpreterPython::dtkScriptInterpreterPython(void)
+    : dtkScriptInterpreter(), d(new dtkScriptInterpreterPythonPrivate)
 {
     Py_Initialize();
 }
@@ -94,7 +88,7 @@ dtkScriptInterpreterPython::~dtkScriptInterpreterPython(void)
     d = nullptr;
 }
 
-void dtkScriptInterpreterPython::init(bool redirect_io, const QString& settings_file)
+void dtkScriptInterpreterPython::init(bool redirect_io, const QString &settings_file)
 {
     d->redirect_io = redirect_io;
 
@@ -130,17 +124,17 @@ void dtkScriptInterpreterPython::init(bool redirect_io, const QString& settings_
 
 void dtkScriptInterpreterPython::allowThreads(void)
 {
-    //init python threads
-    if(!PyEval_ThreadsInitialized()) {
+    // init python threads
+    if (!PyEval_ThreadsInitialized()) {
         qDebug() << "init threads";
-        PyEval_InitThreads();  // in 3.7 not needed anymore
+        PyEval_InitThreads(); // in 3.7 not needed anymore
     }
 
     d->thread_state = PyEval_SaveThread();
 }
 void dtkScriptInterpreterPython::endAllowThreads(void)
 {
-    if(d->thread_state)
+    if (d->thread_state)
         PyEval_RestoreThread(d->thread_state);
     d->thread_state = nullptr;
 }
@@ -154,7 +148,7 @@ void dtkScriptInterpreterPython::childAcquireLock(void)
 void dtkScriptInterpreterPython::childReleaseLock(void)
 {
     long current_thread = long(QThread::currentThreadId());
-    if(current_thread == d->thread_with_gil) {
+    if (current_thread == d->thread_with_gil) {
         PyGILState_Release(d->gilState);
         d->thread_with_gil = -1;
     }
@@ -165,7 +159,7 @@ void dtkScriptInterpreterPython::release(void)
     Py_Finalize();
 }
 
-QString dtkScriptInterpreterPython::interpret(const QString& command, int *stat)
+QString dtkScriptInterpreterPython::interpret(const QString &command, int *stat)
 {
     QString statement = command;
 
@@ -200,10 +194,15 @@ QString dtkScriptInterpreterPython::interpret(const QString& command, int *stat)
     if (!d->module)
         d->module = PyImport_AddModule("__main__");
 
-    switch(PyRun_SimpleString(qPrintable(statement))) {
-    case  0: *stat = Status_Ok;    break;
-    case -1: *stat = Status_Error; break;
-    default: break;
+    switch (PyRun_SimpleString(qPrintable(statement))) {
+    case 0:
+        *stat = Status_Ok;
+        break;
+    case -1:
+        *stat = Status_Error;
+        break;
+    default:
+        break;
     }
 
     if (d->redirect_io) {
@@ -213,10 +212,10 @@ QString dtkScriptInterpreterPython::interpret(const QString& command, int *stat)
             char *method = (char *)"reset";
             PyObject_CallMethod(redtor, method, nullptr);
 
-            QString s =  QString(PyString_AsString(lresult)).simplified();
+            QString s = QString(PyString_AsString(lresult)).simplified();
             Py_DECREF(redtor);
             return s;
-        } else  {
+        } else {
             qDebug() << "no redirector found";
             return QString();
         }

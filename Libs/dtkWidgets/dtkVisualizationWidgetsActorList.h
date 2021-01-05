@@ -11,7 +11,7 @@ class DTKWIDGETS_EXPORT dtkVisualizationWidgetsActorList : public QFrame
     Q_OBJECT
 
 public:
-     dtkVisualizationWidgetsActorList(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsActorList(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsActorList(void);
 
 public slots:

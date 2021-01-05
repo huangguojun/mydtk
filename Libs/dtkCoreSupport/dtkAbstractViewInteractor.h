@@ -37,7 +37,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractViewInteractor : public dtkAbstractObject
 
 public:
     dtkAbstractViewInteractor(void);
-    dtkAbstractViewInteractor(const dtkAbstractViewInteractor& other);
+    dtkAbstractViewInteractor(const dtkAbstractViewInteractor &other);
     virtual ~dtkAbstractViewInteractor(void);
 
 public:
@@ -45,7 +45,7 @@ public:
     virtual QStringList handled(void) const = 0;
 
     bool enabled(void) const;
-    virtual void  enable(void);
+    virtual void enable(void);
     virtual void disable(void);
 
     virtual void setData(dtkAbstractData *data);
@@ -56,12 +56,12 @@ public:
     virtual dtkAbstractData *data(void);
     virtual dtkAbstractView *view(void);
 
-    virtual dtkAbstractData *output (void);
-    virtual dtkAbstractData *output (int channel);
-    virtual dtkAbstractData *output (int channel, int frame);
+    virtual dtkAbstractData *output(void);
+    virtual dtkAbstractData *output(int channel);
+    virtual dtkAbstractData *output(int channel, int frame);
 
-    virtual void  predraw(void);
-    virtual void     draw(void);
+    virtual void predraw(void);
+    virtual void draw(void);
     virtual void postdraw(void);
 
 signals:

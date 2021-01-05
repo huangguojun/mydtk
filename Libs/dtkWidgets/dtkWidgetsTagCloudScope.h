@@ -36,7 +36,7 @@ public:
     void addTag(QString tag);
     void addTag(QString tag, int count);
 
-    void setTags(const QStringList& tags);
+    void setTags(const QStringList &tags);
 
     void setDark(void);
     void setDoom(void);

@@ -18,11 +18,11 @@
  */
 
 #ifndef DTKFLOWLAYOUT_H
-#define DTKFLOWLAYOUT_H
+#    define DTKFLOWLAYOUT_H
 
-#include <dtkGuiSupportExport.h>
+#    include <dtkGuiSupportExport.h>
 
-#include <QtWidgets>
+#    include <QtWidgets>
 
 class DTKGUISUPPORT_EXPORT dtkFlowLayout : public QLayout
 {
@@ -40,12 +40,12 @@ public:
     int count() const;
     QLayoutItem *itemAt(int index) const;
     QSize minimumSize() const;
-    void setGeometry(const QRect& rect);
+    void setGeometry(const QRect &rect);
     QSize sizeHint() const;
     QLayoutItem *takeAt(int index);
 
 private:
-    int doLayout(const QRect& rect, bool testOnly) const;
+    int doLayout(const QRect &rect, bool testOnly) const;
     int smartSpacing(QStyle::PixelMetric pm) const;
 
     QList<QLayoutItem *> itemList;

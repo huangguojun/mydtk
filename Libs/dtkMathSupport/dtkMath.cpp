@@ -24,13 +24,13 @@
  *
  */
 
-#include <dtkConfig.h>
 #include "dtkMath.h"
 #include "dtkVector3D.h"
+#include <dtkConfig.h>
 
 #if defined(Q_OS_WIN)
 // on vs 9 abs() does not work with long long int or __uint64
-#define abs qAbs
+#    define abs qAbs
 #endif
 
 //! dtkBubbleSort(unsigned int indices[], int size)
@@ -42,7 +42,7 @@ void dtkBubbleSort(unsigned int indices[], int size)
     bool ordered = false;
     int j = 0;
 
-    while ( (j < size - 1) && (!ordered) ) {
+    while ((j < size - 1) && (!ordered)) {
         ordered = true;
 
         for (int k = 0; k < (size - 1 - j); k++) {
@@ -67,7 +67,7 @@ void dtkBubbleSort(qint32 *indices, qint32 size)
     bool ordered = false;
     qint32 j = 0;
 
-    while ( (j < size - 1) && (!ordered) ) {
+    while ((j < size - 1) && (!ordered)) {
         ordered = true;
 
         for (qint32 k = 0; k < (size - 1 - j); k++) {
@@ -92,7 +92,7 @@ void dtkBubbleSort(qint64 *indices, qint64 size)
     bool ordered = false;
     qint64 j = 0;
 
-    while ( (j < size - 1) && (!ordered) ) {
+    while ((j < size - 1) && (!ordered)) {
         ordered = true;
 
         for (qint64 k = 0; k < (size - 1 - j); k++) {
@@ -108,11 +108,13 @@ void dtkBubbleSort(qint64 *indices, qint64 size)
     }
 }
 
-//! dtkMinMaxValueOfArray(const qint32* array, const qint32& size, qint32* minValue, qint32* maxValue)
+//! dtkMinMaxValueOfArray(const qint32* array, const qint32& size, qint32*
+//! minValue, qint32* maxValue)
 /*!
  * Gives the minimum and maximum integer of an array.
  */
-void dtkMinMaxValueOfArray(const qint32 *array, const qint32& size, qint32 *minValue, qint32 *maxValue)
+void dtkMinMaxValueOfArray(const qint32 *array, const qint32 &size, qint32 *minValue,
+                           qint32 *maxValue)
 {
     if (!minValue || !maxValue)
         return;
@@ -142,7 +144,8 @@ void dtkMinMaxValueOfArray(const qint32 *array, const qint32& size, qint32 *minV
 /*!
  *
  */
-void dtkMinMaxValueOfArray(const qint64 *array, const qint64& size, qint64 *minValue, qint64 *maxValue)
+void dtkMinMaxValueOfArray(const qint64 *array, const qint64 &size, qint64 *minValue,
+                           qint64 *maxValue)
 {
     if (!minValue || !maxValue)
         return;
@@ -172,7 +175,8 @@ void dtkMinMaxValueOfArray(const qint64 *array, const qint64& size, qint64 *minV
 /*!
  *
  */
-void dtkMinMaxValueOfArray(const qreal *array, const qlonglong& size, qreal *minValue, qreal *maxValue)
+void dtkMinMaxValueOfArray(const qreal *array, const qlonglong &size, qreal *minValue,
+                           qreal *maxValue)
 {
     if (!minValue || !maxValue)
         return;
@@ -272,7 +276,8 @@ bool dtkAlmostEqualRelative2(double A, double B, double maxRelativeError)
 /*!
  *
  */
-bool dtkAlmostEqualRelativeOrAbsolute(float A, float B, float maxRelativeError, float maxAbsoluteError)
+bool dtkAlmostEqualRelativeOrAbsolute(float A, float B, float maxRelativeError,
+                                      float maxAbsoluteError)
 {
     if (fabs(A - B) < maxAbsoluteError)
         return true;
@@ -290,7 +295,8 @@ bool dtkAlmostEqualRelativeOrAbsolute(float A, float B, float maxRelativeError, 
     return false;
 }
 
-bool dtkAlmostEqualRelativeOrAbsolute(double A, double B, double maxRelativeError, double maxAbsoluteError)
+bool dtkAlmostEqualRelativeOrAbsolute(double A, double B, double maxRelativeError,
+                                      double maxAbsoluteError)
 {
     if (fabs(A - B) < maxAbsoluteError)
         return true;
@@ -405,8 +411,7 @@ bool dtkAlmostEqual2sComplement(double A, double B, qint64 maxUlps)
  *  relative tolerance test fails when they become small.
  *  This function combines these two tests together in a single test.
  */
-bool dtkAlmostEqualMixedAbsoluteRelative(const double A, const double B,
-        const double tolerance)
+bool dtkAlmostEqualMixedAbsoluteRelative(const double A, const double B, const double tolerance)
 {
     double diff = fabs(A - B);
 
@@ -466,7 +471,7 @@ bool dtkIsNan(float A)
     qint32 *AA = reinterpret_cast<qint32 *>(&A);
 
     qint32 exp = *AA & EXP_255_BIT_32;
-    qint32 mantissa = *AA & ((1u << 23) - 1u); //0x007FFFFF
+    qint32 mantissa = *AA & ((1u << 23) - 1u); // 0x007FFFFF
 
     if (exp == EXP_255_BIT_32 && mantissa != 0)
         return true;
@@ -479,7 +484,7 @@ bool dtkIsNan(double A)
     qint64 *AA = reinterpret_cast<qint64 *>(&A);
 
     qint64 exp = *AA & EXP_255_BIT_64;
-    qint64 mantissa = *AA & ((1ull << 55) - 1ull); //0x007FFFFFFFFFFFFF
+    qint64 mantissa = *AA & ((1ull << 55) - 1ull); // 0x007FFFFFFFFFFFFF
 
     if (exp == EXP_255_BIT_64 && mantissa != 0)
         return true;
@@ -533,21 +538,21 @@ qint64 dtkSign(double A)
  */
 bool dtkAlmostEqualUlps(float A, float B, qint32 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A == B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A == B;
@@ -580,21 +585,21 @@ bool dtkAlmostEqualUlps(float A, float B, qint32 maxUlps)
 
 bool dtkAlmostEqualUlps(double A, double B, qint64 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A == B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A == B;
@@ -664,21 +669,21 @@ void dtkPrintNumber(double A, qint64 offset)
  */
 bool dtkLesserThanUlps(float A, float B, qint32 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A < B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A < B;
@@ -711,21 +716,21 @@ bool dtkLesserThanUlps(float A, float B, qint32 maxUlps)
 
 bool dtkLesserThanUlps(double A, double B, qint64 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A < B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A < B;
@@ -762,21 +767,21 @@ bool dtkLesserThanUlps(double A, double B, qint64 maxUlps)
  */
 bool dtkLesserThanOrAlmostEqualUlps(float A, float B, qint32 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A <= B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A <= B;
@@ -809,21 +814,21 @@ bool dtkLesserThanOrAlmostEqualUlps(float A, float B, qint32 maxUlps)
 
 bool dtkLesserThanOrAlmostEqualUlps(double A, double B, qint64 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A <= B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A <= B;
@@ -858,23 +863,23 @@ bool dtkLesserThanOrAlmostEqualUlps(double A, double B, qint64 maxUlps)
 /*!
  *
  */
-bool dtkGreaterThanUlps(float A,  float B, qint32 maxUlps)
+bool dtkGreaterThanUlps(float A, float B, qint32 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A > B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A > B;
@@ -907,21 +912,21 @@ bool dtkGreaterThanUlps(float A,  float B, qint32 maxUlps)
 
 bool dtkGreaterThanUlps(double A, double B, qint64 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A > B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A > B;
@@ -956,23 +961,23 @@ bool dtkGreaterThanUlps(double A, double B, qint64 maxUlps)
 /*!
  *
  */
-bool dtkGreaterThanOrAlmostEqualUlps(float A,  float B, qint32 maxUlps)
+bool dtkGreaterThanOrAlmostEqualUlps(float A, float B, qint32 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A >= B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A >= B;
@@ -1005,21 +1010,21 @@ bool dtkGreaterThanOrAlmostEqualUlps(float A,  float B, qint32 maxUlps)
 
 bool dtkGreaterThanOrAlmostEqualUlps(double A, double B, qint64 maxUlps)
 {
-#ifdef  INFINITYCHECK
+#ifdef INFINITYCHECK
 
     if (dtkIsInfinite(A) || dtkIsInfinite(B))
         return A >= B;
 
 #endif
 
-#ifdef  NANCHECK
+#ifdef NANCHECK
 
     if (dtkIsNan(A) || dtkIsNan(B))
         return false;
 
 #endif
 
-#ifdef  SIGNCHECK
+#ifdef SIGNCHECK
 
     if (dtkSign(A) != dtkSign(B))
         return A >= B;
@@ -1052,22 +1057,24 @@ bool dtkGreaterThanOrAlmostEqualUlps(double A, double B, qint64 maxUlps)
 
 namespace dtkDeprecated {
 
-    template <> long double norm_func(const dtkVector<long double>& val)
-    {
-        long double elemResult = dtkZero<long double>();
+template<>
+long double norm_func(const dtkVector<long double> &val)
+{
+    long double elemResult = dtkZero<long double>();
 
-        elemResult = (val) * (val);
+    elemResult = (val) * (val);
 
-        return sqrt( elemResult );
-    }
-
-    template <> inline float norm_func(const dtkVector<float>& val)
-    {
-        float elemResult = dtkZero<float>();
-
-        elemResult = (val) * (val);
-
-        return sqrt( elemResult );
-    }
-
+    return sqrt(elemResult);
 }
+
+template<>
+inline float norm_func(const dtkVector<float> &val)
+{
+    float elemResult = dtkZero<float>();
+
+    elemResult = (val) * (val);
+
+    return sqrt(elemResult);
+}
+
+} // namespace dtkDeprecated

@@ -26,7 +26,8 @@
 
 class dtkAbstractProcess;
 class dtkAbstractProcessFactoryPrivate;
-template<class T> class dtkSmartPointer;
+template<class T>
+class dtkSmartPointer;
 
 class DTKCORESUPPORT_EXPORT dtkAbstractProcessFactory : public dtkAbstractFactory
 {
@@ -37,33 +38,34 @@ public:
 
 public:
     static dtkAbstractProcessFactory *instance(void);
-    bool registerProcessType(const QString& type, dtkAbstractProcessCreator func);
-    bool registerProcessType(const QString& type, dtkAbstractProcessCreator func, const QString& itf);
+    bool registerProcessType(const QString &type, dtkAbstractProcessCreator func);
+    bool registerProcessType(const QString &type, dtkAbstractProcessCreator func,
+                             const QString &itf);
 
-    unsigned int size(const QString& type);
+    unsigned int size(const QString &type);
 
-    bool exists(const QString& type);
+    bool exists(const QString &type);
 
     QStringList creators(void) const;
 
     QStringList implementations(void);
-    QStringList implementations(const QString& itf);
+    QStringList implementations(const QString &itf);
     QStringList interfaces(void);
 
-    dtkSmartPointer<dtkAbstractProcess> createSmartPointer(const QString& type);
+    dtkSmartPointer<dtkAbstractProcess> createSmartPointer(const QString &type);
 
 signals:
-    void created(dtkAbstractProcess *process, const QString& type);
+    void created(dtkAbstractProcess *process, const QString &type);
 
 public slots:
-    dtkAbstractProcess *create(const QString& type);
+    dtkAbstractProcess *create(const QString &type);
 
 protected:
     dtkAbstractProcessFactory(void);
     ~dtkAbstractProcessFactory(void);
 
 private:
-    static dtkAbstractProcessFactory   *s_instance;
+    static dtkAbstractProcessFactory *s_instance;
 
 private:
     dtkAbstractProcessFactoryPrivate *d;

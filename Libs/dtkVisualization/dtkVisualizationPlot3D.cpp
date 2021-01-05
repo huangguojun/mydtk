@@ -22,8 +22,8 @@
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 
 //#include <QVTKOpenGLWidget.h>
@@ -38,7 +38,7 @@ class dtkVisualizationPlot3DPrivate : public QVTKWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationPlot3DPrivate(QWidget *parent = nullptr);
+    dtkVisualizationPlot3DPrivate(QWidget *parent = nullptr);
     ~dtkVisualizationPlot3DPrivate(void);
 
 public:
@@ -56,13 +56,13 @@ public:
     dtkVisualizationPlot3D *q = nullptr;
 
 public:
-    //dtkWidgetsHUD *hud;
-    //dtkWidgetsOverlayPane *overlay;
+    // dtkWidgetsHUD *hud;
+    // dtkWidgetsOverlayPane *overlay;
 };
 
 dtkVisualizationPlot3DPrivate::dtkVisualizationPlot3DPrivate(QWidget *parent) : QVTKWidget(parent)
 {
-   // this->setFormat(QVTKOpenGLWidget::defaultFormat());
+    // this->setFormat(QVTKOpenGLWidget::defaultFormat());
 
     this->renderer = vtkSmartPointer<vtkRenderer>::New();
     this->renderer->SetBackground(0.290, 0.295, 0.300);
@@ -71,16 +71,13 @@ dtkVisualizationPlot3DPrivate::dtkVisualizationPlot3DPrivate(QWidget *parent) : 
     this->window->AddRenderer(this->renderer);
 
     this->SetRenderWindow(this->window);
-    //this->setEnableHiDPI(true);
+    // this->setEnableHiDPI(true);
 
-    //this->hud = new dtkWidgetsHUD(this);
-    //this->overlay = new dtkWidgetsOverlayPane(this);
+    // this->hud = new dtkWidgetsHUD(this);
+    // this->overlay = new dtkWidgetsOverlayPane(this);
 }
 
-dtkVisualizationPlot3DPrivate::~dtkVisualizationPlot3DPrivate(void)
-{
-
-}
+dtkVisualizationPlot3DPrivate::~dtkVisualizationPlot3DPrivate(void) {}
 
 QSize dtkVisualizationPlot3DPrivate::sizeHint(void) const
 {
@@ -98,16 +95,17 @@ void dtkVisualizationPlot3DPrivate::resizeEvent(QResizeEvent *event)
 {
     QVTKWidget::resizeEvent(event);
 
-    //this->hud->resize(event->size());
+    // this->hud->resize(event->size());
 
-    //this->overlay->setFixedHeight(event->size().height());
+    // this->overlay->setFixedHeight(event->size().height());
 }
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationPlot3D
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationPlot3D::dtkVisualizationPlot3D(QWidget *parent) : dtkWidgetsWidget(parent), d(new dtkVisualizationPlot3DPrivate(this))
+dtkVisualizationPlot3D::dtkVisualizationPlot3D(QWidget *parent)
+    : dtkWidgetsWidget(parent), d(new dtkVisualizationPlot3DPrivate(this))
 {
     d->q = this;
 
@@ -118,10 +116,10 @@ dtkVisualizationPlot3D::dtkVisualizationPlot3D(QWidget *parent) : dtkWidgetsWidg
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d);
 
-    //dtkWidgetsHUDItem *settings = d->hud->addItem(fa::sliders);
-    //settings->setToolTip("Settings");
+    // dtkWidgetsHUDItem *settings = d->hud->addItem(fa::sliders);
+    // settings->setToolTip("Settings");
 
-    //connect(settings, SIGNAL(clicked()), d->overlay, SLOT(toggle()));
+    // connect(settings, SIGNAL(clicked()), d->overlay, SLOT(toggle()));
 
     this->setAcceptDrops(true);
 }

@@ -12,8 +12,8 @@
 
 // Code:
 
-#include "dtkNotification.h"
 #include "dtkNotificationEvent.h"
+#include "dtkNotification.h"
 
 class dtkNotificationEventPrivate
 {
@@ -23,12 +23,13 @@ public:
     int duration;
 };
 
-dtkNotificationEvent::dtkNotificationEvent(void) : QEvent((QEvent::Type)dtkNotificationEventType), d(new dtkNotificationEventPrivate)
+dtkNotificationEvent::dtkNotificationEvent(void)
+    : QEvent((QEvent::Type)dtkNotificationEventType), d(new dtkNotificationEventPrivate)
 {
-
 }
 
-dtkNotificationEvent::dtkNotificationEvent(const dtkNotificationEvent& other) : QEvent(QEvent::User), d(new dtkNotificationEventPrivate)
+dtkNotificationEvent::dtkNotificationEvent(const dtkNotificationEvent &other)
+    : QEvent(QEvent::User), d(new dtkNotificationEventPrivate)
 {
     d->type = other.d->type;
     d->message = other.d->message;
@@ -42,7 +43,7 @@ dtkNotificationEvent::~dtkNotificationEvent(void)
     d = NULL;
 }
 
-dtkNotificationEvent& dtkNotificationEvent::operator=(const dtkNotificationEvent& other)
+dtkNotificationEvent &dtkNotificationEvent::operator=(const dtkNotificationEvent &other)
 {
     d->type = other.d->type;
     d->message = other.d->message;
@@ -71,7 +72,7 @@ void dtkNotificationEvent::setType(dtkNotificationEvent::Type type)
     d->type = type;
 }
 
-void dtkNotificationEvent::setMessage(const QString& message)
+void dtkNotificationEvent::setMessage(const QString &message)
 {
     d->message = message;
 }

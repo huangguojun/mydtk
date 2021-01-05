@@ -25,7 +25,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorSnapshot : public dtkVisu
     Q_OBJECT
 
 public:
-     dtkVisualizationDecoratorSnapshot(void);
+    dtkVisualizationDecoratorSnapshot(void);
     ~dtkVisualizationDecoratorSnapshot(void);
 
 public:
@@ -37,9 +37,9 @@ public:
     void touch(void) override;
 
 public:
-    void setData(const QVariant&)            override;
+    void setData(const QVariant &) override;
     void setCanvas(dtkVisualizationCanvas *) override;
-    void unsetCanvas(void)                   override;
+    void unsetCanvas(void) override;
 
 public:
     void setVisibility(bool) override;

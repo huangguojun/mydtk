@@ -24,20 +24,14 @@
 // dtkPlugin implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkPlugin::dtkPlugin(QObject *parent) : dtkAbstractObject(*new dtkPluginPrivate(this), parent)
-{
+dtkPlugin::dtkPlugin(QObject *parent) : dtkAbstractObject(*new dtkPluginPrivate(this), parent) {}
 
+dtkPlugin::dtkPlugin(const dtkPlugin &other)
+    : dtkAbstractObject(*new dtkPluginPrivate(*other.d_func()), other)
+{
 }
 
-dtkPlugin::dtkPlugin(const dtkPlugin& other) : dtkAbstractObject(*new dtkPluginPrivate(*other.d_func()), other)
-{
-
-}
-
-dtkPlugin::~dtkPlugin(void)
-{
-
-}
+dtkPlugin::~dtkPlugin(void) {}
 
 QString dtkPlugin::contact(void) const
 {

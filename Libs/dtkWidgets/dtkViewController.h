@@ -31,16 +31,16 @@ public:
     void insert(dtkViewWidget *);
 
 public:
-    dtkViewWidget *view(const QString& name);
+    dtkViewWidget *view(const QString &name);
 
 public:
     QStringList viewNames(void);
 
 signals:
-    void inserted(dtkViewWidget *, const QString&);
+    void inserted(dtkViewWidget *, const QString &);
 
 protected:
-     dtkViewController(void);
+    dtkViewController(void);
     ~dtkViewController(void);
 
 private:

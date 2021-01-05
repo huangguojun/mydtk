@@ -5,11 +5,11 @@
 //----------------------------------------------------------------------------
 PacketConsumer::PacketConsumer()
 {
-  this->Packets.reset(new SynchronizedQueue<NetworkPacket*>);
+    this->Packets.reset(new SynchronizedQueue<NetworkPacket *>);
 }
 
 //----------------------------------------------------------------------------
-void PacketConsumer::HandleSensorData(const unsigned char* data, unsigned int length)
+void PacketConsumer::HandleSensorData(const unsigned char *data, unsigned int length)
 {
     /*
   this->Interpreter->ProcessPacket(data, length);
@@ -26,54 +26,51 @@ void PacketConsumer::HandleSensorData(const unsigned char* data, unsigned int le
 //----------------------------------------------------------------------------
 vtkSmartPointer<vtkPolyData> PacketConsumer::GetLastAvailableFrame()
 {
-  return this->Frames.back();
+    return this->Frames.back();
 }
 
 //----------------------------------------------------------------------------
 int PacketConsumer::CheckForNewData()
 {
-  return this->Frames.size();
+    return this->Frames.size();
 }
 
 //----------------------------------------------------------------------------
 void PacketConsumer::ThreadLoop()
 {
-  NetworkPacket* packet = nullptr;
- // this->Interpreter->ResetCurrentFrame();
-  while (this->Packets->dequeue(packet))
-  {
-    this->HandleSensorData(packet->GetPayloadData(), packet->GetPayloadSize());
-    delete packet;
-  }
+    NetworkPacket *packet = nullptr;
+    // this->Interpreter->ResetCurrentFrame();
+    while (this->Packets->dequeue(packet)) {
+        this->HandleSensorData(packet->GetPayloadData(), packet->GetPayloadSize());
+        delete packet;
+    }
 }
 
 //----------------------------------------------------------------------------
 void PacketConsumer::Start()
 {
-  if (this->Thread)
-  {
-    return;
-  }
+    if (this->Thread) {
+        return;
+    }
 
-  this->Packets.reset(new SynchronizedQueue<NetworkPacket*>);
-  this->Thread = boost::shared_ptr<boost::thread>(
-    new boost::thread(boost::bind(&PacketConsumer::ThreadLoop, this)));
+    this->Packets.reset(new SynchronizedQueue<NetworkPacket *>);
+    this->Thread = boost::shared_ptr<boost::thread>(
+            new boost::thread(boost::bind(&PacketConsumer::ThreadLoop, this)));
 }
 
 //----------------------------------------------------------------------------
 void PacketConsumer::Stop()
 {
-  if (this->Thread)
-  {
-    this->Packets->stopQueue();
-    this->Thread->join();
-    this->Thread.reset();
-    this->Packets.reset();
-  }
+    if (this->Thread) {
+        this->Packets->stopQueue();
+        this->Thread->join();
+        this->Thread.reset();
+        this->Packets.reset();
+    }
 }
 
 //----------------------------------------------------------------------------
-void PacketConsumer::Enqueue(NetworkPacket* packet)
+void PacketConsumer::Enqueue(NetworkPacket *packet)
 {
-  this->Packets->enqueue(packet);
+    this->Packets->enqueue(packet);
 }

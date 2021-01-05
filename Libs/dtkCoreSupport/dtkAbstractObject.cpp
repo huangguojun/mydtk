@@ -29,7 +29,8 @@
  *  parent to 0 constructs an object with no parent.
  *  The initial reference count is set to 0, and DeferredDeletion is enabled.
  */
-dtkAbstractObject::dtkAbstractObject(dtkAbstractObject *parent) : QObject(parent), d_ptr(new dtkAbstractObjectPrivate(this))
+dtkAbstractObject::dtkAbstractObject(dtkAbstractObject *parent)
+    : QObject(parent), d_ptr(new dtkAbstractObjectPrivate(this))
 {
     d_ptr->count = 0;
 
@@ -40,7 +41,8 @@ dtkAbstractObject::dtkAbstractObject(dtkAbstractObject *parent) : QObject(parent
 /*!
  *
  */
-dtkAbstractObject::dtkAbstractObject(const dtkAbstractObject& other) : QObject(other.parent()), d_ptr(new dtkAbstractObjectPrivate(*other.d_ptr, this))
+dtkAbstractObject::dtkAbstractObject(const dtkAbstractObject &other)
+    : QObject(other.parent()), d_ptr(new dtkAbstractObjectPrivate(*other.d_ptr, this))
 {
     d_ptr->count = 0;
 
@@ -49,15 +51,17 @@ dtkAbstractObject::dtkAbstractObject(const dtkAbstractObject& other) : QObject(o
 
 //! Destroys the object, deleting all its child objects.
 /*!
- *  The reference count is checked, and a warning message is output if the reference count is not valid.
- *  There are two valid reference count values at destruction time :<br>
- *  0 : The object used reference counting, and is no longer referred by any object.<br>
- *  1 : This occurs if the object was never reference counted, and delete(Later) was manually called.<br>
+ *  The reference count is checked, and a warning message is output if the
+ * reference count is not valid. There are two valid reference count values at
+ * destruction time :<br> 0 : The object used reference counting, and is no
+ * longer referred by any object.<br> 1 : This occurs if the object was never
+ * reference counted, and delete(Later) was manually called.<br>
  */
 dtkAbstractObject::~dtkAbstractObject(void)
 {
-    if ( d_ptr->count.load() != 0) {
-        dtkDebug() << "Warning : deleting object of type " << this->metaObject()->className() << " with non-zero reference count";
+    if (d_ptr->count.load() != 0) {
+        dtkDebug() << "Warning : deleting object of type " << this->metaObject()->className()
+                   << " with non-zero reference count";
     }
 
     delete d_ptr;
@@ -95,7 +99,7 @@ dtkAbstractObject *dtkAbstractObject::clone(void)
 /*!
  *
  */
-dtkAbstractObject& dtkAbstractObject::operator = (const dtkAbstractObject& other)
+dtkAbstractObject &dtkAbstractObject::operator=(const dtkAbstractObject &other)
 {
     this->copy(other);
 
@@ -131,21 +135,22 @@ dtkAbstractObject& dtkAbstractObject::operator = (const dtkAbstractObject& other
  *     if (other.identifier() == this->identifier()) {
  *        // cast other into xyzObject and do the copy
  *     } else {
- *        dtkWarn() << "other is not of same type than this, slicing is occuring.";
+ *        dtkWarn() << "other is not of same type than this, slicing is
+ * occuring.";
  *     }
  *  }
  *  \endcode
  */
-void dtkAbstractObject::copy(const dtkAbstractObject& other)
+void dtkAbstractObject::copy(const dtkAbstractObject &other)
 {
     if (this == &other)
         return;
 
     this->setParent(other.parent());
 
-    d_ptr->values     = other.d_ptr->values;
+    d_ptr->values = other.d_ptr->values;
     d_ptr->properties = other.d_ptr->properties;
-    d_ptr->metadatas  = other.d_ptr->metadatas;
+    d_ptr->metadatas = other.d_ptr->metadatas;
 
     d_ptr->count = 0;
     d_ptr->isDeferredDeletionEnabled = true;
@@ -155,13 +160,13 @@ void dtkAbstractObject::copy(const dtkAbstractObject& other)
 /*!
  *
  */
-bool dtkAbstractObject::operator == (const dtkAbstractObject& other) const
+bool dtkAbstractObject::operator==(const dtkAbstractObject &other) const
 {
     return this->isEqual(other);
 }
 
-//! Enables to make a deep comparison between all the attributes through the class
-//! hierarchy.
+//! Enables to make a deep comparison between all the attributes through the
+//! class hierarchy.
 /*!
  *  This method is called by the comparator operator == which
  *  delegates the comparison. When re-implementing this method into a
@@ -199,14 +204,13 @@ bool dtkAbstractObject::operator == (const dtkAbstractObject& other) const
  *  }
  *  \endcode
  */
-bool dtkAbstractObject::isEqual(const dtkAbstractObject& other) const
+bool dtkAbstractObject::isEqual(const dtkAbstractObject &other) const
 {
     if (this == &other)
         return true;
 
-    if (d_ptr->values != other.d_ptr->values         ||
-            d_ptr->properties != other.d_ptr->properties ||
-            d_ptr->metadatas != other.d_ptr->metadatas)
+    if (d_ptr->values != other.d_ptr->values || d_ptr->properties != other.d_ptr->properties
+        || d_ptr->metadatas != other.d_ptr->metadatas)
         return false;
 
     return true;
@@ -214,14 +218,14 @@ bool dtkAbstractObject::isEqual(const dtkAbstractObject& other) const
 
 QString dtkAbstractObject::description(void) const
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 
     return "";
 }
 
 QString dtkAbstractObject::identifier(void) const
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 
     return "";
 }
@@ -257,8 +261,8 @@ int dtkAbstractObject::retain(void) const
  *  count be null, the object is scheduled for deletion. Note it sends
  *  the destroyed signal just before being actually deleted.
  *  The method of deletion depends on isDeferredDeletionEnabled().
- *  If it is true (default) the object will be deleted using "this->deleteLater();",
- *  otherwise "delete this;" is used.
+ *  If it is true (default) the object will be deleted using
+ * "this->deleteLater();", otherwise "delete this;" is used.
  */
 
 int dtkAbstractObject::release(void) const
@@ -277,12 +281,11 @@ int dtkAbstractObject::release(void) const
 }
 
 /*!
- * \brief Enable / disable use of this->deleteLater() when reference count reaches 0.
- * \param value Changes what happens when the objects reference count reaches 0.
- *  For most objects this should be set to true, as it allows existing events
- *  to be processed which may use this object.
- *  \sa dtkAbstractObject::~dtkAbstractObject();
- *  \sa QObject::deleteLater();
+ * \brief Enable / disable use of this->deleteLater() when reference count
+ * reaches 0. \param value Changes what happens when the objects reference count
+ * reaches 0. For most objects this should be set to true, as it allows existing
+ * events to be processed which may use this object. \sa
+ * dtkAbstractObject::~dtkAbstractObject(); \sa QObject::deleteLater();
  */
 void dtkAbstractObject::enableDeferredDeletion(bool value)
 {
@@ -294,17 +297,17 @@ bool dtkAbstractObject::isDeferredDeletionEnabled(void) const
     return d_ptr->isDeferredDeletionEnabled;
 }
 
-void dtkAbstractObject::addProperty(const QString& key, const QStringList& values)
+void dtkAbstractObject::addProperty(const QString &key, const QStringList &values)
 {
     d_ptr->values.insert(key, values);
 }
 
-void dtkAbstractObject::addProperty(const QString& key, const QString& value)
+void dtkAbstractObject::addProperty(const QString &key, const QString &value)
 {
     d_ptr->values.insert(key, QStringList() << value);
 }
 
-void dtkAbstractObject::setProperty(const QString& key, const QString& value)
+void dtkAbstractObject::setProperty(const QString &key, const QString &value)
 {
     if (!d_ptr->values.contains(key)) {
         dtkDebug() << this->metaObject()->className() << " has no such property:" << key;
@@ -312,7 +315,8 @@ void dtkAbstractObject::setProperty(const QString& key, const QString& value)
     }
 
     if (!d_ptr->values.value(key).contains(value)) {
-        dtkDebug() << this->metaObject()->className() << " has no such value:" << value << " for key: " << key;
+        dtkDebug() << this->metaObject()->className() << " has no such value:" << value
+                   << " for key: " << key;
         return;
     }
 
@@ -328,7 +332,7 @@ QStringList dtkAbstractObject::propertyList(void) const
     return d_ptr->properties.keys();
 }
 
-QStringList dtkAbstractObject::propertyValues(const QString& key) const
+QStringList dtkAbstractObject::propertyValues(const QString &key) const
 {
     if (d_ptr->values.contains(key))
         return d_ptr->values[key];
@@ -336,12 +340,12 @@ QStringList dtkAbstractObject::propertyValues(const QString& key) const
     return QStringList();
 }
 
-bool dtkAbstractObject::hasProperty(const QString& key) const
+bool dtkAbstractObject::hasProperty(const QString &key) const
 {
     return d_ptr->values.contains(key);
 }
 
-QString dtkAbstractObject::property(const QString& key) const
+QString dtkAbstractObject::property(const QString &key) const
 {
     if (!d_ptr->values.contains(key)) {
         dtkDebug() << this->metaObject()->className() << "has no such property:" << key;
@@ -351,7 +355,7 @@ QString dtkAbstractObject::property(const QString& key) const
     return d_ptr->properties.value(key);
 }
 
-void dtkAbstractObject::addMetaData(const QString& key, const QStringList& values)
+void dtkAbstractObject::addMetaData(const QString &key, const QStringList &values)
 {
     QStringList currentValues = d_ptr->metadatas.value(key);
 
@@ -364,7 +368,7 @@ void dtkAbstractObject::addMetaData(const QString& key, const QStringList& value
         emit metaDataSet(key, value);
 }
 
-void dtkAbstractObject::addMetaData(const QString& key, const QString& value)
+void dtkAbstractObject::addMetaData(const QString &key, const QString &value)
 {
     QStringList currentValues = d_ptr->metadatas.value(key);
 
@@ -375,7 +379,7 @@ void dtkAbstractObject::addMetaData(const QString& key, const QString& value)
     emit metaDataSet(key, value);
 }
 
-void dtkAbstractObject::setMetaData(const QString& key, const QStringList& values)
+void dtkAbstractObject::setMetaData(const QString &key, const QStringList &values)
 {
     d_ptr->metadatas.insert(key, values);
 
@@ -386,7 +390,7 @@ void dtkAbstractObject::setMetaData(const QString& key, const QStringList& value
         emit metaDataSet(key, value);
 }
 
-void dtkAbstractObject::setMetaData(const QString& key, const QString& value)
+void dtkAbstractObject::setMetaData(const QString &key, const QString &value)
 {
     d_ptr->metadatas.insert(key, QStringList() << value);
 
@@ -400,7 +404,7 @@ QStringList dtkAbstractObject::metaDataList(void) const
     return d_ptr->metadatas.keys();
 }
 
-QStringList dtkAbstractObject::metaDataValues(const QString& key) const
+QStringList dtkAbstractObject::metaDataValues(const QString &key) const
 {
     if (d_ptr->metadatas.contains(key))
         return d_ptr->metadatas[key];
@@ -408,24 +412,24 @@ QStringList dtkAbstractObject::metaDataValues(const QString& key) const
     return QStringList();
 }
 
-bool dtkAbstractObject::hasMetaData(const QString& key) const
+bool dtkAbstractObject::hasMetaData(const QString &key) const
 {
     return d_ptr->metadatas.contains(key);
 }
 
-void dtkAbstractObject::onPropertySet(const QString& key, const QString& value)
+void dtkAbstractObject::onPropertySet(const QString &key, const QString &value)
 {
     Q_UNUSED(key);
     Q_UNUSED(value);
 }
 
-void dtkAbstractObject::onMetaDataSet(const QString& key, const QString& value)
+void dtkAbstractObject::onMetaDataSet(const QString &key, const QString &value)
 {
     Q_UNUSED(key);
     Q_UNUSED(value);
 }
 
-QString dtkAbstractObject::metadata(const QString& key) const
+QString dtkAbstractObject::metadata(const QString &key) const
 {
     if (!d_ptr->metadatas.contains(key)) {
         dtkDebug() << this->metaObject()->className() << "has no such property:" << key;
@@ -435,7 +439,7 @@ QString dtkAbstractObject::metadata(const QString& key) const
     return d_ptr->metadatas.value(key).first();
 }
 
-QStringList dtkAbstractObject::metadatas(const QString& key) const
+QStringList dtkAbstractObject::metadatas(const QString &key) const
 {
     if (!d_ptr->metadatas.contains(key)) {
         dtkDebug() << this->metaObject()->className() << "has no such property:" << key;
@@ -474,9 +478,9 @@ void dtkAbstractObject::copyMetaDataFrom(const dtkAbstractObject *obj)
  *
  *  \code
  *  object->addProperty("key", QStringList() << "value1" << "value2");
- *  object->setProperty("key", "value3");   // Wrong, "value3" has not been assigned to "key".
- *  object->setProperty("key", "value1");   // Right, "value1" has been assigned to "key".
- *  \endcode
+ *  object->setProperty("key", "value3");   // Wrong, "value3" has not been
+ * assigned to "key". object->setProperty("key", "value1");   // Right, "value1"
+ * has been assigned to "key". \endcode
  *
  *  The previous code snippet emits the signal propertySet and calls
  *  the virtual method onPropertySet so that one can override its
@@ -488,9 +492,10 @@ void dtkAbstractObject::copyMetaDataFrom(const dtkAbstractObject *obj)
  *
  *  \code
  *  object->addMetaData("key", QStringList() << "value1" << "value2");
- *  object->setMetaData("key", "value3");   // Right, "value3" is now mapped to "key".
- *  object->setMetaData("key", "value4");   // Right, "value4" is now mapped to "key".
- *  object->addMetaData("key", QStringList() << "value1" << "value2");
+ *  object->setMetaData("key", "value3");   // Right, "value3" is now mapped to
+ * "key". object->setMetaData("key", "value4");   // Right, "value4" is now
+ * mapped to "key". object->addMetaData("key", QStringList() << "value1" <<
+ * "value2");
  *
  *  dtkOutput() << object->metaData("key"); // ("value4", "value1", "value2")
  *  \endcode

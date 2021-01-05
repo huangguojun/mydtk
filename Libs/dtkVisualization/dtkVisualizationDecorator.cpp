@@ -23,9 +23,11 @@
 // Register to dtkVisualization layer
 // ///////////////////////////////////////////////////////////////////
 
-namespace dtk { namespace visualization {
-    DTK_DEFINE_CONCEPT(dtkVisualizationDecorator, decorator, dtk::visualization);
-} }
+namespace dtk {
+namespace visualization {
+DTK_DEFINE_CONCEPT(dtkVisualizationDecorator, decorator, dtk::visualization);
+}
+} // namespace dtk
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationDecorator implementation
@@ -38,11 +40,11 @@ void dtkVisualizationDecorator::draw(void)
     }
 }
 
-void dtkVisualizationDecorator::saveSettings(const QString & name, const QVariant& value)
+void dtkVisualizationDecorator::saveSettings(const QString &name, const QVariant &value)
 {
     QSettings settings;
     settings.beginGroup("canvas");
-    settings.setValue(this->objectName()+"_" + name, value);
+    settings.setValue(this->objectName() + "_" + name, value);
     settings.endGroup();
 }
 
@@ -56,7 +58,7 @@ void dtkVisualizationDecorator::hide(void)
     this->setVisibility(false);
 }
 
-void dtkVisualizationDecorator::setObjectName(const QString & name)
+void dtkVisualizationDecorator::setObjectName(const QString &name)
 {
     QObject::setObjectName(name);
 }

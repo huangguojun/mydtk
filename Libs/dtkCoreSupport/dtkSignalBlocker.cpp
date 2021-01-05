@@ -18,20 +18,21 @@
  *
  */
 
-
 #include "dtkSignalBlocker.h"
 
 // dtkSignalBlocker :
 
 /*! \class      dtkSignalBlocker
- *  \brief      Blocks signals to a given object as long it remains instantiated.
+ *  \brief      Blocks signals to a given object as long it remains
+ * instantiated.
  *
  * The purpose is to increase exception-safety and to ensure that objects are
  * not still unintentionally blocked what ever the return path from a function.
  *
  * object->blockSignals(true) is called when the signalBlocker is created, and
- * object->blockSignals(false) is called when the signalBlocker is destroyed. This
- * ensures that a managed object is always unblocked, whatever the return path.
+ * object->blockSignals(false) is called when the signalBlocker is destroyed.
+ * This ensures that a managed object is always unblocked, whatever the return
+ * path.
  *
  * Code example :
  * \code
@@ -55,4 +56,3 @@
     \brief      Allows early unblocking / reblocking
     \param      v : passed to object->blockSignals(v).
 */
-

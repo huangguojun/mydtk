@@ -32,7 +32,8 @@ public:
 // dtkWidgetsParameterBoolPushButton implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterBoolPushButton::dtkWidgetsParameterBoolPushButton(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_bool>(parent), d(new dtkWidgetsParameterBoolPushButtonPrivate)
+dtkWidgetsParameterBoolPushButton::dtkWidgetsParameterBoolPushButton(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_bool>(parent), d(new dtkWidgetsParameterBoolPushButtonPrivate)
 {
     d->push_button = new QPushButton;
 
@@ -56,8 +57,10 @@ bool dtkWidgetsParameterBoolPushButton::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_bool *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterBoolPushButton.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterBoolPushButton.";
         return false;
     }
 
@@ -65,11 +68,13 @@ bool dtkWidgetsParameterBoolPushButton::connect(dtkCoreParameter *p)
 
     d->running = m_parameter->value();
 
-    if(d->running) {
-        qWarning() << Q_FUNC_INFO << "It is not advised to set d_bool parameter to on before connecting";
+    if (d->running) {
+        qWarning() << Q_FUNC_INFO
+                   << "It is not advised to set d_bool parameter to on before "
+                      "connecting";
     }
 
-    auto setAppearance = [this] (bool state) {
+    auto setAppearance = [this](bool state) {
         if (state) {
             this->d->push_button->setStyleSheet("background-color: red");
             this->d->push_button->setText("Running...");
@@ -81,8 +86,7 @@ bool dtkWidgetsParameterBoolPushButton::connect(dtkCoreParameter *p)
 
     setAppearance(d->running);
 
-    m_parameter->connect([=] (QVariant v)
-    {
+    m_parameter->connect([=](QVariant v) {
         d->running = v.value<dtk::d_bool>().value();
         d->push_button->blockSignals(true);
         setAppearance(d->running);
@@ -90,9 +94,8 @@ bool dtkWidgetsParameterBoolPushButton::connect(dtkCoreParameter *p)
         d->push_button->blockSignals(false);
     });
 
-    QObject::connect(d->push_button, &QPushButton::clicked, [=] ()
-    {
-        if(d->running) {
+    QObject::connect(d->push_button, &QPushButton::clicked, [=]() {
+        if (d->running) {
             d->running = false;
         } else {
             d->running = true;

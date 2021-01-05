@@ -28,72 +28,74 @@
 class VTK_EXPORT vtkLidarProvider : public vtkPolyDataAlgorithm
 {
 public:
-  vtkTypeMacro(vtkLidarProvider, vtkPolyDataAlgorithm)
+    vtkTypeMacro(vtkLidarProvider, vtkPolyDataAlgorithm)
 
-  /**
-   * @brief GetNumberOfFrames return the number of available frames
-   */
-  virtual int GetNumberOfFrames() = 0;
+            /**
+             * @brief GetNumberOfFrames return the number of available frames
+             */
+            virtual int GetNumberOfFrames() = 0;
 
-  /**
-   * @brief GetSensorInformation return some sensor information used for display purposes
-   */
-  virtual std::string GetSensorInformation();
+    /**
+     * @brief GetSensorInformation return some sensor information used for
+     * display purposes
+     */
+    virtual std::string GetSensorInformation();
 
-  /**
-   * @copydoc vtkLidarPacketInterpreter::CalibrationFileName
-   */
-  virtual void SetCalibrationFileName(const std::string& filename);
+    /**
+     * @copydoc vtkLidarPacketInterpreter::CalibrationFileName
+     */
+    virtual void SetCalibrationFileName(const std::string &filename);
 
-  /**
-   * @brief SetDummyProperty a trick to workaround failure to wrap LaserSelection, this actually only calls Modified,
-   * however for some obscure reason, doing the same from python does not have the same effect
-   * @todo set how to remove this methode as it is a workaround
-   */
-  void SetDummyProperty(int);
+    /**
+     * @brief SetDummyProperty a trick to workaround failure to wrap
+     * LaserSelection, this actually only calls Modified, however for some
+     * obscure reason, doing the same from python does not have the same effect
+     * @todo set how to remove this methode as it is a workaround
+     */
+    void SetDummyProperty(int);
 
+    // vtkGetObjectMacro(Interpreter, vtkLidarPacketInterpreter)
+    // virtual void SetInterpreter(vtkLidarPacketInterpreter *);
 
-  //vtkGetObjectMacro(Interpreter, vtkLidarPacketInterpreter)
-  //virtual void SetInterpreter(vtkLidarPacketInterpreter *);
+    /**
+     * @brief The port the Lidar is listening to
+     */
+    virtual int GetLidarPort() = 0;
+    virtual void SetLidarPort(int _arg) = 0;
 
-  /**
-   * @brief The port the Lidar is listening to
-   */
-  virtual int GetLidarPort() = 0;
-  virtual void SetLidarPort(int _arg) = 0;
+    vtkGetMacro(DetectFrameDropping, bool) vtkSetMacro(DetectFrameDropping, bool)
 
-  vtkGetMacro(DetectFrameDropping, bool)
-  vtkSetMacro(DetectFrameDropping, bool)
+            // vtkMTimeType GetMTime() override;
 
- // vtkMTimeType GetMTime() override;
+            friend class vtkLidarReaderInternal;
+    friend class vtkLidarStreamInternal;
 
-  friend class vtkLidarReaderInternal;
-  friend class vtkLidarStreamInternal;
 protected:
-  vtkLidarProvider();
-  ~vtkLidarProvider() = default;
-  int RequestInformation(vtkInformation *request,
-                         vtkInformationVector **inputVector,
-                         vtkInformationVector *outputVector) override;
+    vtkLidarProvider();
+    ~vtkLidarProvider() = default;
+    int RequestInformation(vtkInformation *request, vtkInformationVector **inputVector,
+                           vtkInformationVector *outputVector) override;
 
-  int FillOutputPortInformation(int port, vtkInformation* info) override;
+    int FillOutputPortInformation(int port, vtkInformation *info) override;
 
-  //! Indicate if we should detect that some frames are dropped
-  bool DetectFrameDropping = false;
+    //! Indicate if we should detect that some frames are dropped
+    bool DetectFrameDropping = false;
 
-  //! Last Frame processed, this is important if we want to detect frame dropping
-  int LastFrameProcessed = 0;
+    //! Last Frame processed, this is important if we want to detect frame
+    //! dropping
+    int LastFrameProcessed = 0;
 
-  //! Interpret the packet to create a frame, all the magic happen here
- 
-  //vtkLidarPacketInterpreter* Interpreter = nullptr;
+    //! Interpret the packet to create a frame, all the magic happen here
 
-  //! The calibrationFileName to used and set to the Interpreter once one has been set
-  std::string CalibrationFileName = "";
+    // vtkLidarPacketInterpreter* Interpreter = nullptr;
+
+    //! The calibrationFileName to used and set to the Interpreter once one has
+    //! been set
+    std::string CalibrationFileName = "";
+
 private:
-  vtkLidarProvider(const vtkLidarProvider&) = delete;
-  void operator=(const vtkLidarProvider&) = delete;
-
+    vtkLidarProvider(const vtkLidarProvider &) = delete;
+    void operator=(const vtkLidarProvider &) = delete;
 };
 
 #endif // VTKLIDARPROVIDER_H

@@ -22,10 +22,10 @@
 
 #include "dtkAbstractObject_p.h"
 #include "dtkAbstractViewAnimator.h"
-#include "dtkAbstractViewNavigator.h"
 #include "dtkAbstractViewInteractor.h"
-#include <dtkCoreSupportExport.h>
+#include "dtkAbstractViewNavigator.h"
 #include "dtkSmartPointer.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractView;
 
@@ -37,11 +37,14 @@ class DTKCORESUPPORT_EXPORT dtkAbstractViewPrivate : public dtkAbstractObjectPri
 {
 public:
     dtkAbstractViewPrivate(dtkAbstractView *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractViewPrivate(const dtkAbstractViewPrivate& other) : dtkAbstractObjectPrivate(other),
-        stereo(other.stereo),
-        animators(other.animators),
-        navigators(other.navigators),
-        interactors(other.interactors) {}
+    dtkAbstractViewPrivate(const dtkAbstractViewPrivate &other)
+        : dtkAbstractObjectPrivate(other),
+          stereo(other.stereo),
+          animators(other.animators),
+          navigators(other.navigators),
+          interactors(other.interactors)
+    {
+    }
 
 public:
     virtual ~dtkAbstractViewPrivate(void) {}
@@ -53,9 +56,9 @@ public:
     QString name;
 
 public:
-    QMap<QString, dtkSmartPointer<dtkAbstractViewAnimator> >   animators;
-    QMap<QString, dtkSmartPointer<dtkAbstractViewNavigator> >  navigators;
-    QMap<QString, dtkSmartPointer<dtkAbstractViewInteractor> > interactors;
+    QMap<QString, dtkSmartPointer<dtkAbstractViewAnimator>> animators;
+    QMap<QString, dtkSmartPointer<dtkAbstractViewNavigator>> navigators;
+    QMap<QString, dtkSmartPointer<dtkAbstractViewInteractor>> interactors;
 };
 
 ////////////////////////////////////////////////////

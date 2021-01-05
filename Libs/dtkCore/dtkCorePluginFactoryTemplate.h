@@ -20,8 +20,8 @@
 
 #include <typeinfo>
 
-#if defined (COMPILER_SUPPORTS_CXX11)
-#include <typeindex>
+#if defined(COMPILER_SUPPORTS_CXX11)
+#    include <typeindex>
 #endif
 
 // ///////////////////////////////////////////////////////////////////
@@ -31,18 +31,15 @@
 class dtkCorePluginFactoryTemplate : public QObject
 {
 public:
-    dtkCorePluginFactoryTemplate(void) : QObject() {
-        ;
-    }
-    ~dtkCorePluginFactoryTemplate(void) {
-        ;
-    }
+    dtkCorePluginFactoryTemplate(void) : QObject() { ; }
+    ~dtkCorePluginFactoryTemplate(void) { ; }
 
 public:
-    template <typename FactoryType> FactoryType *pluginFactory(void);
+    template<typename FactoryType>
+    FactoryType *pluginFactory(void);
 
 private:
-#if defined (COMPILER_SUPPORTS_CXX11)
+#if defined(COMPILER_SUPPORTS_CXX11)
     QMap<std::type_index, void *> m_factories;
 #else
     QMap<QString, void *> m_factories;
@@ -51,9 +48,10 @@ private:
 
 // ///////////////////////////////////////////////////////////////////
 
-template <typename FactoryType> inline FactoryType *dtkCorePluginFactoryTemplate::pluginFactory(void)
+template<typename FactoryType>
+inline FactoryType *dtkCorePluginFactoryTemplate::pluginFactory(void)
 {
-#if defined (COMPILER_SUPPORTS_CXX11)
+#if defined(COMPILER_SUPPORTS_CXX11)
     std::type_index index(typeid(FactoryType));
 
     if (!m_factories.contains(index)) {

@@ -37,12 +37,13 @@ public:
 // dtkVisualizationWidgetsFieldScalar
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationWidgetsFieldScalar::dtkVisualizationWidgetsFieldScalar(QWidget *parent) : QWidget(parent), d(new dtkVisualizationWidgetsFieldScalarPrivate)
+dtkVisualizationWidgetsFieldScalar::dtkVisualizationWidgetsFieldScalar(QWidget *parent)
+    : QWidget(parent), d(new dtkVisualizationWidgetsFieldScalarPrivate)
 {
     d->box = new QComboBox(this);
 
     QFormLayout *layout = new QFormLayout(this);
-    layout->setContentsMargins(0, 0, 0,  0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d->box);
 }
 

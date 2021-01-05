@@ -27,26 +27,30 @@
 // dtkVisualizationWidgetsClutEditorVertex
 // /////////////////////////////////////////////////////////////////
 
-class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorVertex : public QObject, public QGraphicsItem
+class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorVertex : public QObject,
+                                                                  public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 
 public:
-     dtkVisualizationWidgetsClutEditorVertex(int x, int y, QColor color = Qt::yellow, QGraphicsItem *parent = nullptr);
-     dtkVisualizationWidgetsClutEditorVertex(QPointF point, QColor color = Qt::yellow, QGraphicsItem *parent = nullptr);
+    dtkVisualizationWidgetsClutEditorVertex(int x, int y, QColor color = Qt::yellow,
+                                            QGraphicsItem *parent = nullptr);
+    dtkVisualizationWidgetsClutEditorVertex(QPointF point, QColor color = Qt::yellow,
+                                            QGraphicsItem *parent = nullptr);
     ~dtkVisualizationWidgetsClutEditorVertex(void);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr);
 
     QRectF boundingRect(void) const;
     QPoint position(void) const;
     QColor color(void) const;
 
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 signals:
-    void moved(const QPointF& position);
+    void moved(const QPointF &position);
 
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -65,13 +69,13 @@ class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorScene : public QGraphic
     Q_OBJECT
 
 public:
-     dtkVisualizationWidgetsClutEditorScene(QObject *parent = nullptr);
+    dtkVisualizationWidgetsClutEditorScene(QObject *parent = nullptr);
     ~dtkVisualizationWidgetsClutEditorScene(void);
 
     void addItem(QGraphicsItem *item);
 
 signals:
-    void   moved(const QPointF& position);
+    void moved(const QPointF &position);
     void removed(void);
 
 protected:
@@ -90,7 +94,7 @@ private:
 class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditorView : public QGraphicsView
 {
 public:
-     dtkVisualizationWidgetsClutEditorView(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsClutEditorView(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsClutEditorView(void);
 
 private:
@@ -109,19 +113,16 @@ class DTKWIDGETS_EXPORT dtkVisualizationWidgetsClutEditor : public QWidget
     Q_OBJECT
 
 public:
-    enum ColorSpace {
-        HSV,
-        RGB
-    };
+    enum ColorSpace { HSV, RGB };
 
 public:
     using Histogram = QList<int>;
 
 public:
-     dtkVisualizationWidgetsClutEditor(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsClutEditor(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsClutEditor(void);
 
-    void   *colorTransferFunction(void);
+    void *colorTransferFunction(void);
     void *opacityTransferFunction(void);
 
     void setColorTransferFunction(vtkColorTransferFunction *color_transfer_function);
@@ -129,14 +130,14 @@ public:
 
     void setRange(double min, double max);
 
-    void setHistogram(const Histogram& histogram);
+    void setHistogram(const Histogram &histogram);
 
 signals:
     void updated(void);
 
 public slots:
     void importClut(void);
-    void importClut(const QString&);
+    void importClut(const QString &);
     void exportClut(void);
 
     void toggle(bool);
@@ -149,12 +150,12 @@ protected slots:
     void onColorAuto(void);
     void onColorChoose(void);
     void onSelectionChanged(void);
-    void onVertexMoved(const QPointF& point);
+    void onVertexMoved(const QPointF &point);
 
 protected:
     void resizeEvent(QResizeEvent *event);
 
- private:
+private:
     void updateTable(void);
 
 private:

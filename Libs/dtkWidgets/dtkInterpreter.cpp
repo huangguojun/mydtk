@@ -19,8 +19,8 @@
 
 #include <iostream>
 
-#include <QtDebug>
 #include <QtCore>
+#include <QtDebug>
 #include <QtGui>
 #include <QtWidgets>
 
@@ -28,10 +28,10 @@
 
 #include <dtkScript/dtkScriptInterpreter.h>
 #if defined(DTK_BUILD_WRAPPERS) && defined(DTK_HAVE_PYTHON)
-#include <dtkScript/dtkScriptInterpreterPython.h>
+#    include <dtkScript/dtkScriptInterpreterPython.h>
 #endif
 #if defined(DTK_BUILD_WRAPPERS) && defined(DTK_HAVE_TCL)
-#include <dtkScript/dtkScriptInterpreterTcl.h>
+#    include <dtkScript/dtkScriptInterpreterTcl.h>
 #endif
 
 #include "dtkInterpreter.h"
@@ -49,9 +49,9 @@ public:
     QTextCursor cursor;
 
 public:
-    QStringList  history;
+    QStringList history;
     unsigned int history_index;
-    bool         history_dirty;
+    bool history_dirty;
 
 public:
     QString prompt;
@@ -61,7 +61,8 @@ public:
 // dtkInterpreter
 // /////////////////////////////////////////////////////////////////
 
-dtkInterpreter::dtkInterpreter(QWidget *parent) : QPlainTextEdit(parent), d(new dtkInterpreterPrivate)
+dtkInterpreter::dtkInterpreter(QWidget *parent)
+    : QPlainTextEdit(parent), d(new dtkInterpreterPrivate)
 {
     d->interpreter = NULL;
     d->history_index = 0;
@@ -146,7 +147,8 @@ void dtkInterpreter::mouseReleaseEvent(QMouseEvent *event)
 {
     QPlainTextEdit::mouseReleaseEvent(event);
 
-    if (d->cursor.blockNumber() + 1 != currentLineNumber() && d->cursor.columnNumber() <= d->prompt.size())
+    if (d->cursor.blockNumber() + 1 != currentLineNumber()
+        && d->cursor.columnNumber() <= d->prompt.size())
         this->setTextCursor(d->cursor);
 }
 
@@ -233,7 +235,7 @@ void dtkInterpreter::onKeyEnterPressed(void)
     this->output(d->interpreter->interpret(line, &stat));
 }
 
-void dtkInterpreter::output(const QString& result)
+void dtkInterpreter::output(const QString &result)
 {
     QString text(result);
 

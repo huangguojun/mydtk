@@ -22,14 +22,11 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideoGL : public dtkWidgetsWid
 {
     Q_OBJECT
 
- public:
-    enum Version {
-        GLSL120,
-        GLSL150
-    };
+public:
+    enum Version { GLSL120, GLSL150 };
 
 public:
-     dtkVisualizationViewVideoGL(QWidget *parent = nullptr);
+    dtkVisualizationViewVideoGL(QWidget *parent = nullptr);
     ~dtkVisualizationViewVideoGL(void);
 
 public:
@@ -39,8 +36,8 @@ public slots:
     void update(void) override;
 
 public slots:
-    void setImage(const QImage&);
-    void setTitle(const QString&);
+    void setImage(const QImage &);
+    void setTitle(const QString &);
 
 public:
     float ratioBuffer(void) const;
@@ -57,7 +54,6 @@ private:
 
 private:
     friend class dtkVisualizationViewVideoGLPrivate;
-
 };
 
 //

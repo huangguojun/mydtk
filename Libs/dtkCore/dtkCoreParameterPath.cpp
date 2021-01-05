@@ -18,7 +18,8 @@
 // dtkCoreParameterPath implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkCoreParameterPath::dtkCoreParameterPath(const dtkCoreParameter *p) : dtkCoreParameterBase<dtkCoreParameterPath>()
+dtkCoreParameterPath::dtkCoreParameterPath(const dtkCoreParameter *p)
+    : dtkCoreParameterBase<dtkCoreParameterPath>()
 {
     if (!p) {
         dtkWarn() << Q_FUNC_INFO << "Input parameter is null. Nothing is done.";
@@ -27,7 +28,8 @@ dtkCoreParameterPath::dtkCoreParameterPath(const dtkCoreParameter *p) : dtkCoreP
     *this = p->variant();
 }
 
-dtkCoreParameterPath::dtkCoreParameterPath(const QVariant& v) : dtkCoreParameterBase<dtkCoreParameterPath>()
+dtkCoreParameterPath::dtkCoreParameterPath(const QVariant &v)
+    : dtkCoreParameterBase<dtkCoreParameterPath>()
 {
     if (v.canConvert<dtkCoreParameterPath>()) {
         auto o(v.value<dtkCoreParameterPath>());
@@ -43,21 +45,18 @@ dtkCoreParameterPath::dtkCoreParameterPath(const QVariant& v) : dtkCoreParameter
     }
 }
 
-dtkCoreParameterPath::dtkCoreParameterPath(const dtkCoreParameterPath& o) : dtkCoreParameterBase<dtkCoreParameterPath>(o),
-                                                                            m_path(o.m_path),
-                                                                            m_filters(o.m_filters)
+dtkCoreParameterPath::dtkCoreParameterPath(const dtkCoreParameterPath &o)
+    : dtkCoreParameterBase<dtkCoreParameterPath>(o), m_path(o.m_path), m_filters(o.m_filters)
 {
-
 }
 
-dtkCoreParameterPath::dtkCoreParameterPath(const QString& label, const QString& path, const QStringList& filters, const QString& doc) : dtkCoreParameterBase<dtkCoreParameterPath>(label, doc),
-                                                                                                                                        m_path(path),
-                                                                                                                                        m_filters(filters)
+dtkCoreParameterPath::dtkCoreParameterPath(const QString &label, const QString &path,
+                                           const QStringList &filters, const QString &doc)
+    : dtkCoreParameterBase<dtkCoreParameterPath>(label, doc), m_path(path), m_filters(filters)
 {
-
 }
 
-dtkCoreParameterPath& dtkCoreParameterPath::operator = (const dtkCoreParameter *p)
+dtkCoreParameterPath &dtkCoreParameterPath::operator=(const dtkCoreParameter *p)
 {
     if (!p) {
         dtkWarn() << Q_FUNC_INFO << "Input parameter is null. Nothing is done.";
@@ -66,7 +65,7 @@ dtkCoreParameterPath& dtkCoreParameterPath::operator = (const dtkCoreParameter *
     return *this = p->variant();
 }
 
-dtkCoreParameterPath& dtkCoreParameterPath::operator = (const QVariant& v)
+dtkCoreParameterPath &dtkCoreParameterPath::operator=(const QVariant &v)
 {
     if (v.canConvert<dtkCoreParameterPath>()) {
         *this = v.value<dtkCoreParameterPath>();
@@ -89,7 +88,7 @@ dtkCoreParameterPath& dtkCoreParameterPath::operator = (const QVariant& v)
     return *this;
 }
 
-dtkCoreParameterPath& dtkCoreParameterPath::operator = (const dtkCoreParameterPath& o)
+dtkCoreParameterPath &dtkCoreParameterPath::operator=(const dtkCoreParameterPath &o)
 {
     if (this != &o) {
         m_label = o.m_label;
@@ -101,13 +100,13 @@ dtkCoreParameterPath& dtkCoreParameterPath::operator = (const dtkCoreParameterPa
     return *this;
 }
 
-void dtkCoreParameterPath::setValue(const QString& path)
+void dtkCoreParameterPath::setValue(const QString &path)
 {
     m_path = path;
     this->sync();
 }
 
-void dtkCoreParameterPath::setValue(const QVariant& v)
+void dtkCoreParameterPath::setValue(const QVariant &v)
 {
     if (v.canConvert<dtkCoreParameterPath>()) {
         *this = v.value<dtkCoreParameterPath>();
@@ -167,7 +166,7 @@ QString dtkCoreParameterPath::baseName(void) const
     return pathinfo.baseName();
 }
 
-QDataStream& operator << (QDataStream& s, const dtkCoreParameterPath& p)
+QDataStream &operator<<(QDataStream &s, const dtkCoreParameterPath &p)
 {
     s << p.label();
     s << p.path();
@@ -181,32 +180,35 @@ QDataStream& operator << (QDataStream& s, const dtkCoreParameterPath& p)
     return s;
 }
 
-QDataStream& operator >> (QDataStream& s, dtkCoreParameterPath& p)
+QDataStream &operator>>(QDataStream &s, dtkCoreParameterPath &p)
 {
-    QString label; s >> label;
-    QString path; s >> path;
-    int count; s >> count;
+    QString label;
+    s >> label;
+    QString path;
+    s >> path;
+    int count;
+    s >> count;
     QStringList filters;
     for (int i = 0; i < count; ++i) {
-        QString filter; s >> filter;
+        QString filter;
+        s >> filter;
         filters << filter;
     }
-    QString doc; s >> doc;
+    QString doc;
+    s >> doc;
 
     p = dtkCoreParameterPath(label, path, filters, doc);
     return s;
-
 }
 
-QDebug operator << (QDebug dbg, dtkCoreParameterPath p)
+QDebug operator<<(QDebug dbg, dtkCoreParameterPath p)
 {
     const bool old_setting = dbg.autoInsertSpaces();
     dbg.nospace() << p.variant().typeName() << " : { ";
     dbg.nospace() << "label " << p.label() << ", "
                   << "path " << p.path() << ", "
                   << "filters " << p.filters() << ", "
-                  << "documentation : " << p.documentation()
-                  << " }";
+                  << "documentation : " << p.documentation() << " }";
 
     dbg.setAutoInsertSpaces(old_setting);
     return dbg.maybeSpace();

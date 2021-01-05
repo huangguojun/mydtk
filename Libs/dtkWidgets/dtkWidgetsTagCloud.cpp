@@ -12,29 +12,29 @@
  *
  */
 
-#include "dtkWidgetsTag.h"
 #include "dtkWidgetsTagCloud.h"
+#include "dtkWidgetsTag.h"
 
 // /////////////////////////////////////////////////////////////////
 // Helper functions
 // /////////////////////////////////////////////////////////////////
 
-bool dtkWidgetsTagAlphaLessThan(const dtkWidgetsTag& t1, const dtkWidgetsTag& t2)
+bool dtkWidgetsTagAlphaLessThan(const dtkWidgetsTag &t1, const dtkWidgetsTag &t2)
 {
     return t1.text() < t2.text();
 }
 
-bool dtkWidgetsTagNumLessThan(const dtkWidgetsTag& t1, const dtkWidgetsTag& t2)
+bool dtkWidgetsTagNumLessThan(const dtkWidgetsTag &t1, const dtkWidgetsTag &t2)
 {
     return t1.count() < t2.count();
 }
 
-bool dtkWidgetsTagAlphaMoreThan(const dtkWidgetsTag& t1, const dtkWidgetsTag& t2)
+bool dtkWidgetsTagAlphaMoreThan(const dtkWidgetsTag &t1, const dtkWidgetsTag &t2)
 {
     return t1.text() >= t2.text();
 }
 
-bool dtkWidgetsTagNumMoreThan(const dtkWidgetsTag& t1, const dtkWidgetsTag& t2)
+bool dtkWidgetsTagNumMoreThan(const dtkWidgetsTag &t1, const dtkWidgetsTag &t2)
 {
     return t1.count() >= t2.count();
 }
@@ -46,7 +46,8 @@ bool dtkWidgetsTagNumMoreThan(const dtkWidgetsTag& t1, const dtkWidgetsTag& t2)
 class dtkWidgetsTagCloudHasher
 {
 public:
-    dtkWidgetsTagCloudHasher(int buckets, int min, int max) {
+    dtkWidgetsTagCloudHasher(int buckets, int min, int max)
+    {
         if (buckets < 1)
             qDebug() << "dtkWidgetsTagCloudHasher: Must have at least one bucket.";
 
@@ -57,7 +58,8 @@ public:
         this->width = ((double)(this->max - this->min)) / ((double)(this->buckets));
     }
 
-    int bucket(dtkWidgetsTag tag) {
+    int bucket(dtkWidgetsTag tag)
+    {
         return ((float)(tag.count() - this->min)) / ((float)(this->width));
     }
 
@@ -83,7 +85,7 @@ public:
     int maxcount;
     int tagCount;
 
-    dtkWidgetsTagCloud::SortingType  sortingType;
+    dtkWidgetsTagCloud::SortingType sortingType;
     dtkWidgetsTagCloud::SortingOrder sortingOrder;
 };
 
@@ -107,14 +109,14 @@ dtkWidgetsTagCloud::dtkWidgetsTagCloud(QWidget *parent) : QTextBrowser(parent)
     d = new dtkWidgetsTagCloudPrivate;
 
     d->averageFontSize = 0;
-    d->fontSizeRange   = 0;
+    d->fontSizeRange = 0;
 
-    d->sortingType  = Alpha;
+    d->sortingType = Alpha;
     d->sortingOrder = Asc;
 
     this->setFrameShape(QFrame::NoFrame);
 
-    connect(this, SIGNAL(anchorClicked(const QUrl&)), this, SLOT(onLinkClicked(const QUrl&)));
+    connect(this, SIGNAL(anchorClicked(const QUrl &)), this, SLOT(onLinkClicked(const QUrl &)));
 }
 
 dtkWidgetsTagCloud::~dtkWidgetsTagCloud(void)
@@ -216,7 +218,8 @@ void dtkWidgetsTagCloud::render(void)
 
     int baseFontSize = d->averageFontSize - ((double)(d->fontSizeRange - 1) / 2);
 
-    QString cloud; cloud.append(QString("<div align=\"justify\">\n"));
+    QString cloud;
+    cloud.append(QString("<div align=\"justify\">\n"));
 
     foreach (dtkWidgetsTag tag, d->tags) {
 
@@ -225,7 +228,7 @@ void dtkWidgetsTagCloud::render(void)
         QString color = "";
 
         if (!tag.color().isEmpty()) {
-            color  = "color: ";
+            color = "color: ";
             color += (!tag.color().startsWith("#")) ? "#" : "";
             color += tag.color();
             color += ";";
@@ -235,12 +238,13 @@ void dtkWidgetsTagCloud::render(void)
 
         QString count = QString::number(tag.count()) + " item" + ((tag.count() != 1) ? "s" : "");
 
-        cloud.append(QString("<a href=\"tag://%1\" title=\"%2\" style=\"font-size: %4px; text-decoration: none; %5\" item=\"%3\">%1</a> ")
-                     .arg(tag.text())
-                     .arg(count)
-                     .arg(tag.items().first())
-                     .arg(fontSize)
-                     .arg(color));
+        cloud.append(QString("<a href=\"tag://%1\" title=\"%2\" style=\"font-size: "
+                             "%4px; text-decoration: none; %5\" item=\"%3\">%1</a> ")
+                             .arg(tag.text())
+                             .arg(count)
+                             .arg(tag.items().first())
+                             .arg(fontSize)
+                             .arg(color));
     }
 
     cloud.append("</div>\n");
@@ -248,7 +252,7 @@ void dtkWidgetsTagCloud::render(void)
     this->setHtml(cloud);
 }
 
-void dtkWidgetsTagCloud::onLinkClicked(const QUrl& url)
+void dtkWidgetsTagCloud::onLinkClicked(const QUrl &url)
 {
     emit tagClicked(url.host());
 }

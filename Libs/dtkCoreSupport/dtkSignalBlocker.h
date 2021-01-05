@@ -25,24 +25,18 @@
 class dtkSignalBlocker
 {
 public:
-    explicit dtkSignalBlocker(QObject *o) : m_object(o) {
-        m_object->blockSignals(true);
-    }
+    explicit dtkSignalBlocker(QObject *o) : m_object(o) { m_object->blockSignals(true); }
 
-    ~dtkSignalBlocker(void) {
-        m_object->blockSignals(false);
-    }
+    ~dtkSignalBlocker(void) { m_object->blockSignals(false); }
 
-    void blockSignals(bool v) {
-        m_object->blockSignals(v);
-    }
+    void blockSignals(bool v) { m_object->blockSignals(v); }
 
 private:
     QObject *m_object;
 
 private:
-    dtkSignalBlocker(const dtkSignalBlocker&);
-    dtkSignalBlocker& operator=(const dtkSignalBlocker&);
+    dtkSignalBlocker(const dtkSignalBlocker &);
+    dtkSignalBlocker &operator=(const dtkSignalBlocker &);
 };
 
 #endif

@@ -35,7 +35,8 @@ private:
     bool m_slim;
 };
 
-dtkSplitterHandle::dtkSplitterHandle(Qt::Orientation orientation, bool slim, QSplitter *parent) : QSplitterHandle(orientation, parent)
+dtkSplitterHandle::dtkSplitterHandle(Qt::Orientation orientation, bool slim, QSplitter *parent)
+    : QSplitterHandle(orientation, parent)
 {
     this->m_slim = slim;
 }

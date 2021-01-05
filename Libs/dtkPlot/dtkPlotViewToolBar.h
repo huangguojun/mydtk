@@ -36,7 +36,7 @@ public:
     ~dtkPlotViewToolBar(void);
 
 protected:
-    void onExport(const QString& file);
+    void onExport(const QString &file);
 
 signals:
     void settingsClicked(bool value);

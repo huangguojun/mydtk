@@ -27,18 +27,17 @@ dtkSpacer::dtkSpacer(QWidget *parent, int width, int height) : QWidget(parent)
         this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
-dtkSpacer::~dtkSpacer(void)
-{
-
-}
+dtkSpacer::~dtkSpacer(void) {}
 
 QSize dtkSpacer::sizeHint(void) const
 {
     QSize size = QWidget::sizeHint();
 
-    if (size.width()  < 1) size.setWidth(1);
+    if (size.width() < 1)
+        size.setWidth(1);
 
-    if (size.height() < 1) size.setHeight(1);
+    if (size.height() < 1)
+        size.setHeight(1);
 
     return (size);
 }

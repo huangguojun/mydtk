@@ -54,12 +54,12 @@ public:
 
 public:
     QMatrix4x4 projection_matrix, view_matrix;
-    QOpenGLShaderProgram     pgm;
+    QOpenGLShaderProgram pgm;
     QOpenGLVertexArrayObject vao;
-    QOpenGLBuffer            vbo;
-    QOpenGLBuffer            ibo;
-    GLuint                   tex;
-    GLsizei                  cnt;
+    QOpenGLBuffer vbo;
+    QOpenGLBuffer ibo;
+    GLuint tex;
+    GLsizei cnt;
 
 public:
     QImage buffer;
@@ -83,11 +83,9 @@ public:
 
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewVideoGLPrivate::dtkVisualizationViewVideoGLPrivate(QWidget *parent) : QOpenGLWidget(parent),
-                                                                                          vbo(QOpenGLBuffer::VertexBuffer),
-                                                                                          ibo(QOpenGLBuffer::IndexBuffer)
+dtkVisualizationViewVideoGLPrivate::dtkVisualizationViewVideoGLPrivate(QWidget *parent)
+    : QOpenGLWidget(parent), vbo(QOpenGLBuffer::VertexBuffer), ibo(QOpenGLBuffer::IndexBuffer)
 {
-
 }
 
 void dtkVisualizationViewVideoGLPrivate::setVersion(int major, int minor, bool debug)
@@ -99,7 +97,7 @@ void dtkVisualizationViewVideoGLPrivate::setVersion(int major, int minor, bool d
     format.setStencilBufferSize(1);
     format.setSamples(1);
     format.setProfile(QSurfaceFormat::CoreProfile);
-    
+
     if (debug) {
         format.setOption(QSurfaceFormat::DebugContext);
     }
@@ -115,7 +113,8 @@ void dtkVisualizationViewVideoGLPrivate::setVersion(int major, int minor, bool d
     this->context->create();
 
     if (debug && this->context->hasExtension(QByteArrayLiteral("GL_KHR_debug"))) {
-        qDebug() << Q_FUNC_INFO << this->context << this->context->shareContext() << QOpenGLContext::globalShareContext();
+        qDebug() << Q_FUNC_INFO << this->context << this->context->shareContext()
+                 << QOpenGLContext::globalShareContext();
         qDebug() << Q_FUNC_INFO << this->context->format();
         qDebug() << Q_FUNC_INFO << this->context->surface();
         qDebug() << "--------------------------------------------";
@@ -126,17 +125,23 @@ void dtkVisualizationViewVideoGLPrivate::setVersion(int major, int minor, bool d
 
 void dtkVisualizationViewVideoGLPrivate::createShaderProgram(void)
 {
-    if(!pgm.addShaderFromSourceFile(QOpenGLShader::Vertex, q->version == dtkVisualizationViewVideoGL::GLSL120 ? ":dtkVisualizationViewVideoGL.120.vert" : ":dtkVisualizationViewVideoGL.150.vert")) {
+    if (!pgm.addShaderFromSourceFile(QOpenGLShader::Vertex,
+                                     q->version == dtkVisualizationViewVideoGL::GLSL120
+                                             ? ":dtkVisualizationViewVideoGL.120.vert"
+                                             : ":dtkVisualizationViewVideoGL.150.vert")) {
         qDebug() << "Error in vertex shader:" << pgm.log();
         exit(1);
     }
 
-    if(!pgm.addShaderFromSourceFile(QOpenGLShader::Fragment, q->version == dtkVisualizationViewVideoGL::GLSL120 ? ":dtkVisualizationViewVideoGL.120.frag" :  ":dtkVisualizationViewVideoGL.150.frag")) {
+    if (!pgm.addShaderFromSourceFile(QOpenGLShader::Fragment,
+                                     q->version == dtkVisualizationViewVideoGL::GLSL120
+                                             ? ":dtkVisualizationViewVideoGL.120.frag"
+                                             : ":dtkVisualizationViewVideoGL.150.frag")) {
         qDebug() << "Error in fragment shader:" << pgm.log();
         exit(1);
     }
 
-    if(!pgm.link()) {
+    if (!pgm.link()) {
         qDebug() << "Error linking shader pgm:" << pgm.log();
         exit(1);
     }
@@ -146,24 +151,21 @@ void dtkVisualizationViewVideoGLPrivate::createGeometry(void)
 {
     vao.bind();
 
-    rx = qreal(this->buffer.width())/qreal(this->buffer.height());
-    ry = qreal(this->buffer.width())/qreal(this->buffer.height());
+    rx = qreal(this->buffer.width()) / qreal(this->buffer.height());
+    ry = qreal(this->buffer.width()) / qreal(this->buffer.height());
 
-    if(rw < rb)
+    if (rw < rb)
         rx = 1.0;
     else
         ry = 1.0;
 
-    struct Vertex {
-        GLfloat position[3],
-            normal  [3],
-            texcoord[2];
-    } attribs[4]= {
-        { { rx * -1.0f, -1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, {  0.0f, 0.0f } },
-        { { rx * -1.0f,  1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, {  0.0f, 1.0f } },
-        { { rx *  1.0f,  1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, {  1.0f, 1.0f } },
-        { { rx *  1.0f, -1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, {  1.0f, 0.0f } }
-    };
+    struct Vertex
+    {
+        GLfloat position[3], normal[3], texcoord[2];
+    } attribs[4] = { { { rx * -1.0f, -1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f } },
+                     { { rx * -1.0f, 1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
+                     { { rx * 1.0f, 1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f } },
+                     { { rx * 1.0f, -1.0f / ry, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } } };
 
     unsigned char nvidia_bug[4];
 
@@ -173,7 +175,8 @@ void dtkVisualizationViewVideoGLPrivate::createGeometry(void)
     vbo.allocate(attribs, sizeof(attribs) + sizeof(nvidia_bug));
 
     pgm.enableAttributeArray("vertexPosition");
-    pgm.setAttributeBuffer("vertexPosition", GL_FLOAT, offsetof(Vertex, position), 3, sizeof(Vertex));
+    pgm.setAttributeBuffer("vertexPosition", GL_FLOAT, offsetof(Vertex, position), 3,
+                           sizeof(Vertex));
 
     pgm.enableAttributeArray("vertexNormal");
     pgm.setAttributeBuffer("vertexNormal", GL_FLOAT, offsetof(Vertex, normal), 3, sizeof(Vertex));
@@ -181,7 +184,8 @@ void dtkVisualizationViewVideoGLPrivate::createGeometry(void)
     pgm.enableAttributeArray("texCoord2d");
     pgm.setAttributeBuffer("texCoord2d", GL_FLOAT, offsetof(Vertex, texcoord), 3, sizeof(Vertex));
 
-    struct {
+    struct
+    {
         GLubyte quad[6];
     } indices;
 
@@ -210,7 +214,8 @@ void dtkVisualizationViewVideoGLPrivate::createTexture(void)
 void dtkVisualizationViewVideoGLPrivate::initializeGL(void)
 {
     if (this->debug && QOpenGLWidget::context()->hasExtension(QByteArrayLiteral("GL_KHR_debug"))) {
-        qDebug() << Q_FUNC_INFO << 1 << this->context << this->context->shareContext() << QOpenGLContext::globalShareContext();
+        qDebug() << Q_FUNC_INFO << 1 << this->context << this->context->shareContext()
+                 << QOpenGLContext::globalShareContext();
         qDebug() << Q_FUNC_INFO << 1 << this->context->format();
         qDebug() << "--------------------------------------------";
     }
@@ -223,16 +228,16 @@ void dtkVisualizationViewVideoGLPrivate::initializeGL(void)
 
     view_matrix.setToIdentity();
 
-// /////////////////////////////////////////////////////////////////////////////
-// TODO: Make sure works for both 2.1 & 4.1 formats
-// /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
+    // TODO: Make sure works for both 2.1 & 4.1 formats
+    // /////////////////////////////////////////////////////////////////////////////
 
     // glEnable(GL_DEPTH_TEST);
     // glEnable(GL_TEXTURE_2D);
 
     // glActiveTexture(GL_TEXTURE0);
 
-// /////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
 
     pgm.setUniformValue("tex", 0);
 
@@ -245,7 +250,8 @@ void dtkVisualizationViewVideoGLPrivate::initializeGL(void)
     createGeometry();
 
     if (this->debug && QOpenGLWidget::context()->hasExtension(QByteArrayLiteral("GL_KHR_debug"))) {
-        qDebug() << Q_FUNC_INFO << 2 << this->context << this->context->shareContext() << QOpenGLContext::globalShareContext();
+        qDebug() << Q_FUNC_INFO << 2 << this->context << this->context->shareContext()
+                 << QOpenGLContext::globalShareContext();
         qDebug() << Q_FUNC_INFO << 2 << this->context->format();
         qDebug() << "--------------------------------------------";
     }
@@ -257,13 +263,13 @@ void dtkVisualizationViewVideoGLPrivate::resizeGL(int w, int h)
 
     projection_matrix.setToIdentity();
 
-    rb = qreal(this->buffer.width())/qreal(this->buffer.height());
-    rw = qreal(w)/qreal(h);
+    rb = qreal(this->buffer.width()) / qreal(this->buffer.height());
+    rw = qreal(w) / qreal(h);
 
     if (rw < rb)
-        projection_matrix.ortho(-1.f, 1.f, -1.f*h/w, 1.f*h/w, 0, 1.f);
+        projection_matrix.ortho(-1.f, 1.f, -1.f * h / w, 1.f * h / w, 0, 1.f);
     else
-        projection_matrix.ortho(-1.f*w/h, 1.f*w/h, -1.f, 1.f, 0, 1.f);
+        projection_matrix.ortho(-1.f * w / h, 1.f * w / h, -1.f, 1.f, 0, 1.f);
 
     update();
 }
@@ -274,19 +280,20 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
         qDebug() << Q_FUNC_INFO;
         qDebug() << "Current context:" << QOpenGLWidget::context();
         qDebug() << "Current context:" << QOpenGLWidget::context()->format();
-        qDebug() << "   THIS context:" << this->context << this->context->shareContext() << QOpenGLContext::globalShareContext();
+        qDebug() << "   THIS context:" << this->context << this->context->shareContext()
+                 << QOpenGLContext::globalShareContext();
         qDebug() << "   THIS context:" << this->context->format();
         qDebug() << "------------------------------------------";
     }
 
-    if(this->buffer.isNull())
+    if (this->buffer.isNull())
         return;
 
     createGeometry();
 
-// ///////////////////////////////////////////////////////////////////
-//
-// ///////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////
+    //
+    // ///////////////////////////////////////////////////////////////////
 
     QOpenGLContext *context = QOpenGLContext::currentContext();
 
@@ -296,14 +303,16 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
 
     if (enable)
         logger->initialize(); // initializes in the current context, i.e. ctx
-// ///////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////
 
-    this->glBindTexture  (GL_TEXTURE_2D, tex);
-    this->glPixelStorei  (GL_UNPACK_ALIGNMENT, 1);
+    this->glBindTexture(GL_TEXTURE_2D, tex);
+    this->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 #if defined(Q_OS_MAC)
-    this->glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGBA, this->buffer.width(), this->buffer.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, this->buffer.bits());
+    this->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->buffer.width(), this->buffer.height(), 0,
+                       GL_BGRA, GL_UNSIGNED_BYTE, this->buffer.bits());
 #else
-    this->glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGBA, this->buffer.width(), this->buffer.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, this->buffer.bits());
+    this->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->buffer.width(), this->buffer.height(), 0,
+                       GL_RGBA, GL_UNSIGNED_BYTE, this->buffer.bits());
 #endif
     this->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     this->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -333,9 +342,9 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
     vbo.release();
     ibo.release();
 
-// ///////////////////////////////////////////////////////////////////
-//
-// ///////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////
+    //
+    // ///////////////////////////////////////////////////////////////////
 
     if (enable) {
         const QList<QOpenGLDebugMessage> messages = logger->loggedMessages();
@@ -343,7 +352,7 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
             qDebug() << message;
     }
 
-// ///////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////
 }
 
 // ///////////////////////////////////////////////////////////////////
@@ -352,7 +361,7 @@ void dtkVisualizationViewVideoGLPrivate::paintGL(void)
 
 dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkWidgetsWidget(parent)
 {
-    
+
     d = new dtkVisualizationViewVideoGLPrivate(this);
     d->q = this;
     d->setVersion(4, 3, false);
@@ -361,14 +370,13 @@ dtkVisualizationViewVideoGL::dtkVisualizationViewVideoGL(QWidget *parent) : dtkW
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(d);
-    
 }
 
 dtkVisualizationViewVideoGL::~dtkVisualizationViewVideoGL(void)
 {
     delete d;
 }
-void dtkVisualizationViewVideoGL::setVersion( int major, int minor, bool debug)
+void dtkVisualizationViewVideoGL::setVersion(int major, int minor, bool debug)
 {
     d->setVersion(major, minor, debug);
 }
@@ -378,7 +386,8 @@ QWidget *dtkVisualizationViewVideoGL::widget(void)
     QOpenGLContext *context = d->QOpenGLWidget::context();
 
     if (context && d->debug && context->hasExtension(QByteArrayLiteral("GL_KHR_debug"))) {
-        qDebug() << Q_FUNC_INFO << d->context << d->context->shareContext() << QOpenGLContext::globalShareContext();
+        qDebug() << Q_FUNC_INFO << d->context << d->context->shareContext()
+                 << QOpenGLContext::globalShareContext();
         qDebug() << Q_FUNC_INFO << d->format();
         qDebug() << "--------------------------------------------";
     }
@@ -391,12 +400,12 @@ void dtkVisualizationViewVideoGL::update(void)
     dtkWidgetsWidget::update();
 }
 
-void dtkVisualizationViewVideoGL::setTitle(const QString& title)
+void dtkVisualizationViewVideoGL::setTitle(const QString &title)
 {
     d->title = title;
 }
 
-void dtkVisualizationViewVideoGL::setImage(const QImage& image)
+void dtkVisualizationViewVideoGL::setImage(const QImage &image)
 {
     d->buffer = image.mirrored(false, true);
 

@@ -17,8 +17,8 @@
  *
  */
 
-#include "dtkPlotView.h"
 #include "dtkPlotViewPanner.h"
+#include "dtkPlotView.h"
 
 #include <qwt_plot.h>
 #include <qwt_plot_canvas.h>
@@ -31,15 +31,9 @@ public:
     ~dtkPlotViewPannerPrivate(void);
 };
 
-dtkPlotViewPannerPrivate::dtkPlotViewPannerPrivate(QwtPlotCanvas *canvas) : QwtPlotPanner(canvas)
-{
+dtkPlotViewPannerPrivate::dtkPlotViewPannerPrivate(QwtPlotCanvas *canvas) : QwtPlotPanner(canvas) {}
 
-}
-
-dtkPlotViewPannerPrivate::~dtkPlotViewPannerPrivate(void)
-{
-
-}
+dtkPlotViewPannerPrivate::~dtkPlotViewPannerPrivate(void) {}
 
 // /////////////////////////////////////////////////////////////////
 //

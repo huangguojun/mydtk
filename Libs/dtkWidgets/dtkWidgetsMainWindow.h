@@ -14,9 +14,8 @@
 
 #pragma once
 
-#include <dtkWidgetsExport>
 #include <QMainWindow>
-
+#include <dtkWidgetsExport>
 
 class dtkWidgetsMenu;
 class dtkWidgetsMenuBar;
@@ -27,14 +26,14 @@ class DTKWIDGETS_EXPORT dtkWidgetsMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-     dtkWidgetsMainWindow(QWidget *parent = nullptr);
+    dtkWidgetsMainWindow(QWidget *parent = nullptr);
     ~dtkWidgetsMainWindow(void);
 
 public:
     dtkWidgetsMenuBar *menubar(void);
 
 public:
-    void            populate(void);
+    void populate(void);
     dtkWidgetsMenu *populateFileMenu(void);
     dtkWidgetsMenu *populateThemesMenu(void);
     dtkWidgetsMenu *populateAboutMenu(void);

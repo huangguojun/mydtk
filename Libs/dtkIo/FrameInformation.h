@@ -26,15 +26,14 @@ struct FrameInformation
 
     FrameInformation() = default;
 
-    FrameInformation(const FrameInformation& arg) { *this = arg; }
+    FrameInformation(const FrameInformation &arg) { *this = arg; }
 
-    void operator=(const FrameInformation& arg)
+    void operator=(const FrameInformation &arg)
     {
         this->FilePosition = arg.FilePosition;
         this->FirstPacketNetworkTime = arg.FirstPacketNetworkTime;
         this->FirstPacketDataTime = arg.FirstPacketDataTime;
-        if (arg.SpecificInformation != nullptr)
-        {
+        if (arg.SpecificInformation != nullptr) {
             this->SpecificInformation = arg.SpecificInformation->clone();
         }
     }

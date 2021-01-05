@@ -22,8 +22,8 @@
 #include "dtkVisualizationDecoratorClutEditorBase.h"
 #include "dtkVisualizationView2D.h"
 
-#include <dtkWidgets>
 #include <dtkLog>
+#include <dtkWidgets>
 
 #include <QtGui/QColor>
 
@@ -40,11 +40,11 @@
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkSphereSource.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
+#include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformFilter.h>
 
@@ -79,7 +79,9 @@ public:
 // dtkVisualizationDecoratorVectorStreamlines implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorVectorStreamlines::dtkVisualizationDecoratorVectorStreamlines(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorVectorStreamlinesPrivate())
+dtkVisualizationDecoratorVectorStreamlines::dtkVisualizationDecoratorVectorStreamlines(void)
+    : dtkVisualizationDecoratorWithClut(),
+      d(new dtkVisualizationDecoratorVectorStreamlinesPrivate())
 {
     vtkSmartPointer<vtkMatrix4x4> matrix = vtkSmartPointer<vtkMatrix4x4>::New();
     matrix->Identity();
@@ -127,15 +129,13 @@ dtkVisualizationDecoratorVectorStreamlines::dtkVisualizationDecoratorVectorStrea
     //////////
     // Inspectors connections
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state)
-    {
-        this->saveSettings("visibility",state == Qt::Checked);
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
         this->setVisibility(state == Qt::Checked);
         this->draw();
     });
 
-    connect(d->show_source_actor_cb, &QCheckBox::stateChanged, [=] (int state)
-    {
+    connect(d->show_source_actor_cb, &QCheckBox::stateChanged, [=](int state) {
         d->source_actor->SetVisibility(state == Qt::Checked);
         this->draw();
     });
@@ -178,7 +178,7 @@ bool dtkVisualizationDecoratorVectorStreamlines::isCurrentFieldUniform(void)
     return false;
 }
 
-void dtkVisualizationDecoratorVectorStreamlines::setData(const QVariant& data)
+void dtkVisualizationDecoratorVectorStreamlines::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -234,7 +234,9 @@ void dtkVisualizationDecoratorVectorStreamlines::setCanvas(dtkVisualizationCanva
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -264,7 +266,7 @@ void dtkVisualizationDecoratorVectorStreamlines::setVisibility(bool visible)
     d->actor->SetVisibility(visible);
 }
 
-bool dtkVisualizationDecoratorVectorStreamlines::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorVectorStreamlines::setCurrentFieldName(const QString &field_name)
 {
     if (field_name.isEmpty()) {
         dtkWarn() << Q_FUNC_INFO << "Field name is empty, nothing is done.";
@@ -272,12 +274,15 @@ bool dtkVisualizationDecoratorVectorStreamlines::setCurrentFieldName(const QStri
     }
 
     if (!d_func()->dataset) {
-        dtkWarn() << Q_FUNC_INFO << "Before calling setCurrentFieldName, setDataSet must be called.";
+        dtkWarn() << Q_FUNC_INFO
+                  << "Before calling setCurrentFieldName, setDataSet must be called.";
         return false;
     }
 
-    if(!d_func()->eligible_field_names.contains(field_name)) {
-        dtkWarn() << Q_FUNC_INFO << "The field name :" << field_name << "that was specified doesn't match any of the eligible scalar field names";
+    if (!d_func()->eligible_field_names.contains(field_name)) {
+        dtkWarn() << Q_FUNC_INFO << "The field name :" << field_name
+                  << "that was specified doesn't match any of the eligible "
+                     "scalar field names";
         return false;
     }
 
@@ -285,25 +290,32 @@ bool dtkVisualizationDecoratorVectorStreamlines::setCurrentFieldName(const QStri
 
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
-    if(support == Support::Point) {
-        d_func()->dataset->GetPointData()->SetActiveVectors(qPrintable(d_func()->current_field_name));
-        d->streamlines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS, qPrintable(field_name));
-    } else if(support == Support::Cell) {
-        d_func()->dataset->GetCellData()->SetActiveVectors(qPrintable(d_func()->current_field_name));
-        d->streamlines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS, qPrintable(field_name));
+    if (support == Support::Point) {
+        d_func()->dataset->GetPointData()->SetActiveVectors(
+                qPrintable(d_func()->current_field_name));
+        d->streamlines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_POINTS,
+                                               qPrintable(field_name));
+    } else if (support == Support::Cell) {
+        d_func()->dataset->GetCellData()->SetActiveVectors(
+                qPrintable(d_func()->current_field_name));
+        d->streamlines->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS,
+                                               qPrintable(field_name));
     }
 
     return dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name);
 }
 
-void dtkVisualizationDecoratorVectorStreamlines::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorVectorStreamlines::setColorMap(
+        const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 
-    // dtkVisualizationWidgetsColorMapEditor *color_map_editor = d_func()->colormap_editor;
+    // dtkVisualizationWidgetsColorMapEditor *color_map_editor =
+    // d_func()->colormap_editor;
 
     // QString& current_field_name = d_func()->current_field_name;
-    // vtkSmartPointer<vtkColorTransferFunction>& color_function = d_func()->color_function;
+    // vtkSmartPointer<vtkColorTransferFunction>& color_function =
+    // d_func()->color_function;
 
     // if(d->mapper->GetInput()) {
     //     d->mapper->SetLookupTable(color_function);

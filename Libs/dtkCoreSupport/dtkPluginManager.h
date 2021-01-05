@@ -34,36 +34,36 @@ class DTKCORESUPPORT_EXPORT dtkPluginManager : public QObject
 public:
     static dtkPluginManager *instance(void);
 
-    void   initializeApplication(void);
-    void   initialize(void);
+    void initializeApplication(void);
+    void initialize(void);
     void uninitialize(void);
     void uninitializeApplication(void);
 
-    virtual void   scan(const QString& path);
-    virtual void   load(const QString& name);
-    virtual void unload(const QString& name);
+    virtual void scan(const QString &path);
+    virtual void load(const QString &name);
+    virtual void unload(const QString &name);
 
-    virtual void  readSettings(void);
+    virtual void readSettings(void);
     virtual void writeSettings(void);
 
     void printPlugins(void);
 
-    void setVerboseLoading (bool value);
-    bool verboseLoading (void) const;
+    void setVerboseLoading(bool value);
+    bool verboseLoading(void) const;
 
-    dtkPlugin   *plugin(const QString& name);
+    dtkPlugin *plugin(const QString &name);
     QList<dtkPlugin *> plugins(void);
 
-    void setPath(const QString& path);
+    void setPath(const QString &path);
 
 public:
-    virtual void   loadPlugin(const QString& path);
-    virtual void unloadPlugin(const QString& path);
+    virtual void loadPlugin(const QString &path);
+    virtual void unloadPlugin(const QString &path);
 
 signals:
-    void   loaded(const QString& plugin);
-    void unloaded(const QString& plugin);
-    void   loadError(const QString& errorMessage);
+    void loaded(const QString &plugin);
+    void unloaded(const QString &plugin);
+    void loadError(const QString &errorMessage);
 
 protected:
     dtkPluginManager(void);

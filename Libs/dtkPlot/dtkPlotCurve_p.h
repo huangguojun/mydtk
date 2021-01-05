@@ -16,8 +16,8 @@
 
 #include <dtkPlotExport.h>
 
-#include <QtCore>
 #include <QPointF>
+#include <QtCore>
 
 #include <qwt_plot_curve.h>
 #include <qwt_series_data.h>
@@ -29,10 +29,10 @@ public:
     ~dtkPlotCurvePrivateData(void) {}
 
 public:
-    void append(const QPointF& point);
+    void append(const QPointF &point);
 
 public:
-    void setData(const QVector<QPointF>& data);
+    void setData(const QVector<QPointF> &data);
 
 public:
     QRectF boundingRect(void) const;
@@ -44,7 +44,7 @@ public:
 class dtkPlotCurvePrivate : public QwtPlotCurve
 {
 public:
-    dtkPlotCurvePrivate(const QString& title);
+    dtkPlotCurvePrivate(const QString &title);
     virtual ~dtkPlotCurvePrivate(void);
 
 public:

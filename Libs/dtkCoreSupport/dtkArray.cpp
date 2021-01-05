@@ -18,10 +18,8 @@
 
 /*!
     \class dtkArray
-    \brief The dtkArray class is a template class that provides a dynamic array of simple types.
-    \since 4.8
-    \ingroup qt3d
-    \ingroup qt3d::arrays
+    \brief The dtkArray class is a template class that provides a dynamic array
+   of simple types. \since 4.8 \ingroup qt3d \ingroup qt3d::arrays
 
     dtkArray is similar to QVector except that it has much less overhead
     when constructing large arrays by appending individual elements
@@ -92,7 +90,8 @@
 */
 
 /*!
-    \fn dtkArray<T, PreallocSize> &dtkArray::operator=(const dtkArray<T, PreallocSize> &other)
+    \fn dtkArray<T, PreallocSize> &dtkArray::operator=(const dtkArray<T,
+   PreallocSize> &other)
 
     Assigns \a other to this array and returns a reference
     to this array.
@@ -272,7 +271,8 @@
 */
 
 /*!
-    \fn void dtkArray::append(const T &value1, const T &value2, const T &value3, const T &value4)
+    \fn void dtkArray::append(const T &value1, const T &value2, const T &value3,
+   const T &value4)
 
     \overload
 
@@ -318,7 +318,8 @@
 */
 
 /*!
-    \fn dtkArray::iterator dtkArray::insert(iterator before, int count, const T &value)
+    \fn dtkArray::iterator dtkArray::insert(iterator before, int count, const T
+   &value)
 
     Inserts \a count copies of \a value in front of the item
     pointed to by the iterator \a before.  Returns an iterator
@@ -568,7 +569,8 @@
 */
 
 /*!
-    \fn void dtkArray::setRawData(const T *raw_data, int size, RawDataType data_type = ReadOnly)
+    \fn void dtkArray::setRawData(const T *raw_data, int size, RawDataType
+   data_type = ReadOnly)
 
     Sets the array using the raw data \a raw_data of \a size elements.
 
@@ -646,7 +648,8 @@
 */
 
 /*!
-    \fn dtkArray<T, PreallocSize> dtkArray::fromWritableRawData(T *data, int size)
+    \fn dtkArray<T, PreallocSize> dtkArray::fromWritableRawData(T *data, int
+   size)
 
     Returns an array consisting of the \a size elements from \a data.
 
@@ -713,7 +716,8 @@
 */
 
 /*!
-    \fn dtkArray<T, PreallocSize> &dtkArray::operator+=(const dtkArray<T, PreallocSize> &other)
+    \fn dtkArray<T, PreallocSize> &dtkArray::operator+=(const dtkArray<T,
+   PreallocSize> &other)
 
     Appends the elements of the \a other array to this array
     and returns a reference to this array.
@@ -733,7 +737,8 @@
 */
 
 /*!
-    \fn dtkArray<T, PreallocSize> &dtkArray::operator<<(const dtkArray<T, PreallocSize> &other)
+    \fn dtkArray<T, PreallocSize> &dtkArray::operator<<(const dtkArray<T,
+   PreallocSize> &other)
 
     Appends the elements of the \a other array to this array
     and returns a reference to this array.
@@ -970,16 +975,16 @@
 #ifndef QT_NO_DATASTREAM
 
 /*!
-    \fn QDataStream& operator<<(QDataStream& stream, const dtkArray<T, PreallocSize>& array)
-    \relates dtkArray
+    \fn QDataStream& operator<<(QDataStream& stream, const dtkArray<T,
+   PreallocSize>& array) \relates dtkArray
 
     Writes \a array to the given \a stream and returns a reference
     to the \a stream.
 */
 
 /*!
-    \fn QDataStream& operator>>(QDataStream& stream, dtkArray<T, PreallocSize>& array)
-    \relates dtkArray
+    \fn QDataStream& operator>>(QDataStream& stream, dtkArray<T, PreallocSize>&
+   array) \relates dtkArray
 
     Reads \a array from the given \a stream and returns a reference
     to the \a stream.
@@ -1016,7 +1021,6 @@ int dtkArrayAllocMore(int alloc, int extra, int sizeOfT)
 // ///////////////////////////////////////////////////////////////////
 // Credits
 // ///////////////////////////////////////////////////////////////////
-
 
 /****************************************************************************
 **

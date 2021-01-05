@@ -32,7 +32,8 @@ public:
 // dtkWidgetsParameterLongLongSpinBox implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterLongLongSpinBox::dtkWidgetsParameterLongLongSpinBox(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterLongLongSpinBoxPrivate)
+dtkWidgetsParameterLongLongSpinBox::dtkWidgetsParameterLongLongSpinBox(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterLongLongSpinBoxPrivate)
 {
     d->spin_box = new dtkWidgetsSpinBoxLong();
 
@@ -56,8 +57,10 @@ bool dtkWidgetsParameterLongLongSpinBox::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_int *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterLongLongSpinBox.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterLongLongSpinBox.";
         return false;
     }
 
@@ -68,18 +71,15 @@ bool dtkWidgetsParameterLongLongSpinBox::connect(dtkCoreParameter *p)
 
     d->spin_box->setValue(m_parameter->value());
 
-    m_parameter->connect([=] (QVariant v)
-    {
+    m_parameter->connect([=](QVariant v) {
         long long value = v.value<dtk::d_int>().value();
         d->spin_box->blockSignals(true);
         d->spin_box->setValue(value);
         d->spin_box->blockSignals(false);
     });
 
-    QObject::connect(d->spin_box, QOverload<long long>::of(&dtkWidgetsSpinBoxLong::valueChanged), [=] (long long v)
-    {
-        m_parameter->shareValue(QVariant::fromValue(v));
-    });
+    QObject::connect(d->spin_box, QOverload<long long>::of(&dtkWidgetsSpinBoxLong::valueChanged),
+                     [=](long long v) { m_parameter->shareValue(QVariant::fromValue(v)); });
 
     return true;
 }

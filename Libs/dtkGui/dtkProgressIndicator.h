@@ -41,7 +41,7 @@ public:
     bool isAnimated(void) const;
     bool isDisplayedWhenStopped(void) const;
 
-    const QColor& color(void) const;
+    const QColor &color(void) const;
 
     QSize sizeHint(void) const;
 
@@ -53,7 +53,7 @@ public slots:
 
     void setAnimationDelay(int delay);
     void setDisplayedWhenStopped(bool state);
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 protected:
     virtual void timerEvent(QTimerEvent *event);

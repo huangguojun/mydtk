@@ -30,7 +30,8 @@ public:
 // dtkWidgetsHUDInfo
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsHUDInfo::dtkWidgetsHUDInfo(const QString& text, QWidget *parent) : QFrame(parent), d(new dtkWidgetsHUDInfoPrivate)
+dtkWidgetsHUDInfo::dtkWidgetsHUDInfo(const QString &text, QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsHUDInfoPrivate)
 {
     d->text = text;
 

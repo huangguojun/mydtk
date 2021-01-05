@@ -37,7 +37,7 @@ public:
     dtkTag(QString text, int instances);
     dtkTag(QString text, int instances, QStringList items);
     dtkTag(QString text, int instances, QStringList items, QString color);
-    dtkTag(const dtkTag& other);
+    dtkTag(const dtkTag &other);
     ~dtkTag(void);
 
     int count(void) const;
@@ -68,15 +68,9 @@ public:
     dtkTagCloud(QWidget *parent = 0);
     ~dtkTagCloud(void);
 
-    enum SortingType {
-        Alpha,
-        Num
-    };
+    enum SortingType { Alpha, Num };
 
-    enum SortingOrder {
-        Asc,
-        Desc
-    };
+    enum SortingOrder { Asc, Desc };
 
     void addTag(QString text, int instances);
     void addTag(QString text, int instances, QStringList items);
@@ -99,7 +93,7 @@ public slots:
     void render(void);
 
 protected slots:
-    void onLinkClicked(const QUrl& item);
+    void onLinkClicked(const QUrl &item);
 
 protected:
     dtkTagCloudPrivate *d;
@@ -133,7 +127,7 @@ public:
     void setDark(void);
 
 public slots:
-    void setText(const QString& text);
+    void setText(const QString &text);
     void setCount(int count);
 
 protected:
@@ -168,7 +162,7 @@ public:
     void addTag(QString tag);
     void addTag(QString tag, int count);
 
-    void setTags(const QStringList& tags);
+    void setTags(const QStringList &tags);
 
     void setBlue(void);
     void setDark(void);
@@ -207,7 +201,7 @@ public:
     dtkItem(QString name, QString description);
     dtkItem(QString name, QString description, QStringList tags);
     dtkItem(QString name, QString description, QStringList tags, QString kind, QString type);
-    dtkItem(const dtkItem& item);
+    dtkItem(const dtkItem &item);
     ~dtkItem(void);
 
     QString name(void) const;
@@ -247,7 +241,7 @@ public:
     void setDark(void);
 
 signals:
-    void itemClicked(const QString& description);
+    void itemClicked(const QString &description);
 
 protected slots:
     void onItemClicked(QListWidgetItem *item);
@@ -286,7 +280,7 @@ public slots:
     void clear(void);
 
 public slots:
-    void setDescription(const QString& description);
+    void setDescription(const QString &description);
 
 protected:
     dtkItemDescPrivate *d;
@@ -296,16 +290,17 @@ protected:
 // dtkItemListDelegate
 // /////////////////////////////////////////////////////////////////
 
-class DTKGUISUPPORT_EXPORT dtkItemListDelegate: public QStyledItemDelegate
+class DTKGUISUPPORT_EXPORT dtkItemListDelegate : public QStyledItemDelegate
 {
 public:
     dtkItemListDelegate(dtkItemList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkItemList *list;
@@ -315,16 +310,17 @@ protected:
 // dtkItemDarkDelegate
 // /////////////////////////////////////////////////////////////////
 
-class DTKGUISUPPORT_EXPORT dtkItemDarkDelegate: public QStyledItemDelegate
+class DTKGUISUPPORT_EXPORT dtkItemDarkDelegate : public QStyledItemDelegate
 {
 public:
     dtkItemDarkDelegate(dtkItemList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkItemList *list;
@@ -334,16 +330,17 @@ protected:
 // dtkItemBlueDelegate
 // /////////////////////////////////////////////////////////////////
 
-class DTKGUISUPPORT_EXPORT dtkItemBlueDelegate: public QStyledItemDelegate
+class DTKGUISUPPORT_EXPORT dtkItemBlueDelegate : public QStyledItemDelegate
 {
 public:
     dtkItemBlueDelegate(dtkItemList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkItemList *list;
@@ -360,13 +357,7 @@ class DTKGUISUPPORT_EXPORT dtkItemView : public QStackedWidget
     Q_OBJECT
 
 public:
-    enum Direction {
-        Left2Right,
-        Right2Left,
-        Top2Bottom,
-        Bottom2Top,
-        Automatic
-    };
+    enum Direction { Left2Right, Right2Left, Top2Bottom, Bottom2Top, Automatic };
 
 public:
     dtkItemView(QWidget *parent = 0);
@@ -381,7 +372,7 @@ public:
     void setDark(void);
 
 public slots:
-    void onItemClicked(const QString& description);
+    void onItemClicked(const QString &description);
 
 protected slots:
     void setSpeed(int speed);

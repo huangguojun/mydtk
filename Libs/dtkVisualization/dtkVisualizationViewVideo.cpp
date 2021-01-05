@@ -35,8 +35,8 @@ public:
 
 public:
     void initializeGL(void);
-    void      paintGL(void);
-    void     resizeGL(int, int);
+    void paintGL(void);
+    void resizeGL(int, int);
 
 public:
     void recalculatePosition(void);
@@ -62,7 +62,8 @@ public:
 
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewVideoPrivate::dtkVisualizationViewVideoPrivate(QWidget *parent) : QOpenGLWidget(parent), QOpenGLFunctions()
+dtkVisualizationViewVideoPrivate::dtkVisualizationViewVideoPrivate(QWidget *parent)
+    : QOpenGLWidget(parent), QOpenGLFunctions()
 {
     QSurfaceFormat format;
     format.setVersion(1, 2);
@@ -122,7 +123,7 @@ void dtkVisualizationViewVideoPrivate::updateScene(void)
 
 void dtkVisualizationViewVideoPrivate::recalculatePosition(void)
 {
-    this->image_ratio = (float)this->render_image.width()/(float)this->render_image.height();
+    this->image_ratio = (float)this->render_image.width() / (float)this->render_image.height();
 
     this->render_width = this->size().width();
     this->render_height = floor(this->render_width / this->image_ratio);
@@ -132,7 +133,7 @@ void dtkVisualizationViewVideoPrivate::recalculatePosition(void)
         this->render_width = floor(this->render_height * this->image_ratio);
     }
 
-    this->render_x = +floor((this->size().width()  - this->render_width)  / 2);
+    this->render_x = +floor((this->size().width() - this->render_width) / 2);
     this->render_y = -floor((this->size().height() - this->render_height) / 2);
 
     this->resize_image = QImage();
@@ -140,23 +141,28 @@ void dtkVisualizationViewVideoPrivate::recalculatePosition(void)
 
 void dtkVisualizationViewVideoPrivate::renderImage(void)
 {
-    if(!this->render_image.isNull()) {
+    if (!this->render_image.isNull()) {
         glLoadIdentity();
 
         glPushMatrix();
         {
             if (this->resize_image.width() <= 0) {
-                if (this->render_width == this->render_image.width() && this->render_height == this->render_image.height())
+                if (this->render_width == this->render_image.width()
+                    && this->render_height == this->render_image.height())
                     this->resize_image = this->render_image;
                 else
-                    this->resize_image = this->render_image.scaled(QSize(this->render_width * qGuiApp->devicePixelRatio(), this->render_height * qGuiApp->devicePixelRatio()), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                    this->resize_image = this->render_image.scaled(
+                            QSize(this->render_width * qGuiApp->devicePixelRatio(),
+                                  this->render_height * qGuiApp->devicePixelRatio()),
+                            Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             }
 
             glRasterPos2i(this->render_x, this->render_y);
 
             glPixelZoom(1, -1);
 
-            glDrawPixels(this->resize_image.width(), this->resize_image.height(), GL_BGRA, GL_UNSIGNED_BYTE, this->resize_image.bits());
+            glDrawPixels(this->resize_image.width(), this->resize_image.height(), GL_BGRA,
+                         GL_UNSIGNED_BYTE, this->resize_image.bits());
         }
 
         glPopMatrix();
@@ -169,7 +175,8 @@ void dtkVisualizationViewVideoPrivate::renderImage(void)
 // dtkVisualizationViewVideo
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewVideo::dtkVisualizationViewVideo(QWidget *parent) : dtkWidgetsWidget(parent), d(new dtkVisualizationViewVideoPrivate)
+dtkVisualizationViewVideo::dtkVisualizationViewVideo(QWidget *parent)
+    : dtkWidgetsWidget(parent), d(new dtkVisualizationViewVideoPrivate)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
@@ -192,12 +199,12 @@ void dtkVisualizationViewVideo::update(void)
     qDebug() << Q_FUNC_INFO;
 }
 
-void dtkVisualizationViewVideo::setTitle(const QString& title)
+void dtkVisualizationViewVideo::setTitle(const QString &title)
 {
     d->title = title;
 }
 
-void dtkVisualizationViewVideo::setImage(const QImage& image)
+void dtkVisualizationViewVideo::setImage(const QImage &image)
 {
     d->render_image = image;
 

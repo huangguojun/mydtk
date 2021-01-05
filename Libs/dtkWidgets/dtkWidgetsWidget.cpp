@@ -16,10 +16,7 @@
 #include "dtkApplication.h"
 #include "dtkWidgetsMainWindow.h"
 
-dtkWidgetsWidget::dtkWidgetsWidget(QWidget *parent) : QWidget(parent)
-{
-
-}
+dtkWidgetsWidget::dtkWidgetsWidget(QWidget *parent) : QWidget(parent) {}
 
 QWidget *dtkWidgetsWidget::widget(void)
 {
@@ -31,9 +28,7 @@ QWidget *dtkWidgetsWidget::inspector(void)
     return nullptr;
 }
 
-void dtkWidgetsWidget::update(void)
-{
-}
+void dtkWidgetsWidget::update(void) {}
 
 void dtkWidgetsWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -47,8 +42,8 @@ void dtkWidgetsWidget::showEvent(QShowEvent *event)
     QWidget::showEvent(event);
 
     // needed for mouse tracking propagation
- //   if (qApp && dynamic_cast<dtkApplication*>(qApp))
-   //     dtkApp->window()->touch();
+    //   if (qApp && dynamic_cast<dtkApplication*>(qApp))
+    //     dtkApp->window()->touch();
 }
 
 //

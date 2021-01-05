@@ -18,20 +18,21 @@
 
 #include "dtkVisualizationDecoratorClutEditorBase.h"
 
-class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorClutEditor : public dtkVisualizationDecoratorClutEditorBase
+class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorClutEditor
+    : public dtkVisualizationDecoratorClutEditorBase
 {
     Q_OBJECT
 
 public:
-     dtkVisualizationDecoratorClutEditor(void);
+    dtkVisualizationDecoratorClutEditor(void);
     ~dtkVisualizationDecoratorClutEditor(void);
 
 public:
     bool isDecorating(void) override;
 
-    void setData(const QVariant&)            override;
+    void setData(const QVariant &) override;
     void setCanvas(dtkVisualizationCanvas *) override;
-    void unsetCanvas(void)                   override;
+    void unsetCanvas(void) override;
 
     QVariant data(void) const override;
     dtkVisualizationCanvas *canvas(void) const override;
@@ -43,14 +44,14 @@ public:
     void hide(void);
 
 public:
-    QStringList                               eligibleFieldNames(void) const override;
-    QString                                   currentFieldName(void) const override;
-    QPair<double, double>                     currentRange(void) const override;
+    QStringList eligibleFieldNames(void) const override;
+    QString currentFieldName(void) const override;
+    QPair<double, double> currentRange(void) const override;
     vtkSmartPointer<vtkColorTransferFunction> currentColorTransferFunction(void) const override;
-    vtkSmartPointer<vtkPiecewiseFunction>     currentOpacityTransferFunction(void) const override;
+    vtkSmartPointer<vtkPiecewiseFunction> currentOpacityTransferFunction(void) const override;
 
 public:
-    bool setCurrentFieldName(const QString&) override;
+    bool setCurrentFieldName(const QString &) override;
 
 public:
     void setCurrentColorTransferFunction(vtkSmartPointer<vtkColorTransferFunction>);

@@ -18,29 +18,27 @@
  */
 
 #include "dtkAbstractDataConverter.h"
-#include "dtkAbstractDataConverter_p.h"
 #include "dtkAbstractData.h"
+#include "dtkAbstractDataConverter_p.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkAbstractDataConverter implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractDataConverter::dtkAbstractDataConverter(void) : dtkAbstractObject(*new dtkAbstractDataConverterPrivate(this), 0)
+dtkAbstractDataConverter::dtkAbstractDataConverter(void)
+    : dtkAbstractObject(*new dtkAbstractDataConverterPrivate(this), 0)
 {
     DTK_D(dtkAbstractDataConverter);
 
     d->enabled = false;
 }
 
-dtkAbstractDataConverter::dtkAbstractDataConverter(const dtkAbstractDataConverter& other) : dtkAbstractObject(*new dtkAbstractDataConverterPrivate(*other.d_func()), other)
+dtkAbstractDataConverter::dtkAbstractDataConverter(const dtkAbstractDataConverter &other)
+    : dtkAbstractObject(*new dtkAbstractDataConverterPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractDataConverter::~dtkAbstractDataConverter(void)
-{
-
-}
+dtkAbstractDataConverter::~dtkAbstractDataConverter(void) {}
 
 bool dtkAbstractDataConverter::enabled(void) const
 {
@@ -77,7 +75,7 @@ void dtkAbstractDataConverter::setData(dtkAbstractData *data)
     d->data = data;
 }
 
-bool dtkAbstractDataConverter::canConvert(const QString& toType)
+bool dtkAbstractDataConverter::canConvert(const QString &toType)
 {
     return (this->toType() == toType);
 }
@@ -89,5 +87,5 @@ dtkAbstractData *dtkAbstractDataConverter::convert(void)
 
 void dtkAbstractDataConverter::setProgress(int value)
 {
-    emit progressed (value);
+    emit progressed(value);
 }

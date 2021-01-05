@@ -33,7 +33,7 @@ class DTKWIDGETS_EXPORT dtkViewLayoutItemProxy : public QFrame
     Q_OBJECT
 
 public:
-     dtkViewLayoutItemProxy(QWidget *parent = 0);
+    dtkViewLayoutItemProxy(QWidget *parent = 0);
     ~dtkViewLayoutItemProxy(void);
 
 public:
@@ -63,7 +63,7 @@ class DTKWIDGETS_EXPORT dtkViewLayoutItem : public QFrame
     Q_OBJECT
 
 public:
-     dtkViewLayoutItem(dtkViewLayoutItem *parent = 0);
+    dtkViewLayoutItem(dtkViewLayoutItem *parent = 0);
     ~dtkViewLayoutItem(void);
 
 public:
@@ -94,8 +94,8 @@ public:
     void setLayout(dtkViewLayout *layout);
 
 public slots:
-    void   clear(void);
-    void   split(void);
+    void clear(void);
+    void split(void);
     void unsplit(void);
     void maximize(void);
 

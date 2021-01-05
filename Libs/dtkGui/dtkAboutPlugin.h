@@ -33,7 +33,7 @@ class DTKGUISUPPORT_EXPORT dtkAboutPlugin : public QWidget
 
 public:
     dtkAboutPlugin(dtkPlugin *plugin, QWidget *parent = 0);
-    dtkAboutPlugin(const QString& plugin, QWidget *parent = 0);
+    dtkAboutPlugin(const QString &plugin, QWidget *parent = 0);
     ~dtkAboutPlugin(void);
 
     bool openExternalLinks(void);

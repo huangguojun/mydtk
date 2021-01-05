@@ -23,8 +23,8 @@
 
 #include <dtkMathSupport/dtkVector.h>
 
-#include <QtCore>
 #include <QImage>
+#include <QtCore>
 
 class dtkAbstractDataReader;
 class dtkAbstractDataWriter;
@@ -42,41 +42,41 @@ class DTKCORESUPPORT_EXPORT dtkAbstractData : public dtkAbstractObject
     Q_OBJECT
 
 public:
-    dtkAbstractData(      dtkAbstractData *parent = 0);
-    dtkAbstractData(const dtkAbstractData& other);
+    dtkAbstractData(dtkAbstractData *parent = 0);
+    dtkAbstractData(const dtkAbstractData &other);
     virtual ~dtkAbstractData(void);
 
 public:
     virtual dtkAbstractData *clone(void);
 
 public:
-    dtkAbstractData& operator = (const dtkAbstractData& other);
+    dtkAbstractData &operator=(const dtkAbstractData &other);
 
 protected:
-    virtual void copy(const dtkAbstractObject& other);
+    virtual void copy(const dtkAbstractObject &other);
 
 public:
-    bool operator == (const dtkAbstractData& other) const;
+    bool operator==(const dtkAbstractData &other) const;
 
 protected:
-    virtual bool isEqual(const dtkAbstractObject& other) const;
+    virtual bool isEqual(const dtkAbstractObject &other) const;
 
 public:
-    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractData& data);
-    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug,       dtkAbstractData *data);
+    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractData &data);
+    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, dtkAbstractData *data);
 
     virtual void draw(void) {}
 
 public slots:
-    virtual bool read(const QString& file);
-    virtual bool read(const QStringList& files);
+    virtual bool read(const QString &file);
+    virtual bool read(const QStringList &files);
 
-    virtual bool write(const QString& file);
-    virtual bool write(const QStringList& files);
+    virtual bool write(const QString &file);
+    virtual bool write(const QStringList &files);
 
-    virtual dtkAbstractData *convert(const QString& toType);
-    virtual QByteArray    *serialize(void);
-    virtual dtkAbstractData *deserialize(const QByteArray& array);
+    virtual dtkAbstractData *convert(const QString &toType);
+    virtual QByteArray *serialize(void);
+    virtual dtkAbstractData *deserialize(const QByteArray &array);
 
     virtual void *output(void);
     virtual void *output(int channel);
@@ -100,8 +100,8 @@ public slots:
     virtual void setParameter(double parameter);
     virtual void setParameter(double parameter, int channel);
 
-    virtual void setParameter(const QString& parameter);
-    virtual void setParameter(const QString& parameter, int channel);
+    virtual void setParameter(const QString &parameter);
+    virtual void setParameter(const QString &parameter, int channel);
 
     virtual void setParameter(dtkAbstractData *parameter);
     virtual void setParameter(dtkAbstractData *parameter, int channel);
@@ -116,49 +116,49 @@ public slots:
 
     virtual void update(void);
 
-    void addReader      (const QString& reader);
-    void addWriter      (const QString& writer);
-    void addConverter   (const QString& converter);
-    void addSerializer  (const QString& serializer);
-    void addDeserializer(const QString& deserializer);
+    void addReader(const QString &reader);
+    void addWriter(const QString &writer);
+    void addConverter(const QString &converter);
+    void addSerializer(const QString &serializer);
+    void addDeserializer(const QString &deserializer);
 
-    void  enableReader(const QString& reader);
-    void disableReader(const QString& reader);
+    void enableReader(const QString &reader);
+    void disableReader(const QString &reader);
 
-    void  enableWriter(const QString& writer);
-    void disableWriter(const QString& writer);
+    void enableWriter(const QString &writer);
+    void disableWriter(const QString &writer);
 
-    void  enableConverter(const QString& converter);
-    void disableConverter(const QString& converter);
+    void enableConverter(const QString &converter);
+    void disableConverter(const QString &converter);
 
-    void  enableSerializer(const QString& serializer);
-    void disableSerializer(const QString& serializer);
+    void enableSerializer(const QString &serializer);
+    void disableSerializer(const QString &serializer);
 
-    void  enableDeserializer(const QString& deserializer);
-    void disableDeserializer(const QString& deserializer);
+    void enableDeserializer(const QString &deserializer);
+    void disableDeserializer(const QString &deserializer);
 
-    dtkAbstractDataReader       *reader   (const QString& type);
-    dtkAbstractDataWriter       *writer   (const QString& type);
-    dtkAbstractDataConverter    *converter(const QString& type);
-    dtkAbstractDataSerializer   *serializer(const QString& type);
-    dtkAbstractDataDeserializer *deserializer(const QString& type);
+    dtkAbstractDataReader *reader(const QString &type);
+    dtkAbstractDataWriter *writer(const QString &type);
+    dtkAbstractDataConverter *converter(const QString &type);
+    dtkAbstractDataSerializer *serializer(const QString &type);
+    dtkAbstractDataDeserializer *deserializer(const QString &type);
 
-    QString     path(void);
+    QString path(void);
     QStringList paths(void);
 
-    virtual       QImage& thumbnail(void) ;
-    virtual QList<QImage>& thumbnails(void);
+    virtual QImage &thumbnail(void);
+    virtual QList<QImage> &thumbnails(void);
 
 public:
     virtual QVariant toVariant(dtkAbstractData *data);
-    virtual dtkAbstractData *fromVariant(const QVariant& v);
+    virtual dtkAbstractData *fromVariant(const QVariant &v);
 
 private:
     DTK_DECLARE_PRIVATE(dtkAbstractData);
 };
 
-DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractData& data);
-DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug,       dtkAbstractData *data);
+DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractData &data);
+DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, dtkAbstractData *data);
 
 Q_DECLARE_METATYPE(dtkAbstractData)
 Q_DECLARE_METATYPE(dtkAbstractData *)

@@ -18,27 +18,28 @@
 // dtkGraphTemplateEdge interface
 // /////////////////////////////////////////////////////////////////
 
-template < typename Node > class dtkGraphTemplateEdge
+template<typename Node>
+class dtkGraphTemplateEdge
 {
 public:
-             dtkGraphTemplateEdge(void) = default;
-             dtkGraphTemplateEdge(const Node& source, const Node& destination);
-             dtkGraphTemplateEdge(const dtkGraphTemplateEdge& o);
+    dtkGraphTemplateEdge(void) = default;
+    dtkGraphTemplateEdge(const Node &source, const Node &destination);
+    dtkGraphTemplateEdge(const dtkGraphTemplateEdge &o);
     virtual ~dtkGraphTemplateEdge(void);
 
 public:
-    dtkGraphTemplateEdge& operator = (const dtkGraphTemplateEdge& o);
+    dtkGraphTemplateEdge &operator=(const dtkGraphTemplateEdge &o);
 
 public:
-    bool operator == (const dtkGraphTemplateEdge& o) const;
+    bool operator==(const dtkGraphTemplateEdge &o) const;
 
 public:
-    virtual const Node& source(void) const;
-    virtual const Node& destination(void) const;
+    virtual const Node &source(void) const;
+    virtual const Node &destination(void) const;
 
 public:
-    void setSource(const Node& source);
-    void setDestination(const Node& destination);
+    void setSource(const Node &source);
+    void setDestination(const Node &destination);
 
 protected:
     Node m_source;

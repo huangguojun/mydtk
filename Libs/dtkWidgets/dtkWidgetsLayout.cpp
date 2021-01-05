@@ -12,8 +12,8 @@
 
 // Code:
 
-#include "dtkWidgetsController.h"
 #include "dtkWidgetsLayout.h"
+#include "dtkWidgetsController.h"
 #include "dtkWidgetsLayoutItem.h"
 
 #include <QtCore>
@@ -76,10 +76,12 @@ dtkWidgetsLayout::dtkWidgetsLayout(QWidget *parent) : QFrame(parent), d(new dtkW
     layout->setSpacing(0);
     layout->addWidget(d->root);
 
-    connect(d->root, SIGNAL(focused(dtkWidgetsWidget *)), this, SIGNAL(focused(dtkWidgetsWidget *)));
-    connect(d->root, SIGNAL(unfocused(dtkWidgetsWidget *)), this, SIGNAL(unfocused(dtkWidgetsWidget *)));
+    connect(d->root, SIGNAL(focused(dtkWidgetsWidget *)), this,
+            SIGNAL(focused(dtkWidgetsWidget *)));
+    connect(d->root, SIGNAL(unfocused(dtkWidgetsWidget *)), this,
+            SIGNAL(unfocused(dtkWidgetsWidget *)));
     // TODO: // connect(d->root, SIGNAL(create()), this, SIGNAL(create()));
-    connect(d->root, SIGNAL(create(const QString&)), this, SLOT(create(const QString&)));
+    connect(d->root, SIGNAL(create(const QString &)), this, SLOT(create(const QString &)));
 }
 
 dtkWidgetsLayout::~dtkWidgetsLayout(void)
@@ -113,7 +115,7 @@ void dtkWidgetsLayout::setCurrent(dtkWidgetsLayoutItem *item)
     d->current = item;
 
     connect(d->current, SIGNAL(create()), this, SLOT(create()));
-    connect(d->current, SIGNAL(create(const QString&)), this, SLOT(create(const QString&)));
+    connect(d->current, SIGNAL(create(const QString &)), this, SLOT(create(const QString &)));
 }
 
 void dtkWidgetsLayout::clear(void)
@@ -126,14 +128,14 @@ void dtkWidgetsLayout::create(void)
     this->create("");
 }
 
-void dtkWidgetsLayout::create(const QString& name)
+void dtkWidgetsLayout::create(const QString &name)
 {
-    if(!d->creator)
+    if (!d->creator)
         return;
 
     dtkWidgetsWidget *widget = d->creator(name);
 
-    if(widget) {
+    if (widget) {
         d->current->setView(widget);
         dtkWidgetsController::instance()->insert(widget);
     }

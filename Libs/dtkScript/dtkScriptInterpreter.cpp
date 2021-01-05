@@ -32,9 +32,9 @@ public:
 // dtkScriptInterpreter
 // /////////////////////////////////////////////////////////////////
 
-dtkScriptInterpreter::dtkScriptInterpreter(QObject *parent) : QObject(parent), d(new dtkScriptInterpreterPrivate)
+dtkScriptInterpreter::dtkScriptInterpreter(QObject *parent)
+    : QObject(parent), d(new dtkScriptInterpreterPrivate)
 {
-
 }
 
 dtkScriptInterpreter::~dtkScriptInterpreter(void)

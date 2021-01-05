@@ -30,57 +30,48 @@
 //-----------------------------------------------------------------------------
 NetworkSource::~NetworkSource()
 {
-  this->Stop();
+    this->Stop();
 
-  delete this->DummyWork;
+    delete this->DummyWork;
 
-  if (this->Thread)
-  {
-    this->Thread->join();
-  }
+    if (this->Thread) {
+        this->Thread->join();
+    }
 }
 
 //-----------------------------------------------------------------------------
-void NetworkSource::QueuePackets(NetworkPacket* packet)
+void NetworkSource::QueuePackets(NetworkPacket *packet)
 {
-  NetworkPacket* packet2 = nullptr;
+    NetworkPacket *packet2 = nullptr;
 
+    if (this->Consumer) {
+        this->Consumer->Enqueue(packet);
+    }
 
-  if (this->Consumer)
-  {
-    this->Consumer->Enqueue(packet);
-  }
-
-  
-  if (this->Writer)
-  {
-    packet2 = new NetworkPacket(*packet);
-    this->Writer->Enqueue(packet2);
-  }
-  
+    if (this->Writer) {
+        packet2 = new NetworkPacket(*packet);
+        this->Writer->Enqueue(packet2);
+    }
 }
 
 //-----------------------------------------------------------------------------
 void NetworkSource::Start()
 {
-  if (!this->Thread)
-  {
-    this->Thread.reset(
-      new boost::thread(boost::bind(&boost::asio::io_service::run, &this->IOService)));
-  }
-  
-  // Create work
-  this->LidarPortReceiver = boost::shared_ptr<PacketReceiver>(new PacketReceiver(
-    this->IOService, LidarPort, ForwardedLidarPort, ForwardedIpAddress, IsForwarding, this));
+    if (!this->Thread) {
+        this->Thread.reset(
+                new boost::thread(boost::bind(&boost::asio::io_service::run, &this->IOService)));
+    }
 
+    // Create work
+    this->LidarPortReceiver = boost::shared_ptr<PacketReceiver>(
+            new PacketReceiver(this->IOService, LidarPort, ForwardedLidarPort, ForwardedIpAddress,
+                               IsForwarding, this));
 
-
-  this->LidarPortReceiver->StartReceive();
-  
+    this->LidarPortReceiver->StartReceive();
 }
 
 //-----------------------------------------------------------------------------
 void NetworkSource::Stop()
 {
-  this->LidarPortReceiver.reset();
+    this->LidarPortReceiver.reset();
 }

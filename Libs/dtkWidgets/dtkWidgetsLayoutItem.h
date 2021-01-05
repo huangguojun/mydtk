@@ -33,12 +33,12 @@ class DTKWIDGETS_EXPORT dtkWidgetsLayoutItemProxy : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsLayoutItemProxy(QWidget *parent = nullptr);
+    dtkWidgetsLayoutItemProxy(QWidget *parent = nullptr);
     ~dtkWidgetsLayoutItemProxy(void);
 
 signals:
     void create(void);
-    void create(const QString&);
+    void create(const QString &);
 
 public:
     dtkWidgetsWidget *view(void);
@@ -82,12 +82,12 @@ public:
     using Actions = QMap<QString, QString>;
 
 public:
-     dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent = 0);
+    dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent = 0);
     ~dtkWidgetsLayoutItem(void);
 
 signals:
     void create(void);
-    void create(const QString&);
+    void create(const QString &);
 
 public:
     dtkWidgetsWidget *view(void);
@@ -99,7 +99,7 @@ public:
 
 public:
     void setOrientation(Qt::Orientation orientation);
-    void setSizes(const QList<int>& sizes);
+    void setSizes(const QList<int> &sizes);
 
 public:
     int canvasHeight(void);
@@ -117,8 +117,8 @@ public:
     void setLayout(dtkWidgetsLayout *layout);
 
 public slots:
-    void   clear(void);
-    void   split(bool force = false);
+    void clear(void);
+    void split(bool force = false);
     void unsplit(void);
     void maximize(void);
 
@@ -129,7 +129,7 @@ public:
     void setView(dtkWidgetsWidget *view);
 
 public:
-    static void setActions(const Actions& actions);
+    static void setActions(const Actions &actions);
 
 signals:
     void focused(dtkWidgetsWidget *view);

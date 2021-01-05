@@ -24,9 +24,9 @@
 
 #include <vtkActor.h>
 #include <vtkAssembly.h>
+#include <vtkCellData.h>
 #include <vtkCellDataToPointData.h>
 #include <vtkColorTransferFunction.h>
-#include <vtkCellData.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
@@ -35,8 +35,8 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSmartVolumeMapper.h>
 #include <vtkTextProperty.h>
@@ -62,7 +62,7 @@ public:
     vtkSmartPointer<vtkCellDataToPointData> c2p_filter;
 
 public:
-    QCheckBox *show_actor_cb     = nullptr;
+    QCheckBox *show_actor_cb = nullptr;
 
 public:
     QMap<double, double> opacity_map;
@@ -75,7 +75,8 @@ public slots:
 // dtkVisualizationDecoratorVolume implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorVolume::dtkVisualizationDecoratorVolume(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorVolumePrivate())
+dtkVisualizationDecoratorVolume::dtkVisualizationDecoratorVolume(void)
+    : dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorVolumePrivate())
 {
     d->c2p_filter = vtkSmartPointer<vtkCellDataToPointData>::New();
     d->mapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
@@ -108,16 +109,16 @@ dtkVisualizationDecoratorVolume::dtkVisualizationDecoratorVolume(void): dtkVisua
     d->actor->AddPart(d->volume);
     d->actor->AddPart(d->outline_contour_actor);
 
-    d->show_actor_cb     = new QCheckBox;
+    d->show_actor_cb = new QCheckBox;
 
     //////////
     // Inspectors connections
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("visibility", state == Qt::Checked);
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
     this->setObjectName("Volume");
     d->show_actor_cb->setObjectName("Display");
@@ -133,7 +134,7 @@ dtkVisualizationDecoratorVolume::~dtkVisualizationDecoratorVolume(void)
     d = nullptr;
 }
 
-void dtkVisualizationDecoratorVolume::setData(const QVariant& data)
+void dtkVisualizationDecoratorVolume::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -176,7 +177,9 @@ void dtkVisualizationDecoratorVolume::setCanvas(dtkVisualizationCanvas *canvas)
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -216,19 +219,18 @@ void dtkVisualizationDecoratorVolume::restoreSettings(void)
     d->show_actor_cb->blockSignals(true);
     d->show_actor_cb->setChecked(d_func()->default_visibility);
     d->show_actor_cb->blockSignals(false);
-
 }
 
-
-bool dtkVisualizationDecoratorVolume::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorVolume::setCurrentFieldName(const QString &field_name)
 {
     if (!dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name))
         return false;
 
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
-    if(support == Support::Cell) {
-        d->c2p_filter->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS, qPrintable(field_name));
+    if (support == Support::Cell) {
+        d->c2p_filter->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS,
+                                              qPrintable(field_name));
         d->mapper->SetInputConnection(d->c2p_filter->GetOutputPort());
     }
     d->mapper->SetScalarModeToUsePointFieldData();
@@ -238,14 +240,14 @@ bool dtkVisualizationDecoratorVolume::setCurrentFieldName(const QString& field_n
     return true;
 }
 
-void dtkVisualizationDecoratorVolume::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorVolume::setColorMap(const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 
     d->volume_property->SetColor(d_func()->color_function);
 
     if (d->opacity_map.isEmpty()) {
-        auto&& range = d_func()->ranges[d_func()->current_field_name];
+        auto &&range = d_func()->ranges[d_func()->current_field_name];
         double min = range[0];
         double max = range[1];
         double mid = (min + max) / 2.0;
@@ -260,12 +262,12 @@ void dtkVisualizationDecoratorVolume::setColorMap(const QMap<double, QColor>& ne
     }
 }
 
-void dtkVisualizationDecoratorVolume::setAlphaMap(const QMap<double, double>& map)
+void dtkVisualizationDecoratorVolume::setAlphaMap(const QMap<double, double> &map)
 {
     d->opacity_map = map;
     d->opacity_transfer_function->RemoveAllPoints();
 
-    foreach(double value, map.keys()) {
+    foreach (double value, map.keys()) {
         d->opacity_transfer_function->AddPoint(value, map[value]);
         d->opacity_transfer_function->AddPoint(value, map[value]);
         d->opacity_transfer_function->AddPoint(value, map[value]);
@@ -274,7 +276,6 @@ void dtkVisualizationDecoratorVolume::setAlphaMap(const QMap<double, double>& ma
     d->opacity_transfer_function->Modified();
     d->volume_property->Modified();
     d->mapper->Modified();
-
 }
 
 //

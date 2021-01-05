@@ -23,18 +23,15 @@ class dtkNotificationEventPrivate;
 class DTKWIDGETS_EXPORT dtkNotificationEvent : public QEvent
 {
 public:
-    enum Type {
-        Persistent,
-        NonPersistent
-    };
+    enum Type { Persistent, NonPersistent };
 
 public:
-     dtkNotificationEvent(void);
-     dtkNotificationEvent(const dtkNotificationEvent& other);
+    dtkNotificationEvent(void);
+    dtkNotificationEvent(const dtkNotificationEvent &other);
     ~dtkNotificationEvent(void);
 
 public:
-    dtkNotificationEvent& operator=(const dtkNotificationEvent& other);
+    dtkNotificationEvent &operator=(const dtkNotificationEvent &other);
 
 public:
     Type type(void);
@@ -43,7 +40,7 @@ public:
 
 public:
     void setType(Type type);
-    void setMessage(const QString& messqge);
+    void setMessage(const QString &messqge);
     void setDuration(int ms);
 
 private:

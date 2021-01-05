@@ -11,14 +11,17 @@
 #ifndef DTKSINGLETONDECLARE_H
 #define DTKSINGLETONDECLARE_H
 
-template<class T> class dtkSingleton;
-template <typename T> struct QScopedPointerDeleter;
+template<class T>
+class dtkSingleton;
+template<typename T>
+struct QScopedPointerDeleter;
 
-#define DTK_DECLARE_SINGLETON( T )          \
-public:                                     \
-    static T* instance();                   \
-private:                                    \
-    friend class dtkSingleton<T>;           \
+#define DTK_DECLARE_SINGLETON(T)                                                                   \
+public:                                                                                            \
+    static T *instance();                                                                          \
+                                                                                                   \
+private:                                                                                           \
+    friend class dtkSingleton<T>;                                                                  \
     friend struct QScopedPointerDeleter<T>
 
-#endif //DTKSINGLETONDECLARE_H
+#endif // DTKSINGLETONDECLARE_H

@@ -31,9 +31,9 @@
 #include <vtkPiecewiseFunction.h>
 #include <vtkPointData.h>
 #include <vtkProperty.h>
-#include <vtkRendererCollection.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRendererCollection.h>
 #include <vtkScalarBarActor.h>
 
 // ///////////////////////////////////////////////////////////////////
@@ -43,11 +43,7 @@
 class dtkVisualizationDecoratorClutEditorPrivate
 {
 public:
-    enum Support {
-        Unknown = 0,
-        Point = 1,
-        Cell = 2
-    };
+    enum Support { Unknown = 0, Point = 1, Cell = 2 };
 
 public:
     QStringList eligible_field_names;
@@ -67,15 +63,15 @@ public:
 public:
     QHash<QString, vtkSmartPointer<vtkColorTransferFunction>> color_transfer_functions;
     QHash<QString, vtkSmartPointer<vtkPiecewiseFunction>> opacity_functions;
-    QHash<QString, QPair<double,double>> ranges;
+    QHash<QString, QPair<double, double>> ranges;
     QHash<QString, int> supports;
 
 public:
     QCheckBox *display_scalarbar = nullptr;
-    QComboBox *fields_box        = nullptr;
-    QCheckBox *fixed_range       = nullptr;
-    QLineEdit *min_range         = nullptr;
-    QLineEdit *max_range         = nullptr;
+    QComboBox *fields_box = nullptr;
+    QCheckBox *fixed_range = nullptr;
+    QLineEdit *min_range = nullptr;
+    QLineEdit *max_range = nullptr;
 
     dtkVisualizationWidgetsClutEditor *clut_editor = nullptr;
 };
@@ -84,7 +80,8 @@ public:
 // dtkVisualizationDecoratorClutEditor implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorClutEditor::dtkVisualizationDecoratorClutEditor(void): dtkVisualizationDecoratorClutEditorBase(), d(new dtkVisualizationDecoratorClutEditorPrivate())
+dtkVisualizationDecoratorClutEditor::dtkVisualizationDecoratorClutEditor(void)
+    : dtkVisualizationDecoratorClutEditorBase(), d(new dtkVisualizationDecoratorClutEditorPrivate())
 {
     this->setObjectName("Clut Editor");
 
@@ -127,35 +124,37 @@ dtkVisualizationDecoratorClutEditor::dtkVisualizationDecoratorClutEditor(void): 
     //////////
     // Inspectors connections
 
-    connect(d->min_range, &QLineEdit::textEdited, [=] (QString new_min) {
-            d->fixed_range->setChecked(Qt::Checked);
-            this->setCurrentRange(new_min.toDouble(), d->max_range->text().toDouble());
-        });
+    connect(d->min_range, &QLineEdit::textEdited, [=](QString new_min) {
+        d->fixed_range->setChecked(Qt::Checked);
+        this->setCurrentRange(new_min.toDouble(), d->max_range->text().toDouble());
+    });
 
-    connect(d->max_range, &QLineEdit::textEdited, [=] (QString new_max) {
-            d->fixed_range->setChecked(Qt::Checked);
-            this->setCurrentRange(d->min_range->text().toDouble(), new_max.toDouble());
-        });
+    connect(d->max_range, &QLineEdit::textEdited, [=](QString new_max) {
+        d->fixed_range->setChecked(Qt::Checked);
+        this->setCurrentRange(d->min_range->text().toDouble(), new_max.toDouble());
+    });
     // Restores default ranges when unchecked
-    connect(d->fixed_range, &QCheckBox::stateChanged, [=] (int state) {
-            if(state == Qt::Unchecked) {
-                double *range;
-                if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
-                    d->dataset->GetPointData()->SetActiveScalars(qPrintable(d->current_field_name));
-                    range = d->dataset->GetPointData()->GetScalars()->GetRange();
-                } else if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
-                    d->dataset->GetCellData()->SetActiveScalars(qPrintable(d->current_field_name));
-                    range = d->dataset->GetCellData()->GetScalars()->GetRange();
-                }
-
-                this->setCurrentRange(range[0], range[1]);
-            } else {
-                this->setCurrentRange(d->min_range->text().toDouble(), d->max_range->text().toDouble());
+    connect(d->fixed_range, &QCheckBox::stateChanged, [=](int state) {
+        if (state == Qt::Unchecked) {
+            double *range;
+            if (d->supports[d->current_field_name]
+                == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
+                d->dataset->GetPointData()->SetActiveScalars(qPrintable(d->current_field_name));
+                range = d->dataset->GetPointData()->GetScalars()->GetRange();
+            } else if (d->supports[d->current_field_name]
+                       == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
+                d->dataset->GetCellData()->SetActiveScalars(qPrintable(d->current_field_name));
+                range = d->dataset->GetCellData()->GetScalars()->GetRange();
             }
-        });
 
-    connect(d->fields_box, &QComboBox::currentTextChanged,
-            this, &dtkVisualizationDecoratorClutEditor::setCurrentFieldName);
+            this->setCurrentRange(range[0], range[1]);
+        } else {
+            this->setCurrentRange(d->min_range->text().toDouble(), d->max_range->text().toDouble());
+        }
+    });
+
+    connect(d->fields_box, &QComboBox::currentTextChanged, this,
+            &dtkVisualizationDecoratorClutEditor::setCurrentFieldName);
 
     d->display_scalarbar->setObjectName("Display Scalar Bar");
     d->fields_box->setObjectName("Field");
@@ -180,7 +179,7 @@ void dtkVisualizationDecoratorClutEditor::touch(void)
         return;
     }
 
-    if(!this->canvas()) {
+    if (!this->canvas()) {
         dtkWarn() << Q_FUNC_INFO << "No canvas was set, call setCanvas to call draw on a canvas.";
         return;
     }
@@ -188,18 +187,23 @@ void dtkVisualizationDecoratorClutEditor::touch(void)
     Q_ASSERT(this->canvas()->renderer());
 
     // Updates the color depending of the range
-    if(!d->fixed_range->isChecked()) {
+    if (!d->fixed_range->isChecked()) {
 
         double *range;
-        if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
-            range = d->dataset->GetPointData()->GetArray(qPrintable(d->current_field_name))->GetRange();
-        } else if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
-            range = d->dataset->GetCellData()->GetArray(qPrintable(d->current_field_name))->GetRange();
+        if (d->supports[d->current_field_name]
+            == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
+            range = d->dataset->GetPointData()
+                            ->GetArray(qPrintable(d->current_field_name))
+                            ->GetRange();
+        } else if (d->supports[d->current_field_name]
+                   == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
+            range = d->dataset->GetCellData()
+                            ->GetArray(qPrintable(d->current_field_name))
+                            ->GetRange();
         }
 
         this->setCurrentRange(range[0], range[1]);
     }
-
 }
 
 bool dtkVisualizationDecoratorClutEditor::isDecorating(void)
@@ -207,7 +211,7 @@ bool dtkVisualizationDecoratorClutEditor::isDecorating(void)
     return d->dataset;
 }
 
-void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
+void dtkVisualizationDecoratorClutEditor::setData(const QVariant &data)
 {
     d->dataset = data.value<vtkDataSet *>();
     if (!d->dataset) {
@@ -230,10 +234,12 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
             d->supports[field_name] = dtkVisualizationDecoratorClutEditorPrivate::Support::Point;
 
             d->dataset->GetPointData()->SetActiveScalars(qPrintable(field_name));
-            double *range = static_cast<vtkDataArray *>(d->dataset->GetPointData()->GetScalars())->GetRange();
+            double *range = static_cast<vtkDataArray *>(d->dataset->GetPointData()->GetScalars())
+                                    ->GetRange();
             d->ranges[field_name] = qMakePair(range[0], range[1]);
 
-            vtkSmartPointer<vtkColorTransferFunction> color_function = vtkSmartPointer<vtkColorTransferFunction>::New();
+            vtkSmartPointer<vtkColorTransferFunction> color_function =
+                    vtkSmartPointer<vtkColorTransferFunction>::New();
             QColor black = QColor(0., 0., 0., 255);
             color_function->AddRGBPoint(range[0], black.red(), black.green(), black.blue());
             QColor white = QColor(1., 1., 1., 255);
@@ -241,9 +247,10 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
             color_function->Build();
             d->color_transfer_functions[field_name] = color_function;
 
-            vtkSmartPointer<vtkPiecewiseFunction> opacity_function = vtkSmartPointer<vtkPiecewiseFunction>::New();
+            vtkSmartPointer<vtkPiecewiseFunction> opacity_function =
+                    vtkSmartPointer<vtkPiecewiseFunction>::New();
             opacity_function->RemoveAllPoints();
-            opacity_function->AddPoint(0,   0.);
+            opacity_function->AddPoint(0, 0.);
             opacity_function->AddPoint(255, 1.);
 
             d->opacity_functions[field_name] = opacity_function;
@@ -258,10 +265,12 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
             d->supports[field_name] = dtkVisualizationDecoratorClutEditorPrivate::Support::Cell;
 
             d->dataset->GetCellData()->SetActiveScalars(qPrintable(field_name));
-            double *range = static_cast<vtkDataArray *>(d->dataset->GetCellData()->GetScalars())->GetRange();
+            double *range = static_cast<vtkDataArray *>(d->dataset->GetCellData()->GetScalars())
+                                    ->GetRange();
             d->ranges[field_name] = qMakePair(range[0], range[1]);
 
-            vtkSmartPointer<vtkColorTransferFunction> color_function = vtkSmartPointer<vtkColorTransferFunction>::New();
+            vtkSmartPointer<vtkColorTransferFunction> color_function =
+                    vtkSmartPointer<vtkColorTransferFunction>::New();
             QColor black = QColor(0., 0., 0., 255);
             color_function->AddRGBPoint(range[0], black.red(), black.green(), black.blue());
             QColor white = QColor(1., 1., 1., 255);
@@ -269,9 +278,10 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
             color_function->Build();
             d->color_transfer_functions[field_name] = color_function;
 
-            vtkSmartPointer<vtkPiecewiseFunction> opacity_function = vtkSmartPointer<vtkPiecewiseFunction>::New();
+            vtkSmartPointer<vtkPiecewiseFunction> opacity_function =
+                    vtkSmartPointer<vtkPiecewiseFunction>::New();
             opacity_function->RemoveAllPoints();
-            opacity_function->AddPoint(0,   0.);
+            opacity_function->AddPoint(0, 0.);
             opacity_function->AddPoint(255, 1.);
 
             d->opacity_functions[field_name] = opacity_function;
@@ -281,7 +291,7 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
     if (d->eligible_field_names.size() > 0) {
         d->eligible_field_names.sort();
 
-        if(d->fields_box) {
+        if (d->fields_box) {
             d->fields_box->clear();
             d->fields_box->addItems(d->eligible_field_names);
         }
@@ -289,7 +299,7 @@ void dtkVisualizationDecoratorClutEditor::setData(const QVariant& data)
         this->setCurrentFieldName(d->eligible_field_names.first());
     }
 
-    if(this->canvas()) {
+    if (this->canvas()) {
         this->canvas()->addScalarBar(d->scalar_bar);
     }
 }
@@ -300,23 +310,26 @@ void dtkVisualizationDecoratorClutEditor::setCanvas(dtkVisualizationCanvas *canv
 
     d->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
     d->display_scalarbar->disconnect();
 
-    connect(d->display_scalarbar, &QCheckBox::stateChanged, [=] (int value) {
-            if (value == Qt::Checked)
-                this->canvas()->renderer()->AddActor2D(d->scalar_bar);
-            else
-                this->canvas()->renderer()->RemoveActor2D(d->scalar_bar);
+    connect(d->display_scalarbar, &QCheckBox::stateChanged, [=](int value) {
+        if (value == Qt::Checked)
+            this->canvas()->renderer()->AddActor2D(d->scalar_bar);
+        else
+            this->canvas()->renderer()->RemoveActor2D(d->scalar_bar);
 
-            this->canvas()->renderer()->GetRenderWindow()->Render();
-        });
+        this->canvas()->renderer()->GetRenderWindow()->Render();
+    });
 
     // clut_editor connections
-    // connect(this, &dtkVisualizationDecoratorClutEditor::currentRangeChanged, [=] (double min, double max) {
+    // connect(this, &dtkVisualizationDecoratorClutEditor::currentRangeChanged,
+    // [=] (double min, double max) {
     //         clut_editor->setRange(min, max);
     //         if(!d->fixed_range->isChecked()) {
     //             d->min_range->setText(QString::number(min));
@@ -324,7 +337,9 @@ void dtkVisualizationDecoratorClutEditor::setCanvas(dtkVisualizationCanvas *canv
     //         }
     //     });
 
-    // connect(this, &dtkVisualizationDecoratorClutEditor::currentColorTransferFunctionChanged, [=] (vtkColorTransferFunction *color_transfer_function) {
+    // connect(this,
+    // &dtkVisualizationDecoratorClutEditor::currentColorTransferFunctionChanged,
+    // [=] (vtkColorTransferFunction *color_transfer_function) {
     //         clut_editor->blockSignals(true);
     //         clut_editor->setColorTransferFunction(color_transfer_function);
     //         clut_editor->blockSignals(false);
@@ -332,20 +347,22 @@ void dtkVisualizationDecoratorClutEditor::setCanvas(dtkVisualizationCanvas *canv
 
     d->clut_editor->disconnect();
 
-    connect(d->clut_editor, &dtkVisualizationWidgetsClutEditor::updated, [=] () {
-            //need to block signal to avoid calling the previous connect
-            this->blockSignals(true);
-            this->setCurrentColorTransferFunction(reinterpret_cast<vtkColorTransferFunction *>(d->clut_editor->colorTransferFunction()));
-            this->setCurrentOpacityTransferFunction(reinterpret_cast<vtkPiecewiseFunction *>(d->clut_editor->opacityTransferFunction()));
-            this->blockSignals(false);
+    connect(d->clut_editor, &dtkVisualizationWidgetsClutEditor::updated, [=]() {
+        // need to block signal to avoid calling the previous connect
+        this->blockSignals(true);
+        this->setCurrentColorTransferFunction(reinterpret_cast<vtkColorTransferFunction *>(
+                d->clut_editor->colorTransferFunction()));
+        this->setCurrentOpacityTransferFunction(reinterpret_cast<vtkPiecewiseFunction *>(
+                d->clut_editor->opacityTransferFunction()));
+        this->blockSignals(false);
 
-            if(this->canvas())
-                this->canvas()->renderer()->GetRenderWindow()->Render();
+        if (this->canvas())
+            this->canvas()->renderer()->GetRenderWindow()->Render();
 
-            emit updated();
-        });
+        emit updated();
+    });
 
-    if(d->dataset) {
+    if (d->dataset) {
         d->view->renderer()->AddActor2D(d->scalar_bar);
     }
 }
@@ -357,7 +374,6 @@ void dtkVisualizationDecoratorClutEditor::unsetCanvas(void)
     }
     d->view = nullptr;
 }
-
 
 QStringList dtkVisualizationDecoratorClutEditor::eligibleFieldNames(void) const
 {
@@ -374,17 +390,19 @@ QPair<double, double> dtkVisualizationDecoratorClutEditor::currentRange(void) co
     return d->ranges[d->current_field_name];
 }
 
-vtkSmartPointer<vtkColorTransferFunction> dtkVisualizationDecoratorClutEditor::currentColorTransferFunction(void) const
+vtkSmartPointer<vtkColorTransferFunction>
+dtkVisualizationDecoratorClutEditor::currentColorTransferFunction(void) const
 {
     return d->color_transfer_functions[d->current_field_name];
 }
 
-vtkSmartPointer<vtkPiecewiseFunction> dtkVisualizationDecoratorClutEditor::currentOpacityTransferFunction(void) const
+vtkSmartPointer<vtkPiecewiseFunction>
+dtkVisualizationDecoratorClutEditor::currentOpacityTransferFunction(void) const
 {
     return d->opacity_functions[d->current_field_name];
 }
 
-bool dtkVisualizationDecoratorClutEditor::setCurrentFieldName(const QString& scalar_field_name)
+bool dtkVisualizationDecoratorClutEditor::setCurrentFieldName(const QString &scalar_field_name)
 {
     if (scalar_field_name.isEmpty()) {
         dtkWarn() << Q_FUNC_INFO << "Scalar field name is empty, nothing is done.";
@@ -396,39 +414,44 @@ bool dtkVisualizationDecoratorClutEditor::setCurrentFieldName(const QString& sca
         return false;
     }
 
-    if(!d->eligible_field_names.contains(scalar_field_name)) {
-        dtkWarn() << Q_FUNC_INFO << "The field name :" << scalar_field_name << "that was specified doesn't match any of the eligible scalar field names";
+    if (!d->eligible_field_names.contains(scalar_field_name)) {
+        dtkWarn() << Q_FUNC_INFO << "The field name :" << scalar_field_name
+                  << "that was specified doesn't match any of the eligible "
+                     "scalar field names";
 
         return false;
     }
 
     d->current_field_name = scalar_field_name;
 
-    if(d->fields_box)
+    if (d->fields_box)
         d->fields_box->setCurrentText(d->current_field_name);
 
-    if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
+    if (d->supports[d->current_field_name]
+        == dtkVisualizationDecoratorClutEditorPrivate::Support::Point) {
         d->dataset->GetPointData()->SetActiveScalars(qPrintable(d->current_field_name));
-    } else if (d->supports[d->current_field_name] == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
+    } else if (d->supports[d->current_field_name]
+               == dtkVisualizationDecoratorClutEditorPrivate::Support::Cell) {
         d->dataset->GetCellData()->SetActiveScalars(qPrintable(d->current_field_name));
     }
 
-    vtkSmartPointer<vtkColorTransferFunction> color_function = d->color_transfer_functions[d->current_field_name];
-    const QPair<double, double>& range = d->ranges[d->current_field_name];
+    vtkSmartPointer<vtkColorTransferFunction> color_function =
+            d->color_transfer_functions[d->current_field_name];
+    const QPair<double, double> &range = d->ranges[d->current_field_name];
 
     d->clut_editor->blockSignals(true);
     d->clut_editor->setColorTransferFunction(color_function);
     d->clut_editor->setRange(range.first, range.second);
     d->clut_editor->blockSignals(false);
 
-    if(!d->fixed_range->isChecked()) {
+    if (!d->fixed_range->isChecked()) {
         d->min_range->setText(QString::number(range.first));
         d->max_range->setText(QString::number(range.second));
     }
 
     d->scalar_bar->SetTitle(qPrintable(d->current_field_name));
     d->scalar_bar->SetLookupTable(color_function);
-    //TODO range SetMapper2D
+    // TODO range SetMapper2D
     d->scalar_bar->Modified();
 
     emit updated();
@@ -436,7 +459,8 @@ bool dtkVisualizationDecoratorClutEditor::setCurrentFieldName(const QString& sca
     return true;
 }
 
-void dtkVisualizationDecoratorClutEditor::setCurrentColorTransferFunction(vtkSmartPointer<vtkColorTransferFunction> color_function)
+void dtkVisualizationDecoratorClutEditor::setCurrentColorTransferFunction(
+        vtkSmartPointer<vtkColorTransferFunction> color_function)
 {
     if (d->current_field_name.isEmpty()) {
         return;
@@ -445,7 +469,7 @@ void dtkVisualizationDecoratorClutEditor::setCurrentColorTransferFunction(vtkSma
     d->color_transfer_functions[d->current_field_name]->DeepCopy(color_function);
 
     d->scalar_bar->SetLookupTable(d->color_transfer_functions[d->current_field_name]);
-    //TODO range SetMapper2D
+    // TODO range SetMapper2D
     d->scalar_bar->Modified();
 
     d->clut_editor->blockSignals(true);
@@ -455,7 +479,8 @@ void dtkVisualizationDecoratorClutEditor::setCurrentColorTransferFunction(vtkSma
     emit updated();
 }
 
-void dtkVisualizationDecoratorClutEditor::setCurrentOpacityTransferFunction(vtkSmartPointer<vtkPiecewiseFunction> opacity_function)
+void dtkVisualizationDecoratorClutEditor::setCurrentOpacityTransferFunction(
+        vtkSmartPointer<vtkPiecewiseFunction> opacity_function)
 {
     // TODO keep or delete
     if (d->current_field_name.isEmpty()) {
@@ -465,7 +490,6 @@ void dtkVisualizationDecoratorClutEditor::setCurrentOpacityTransferFunction(vtkS
     d->opacity_functions[d->current_field_name]->DeepCopy(opacity_function);
 
     // set opacity of d->clut_editor
-
 
     /*
     int size = opacity_function->GetSize();
@@ -493,7 +517,7 @@ void dtkVisualizationDecoratorClutEditor::setCurrentRange(double min, double max
         return;
     }
 
-    if(min <= max) {
+    if (min <= max) {
         d->ranges[d->current_field_name] = qMakePair(min, max);
         d->clut_editor->setRange(min, max);
     } else {

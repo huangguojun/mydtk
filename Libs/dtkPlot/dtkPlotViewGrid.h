@@ -40,7 +40,7 @@ public:
 public:
     QColor color(void) const;
 
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 private:
     dtkPlotViewGridPrivate *d;

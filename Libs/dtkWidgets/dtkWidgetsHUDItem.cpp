@@ -19,8 +19,8 @@
 
 #include <dtkThemes>
 
-#include <QtWidgets>
 #include <QtGui>
+#include <QtWidgets>
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsHUDItemPrivate
@@ -36,11 +36,13 @@ public:
 //
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsHUDItem::dtkWidgetsHUDItem(fa::icon icon, QWidget *parent) : QFrame(parent), d(new dtkWidgetsHUDItemPrivate)
+dtkWidgetsHUDItem::dtkWidgetsHUDItem(fa::icon icon, QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsHUDItemPrivate)
 {
     dtkFontAwesome::instance()->initFontAwesome();
     dtkFontAwesome::instance()->setDefaultOption("scale-factor", 1.0);
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@fg"));
 
     d->label = new QLabel(this);
     d->label->setPixmap(dtkFontAwesome::instance()->icon(icon).pixmap(16, 16));
@@ -71,7 +73,8 @@ void dtkWidgetsHUDItem::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(dtkThemesEngine::instance()->color("@fg"));
     painter.setBrush(dtkThemesEngine::instance()->color("@bg"));
-    painter.drawRoundedRect(event->rect(), event->rect().size().width()/2, event->rect().size().height()/2);
+    painter.drawRoundedRect(event->rect(), event->rect().size().width() / 2,
+                            event->rect().size().height() / 2);
 
     QFrame::paintEvent(event);
 }

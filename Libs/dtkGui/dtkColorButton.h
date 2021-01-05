@@ -48,37 +48,33 @@ class DTKGUISUPPORT_EXPORT dtkColorButton : public QPushButton
     Q_PROPERTY(PickMode pickModeRight READ pickModeRight WRITE setPickModeRight)
 
 public:
-    enum PickMode {
-        PM_NONE,
-        PM_COLORDIALOG,
-        PM_COLORGRID
-    };
+    enum PickMode { PM_NONE, PM_COLORDIALOG, PM_COLORGRID };
 
     dtkColorButton(QWidget *parent = 0);
     virtual ~dtkColorButton(void);
 
     int cellSize(void) const;
 
-    const QColor& color(void) const;
+    const QColor &color(void) const;
 
-    const PickMode& pickModeLeft() const;
-    const PickMode& pickModeRight() const;
+    const PickMode &pickModeLeft() const;
+    const PickMode &pickModeRight() const;
 
     dtkColorList *scheme(void) const;
 
     void setCellSize(int size);
-    void setPickModeLeft(const PickMode& mode);
-    void setPickModeRight(const PickMode& mode);
+    void setPickModeLeft(const PickMode &mode);
+    void setPickModeRight(const PickMode &mode);
     void setScheme(dtkColorList *scheme);
 
 signals:
-    void colorChanged(const QColor& color);
+    void colorChanged(const QColor &color);
 
 public slots:
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 protected:
-    virtual void drawColorItem(QPixmap& pm, const QColor& color);
+    virtual void drawColorItem(QPixmap &pm, const QColor &color);
 
 protected:
     void mousePressEvent(QMouseEvent *event);

@@ -12,9 +12,9 @@
 
 // Code:
 
+#include "dtkWidgetsTagCloudView.h"
 #include "dtkWidgetsTagCloudDesc.h"
 #include "dtkWidgetsTagCloudList.h"
-#include "dtkWidgetsTagCloudView.h"
 
 class dtkWidgetsTagCloudViewPrivate
 {
@@ -42,7 +42,8 @@ public:
     dtkWidgetsTagCloudDesc *desc;
 };
 
-dtkWidgetsTagCloudView::dtkWidgetsTagCloudView(QWidget *parent) : QStackedWidget(parent), d(new dtkWidgetsTagCloudViewPrivate)
+dtkWidgetsTagCloudView::dtkWidgetsTagCloudView(QWidget *parent)
+    : QStackedWidget(parent), d(new dtkWidgetsTagCloudViewPrivate)
 {
     d->list = new dtkWidgetsTagCloudList(this);
     d->desc = new dtkWidgetsTagCloudDesc(this);
@@ -64,7 +65,8 @@ dtkWidgetsTagCloudView::dtkWidgetsTagCloudView(QWidget *parent) : QStackedWidget
     this->addWidget(d->list);
     this->addWidget(d->desc);
 
-    connect(d->list, SIGNAL(itemClicked(const QString&)), this, SLOT(onItemClicked(const QString&)));
+    connect(d->list, SIGNAL(itemClicked(const QString &)), this,
+            SLOT(onItemClicked(const QString &)));
     connect(d->desc, SIGNAL(back()), this, SLOT(slideInPrev()));
 }
 
@@ -95,7 +97,7 @@ void dtkWidgetsTagCloudView::setDoom(void)
     d->list->setDoom();
 }
 
-void dtkWidgetsTagCloudView::onItemClicked(const QString& description)
+void dtkWidgetsTagCloudView::onItemClicked(const QString &description)
 {
     d->desc->setDescription(description);
 
@@ -144,11 +146,11 @@ void dtkWidgetsTagCloudView::slideInIdx(int idx, Direction direction)
         direction = d->vertical ? Top2Bottom : Right2Left;
         idx = (idx) % count();
     } else if (idx < 0) {
-        direction =  d->vertical ? Bottom2Top : Left2Right;
+        direction = d->vertical ? Bottom2Top : Left2Right;
         idx = (idx + count()) % count();
     }
 
-    slideInWgt(widget ( idx ), direction);
+    slideInWgt(widget(idx), direction);
 }
 
 void dtkWidgetsTagCloudView::slideInWgt(QWidget *newwidget, Direction direction)
@@ -178,9 +180,9 @@ void dtkWidgetsTagCloudView::slideInWgt(QWidget *newwidget, Direction direction)
     int offsetx = frameRect().width();
     int offsety = frameRect().height();
 
-    widget(next)->setGeometry ( 0,  0, offsetx, offsety );
+    widget(next)->setGeometry(0, 0, offsetx, offsety);
 
-    if (direction == Bottom2Top)  {
+    if (direction == Bottom2Top) {
         offsetx = 0;
         offsety = -offsety;
     } else if (direction == Top2Bottom) {

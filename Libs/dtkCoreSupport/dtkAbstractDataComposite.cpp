@@ -29,22 +29,22 @@ class dtkAbstractDataCompositePrivate
 public:
     dtkAbstractDataCompositePrivate(void);
 
-    dtkAbstractDataCompositePrivate(      QVector<dtkAbstractData *> *ivector);
-    dtkAbstractDataCompositePrivate(      QVector<dtkAbstractData *>& ivector);
-    dtkAbstractDataCompositePrivate(const QVector<dtkAbstractData *>& ivector);
+    dtkAbstractDataCompositePrivate(QVector<dtkAbstractData *> *ivector);
+    dtkAbstractDataCompositePrivate(QVector<dtkAbstractData *> &ivector);
+    dtkAbstractDataCompositePrivate(const QVector<dtkAbstractData *> &ivector);
 
-    dtkAbstractDataCompositePrivate(        QList<dtkAbstractData *> *ilist);
-    dtkAbstractDataCompositePrivate(        QList<dtkAbstractData *>& ilist);
-    dtkAbstractDataCompositePrivate(const   QList<dtkAbstractData *>& ilist);
+    dtkAbstractDataCompositePrivate(QList<dtkAbstractData *> *ilist);
+    dtkAbstractDataCompositePrivate(QList<dtkAbstractData *> &ilist);
+    dtkAbstractDataCompositePrivate(const QList<dtkAbstractData *> &ilist);
 
 public:
     dtkAbstractDataComposite::Type type;
 
-    const QVector<dtkAbstractData *>& const_vector;
-    QVector<dtkAbstractData *>& vector;
+    const QVector<dtkAbstractData *> &const_vector;
+    QVector<dtkAbstractData *> &vector;
 
-    const QList<dtkAbstractData *>& const_list;
-    QList<dtkAbstractData *>& list;
+    const QList<dtkAbstractData *> &const_list;
+    QList<dtkAbstractData *> &list;
 
     const QVector<dtkAbstractData *> *cv;
     QVector<dtkAbstractData *> *vv;
@@ -53,42 +53,79 @@ public:
     QList<dtkAbstractData *> *vl;
 };
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QVector<dtkAbstractData *> *ivector) : const_vector(*new QVector<dtkAbstractData * >()), vector(*ivector), const_list(*new QList<dtkAbstractData * >()), list(*new QList<dtkAbstractData * >()), cv(0), vv(ivector), cl(0), vl(0)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(
+        QVector<dtkAbstractData *> *ivector)
+    : const_vector(*new QVector<dtkAbstractData *>()),
+      vector(*ivector),
+      const_list(*new QList<dtkAbstractData *>()),
+      list(*new QList<dtkAbstractData *>()),
+      cv(0),
+      vv(ivector),
+      cl(0),
+      vl(0)
 {
     cv = &const_vector;
     cl = &const_list;
     vl = &list;
 }
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(const QVector<dtkAbstractData *>& ivector) : const_vector(ivector), vector(*new QVector<dtkAbstractData * >()), const_list(*new QList<dtkAbstractData * >()), list(*new QList<dtkAbstractData * >()), cv(&ivector)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(
+        const QVector<dtkAbstractData *> &ivector)
+    : const_vector(ivector),
+      vector(*new QVector<dtkAbstractData *>()),
+      const_list(*new QList<dtkAbstractData *>()),
+      list(*new QList<dtkAbstractData *>()),
+      cv(&ivector)
 {
     vv = &vector;
     cl = &const_list;
     vl = &list;
 }
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QVector<dtkAbstractData *>& ivector) : const_vector(*new QVector<dtkAbstractData * >()), vector(ivector), const_list(*new QList<dtkAbstractData * >()), list(*new QList<dtkAbstractData * >()),  vv(&ivector)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(
+        QVector<dtkAbstractData *> &ivector)
+    : const_vector(*new QVector<dtkAbstractData *>()),
+      vector(ivector),
+      const_list(*new QList<dtkAbstractData *>()),
+      list(*new QList<dtkAbstractData *>()),
+      vv(&ivector)
 {
     cv = &const_vector;
     cl = &const_list;
     vl = &list;
 }
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QList<dtkAbstractData *> *ilist) : const_vector(*new QVector<dtkAbstractData * >()), vector(*new QVector<dtkAbstractData * >()), const_list(*new QList<dtkAbstractData * >()), list(*ilist), vl(ilist)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QList<dtkAbstractData *> *ilist)
+    : const_vector(*new QVector<dtkAbstractData *>()),
+      vector(*new QVector<dtkAbstractData *>()),
+      const_list(*new QList<dtkAbstractData *>()),
+      list(*ilist),
+      vl(ilist)
 {
     cv = &const_vector;
     vv = &vector;
     cl = &const_list;
 }
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(const QList<dtkAbstractData *>& ilist) : const_vector(*new QVector<dtkAbstractData * >()), vector(*new QVector<dtkAbstractData * >()), const_list(ilist), list(*new QList<dtkAbstractData * >()), cl(&ilist)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(
+        const QList<dtkAbstractData *> &ilist)
+    : const_vector(*new QVector<dtkAbstractData *>()),
+      vector(*new QVector<dtkAbstractData *>()),
+      const_list(ilist),
+      list(*new QList<dtkAbstractData *>()),
+      cl(&ilist)
 {
     cv = &const_vector;
     vv = &vector;
     vl = &list;
 }
 
-dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QList<dtkAbstractData *>& ilist) : const_vector(*new QVector<dtkAbstractData * >()), vector(*new QVector<dtkAbstractData * >()), const_list(*new QList<dtkAbstractData * >()), list(ilist), vl(&ilist)
+dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QList<dtkAbstractData *> &ilist)
+    : const_vector(*new QVector<dtkAbstractData *>()),
+      vector(*new QVector<dtkAbstractData *>()),
+      const_list(*new QList<dtkAbstractData *>()),
+      list(ilist),
+      vl(&ilist)
 {
     cv = &const_vector;
     vv = &vector;
@@ -103,7 +140,9 @@ dtkAbstractDataCompositePrivate::dtkAbstractDataCompositePrivate(QList<dtkAbstra
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(const QVector<dtkAbstractData *>& vector, dtkAbstractData *parent) : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(vector))
+dtkAbstractDataComposite::dtkAbstractDataComposite(const QVector<dtkAbstractData *> &vector,
+                                                   dtkAbstractData *parent)
+    : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(vector))
 {
     d->type = dtkAbstractDataComposite::ConstVector;
 }
@@ -112,7 +151,9 @@ dtkAbstractDataComposite::dtkAbstractDataComposite(const QVector<dtkAbstractData
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *>& vector, dtkAbstractData *parent) : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(vector))
+dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *> &vector,
+                                                   dtkAbstractData *parent)
+    : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(vector))
 {
     d->type = dtkAbstractDataComposite::Vector;
 }
@@ -120,7 +161,9 @@ dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *>& v
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(const QList<dtkAbstractData *>& list, dtkAbstractData *parent) : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(list))
+dtkAbstractDataComposite::dtkAbstractDataComposite(const QList<dtkAbstractData *> &list,
+                                                   dtkAbstractData *parent)
+    : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(list))
 {
     d->type = dtkAbstractDataComposite::ConstList;
 }
@@ -129,7 +172,9 @@ dtkAbstractDataComposite::dtkAbstractDataComposite(const QList<dtkAbstractData *
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(QList<dtkAbstractData *>& list, dtkAbstractData *parent) : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(list))
+dtkAbstractDataComposite::dtkAbstractDataComposite(QList<dtkAbstractData *> &list,
+                                                   dtkAbstractData *parent)
+    : dtkAbstractData(parent), d(new dtkAbstractDataCompositePrivate(list))
 {
     d->type = dtkAbstractDataComposite::List;
 }
@@ -180,11 +225,13 @@ void dtkAbstractDataComposite::append(dtkAbstractData *data)
         break;
 
     case dtkAbstractDataComposite::ConstVector:
-        qDebug() << DTK_PRETTY_FUNCTION << "Composite data is of type const vector. Adding data failed";
+        qDebug() << DTK_PRETTY_FUNCTION
+                 << "Composite data is of type const vector. Adding data failed";
         break;
 
     case dtkAbstractDataComposite::ConstList:
-        qDebug() << DTK_PRETTY_FUNCTION << "Composite data is of type const list. Adding data failed";
+        qDebug() << DTK_PRETTY_FUNCTION
+                 << "Composite data is of type const list. Adding data failed";
         break;
 
     default:
@@ -217,11 +264,13 @@ void dtkAbstractDataComposite::remove(dtkAbstractData *data)
         break;
 
     case dtkAbstractDataComposite::ConstVector:
-        qDebug() << DTK_PRETTY_FUNCTION << "Composite data is of type const vector. Removing data failed";
+        qDebug() << DTK_PRETTY_FUNCTION
+                 << "Composite data is of type const vector. Removing data failed";
         break;
 
     case dtkAbstractDataComposite::ConstList:
-        qDebug() << DTK_PRETTY_FUNCTION << "Composite data is of type const list. Removing data failed";
+        qDebug() << DTK_PRETTY_FUNCTION
+                 << "Composite data is of type const list. Removing data failed";
         break;
 
     default:
@@ -343,7 +392,8 @@ dtkAbstractDataComposite::Type dtkAbstractDataComposite::type(void)
 
 //! Returns the item at index position \a index in the composite.
 /*!
- *   \a index must be a valid index position in the composite (i.e., 0 <= i < size).
+ *   \a index must be a valid index position in the composite (i.e., 0 <= i <
+ * size).
  */
 const dtkAbstractData *dtkAbstractDataComposite::at(qlonglong index) const
 {
@@ -376,7 +426,8 @@ const dtkAbstractData *dtkAbstractDataComposite::at(qlonglong index) const
 
 //! Returns the item at index position \a index in the composite.
 /*!
- *   \a index must be a valid index position in the composite (i.e., 0 <= i < size).
+ *   \a index must be a valid index position in the composite (i.e., 0 <= i <
+ * size).
  */
 dtkAbstractData *dtkAbstractDataComposite::at(qlonglong index)
 {
@@ -415,7 +466,7 @@ dtkAbstractData *dtkAbstractDataComposite::at(qlonglong index)
  *  When composite has been created using a Qt list, a reference to a
  *  vector containing a copy of the original list is returned.
  */
-const QVector<dtkAbstractData *>& dtkAbstractDataComposite::vector(void) const
+const QVector<dtkAbstractData *> &dtkAbstractDataComposite::vector(void) const
 {
     switch (d->type) {
     case dtkAbstractDataComposite::Vector:
@@ -453,7 +504,7 @@ const QVector<dtkAbstractData *>& dtkAbstractDataComposite::vector(void) const
  *  When composite has been created using a Qt list, a reference to a
  *  vector containing a copy of the original list is returned.
  */
-QVector<dtkAbstractData *>& dtkAbstractDataComposite::vector(void)
+QVector<dtkAbstractData *> &dtkAbstractDataComposite::vector(void)
 {
     switch (d->type) {
     case dtkAbstractDataComposite::Vector:
@@ -489,7 +540,7 @@ QVector<dtkAbstractData *>& dtkAbstractDataComposite::vector(void)
  *  When composite has been created using a Qt vector, a reference to a
  *  list containing a copy of the original vector is returned.
  */
-const QList<dtkAbstractData *>& dtkAbstractDataComposite::list(void) const
+const QList<dtkAbstractData *> &dtkAbstractDataComposite::list(void) const
 {
     switch (d->type) {
     case dtkAbstractDataComposite::Vector:
@@ -527,7 +578,7 @@ const QList<dtkAbstractData *>& dtkAbstractDataComposite::list(void) const
  *  When composite has been created using a Qt vector, a reference to a
  *  list containing a copy of the original vector is returned.
  */
-QList<dtkAbstractData *>& dtkAbstractDataComposite::list(void)
+QList<dtkAbstractData *> &dtkAbstractDataComposite::list(void)
 {
     switch (d->type) {
     case dtkAbstractDataComposite::Vector:
@@ -563,7 +614,8 @@ QList<dtkAbstractData *>& dtkAbstractDataComposite::list(void)
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *> *vector) : dtkAbstractData(), d(new dtkAbstractDataCompositePrivate(vector))
+dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *> *vector)
+    : dtkAbstractData(), d(new dtkAbstractDataCompositePrivate(vector))
 {
     d->type = dtkAbstractDataComposite::Vector;
 }
@@ -572,7 +624,8 @@ dtkAbstractDataComposite::dtkAbstractDataComposite(QVector<dtkAbstractData *> *v
 /*!
  *
  */
-dtkAbstractDataComposite::dtkAbstractDataComposite(QList<dtkAbstractData *> *list) : dtkAbstractData(), d(new dtkAbstractDataCompositePrivate(list))
+dtkAbstractDataComposite::dtkAbstractDataComposite(QList<dtkAbstractData *> *list)
+    : dtkAbstractData(), d(new dtkAbstractDataCompositePrivate(list))
 {
     d->type = dtkAbstractDataComposite::List;
 }
@@ -585,7 +638,8 @@ dtkAbstractDataComposite::dtkAbstractDataComposite(QList<dtkAbstractData *> *lis
 /*!
  *
  */
-dtkAbstractDataComposite *dtkAbstractDataComposite::createFromVectorCopy(const QVector<dtkAbstractData *>& vector)
+dtkAbstractDataComposite *
+dtkAbstractDataComposite::createFromVectorCopy(const QVector<dtkAbstractData *> &vector)
 {
     return new dtkAbstractDataComposite(new QVector<dtkAbstractData *>(vector));
 }
@@ -594,7 +648,8 @@ dtkAbstractDataComposite *dtkAbstractDataComposite::createFromVectorCopy(const Q
 /*!
  *
  */
-dtkAbstractDataComposite *dtkAbstractDataComposite::createFromVectorCopy(QVector<dtkAbstractData *>& vector)
+dtkAbstractDataComposite *
+dtkAbstractDataComposite::createFromVectorCopy(QVector<dtkAbstractData *> &vector)
 {
     return new dtkAbstractDataComposite(new QVector<dtkAbstractData *>(vector));
 }
@@ -603,7 +658,8 @@ dtkAbstractDataComposite *dtkAbstractDataComposite::createFromVectorCopy(QVector
 /*!
  *
  */
-dtkAbstractDataComposite *dtkAbstractDataComposite::createFromListCopy(const QList<dtkAbstractData *>& list)
+dtkAbstractDataComposite *
+dtkAbstractDataComposite::createFromListCopy(const QList<dtkAbstractData *> &list)
 {
     return new dtkAbstractDataComposite(new QList<dtkAbstractData *>(list));
 }
@@ -612,7 +668,8 @@ dtkAbstractDataComposite *dtkAbstractDataComposite::createFromListCopy(const QLi
 /*!
  *
  */
-dtkAbstractDataComposite *dtkAbstractDataComposite::createFromListCopy(QList<dtkAbstractData *>& list)
+dtkAbstractDataComposite *
+dtkAbstractDataComposite::createFromListCopy(QList<dtkAbstractData *> &list)
 {
     return new dtkAbstractDataComposite(new QList<dtkAbstractData *>(list));
 }
@@ -636,4 +693,3 @@ dtkAbstractDataComposite *dtkAbstractDataComposite::createFromListCopy(QList<dtk
  *
  *
  */
-

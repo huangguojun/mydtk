@@ -23,9 +23,8 @@
 #include <QtWidgets>
 
 #include <vtkActor.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkLookupTable.h>
 #include <vtkCellData.h>
+#include <vtkColorTransferFunction.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
@@ -33,9 +32,9 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRendererCollection.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
 #include <vtkVertexGlyphFilter.h>
 
@@ -69,7 +68,8 @@ public:
 // dtkVisualizationDecoratorPoints implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorPoints::dtkVisualizationDecoratorPoints(void): d(new dtkVisualizationDecoratorPointsPrivate())
+dtkVisualizationDecoratorPoints::dtkVisualizationDecoratorPoints(void)
+    : d(new dtkVisualizationDecoratorPointsPrivate())
 {
     d->data = vtkSmartPointer<vtkPolyData>::New();
 
@@ -90,10 +90,10 @@ dtkVisualizationDecoratorPoints::dtkVisualizationDecoratorPoints(void): d(new dt
     //////////
     // Inspectors creation
 
-    d->color_button    = new QPushButton("Color");
+    d->color_button = new QPushButton("Color");
     d->opacity_spinbox = new QDoubleSpinBox;
-    d->size_spinbox    = new QDoubleSpinBox;
-    d->show_actor_cb   = new QCheckBox;
+    d->size_spinbox = new QDoubleSpinBox;
+    d->show_actor_cb = new QCheckBox;
 
     d->opacity_spinbox->setObjectName("Opacity");
     d->opacity_spinbox->setRange(0, 1);
@@ -115,21 +115,23 @@ dtkVisualizationDecoratorPoints::dtkVisualizationDecoratorPoints(void): d(new dt
     //////////
     // Inspectors connections
 
-    connect(d->color_button, &QPushButton::released, [=] (void) {
+    connect(d->color_button, &QPushButton::released, [=](void) {
         double *vtk_color = d->actor->GetProperty()->GetColor();
         QColor qt_color = QColor(vtk_color[0], vtk_color[1], vtk_color[2]);
         qt_color = QColorDialog::getColor(qt_color, d->color_button);
         this->setColor(qt_color);
     });
 
-    connect(d->opacity_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &dtkVisualizationDecoratorPoints::setOpacity);
+    connect(d->opacity_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &dtkVisualizationDecoratorPoints::setOpacity);
 
-    connect(d->size_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &dtkVisualizationDecoratorPoints::setSize);
+    connect(d->size_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &dtkVisualizationDecoratorPoints::setSize);
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
     d->inspectors << d->color_button << d->opacity_spinbox << d->size_spinbox << d->show_actor_cb;
 }
@@ -144,7 +146,7 @@ dtkVisualizationDecoratorPoints::~dtkVisualizationDecoratorPoints(void)
 
 void dtkVisualizationDecoratorPoints::touch(void)
 {
-    if(!this->canvas()) {
+    if (!this->canvas()) {
         dtkWarn() << Q_FUNC_INFO << "No canvas was set, call setCanvas to call draw on a canvas.";
         return;
     }
@@ -161,7 +163,7 @@ bool dtkVisualizationDecoratorPoints::isDecorating(void)
     return d->points;
 }
 
-void dtkVisualizationDecoratorPoints::setData(const QVariant& data)
+void dtkVisualizationDecoratorPoints::setData(const QVariant &data)
 {
     d->points = data.value<vtkPoints *>();
     if (!d->points) {
@@ -192,14 +194,16 @@ void dtkVisualizationDecoratorPoints::setCanvas(dtkVisualizationCanvas *canvas)
 
     d->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
     if (d->filter->GetInput()) {
         d->view->renderer()->AddActor(d->actor);
 
-        if(d->view->interactor()) {
+        if (d->view->interactor()) {
             d->view->interactor()->Render();
         }
     }
@@ -220,17 +224,16 @@ void dtkVisualizationDecoratorPoints::setVisibility(bool visible)
     d->show_actor_cb->blockSignals(true);
     d->show_actor_cb->setCheckState(visible ? Qt::Checked : Qt::Unchecked);
     d->show_actor_cb->blockSignals(false);
-
 }
 
-void dtkVisualizationDecoratorPoints::setColor(const QColor& color)
+void dtkVisualizationDecoratorPoints::setColor(const QColor &color)
 {
     d->actor->GetProperty()->SetColor(color.red(), color.green(), color.blue());
 
     this->draw();
 }
 
-void dtkVisualizationDecoratorPoints::setOpacity(const double& alpha)
+void dtkVisualizationDecoratorPoints::setOpacity(const double &alpha)
 {
     d->actor->GetProperty()->SetOpacity(alpha);
 
@@ -241,7 +244,7 @@ void dtkVisualizationDecoratorPoints::setOpacity(const double& alpha)
     this->draw();
 }
 
-void dtkVisualizationDecoratorPoints::setSize(const double& size)
+void dtkVisualizationDecoratorPoints::setSize(const double &size)
 {
     d->actor->GetProperty()->SetPointSize(size);
 

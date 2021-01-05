@@ -7,10 +7,11 @@ class dtkVisualizationWidgetsSliceControlsPrivate
 public:
     QCheckBox *enable_slicing = nullptr;
     QCheckBox *reset_pos = nullptr;
-    QDoubleSpinBox *slice_position ;
+    QDoubleSpinBox *slice_position;
 };
 
-dtkVisualizationWidgetsSliceControls::dtkVisualizationWidgetsSliceControls(QWidget *parent) : QWidget(parent), d (new dtkVisualizationWidgetsSliceControlsPrivate)
+dtkVisualizationWidgetsSliceControls::dtkVisualizationWidgetsSliceControls(QWidget *parent)
+    : QWidget(parent), d(new dtkVisualizationWidgetsSliceControlsPrivate)
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(10, 0, 10, 0);
@@ -22,7 +23,7 @@ dtkVisualizationWidgetsSliceControls::dtkVisualizationWidgetsSliceControls(QWidg
     d->enable_slicing->setToolTip("Enable/Disable slice");
 
     d->slice_position = new QDoubleSpinBox(this);
-    d->slice_position->setRange(0,99999999);
+    d->slice_position->setRange(0, 99999999);
     d->slice_position->setAlignment(Qt::AlignRight);
 
     QLabel *label_reset = new QLabel(this);
@@ -39,11 +40,14 @@ dtkVisualizationWidgetsSliceControls::dtkVisualizationWidgetsSliceControls(QWidg
 
     this->setLayout(layout);
 
-    connect(d->slice_position, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &dtkVisualizationWidgetsSliceControls::valueChanged);
-    connect(d->enable_slicing, &QCheckBox::toggled, this, &dtkVisualizationWidgetsSliceControls::toggled);
-    connect(d->reset_pos, &QCheckBox::clicked, [=] (bool b) {
-       d->slice_position->setValue(0.0);
-       emit reset();} );
+    connect(d->slice_position, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &dtkVisualizationWidgetsSliceControls::valueChanged);
+    connect(d->enable_slicing, &QCheckBox::toggled, this,
+            &dtkVisualizationWidgetsSliceControls::toggled);
+    connect(d->reset_pos, &QCheckBox::clicked, [=](bool b) {
+        d->slice_position->setValue(0.0);
+        emit reset();
+    });
 }
 
 dtkVisualizationWidgetsSliceControls::~dtkVisualizationWidgetsSliceControls(void)

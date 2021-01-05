@@ -19,8 +19,8 @@
 #include <vtkDataSet.h>
 #include <vtkImageData.h>
 #include <vtkPolyData.h>
-#include <vtkSmartPointer.h>
 #include <vtkRectilinearGrid.h>
+#include <vtkSmartPointer.h>
 #include <vtkStructuredGrid.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkXMLImageDataReader.h>
@@ -33,7 +33,7 @@
 // dtkVisualizationVTKReader implementation
 // ///////////////////////////////////////////////////////////////////
 
-vtkDataSet *dtkVisualizationVTKReader(const QString& path)
+vtkDataSet *dtkVisualizationVTKReader(const QString &path)
 {
     if (path.endsWith(".vti"))
         return dtkVisualizationVTKReaderVTI(path);
@@ -54,7 +54,7 @@ vtkDataSet *dtkVisualizationVTKReader(const QString& path)
     return nullptr;
 }
 
-vtkDataSet *dtkVisualizationVTKReaderVTI(const QString& path)
+vtkDataSet *dtkVisualizationVTKReaderVTI(const QString &path)
 {
     vtkDataSet *res = vtkImageData::New();
     vtkSmartPointer<vtkXMLImageDataReader> reader = vtkSmartPointer<vtkXMLImageDataReader>::New();
@@ -64,7 +64,7 @@ vtkDataSet *dtkVisualizationVTKReaderVTI(const QString& path)
     return res;
 }
 
-vtkDataSet *dtkVisualizationVTKReaderVTP(const QString& path)
+vtkDataSet *dtkVisualizationVTKReaderVTP(const QString &path)
 {
     vtkDataSet *res = vtkPolyData::New();
     vtkSmartPointer<vtkXMLPolyDataReader> reader = vtkSmartPointer<vtkXMLPolyDataReader>::New();
@@ -74,30 +74,33 @@ vtkDataSet *dtkVisualizationVTKReaderVTP(const QString& path)
     return res;
 }
 
-vtkDataSet *dtkVisualizationVTKReaderVTR(const QString& path)
+vtkDataSet *dtkVisualizationVTKReaderVTR(const QString &path)
 {
     vtkDataSet *res = vtkRectilinearGrid::New();
-    vtkSmartPointer<vtkXMLRectilinearGridReader> reader = vtkSmartPointer<vtkXMLRectilinearGridReader>::New();
+    vtkSmartPointer<vtkXMLRectilinearGridReader> reader =
+            vtkSmartPointer<vtkXMLRectilinearGridReader>::New();
     reader->SetFileName(qPrintable(path));
     reader->Update();
     res->DeepCopy(reader->GetOutput());
     return res;
 }
 
-vtkDataSet *dtkVisualizationVTKReaderVTS(const QString& path)
+vtkDataSet *dtkVisualizationVTKReaderVTS(const QString &path)
 {
     vtkDataSet *res = vtkStructuredGrid::New();
-    vtkSmartPointer<vtkXMLStructuredGridReader> reader = vtkSmartPointer<vtkXMLStructuredGridReader>::New();
+    vtkSmartPointer<vtkXMLStructuredGridReader> reader =
+            vtkSmartPointer<vtkXMLStructuredGridReader>::New();
     reader->SetFileName(qPrintable(path));
     reader->Update();
     res->DeepCopy(reader->GetOutput());
     return res;
 }
 
-vtkDataSet *dtkVisualizationVTKReaderVTU(const QString& path)
+vtkDataSet *dtkVisualizationVTKReaderVTU(const QString &path)
 {
     vtkDataSet *res = vtkUnstructuredGrid::New();
-    vtkSmartPointer<vtkXMLUnstructuredGridReader> reader = vtkSmartPointer<vtkXMLUnstructuredGridReader>::New();
+    vtkSmartPointer<vtkXMLUnstructuredGridReader> reader =
+            vtkSmartPointer<vtkXMLUnstructuredGridReader>::New();
     reader->SetFileName(qPrintable(path));
     reader->Update();
     res->DeepCopy(reader->GetOutput());

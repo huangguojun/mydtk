@@ -19,16 +19,13 @@
 // dtkLogDestination
 // /////////////////////////////////////////////////////////////////
 
-dtkLogDestination::~dtkLogDestination(void)
-{
-
-}
+dtkLogDestination::~dtkLogDestination(void) {}
 
 // /////////////////////////////////////////////////////////////////
 // dtkLogDestinationConsole
 // /////////////////////////////////////////////////////////////////
 
-void dtkLogDestinationConsole::write(const QString& message)
+void dtkLogDestinationConsole::write(const QString &message)
 {
     fprintf(stderr, "%s\n", qPrintable(message));
     fflush(stderr);
@@ -48,7 +45,8 @@ public:
     QTextStream stream;
 };
 
-dtkLogDestinationFile::dtkLogDestinationFile(const QString& path, qlonglong max_file_size) : d(new dtkLogDestinationFilePrivate)
+dtkLogDestinationFile::dtkLogDestinationFile(const QString &path, qlonglong max_file_size)
+    : d(new dtkLogDestinationFilePrivate)
 {
     d->file.setFileName(path);
     d->max_file_size = max_file_size;
@@ -80,7 +78,7 @@ void dtkLogDestinationFile::setMaxFileSize(qlonglong size)
     d->max_file_size = size;
 }
 
-void dtkLogDestinationFile::write(const QString& message)
+void dtkLogDestinationFile::write(const QString &message)
 {
     if (d->file.size() + message.size() > d->max_file_size) {
         qDebug() << "Max log file size reached" << d->max_file_size << ", rotate log file";
@@ -93,11 +91,10 @@ void dtkLogDestinationFile::write(const QString& message)
         if (QFile::exists(backup))
             QFile::remove(backup);
 
-        QFile::rename( path, backup);
+        QFile::rename(path, backup);
 
         if (!d->file.open(QFile::WriteOnly | QFile::Text | QIODevice::Append))
-            qDebug() << "Unable to open" <<  path << "for writing";
-
+            qDebug() << "Unable to open" << path << "for writing";
     }
 
     d->stream << message << endl;
@@ -114,7 +111,8 @@ public:
     dtkLogModel *model;
 };
 
-dtkLogDestinationModel::dtkLogDestinationModel(dtkLogModel *model) : d(new dtkLogDestinationModelPrivate)
+dtkLogDestinationModel::dtkLogDestinationModel(dtkLogModel *model)
+    : d(new dtkLogDestinationModelPrivate)
 {
     d->model = model;
 }
@@ -126,7 +124,7 @@ dtkLogDestinationModel::~dtkLogDestinationModel(void)
     d = NULL;
 }
 
-void dtkLogDestinationModel::write(const QString& message)
+void dtkLogDestinationModel::write(const QString &message)
 {
     d->model->append(message);
 }

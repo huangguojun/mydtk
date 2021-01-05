@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterLongLongSpinBox : public dtkWidgetsParameterBase<dtk::d_int>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterLongLongSpinBox
+    : public dtkWidgetsParameterBase<dtk::d_int>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterLongLongSpinBox(QWidget* parent = nullptr);
+    dtkWidgetsParameterLongLongSpinBox(QWidget *parent = nullptr);
     ~dtkWidgetsParameterLongLongSpinBox(void);
 
 public:

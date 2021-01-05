@@ -18,29 +18,27 @@
  */
 
 #include "dtkAbstractDataReader.h"
-#include "dtkAbstractDataReader_p.h"
 #include "dtkAbstractData.h"
+#include "dtkAbstractDataReader_p.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkAbstractDataReader implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractDataReader::dtkAbstractDataReader(void) : dtkAbstractObject(*new dtkAbstractDataReaderPrivate(this), 0)
+dtkAbstractDataReader::dtkAbstractDataReader(void)
+    : dtkAbstractObject(*new dtkAbstractDataReaderPrivate(this), 0)
 {
     DTK_D(dtkAbstractDataReader);
 
     d->enabled = false;
 }
 
-dtkAbstractDataReader::dtkAbstractDataReader(const dtkAbstractDataReader& other) : dtkAbstractObject(*new dtkAbstractDataReaderPrivate(*other.d_func()), other)
+dtkAbstractDataReader::dtkAbstractDataReader(const dtkAbstractDataReader &other)
+    : dtkAbstractObject(*new dtkAbstractDataReaderPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractDataReader::~dtkAbstractDataReader(void)
-{
-
-}
+dtkAbstractDataReader::~dtkAbstractDataReader(void) {}
 
 bool dtkAbstractDataReader::enabled(void) const
 {
@@ -82,14 +80,14 @@ void dtkAbstractDataReader::setData(dtkAbstractData *data)
 
 //  Verify that the reader can handle this/these file(s).
 
-bool dtkAbstractDataReader::canRead(const QString& file)
+bool dtkAbstractDataReader::canRead(const QString &file)
 {
     DTK_UNUSED(file);
 
     return false;
 }
 
-bool dtkAbstractDataReader::canRead(const QStringList& files)
+bool dtkAbstractDataReader::canRead(const QStringList &files)
 {
     if (files.size() == 1)
         return canRead(files[0]);
@@ -97,7 +95,7 @@ bool dtkAbstractDataReader::canRead(const QStringList& files)
     return false;
 }
 
-bool dtkAbstractDataReader::read(const QString& file)
+bool dtkAbstractDataReader::read(const QString &file)
 {
     DTK_D(dtkAbstractDataReader);
 
@@ -106,7 +104,7 @@ bool dtkAbstractDataReader::read(const QString& file)
     return false;
 }
 
-bool dtkAbstractDataReader::read(const QStringList& files)
+bool dtkAbstractDataReader::read(const QStringList &files)
 {
     DTK_D(dtkAbstractDataReader);
 
@@ -120,13 +118,13 @@ bool dtkAbstractDataReader::read(const QStringList& files)
     return false;
 }
 
-bool dtkAbstractDataReader::readInformation(const QString& path)
+bool dtkAbstractDataReader::readInformation(const QString &path)
 {
     DTK_UNUSED(path);
     return false;
 }
 
-bool dtkAbstractDataReader::readInformation(const QStringList& paths)
+bool dtkAbstractDataReader::readInformation(const QStringList &paths)
 {
     if (paths.size() == 1)
         return readInformation(paths[0]);
@@ -136,17 +134,17 @@ bool dtkAbstractDataReader::readInformation(const QStringList& paths)
 
 void dtkAbstractDataReader::setProgress(int value)
 {
-    emit progressed (value);
+    emit progressed(value);
 }
 
-const QString& dtkAbstractDataReader::file(void) const
+const QString &dtkAbstractDataReader::file(void) const
 {
     DTK_D(const dtkAbstractDataReader);
 
     return d->file;
 }
 
-const QStringList& dtkAbstractDataReader::files(void) const
+const QStringList &dtkAbstractDataReader::files(void) const
 {
     DTK_D(const dtkAbstractDataReader);
 

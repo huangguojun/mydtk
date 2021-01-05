@@ -38,7 +38,8 @@ dtkViewLayout::dtkViewLayout(QWidget *parent) : QFrame(parent), d(new dtkViewLay
     layout->addWidget(d->root);
 
     connect(d->root, SIGNAL(focused(dtkAbstractView *)), this, SIGNAL(focused(dtkAbstractView *)));
-    connect(d->root, SIGNAL(unfocused(dtkAbstractView *)), this, SIGNAL(unfocused(dtkAbstractView *)));
+    connect(d->root, SIGNAL(unfocused(dtkAbstractView *)), this,
+            SIGNAL(unfocused(dtkAbstractView *)));
 
     connect(dtkAbstractViewFactory::instance(), SIGNAL(cleared()), this, SLOT(clear()));
 }

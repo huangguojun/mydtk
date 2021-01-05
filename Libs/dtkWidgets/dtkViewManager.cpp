@@ -13,8 +13,8 @@
 // Code:
 
 #include "dtkViewManager.h"
-#include "dtkViewList.h"
 #include "dtkViewLayout.h"
+#include "dtkViewList.h"
 #include "dtkViewListControl.h"
 #include "dtkViewWidget.h"
 
@@ -43,7 +43,8 @@ dtkViewManager::dtkViewManager(QWidget *parent) : QFrame(parent), d(new dtkViewM
     inner->addWidget(view_control);
     inner->addWidget(d->view_list);
     inner->addWidget(d->view_inspector);
-    inner->setSizes(QList<int>() << 32  << (parent->size().height()-32)/8 << (parent->size().height()-32)/2);
+    inner->setSizes(QList<int>() << 32 << (parent->size().height() - 32) / 8
+                                 << (parent->size().height() - 32) / 2);
 
     QSplitter *splitter = new QSplitter(this);
     splitter->setHandleWidth(2);
@@ -56,9 +57,12 @@ dtkViewManager::dtkViewManager(QWidget *parent) : QFrame(parent), d(new dtkViewM
     main_layout->setSpacing(0);
     main_layout->addWidget(splitter);
 
-    connect(d->view_layout, SIGNAL(focused(dtkViewWidget *)), this, SIGNAL(focused(dtkViewWidget *)));
-    connect(d->view_layout, SIGNAL(focused(dtkViewWidget *)), this, SLOT(onViewFocused(dtkViewWidget *)));
-    connect(d->view_layout, SIGNAL(unfocused(dtkViewWidget *)), this, SLOT(onViewUnfocused(dtkViewWidget *)));
+    connect(d->view_layout, SIGNAL(focused(dtkViewWidget *)), this,
+            SIGNAL(focused(dtkViewWidget *)));
+    connect(d->view_layout, SIGNAL(focused(dtkViewWidget *)), this,
+            SLOT(onViewFocused(dtkViewWidget *)));
+    connect(d->view_layout, SIGNAL(unfocused(dtkViewWidget *)), this,
+            SLOT(onViewUnfocused(dtkViewWidget *)));
 }
 
 dtkViewManager::~dtkViewManager(void)

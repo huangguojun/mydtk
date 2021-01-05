@@ -10,17 +10,17 @@
  */
 
 #include "dtkPlotViewLegend.h"
-#include "dtkPlotViewLegend_p.h"
 #include "dtkPlotView.h"
+#include "dtkPlotViewLegend_p.h"
 
-#include <qwt_plot_layout.h>
-#include <qwt_plot_item.h>
 #include <qwt_legend.h>
+#include <qwt_plot_item.h>
+#include <qwt_plot_layout.h>
 
 #if QWT_VERSION >= 0x060100
-#include <qwt_legend_label.h>
+#    include <qwt_legend_label.h>
 #else
-#include <qwt_legend_item.h>
+#    include <qwt_legend_item.h>
 #endif
 
 // /////////////////////////////////////////////////////////////////
@@ -40,18 +40,17 @@ dtkPlotViewLegendPrivate::dtkPlotViewLegendPrivate(dtkPlotView *parent)
     plot->insertLegend(legend, QwtPlot::RightLegend);
 
 #if QWT_VERSION >= 0x060100
-    connect(legend, SIGNAL(checked(const QVariant&, bool, int)), this, SLOT(legendChecked(const QVariant&, bool)));
+    connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this,
+            SLOT(legendChecked(const QVariant &, bool)));
 #else
-    connect(plot, SIGNAL(legendChecked(QwtPlotItem *, bool)), this, SLOT(showCurve(QwtPlotItem *, bool)));
+    connect(plot, SIGNAL(legendChecked(QwtPlotItem *, bool)), this,
+            SLOT(showCurve(QwtPlotItem *, bool)));
 #endif
 }
 
-dtkPlotViewLegendPrivate::~dtkPlotViewLegendPrivate(void)
-{
+dtkPlotViewLegendPrivate::~dtkPlotViewLegendPrivate(void) {}
 
-}
-
-void dtkPlotViewLegendPrivate::legendChecked(const QVariant& itemInfo, bool value)
+void dtkPlotViewLegendPrivate::legendChecked(const QVariant &itemInfo, bool value)
 {
 #if QWT_VERSION >= 0x060100
     QwtPlotItem *item = plot->infoToItem(itemInfo);
@@ -78,11 +77,11 @@ dtkPlotViewLegend::dtkPlotViewLegend(dtkPlotView *parent) : d(new dtkPlotViewLeg
 
     QwtPlotItemList items = d->plot->itemList();
 
-    for ( int i = 0; i < items.size(); i++ ) {
+    for (int i = 0; i < items.size(); i++) {
 #if QWT_VERSION >= 0x060100
         QList<QWidget *> legendWidgets = d->legend->legendWidgets(d->plot->itemToInfo(items[i]));
 
-        if (legendWidgets.size() == 1 ) {
+        if (legendWidgets.size() == 1) {
             QwtLegendLabel *legendLabel = qobject_cast<QwtLegendLabel *>(legendWidgets[0]);
 
             if (legendLabel) {

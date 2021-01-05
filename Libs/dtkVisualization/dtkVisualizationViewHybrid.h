@@ -34,7 +34,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewHybrid : public QWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationViewHybrid(QWidget *parent = nullptr);
+    dtkVisualizationViewHybrid(QWidget *parent = nullptr);
     ~dtkVisualizationViewHybrid(void);
 
 public:
@@ -54,16 +54,16 @@ public slots:
     void render(void);
 
 public slots:
-    void importVTI(const QString& path);
-    void importVTP(const QString& path);
-    void importVTR(const QString& path);
-    void importVTS(const QString& path);
-    void importVTU(const QString& path);
-    void importMHA(const QString& path);
+    void importVTI(const QString &path);
+    void importVTP(const QString &path);
+    void importVTR(const QString &path);
+    void importVTS(const QString &path);
+    void importVTU(const QString &path);
+    void importMHA(const QString &path);
 
 public slots:
-    void switchTo3D  (void);
-    void switchTo2D  (void);
+    void switchTo3D(void);
+    void switchTo2D(void);
     void switchTo2DXY(void);
     void switchTo2DXZ(void);
     void switchTo2DYZ(void);
@@ -78,16 +78,16 @@ public slots:
     void setCameraViewPositiveZ(void);
 
 public slots:
-    void   link(dtkVisualizationViewHybrid *other);
+    void link(dtkVisualizationViewHybrid *other);
     void unlink(dtkVisualizationViewHybrid *other);
 
 signals:
-    void   linking(void);
+    void linking(void);
     void unlinking(void);
 
 signals:
-    void switchedTo3D  (void);
-    void switchedTo2D  (void);
+    void switchedTo3D(void);
+    void switchedTo2D(void);
     void switchedTo2DXY(void);
     void switchedTo2DXZ(void);
     void switchedTo2DYZ(void);

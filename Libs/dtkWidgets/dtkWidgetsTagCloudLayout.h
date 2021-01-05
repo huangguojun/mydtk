@@ -17,7 +17,8 @@
 class DTKWIDGETS_EXPORT dtkWidgetsTagCloudLayout : public QLayout
 {
 public:
-    dtkWidgetsTagCloudLayout(QWidget *parent, int margin = -1, int hSpacing = -1, int vSpacing = -1);
+    dtkWidgetsTagCloudLayout(QWidget *parent, int margin = -1, int hSpacing = -1,
+                             int vSpacing = -1);
     dtkWidgetsTagCloudLayout(int margin = -1, int hSpacing = -1, int vSpacing = -1);
     ~dtkWidgetsTagCloudLayout(void);
 
@@ -46,11 +47,11 @@ public:
     int heightForWidth(int) const;
     int count(void) const;
     QSize minimumSize(void) const;
-    void setGeometry(const QRect& rect);
+    void setGeometry(const QRect &rect);
     QSize sizeHint(void) const;
 
 private:
-    int doLayout(const QRect& rect, bool testOnly) const;
+    int doLayout(const QRect &rect, bool testOnly) const;
     int smartSpacing(QStyle::PixelMetric pm) const;
 
     QList<QLayoutItem *> itemList;

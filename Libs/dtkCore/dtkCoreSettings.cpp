@@ -14,12 +14,9 @@
 
 #include "dtkCoreSettings.h"
 
-dtkCoreSettings::dtkCoreSettings(void) : QSettings(QSettings::IniFormat, QSettings::UserScope, "inria", "dtk-core")
+dtkCoreSettings::dtkCoreSettings(void)
+    : QSettings(QSettings::IniFormat, QSettings::UserScope, "inria", "dtk-core")
 {
-
 }
 
-dtkCoreSettings::~dtkCoreSettings(void)
-{
-
-}
+dtkCoreSettings::~dtkCoreSettings(void) {}

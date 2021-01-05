@@ -25,12 +25,9 @@ public:
     QStringList logs;
 };
 
-dtkLogModel::dtkLogModel(QObject *parent) : QAbstractListModel(parent), d(new dtkLogModelPrivate)
-{
+dtkLogModel::dtkLogModel(QObject *parent) : QAbstractListModel(parent), d(new dtkLogModelPrivate) {}
 
-}
-
-void dtkLogModel::append(const QString& message)
+void dtkLogModel::append(const QString &message)
 {
     int row = d->logs.count();
 
@@ -41,7 +38,7 @@ void dtkLogModel::append(const QString& message)
     endInsertRows();
 }
 
-int dtkLogModel::rowCount(const QModelIndex& parent) const
+int dtkLogModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
@@ -49,7 +46,7 @@ int dtkLogModel::rowCount(const QModelIndex& parent) const
     return d->logs.count();
 }
 
-QVariant dtkLogModel::data(const QModelIndex& index, int role) const
+QVariant dtkLogModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= d->logs.size())
         return QVariant();
@@ -60,18 +57,19 @@ QVariant dtkLogModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-Qt::ItemFlags dtkLogModel::flags(const QModelIndex& index) const
+Qt::ItemFlags dtkLogModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
 
-    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsDragEnabled
+            | Qt::ItemIsDropEnabled;
 }
 
-bool dtkLogModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool dtkLogModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.row() >= 0 && index.row() < d->logs.size()
-            && (role == Qt::EditRole || role == Qt::DisplayRole)) {
+        && (role == Qt::EditRole || role == Qt::DisplayRole)) {
         d->logs.replace(index.row(), value.toString());
         emit dataChanged(index, index);
         return true;
@@ -80,7 +78,7 @@ bool dtkLogModel::setData(const QModelIndex& index, const QVariant& value, int r
     return false;
 }
 
-bool dtkLogModel::insertRows(int row, int count, const QModelIndex& parent)
+bool dtkLogModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     if (count < 1 || row < 0 || row > rowCount(parent))
         return false;
@@ -95,7 +93,7 @@ bool dtkLogModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool dtkLogModel::removeRows(int row, int count, const QModelIndex& parent)
+bool dtkLogModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (count <= 0 || row < 0 || (row + count) > rowCount(parent))
         return false;
@@ -110,12 +108,12 @@ bool dtkLogModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-static bool ascendingLessThan(const QPair<QString, int>& s1, const QPair<QString, int>& s2)
+static bool ascendingLessThan(const QPair<QString, int> &s1, const QPair<QString, int> &s2)
 {
     return s1.first < s2.first;
 }
 
-static bool decendingLessThan(const QPair<QString, int>& s1, const QPair<QString, int>& s2)
+static bool decendingLessThan(const QPair<QString, int> &s1, const QPair<QString, int> &s2)
 {
     return s1.first > s2.first;
 }
@@ -124,7 +122,7 @@ void dtkLogModel::sort(int, Qt::SortOrder order)
 {
     emit layoutAboutToBeChanged();
 
-    QList<QPair<QString, int> > list;
+    QList<QPair<QString, int>> list;
 
     for (int i = 0; i < d->logs.count(); ++i)
         list.append(QPair<QString, int>(d->logs.at(i), i));

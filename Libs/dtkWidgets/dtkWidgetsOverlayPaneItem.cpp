@@ -31,14 +31,14 @@ class dtkWidgetsOverlayPaneItemHeader : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneItemHeader(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneItemHeader(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneItemHeader(void);
 
 public:
     QSize sizeHint(void) const;
 
 public:
-    void setTitle(const QString&);
+    void setTitle(const QString &);
 
 public slots:
     void toggle(void);
@@ -77,17 +77,14 @@ dtkWidgetsOverlayPaneItemHeader::dtkWidgetsOverlayPaneItemHeader(QWidget *parent
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 }
 
-dtkWidgetsOverlayPaneItemHeader::~dtkWidgetsOverlayPaneItemHeader(void)
-{
-
-}
+dtkWidgetsOverlayPaneItemHeader::~dtkWidgetsOverlayPaneItemHeader(void) {}
 
 QSize dtkWidgetsOverlayPaneItemHeader::sizeHint(void) const
 {
     return QSize(50, 50);
 }
 
-void dtkWidgetsOverlayPaneItemHeader::setTitle(const QString& title)
+void dtkWidgetsOverlayPaneItemHeader::setTitle(const QString &title)
 {
     this->title->setText(title);
 }
@@ -95,14 +92,20 @@ void dtkWidgetsOverlayPaneItemHeader::setTitle(const QString& title)
 void dtkWidgetsOverlayPaneItemHeader::toggle(void)
 {
     // // QVariantMap options;
-    // // options.insert("text",           dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("text-active",    dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("text-disabled",  dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("text-selected",  dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("color",          dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("color-active",   dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("color-disabled", dtkThemesEngine::instance()->color("@fg"));
-    // // options.insert("color-selected", dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("text", dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("text-active",
+    // dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("text-disabled",
+    // dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("text-selected",
+    // dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("color", dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("color-active",
+    // dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("color-disabled",
+    // dtkThemesEngine::instance()->color("@fg"));
+    // // options.insert("color-selected",
+    // dtkThemesEngine::instance()->color("@fg"));
 
     this->expanded = !this->expanded;
 
@@ -128,7 +131,7 @@ class dtkWidgetsOverlayPaneItemFooter : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneItemFooter(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneItemFooter(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneItemFooter(void);
 
 public slots:
@@ -159,10 +162,7 @@ dtkWidgetsOverlayPaneItemFooter::dtkWidgetsOverlayPaneItemFooter(QWidget *parent
     this->setVisible(false);
 }
 
-dtkWidgetsOverlayPaneItemFooter::~dtkWidgetsOverlayPaneItemFooter(void)
-{
-
-}
+dtkWidgetsOverlayPaneItemFooter::~dtkWidgetsOverlayPaneItemFooter(void) {}
 
 void dtkWidgetsOverlayPaneItemFooter::addLayout(QLayout *layout)
 {
@@ -193,7 +193,8 @@ public:
     dtkWidgetsOverlayPaneItemFooter *footer = nullptr;
 };
 
-dtkWidgetsOverlayPaneItem::dtkWidgetsOverlayPaneItem(QWidget *parent) : QFrame(parent), d (new dtkWidgetsOverlayPaneItemPrivate)
+dtkWidgetsOverlayPaneItem::dtkWidgetsOverlayPaneItem(QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsOverlayPaneItemPrivate)
 {
     d->header = new dtkWidgetsOverlayPaneItemHeader(this);
     d->footer = new dtkWidgetsOverlayPaneItemFooter(this);
@@ -215,7 +216,7 @@ dtkWidgetsOverlayPaneItem::~dtkWidgetsOverlayPaneItem(void)
     delete d;
 }
 
-void dtkWidgetsOverlayPaneItem::setTitle(const QString& title)
+void dtkWidgetsOverlayPaneItem::setTitle(const QString &title)
 {
     d->header->setTitle(title);
 }

@@ -12,8 +12,8 @@
 
 // Code:
 
-#include "dtkViewController.h"
 #include "dtkViewList.h"
+#include "dtkViewController.h"
 #include "dtkViewWidget.h"
 
 class dtkViewListPrivate
@@ -29,7 +29,8 @@ dtkViewList::dtkViewList(QWidget *parent) : QListWidget(parent), d(new dtkViewLi
     this->setFrameStyle(QFrame::NoFrame);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    connect(dtkViewController::instance(), SIGNAL(inserted(dtkViewWidget *, const QString&)), this, SLOT(update()));
+    connect(dtkViewController::instance(), SIGNAL(inserted(dtkViewWidget *, const QString &)), this,
+            SLOT(update()));
 
     this->update();
 }
@@ -52,7 +53,7 @@ void dtkViewList::update(void)
         item->setText(text);
         this->addItem(item);
 
-        if(!d->connected_views.contains(view)) {
+        if (!d->connected_views.contains(view)) {
             d->connected_views.append(view);
         }
     }

@@ -14,8 +14,8 @@
 
 #include "dtkWidgetsWorkspaceBrowser.h"
 
-#include <dtkWidgets>
 #include <dtk>
+#include <dtkWidgets>
 
 class dtkWidgetsWorkspaceBrowserPrivate
 {
@@ -27,7 +27,6 @@ public:
 public:
     // dtkViewVolumic *browse_view;
     dtkViewForm *browse_view;
-
 };
 
 dtkWidgetsWorkspaceBrowser::dtkWidgetsWorkspaceBrowser(QWidget *parent) : dtkWorkspace(parent)
@@ -64,16 +63,16 @@ dtkWidgetsWorkspaceBrowser::dtkWidgetsWorkspaceBrowser(QWidget *parent) : dtkWor
     QWidget *finder = new QWidget(this);
     finder->setLayout(finder_layout);
 
-    connect(d->finder, SIGNAL(changed(QString)), d->path,    SLOT(setPath(QString)));
+    connect(d->finder, SIGNAL(changed(QString)), d->path, SLOT(setPath(QString)));
     connect(d->finder, SIGNAL(changed(QString)), d->toolbar, SLOT(setPath(QString)));
 
-    connect(d->path, SIGNAL(changed(QString)), d->finder,  SLOT(setPath(QString)));
+    connect(d->path, SIGNAL(changed(QString)), d->finder, SLOT(setPath(QString)));
     connect(d->path, SIGNAL(changed(QString)), d->toolbar, SLOT(setPath(QString)));
 
     connect(d->toolbar, SIGNAL(changed(QString)), d->finder, SLOT(setPath(QString)));
-    connect(d->toolbar, SIGNAL(changed(QString)), d->path,   SLOT(setPath(QString)));
-    connect(d->toolbar, SIGNAL(treeView()),       d->finder, SLOT(switchToTreeView()));
-    connect(d->toolbar, SIGNAL(listView()),       d->finder, SLOT(switchToListView()));
+    connect(d->toolbar, SIGNAL(changed(QString)), d->path, SLOT(setPath(QString)));
+    connect(d->toolbar, SIGNAL(treeView()), d->finder, SLOT(switchToTreeView()));
+    connect(d->toolbar, SIGNAL(listView()), d->finder, SLOT(switchToListView()));
 
     QSplitter *splitter = new QSplitter(this);
     splitter->addWidget(finder);
@@ -90,10 +89,7 @@ dtkWidgetsWorkspaceBrowser::~dtkWidgetsWorkspaceBrowser(void)
     delete d;
 }
 
-void dtkWidgetsWorkspaceBrowser::apply(void)
-{
-
-}
+void dtkWidgetsWorkspaceBrowser::apply(void) {}
 
 //
 // dtkWidgetsWorkspaceBrowser.cpp ends here

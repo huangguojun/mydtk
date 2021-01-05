@@ -25,7 +25,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsParameterIntSpinBox : public dtkWidgetsParamet
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterIntSpinBox(QWidget* parent = 0);
+    dtkWidgetsParameterIntSpinBox(QWidget *parent = 0);
     ~dtkWidgetsParameterIntSpinBox(void);
 
 public:

@@ -83,6 +83,5 @@ public:
     dtkWidgetsLayoutItem *q = nullptr;
 };
 
-
 //
 // dtkWidgetsLayoutItem_p.h ends here

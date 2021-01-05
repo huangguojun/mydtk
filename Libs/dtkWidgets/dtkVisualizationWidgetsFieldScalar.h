@@ -26,7 +26,7 @@ class DTKWIDGETS_EXPORT dtkVisualizationWidgetsFieldScalar : public QWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationWidgetsFieldScalar(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsFieldScalar(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsFieldScalar(void);
 
 public slots:

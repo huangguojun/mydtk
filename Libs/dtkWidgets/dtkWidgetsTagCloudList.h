@@ -42,7 +42,7 @@ public:
     void setDoom(void);
 
 signals:
-    void itemClicked(const QString& description);
+    void itemClicked(const QString &description);
 
 protected slots:
     void onItemClicked(QListWidgetItem *item);

@@ -22,9 +22,9 @@
 
 #include <dtkPlotExport.h>
 
+#include <QColor>
 #include <QObject>
 #include <QRectF>
-#include <QColor>
 
 class dtkPlotView;
 class dtkPlotViewZoomerPrivate;
@@ -38,7 +38,7 @@ public:
     ~dtkPlotViewZoomer(void);
 
 public:
-    void   activate(void);
+    void activate(void);
     void deactivate(void);
 
     bool isActivated(void) const;
@@ -46,10 +46,10 @@ public:
 public:
     QColor color(void) const;
 
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 public:
-    void updateBase(const QRectF& rectf);
+    void updateBase(const QRectF &rectf);
 
 private:
     dtkPlotViewZoomerPrivate *d;

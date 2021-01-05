@@ -20,8 +20,8 @@
 #ifndef DTKSWITCH_H
 #define DTKSWITCH_H
 
-#include <QtWidgets>
 #include <QQuickView>
+#include <QtWidgets>
 
 class dtkSwitchPrivate;
 
@@ -48,12 +48,12 @@ public slots:
     void toggle(void);
 
 public slots:
-    void setForeground(const QString& pixmap);
-    void setBackground(const QString& pixmap);
+    void setForeground(const QString &pixmap);
+    void setBackground(const QString &pixmap);
 
 public slots:
-    void setLeftLabel(const QString& label);
-    void setRightLabel(const QString& label);
+    void setLeftLabel(const QString &label);
+    void setRightLabel(const QString &label);
 
 private:
     dtkSwitchPrivate *d;

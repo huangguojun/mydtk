@@ -12,7 +12,6 @@
 
 // Code:
 
-
 #pragma once
 
 #include <dtkWidgetsExport>
@@ -24,14 +23,10 @@ class DTKWIDGETS_EXPORT dtkVisualizationWidgetsVideoControls : public QFrame
     Q_OBJECT
 
 public:
-    enum State {
-        StoppedState = 0,
-        PlayingState = 1,
-        PausedState  = 2
-    };
+    enum State { StoppedState = 0, PlayingState = 1, PausedState = 2 };
 
 public:
-     dtkVisualizationWidgetsVideoControls(QWidget *parent = nullptr);
+    dtkVisualizationWidgetsVideoControls(QWidget *parent = nullptr);
     ~dtkVisualizationWidgetsVideoControls(void);
 
 public:
@@ -41,7 +36,7 @@ public slots:
     void reset(void);
     void toggle(void);
 
- public:
+public:
     void setBufferVisible(bool);
 
 signals:

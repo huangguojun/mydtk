@@ -30,14 +30,16 @@ dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name) : QListWidgetItem(n
     d->name = name;
 }
 
-dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description) : QListWidgetItem(name)
+dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description)
+    : QListWidgetItem(name)
 {
     d = new dtkWidgetsTagCloudItemPrivate;
     d->name = name;
     d->description = description;
 }
 
-dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags) : QListWidgetItem(name)
+dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags)
+    : QListWidgetItem(name)
 {
     d = new dtkWidgetsTagCloudItemPrivate;
     d->name = name;
@@ -45,7 +47,9 @@ dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description
     d->tags = tags;
 }
 
-dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags, QString kind, QString type) : QListWidgetItem(name)
+dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags,
+                                               QString kind, QString type)
+    : QListWidgetItem(name)
 {
     d = new dtkWidgetsTagCloudItemPrivate;
     d->name = name;
@@ -55,7 +59,8 @@ dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(QString name, QString description
     d->type = type;
 }
 
-dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(const dtkWidgetsTagCloudItem& item) : QListWidgetItem(item.name())
+dtkWidgetsTagCloudItem::dtkWidgetsTagCloudItem(const dtkWidgetsTagCloudItem &item)
+    : QListWidgetItem(item.name())
 {
     d = new dtkWidgetsTagCloudItemPrivate;
     d->name = item.d->name;

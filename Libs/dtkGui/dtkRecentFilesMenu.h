@@ -25,17 +25,17 @@ class DTKGUISUPPORT_EXPORT dtkRecentFilesMenu : public QMenu
 
 public:
     dtkRecentFilesMenu(QWidget *parent = 0);
-    dtkRecentFilesMenu(const QString& title, QWidget *parent = 0);
+    dtkRecentFilesMenu(const QString &title, QWidget *parent = 0);
 
     int maxCount(void) const;
 
 public slots:
-    void addRecentFile(const QString& fileName);
+    void addRecentFile(const QString &fileName);
     void clearMenu(void);
     void setMaxCount(int);
 
 signals:
-    void recentFileTriggered(const QString& filename);
+    void recentFileTriggered(const QString &filename);
 
 private slots:
     void menuTriggered(QAction *action);

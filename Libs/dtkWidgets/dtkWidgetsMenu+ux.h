@@ -34,8 +34,8 @@ class dtkWidgetsMenuNavigationFacade : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuNavigationFacade(QWidget *parent = nullptr);
-     dtkWidgetsMenuNavigationFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
+    dtkWidgetsMenuNavigationFacade(QWidget *parent = nullptr);
+    dtkWidgetsMenuNavigationFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
     ~dtkWidgetsMenuNavigationFacade(void);
 
 public:
@@ -45,15 +45,14 @@ signals:
     void clicked(void);
 
 public:
-    QSize sizeHint(void) const {
-        return QSize(200, ::item_height + 20);
-    }
+    QSize sizeHint(void) const { return QSize(200, ::item_height + 20); }
 
 protected:
     void paintEvent(QPaintEvent *event);
 
-    void mousePressEvent(QMouseEvent *event) {
-        if(event->pos().x() < 50)
+    void mousePressEvent(QMouseEvent *event)
+    {
+        if (event->pos().x() < 50)
             emit clicked();
     }
 
@@ -70,13 +69,11 @@ class dtkWidgetsMenuHeaderFacade : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuHeaderFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
+    dtkWidgetsMenuHeaderFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
     ~dtkWidgetsMenuHeaderFacade(void);
 
 public:
-    QSize sizeHint(void) const {
-        return QSize(200, ::item_height);
-    }
+    QSize sizeHint(void) const { return QSize(200, ::item_height); }
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -92,16 +89,16 @@ public:
 class dtkWidgetsMenuItemSpacerFacade : public QWidget
 {
 public:
-    dtkWidgetsMenuItemSpacerFacade(int width, int height, QWidget *parent = nullptr) : QWidget(parent) {
+    dtkWidgetsMenuItemSpacerFacade(int width, int height, QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
         m_width = width;
         m_height = height;
         this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     }
 
 public:
-    QSize sizeHint(void) const {
-        return QSize(m_width, m_height);
-    }
+    QSize sizeHint(void) const { return QSize(m_width, m_height); }
 
 private:
     int m_width = 0;
@@ -117,13 +114,11 @@ class dtkWidgetsMenuInnerFacade : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuInnerFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
+    dtkWidgetsMenuInnerFacade(dtkWidgetsMenu *source, QWidget *parent = nullptr);
     ~dtkWidgetsMenuInnerFacade(void);
 
 public:
-    QSize sizeHint(void) const {
-        return QSize(400, ::item_height);
-    }
+    QSize sizeHint(void) const { return QSize(400, ::item_height); }
 
 signals:
     void clicked(void);
@@ -148,13 +143,11 @@ class dtkWidgetsMenuItemFacade : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemFacade(dtkWidgetsMenuItem *source, QWidget *parent = nullptr);
+    dtkWidgetsMenuItemFacade(dtkWidgetsMenuItem *source, QWidget *parent = nullptr);
     ~dtkWidgetsMenuItemFacade(void);
 
 public:
-    QSize sizeHint(void) const {
-        return QSize(400, ::item_height);
-    }
+    QSize sizeHint(void) const { return QSize(400, ::item_height); }
 
 signals:
     void clicked(void);
@@ -176,8 +169,9 @@ class dtkWidgetsMenuItemParameterFacade : public dtkWidgetsMenuItemFacade
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemParameterFacade(dtkWidgetsMenuItemParameter *source, QWidget *parent = nullptr);
-     ~dtkWidgetsMenuItemParameterFacade(void);
+    dtkWidgetsMenuItemParameterFacade(dtkWidgetsMenuItemParameter *source,
+                                      QWidget *parent = nullptr);
+    ~dtkWidgetsMenuItemParameterFacade(void);
 
 private:
     QMetaObject::Connection param_connect;
@@ -192,8 +186,8 @@ class dtkWidgetsMenuItemCustomFacade : public dtkWidgetsMenuItemFacade
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemCustomFacade(dtkWidgetsMenuItemCustom *source, QWidget *parent = nullptr);
-     ~dtkWidgetsMenuItemCustomFacade(void);
+    dtkWidgetsMenuItemCustomFacade(dtkWidgetsMenuItemCustom *source, QWidget *parent = nullptr);
+    ~dtkWidgetsMenuItemCustomFacade(void);
 };
 
 // ///////////////////////////////////////////////////////////////////
@@ -205,7 +199,7 @@ class dtkWidgetsMenuFacade : public QWidget
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuFacade(dtkWidgetsMenu *, QWidget *parent = nullptr);
+    dtkWidgetsMenuFacade(dtkWidgetsMenu *, QWidget *parent = nullptr);
     ~dtkWidgetsMenuFacade(void);
 
 signals:

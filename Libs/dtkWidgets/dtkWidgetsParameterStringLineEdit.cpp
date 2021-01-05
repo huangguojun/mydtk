@@ -30,7 +30,9 @@ public:
 // dtkWidgetsParameterStringLineEdit implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterStringLineEdit::dtkWidgetsParameterStringLineEdit(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_string>(parent), d(new dtkWidgetsParameterStringLineEditPrivate)
+dtkWidgetsParameterStringLineEdit::dtkWidgetsParameterStringLineEdit(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_string>(parent),
+      d(new dtkWidgetsParameterStringLineEditPrivate)
 {
     d->line_edit = new QLineEdit;
 
@@ -54,23 +56,24 @@ bool dtkWidgetsParameterStringLineEdit::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_string *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterStringLineEdit.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterStringLineEdit.";
         return false;
     }
 
     d->line_edit->setText(m_parameter->value());
     d->line_edit->setToolTip(m_parameter->documentation());
 
-    m_parameter->connect([=] (QVariant v) {
+    m_parameter->connect([=](QVariant v) {
         QString value = v.value<dtk::d_string>().value();
         d->line_edit->blockSignals(true);
         d->line_edit->setText(value);
         d->line_edit->blockSignals(false);
     });
 
-    QObject::connect(d->line_edit, &QLineEdit::editingFinished, [=] ()
-    {
+    QObject::connect(d->line_edit, &QLineEdit::editingFinished, [=]() {
         QString v = d->line_edit->text();
         m_parameter->shareValue(QVariant::fromValue(v));
     });

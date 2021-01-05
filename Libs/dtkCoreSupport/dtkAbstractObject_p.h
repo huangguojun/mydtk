@@ -20,8 +20,8 @@
 #ifndef DTKABSTRACTOBJECT_P_H
 #define DTKABSTRACTOBJECT_P_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject.h"
+#include <dtkCoreSupportExport.h>
 
 #include <QtCore>
 
@@ -33,10 +33,11 @@ class DTKCORESUPPORT_EXPORT dtkAbstractObjectPrivate
 {
 public:
     dtkAbstractObjectPrivate(dtkAbstractObject *q = 0) : q_ptr(q) {}
-    dtkAbstractObjectPrivate(const dtkAbstractObjectPrivate& other, dtkAbstractObject *q = 0) : q_ptr(q),
-        values(other.values),
-        properties(other.properties),
-        metadatas(other.metadatas) {}
+    dtkAbstractObjectPrivate(const dtkAbstractObjectPrivate &other, dtkAbstractObject *q = 0)
+        : q_ptr(q), values(other.values), properties(other.properties), metadatas(other.metadatas)
+    {
+    }
+
 public:
     virtual ~dtkAbstractObjectPrivate(void) {}
 
@@ -64,14 +65,15 @@ public:
 // dtkAbstractObject inline methods
 ////////////////////////////////////////////////////
 
-inline dtkAbstractObject::dtkAbstractObject(dtkAbstractObjectPrivate& dd, QObject *parent) : QObject(parent), d_ptr(&dd)
+inline dtkAbstractObject::dtkAbstractObject(dtkAbstractObjectPrivate &dd, QObject *parent)
+    : QObject(parent), d_ptr(&dd)
 {
-
 }
 
-inline dtkAbstractObject::dtkAbstractObject(dtkAbstractObjectPrivate& dd, const dtkAbstractObject& other) : QObject(other.parent()), d_ptr(&dd)
+inline dtkAbstractObject::dtkAbstractObject(dtkAbstractObjectPrivate &dd,
+                                            const dtkAbstractObject &other)
+    : QObject(other.parent()), d_ptr(&dd)
 {
-
 }
 
 #endif // DTKABSTRACTOBJECT_P_H

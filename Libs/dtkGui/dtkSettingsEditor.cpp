@@ -23,7 +23,8 @@
 // dtkSettingsEditorVariantDelegate
 // /////////////////////////////////////////////////////////////////
 
-dtkSettingsEditorVariantDelegate::dtkSettingsEditorVariantDelegate(QObject *parent) : QItemDelegate(parent)
+dtkSettingsEditorVariantDelegate::dtkSettingsEditorVariantDelegate(QObject *parent)
+    : QItemDelegate(parent)
 {
     boolExp.setPattern("true|false");
     boolExp.setCaseSensitivity(Qt::CaseInsensitive);
@@ -43,7 +44,8 @@ dtkSettingsEditorVariantDelegate::dtkSettingsEditorVariantDelegate(QObject *pare
     dateTimeExp.setPattern(dateExp.pattern() + "T" + timeExp.pattern());
 }
 
-void dtkSettingsEditorVariantDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkSettingsEditorVariantDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                                             const QModelIndex &index) const
 {
     if (index.column() == 2) {
         QVariant value = index.model()->data(index, Qt::UserRole);
@@ -59,7 +61,9 @@ void dtkSettingsEditorVariantDelegate::paint(QPainter *painter, const QStyleOpti
     QItemDelegate::paint(painter, option, index);
 }
 
-QWidget *dtkSettingsEditorVariantDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem& /* option */, const QModelIndex& index) const
+QWidget *dtkSettingsEditorVariantDelegate::createEditor(QWidget *parent,
+                                                        const QStyleOptionViewItem & /* option */,
+                                                        const QModelIndex &index) const
 {
     if (index.column() != 2)
         return 0;
@@ -129,8 +133,7 @@ QWidget *dtkSettingsEditorVariantDelegate::createEditor(QWidget *parent, const Q
         regExp = unsignedIntegerExp;
         break;
 
-    default:
-        ;
+    default:;
     }
 
     if (!regExp.isEmpty()) {
@@ -141,7 +144,8 @@ QWidget *dtkSettingsEditorVariantDelegate::createEditor(QWidget *parent, const Q
     return lineEdit;
 }
 
-void dtkSettingsEditorVariantDelegate::setEditorData(QWidget *editor, const QModelIndex& index) const
+void dtkSettingsEditorVariantDelegate::setEditorData(QWidget *editor,
+                                                     const QModelIndex &index) const
 {
     QVariant value = index.model()->data(index, Qt::UserRole);
 
@@ -149,7 +153,8 @@ void dtkSettingsEditorVariantDelegate::setEditorData(QWidget *editor, const QMod
         lineEdit->setText(displayText(value));
 }
 
-void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex& index) const
+void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+                                                    const QModelIndex &index) const
 {
     QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor);
 
@@ -176,10 +181,8 @@ void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractIt
 
     case QVariant::Color:
         colorExp.exactMatch(text);
-        value = QColor(qMin(colorExp.cap(1).toInt(), 255),
-                       qMin(colorExp.cap(2).toInt(), 255),
-                       qMin(colorExp.cap(3).toInt(), 255),
-                       qMin(colorExp.cap(4).toInt(), 255));
+        value = QColor(qMin(colorExp.cap(1).toInt(), 255), qMin(colorExp.cap(2).toInt(), 255),
+                       qMin(colorExp.cap(3).toInt(), 255), qMin(colorExp.cap(4).toInt(), 255));
         break;
 
     case QVariant::Date: {
@@ -189,8 +192,7 @@ void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractIt
             return;
 
         value = date;
-    }
-    break;
+    } break;
 
     case QVariant::DateTime: {
         QDateTime dateTime = QDateTime::fromString(text, Qt::ISODate);
@@ -199,8 +201,7 @@ void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractIt
             return;
 
         value = dateTime;
-    }
-    break;
+    } break;
 
     case QVariant::Point:
         pointExp.exactMatch(text);
@@ -209,8 +210,8 @@ void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractIt
 
     case QVariant::Rect:
         rectExp.exactMatch(text);
-        value = QRect(rectExp.cap(1).toInt(), rectExp.cap(2).toInt(),
-                      rectExp.cap(3).toInt(), rectExp.cap(4).toInt());
+        value = QRect(rectExp.cap(1).toInt(), rectExp.cap(2).toInt(), rectExp.cap(3).toInt(),
+                      rectExp.cap(4).toInt());
         break;
 
     case QVariant::Size:
@@ -229,8 +230,7 @@ void dtkSettingsEditorVariantDelegate::setModelData(QWidget *editor, QAbstractIt
             return;
 
         value = time;
-    }
-    break;
+    } break;
 
     default:
         value = text;
@@ -268,7 +268,7 @@ bool dtkSettingsEditorVariantDelegate::isSupportedType(QVariant::Type type)
     }
 }
 
-QString dtkSettingsEditorVariantDelegate::displayText(const QVariant& value)
+QString dtkSettingsEditorVariantDelegate::displayText(const QVariant &value)
 {
     switch (value.type()) {
     case QVariant::Bool:
@@ -285,8 +285,10 @@ QString dtkSettingsEditorVariantDelegate::displayText(const QVariant& value)
     case QVariant::Color: {
         QColor color = qvariant_cast<QColor>(value);
         return QString("(%1,%2,%3,%4)")
-               .arg(color.red()).arg(color.green())
-               .arg(color.blue()).arg(color.alpha());
+                .arg(color.red())
+                .arg(color.green())
+                .arg(color.blue())
+                .arg(color.alpha());
     }
 
     case QVariant::Date:
@@ -306,8 +308,10 @@ QString dtkSettingsEditorVariantDelegate::displayText(const QVariant& value)
     case QVariant::Rect: {
         QRect rect = value.toRect();
         return QString("(%1,%2,%3,%4)")
-               .arg(rect.x()).arg(rect.y())
-               .arg(rect.width()).arg(rect.height());
+                .arg(rect.x())
+                .arg(rect.y())
+                .arg(rect.width())
+                .arg(rect.height());
     }
 
     case QVariant::Size: {
@@ -346,10 +350,9 @@ dtkSettingsEditorTree::dtkSettingsEditorTree(QWidget *parent) : QTreeWidget(pare
     refreshTimer.setInterval(2000);
     autoRefresh = false;
 
-    groupIcon.addPixmap(style()->standardPixmap(QStyle::SP_DirClosedIcon),
-                        QIcon::Normal, QIcon::Off);
-    groupIcon.addPixmap(style()->standardPixmap(QStyle::SP_DirOpenIcon),
-                        QIcon::Normal, QIcon::On);
+    groupIcon.addPixmap(style()->standardPixmap(QStyle::SP_DirClosedIcon), QIcon::Normal,
+                        QIcon::Off);
+    groupIcon.addPixmap(style()->standardPixmap(QStyle::SP_DirOpenIcon), QIcon::Normal, QIcon::On);
     keyIcon.addPixmap(style()->standardPixmap(QStyle::SP_FileIcon));
 
     connect(&refreshTimer, SIGNAL(timeout()), this, SLOT(maybeRefresh()));
@@ -410,14 +413,14 @@ void dtkSettingsEditorTree::refresh(void)
     if (!settings)
         return;
 
-    disconnect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)),
-               this, SLOT(updateSetting(QTreeWidgetItem *)));
+    disconnect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this,
+               SLOT(updateSetting(QTreeWidgetItem *)));
 
     settings->sync();
     updateChildItems(0);
 
-    connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)),
-            this, SLOT(updateSetting(QTreeWidgetItem *)));
+    connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this,
+            SLOT(updateSetting(QTreeWidgetItem *)));
 }
 
 bool dtkSettingsEditorTree::event(QEvent *event)
@@ -510,7 +513,8 @@ void dtkSettingsEditorTree::updateChildItems(QTreeWidgetItem *parent)
         delete childAt(parent, dividerIndex);
 }
 
-QTreeWidgetItem *dtkSettingsEditorTree::createItem(const QString& text, QTreeWidgetItem *parent, int index)
+QTreeWidgetItem *dtkSettingsEditorTree::createItem(const QString &text, QTreeWidgetItem *parent,
+                                                   int index)
 {
     QTreeWidgetItem *after = 0;
 
@@ -545,7 +549,7 @@ int dtkSettingsEditorTree::childCount(QTreeWidgetItem *parent)
         return topLevelItemCount();
 }
 
-int dtkSettingsEditorTree::findChild(QTreeWidgetItem *parent, const QString& text, int startIndex)
+int dtkSettingsEditorTree::findChild(QTreeWidgetItem *parent, const QString &text, int startIndex)
 {
     for (int i = startIndex; i < childCount(parent); ++i) {
         if (childAt(parent, i)->text(0) == text)
@@ -571,7 +575,8 @@ public:
     dtkSettingsEditorTree *tree;
 };
 
-dtkSettingsEditor::dtkSettingsEditor(QWidget *parent) : QWidget(parent), d(new dtkSettingsEditorPrivate)
+dtkSettingsEditor::dtkSettingsEditor(QWidget *parent)
+    : QWidget(parent), d(new dtkSettingsEditorPrivate)
 {
     d->tree = new dtkSettingsEditorTree(this);
     d->tree->setAttribute(Qt::WA_MacShowFocusRect, false);
@@ -589,12 +594,13 @@ dtkSettingsEditor::~dtkSettingsEditor(void)
     d = NULL;
 }
 
-void dtkSettingsEditor::setSettings(const QString& organisation, const QString& application)
+void dtkSettingsEditor::setSettings(const QString &organisation, const QString &application)
 {
     d->tree->setSettingsObject(new QSettings(organisation, application));
 }
 
-/* Credits: Main part of this file has been inspired by the qt's settings example
+/* Credits: Main part of this file has been inspired by the qt's settings
+ * example
  *
  * Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
  * All rights reserved.

@@ -25,38 +25,38 @@ class vtkPacketFileReader;
 class VTK_EXPORT vvPacketSender
 {
 public:
-  vvPacketSender(std::string pcapfile, std::string destinationio = "127.0.0.1",
-    int lidarport = 2368, int positionport = 8308);
-  ~vvPacketSender();
+    vvPacketSender(std::string pcapfile, std::string destinationio = "127.0.0.1",
+                   int lidarport = 2368, int positionport = 8308);
+    ~vvPacketSender();
 
-  /**
-   * @brief pumpPacket
-   * @return the timestamp of the packet send
-   */
-  double pumpPacket();
+    /**
+     * @brief pumpPacket
+     * @return the timestamp of the packet send
+     */
+    double pumpPacket();
 
-  /**
-   * @copydoc Done
-   */
-  bool IsDone() const;
+    /**
+     * @copydoc Done
+     */
+    bool IsDone() const;
 
-  /**
-   * @brief PacketCount return the number of packet already send
-   */
-  size_t GetPacketCount() const;
+    /**
+     * @brief PacketCount return the number of packet already send
+     */
+    size_t GetPacketCount() const;
 
 private:
-  boost::asio::ip::udp::socket* LIDARSocket;
-  boost::asio::ip::udp::endpoint LIDAREndpoint;
+    boost::asio::ip::udp::socket *LIDARSocket;
+    boost::asio::ip::udp::endpoint LIDAREndpoint;
 
-  boost::asio::ip::udp::socket* PositionSocket;
-  boost::asio::ip::udp::endpoint PositionEndpoint;
+    boost::asio::ip::udp::socket *PositionSocket;
+    boost::asio::ip::udp::endpoint PositionEndpoint;
 
-  boost::asio::io_service IOService;
+    boost::asio::io_service IOService;
 
-  vtkPacketFileReader* PacketReader;
-  //! Indicate if the end of the pcap file has been reach
-  bool Done;
-  //! Number of packet already send
-  size_t PacketCount;
+    vtkPacketFileReader *PacketReader;
+    //! Indicate if the end of the pcap file has been reach
+    bool Done;
+    //! Number of packet already send
+    size_t PacketCount;
 };

@@ -26,7 +26,7 @@ class DTKWIDGETS_EXPORT dtkNotificationDisplay : public QFrame, public dtkNotifi
     Q_OBJECT
 
 public:
-     dtkNotificationDisplay(QWidget *parent = 0);
+    dtkNotificationDisplay(QWidget *parent = 0);
     ~dtkNotificationDisplay(void);
 
 public slots:
@@ -35,7 +35,7 @@ public slots:
     void previous(void);
     void dismiss(void);
     void dismissible(bool dismissible);
-    void display(const QString& message);
+    void display(const QString &message);
     void setPersistentCount(int count);
     void setNonPersistentCount(int count);
 

@@ -7,18 +7,20 @@
 /*!
   \class dtkCorePluginManagerPrivate
   \internal
-  \brief The dtkCorePluginManagerPrivate class is the private implementation of dtkCorePluginManager.
+  \brief The dtkCorePluginManagerPrivate class is the private implementation of
+  dtkCorePluginManager.
 */
 
-/*! \fn bool dtkCorePluginManagerPrivate::check(const QString& path, bool checkConceptLayer = true)
-    \internal
-    Checks validity of the plugin library \a path (name, version, dependencies).
+/*! \fn bool dtkCorePluginManagerPrivate::check(const QString& path, bool
+   checkConceptLayer = true) \internal Checks validity of the plugin library \a
+   path (name, version, dependencies).
 */
 
 /*!
   \class dtkCorePluginManager
   \inmodule dtkCore
-  \brief The dtkCorePluginManager class is a template class that handles plugins.
+  \brief The dtkCorePluginManager class is a template class that handles
+  plugins.
 */
 
 /*! \fn dtkCorePluginManager::dtkCorePluginManager(void)
@@ -42,13 +44,15 @@
 */
 
 /*! \fn void dtkCorePluginManager::scan(const QString& path)
-    Scans plugin library \a path and stores plugin metadatas (name, version, dependencies).
+    Scans plugin library \a path and stores plugin metadatas (name, version,
+   dependencies).
 
     \sa initialize(), load()
 */
 
 /*! \fn void dtkCorePluginManager::setVerboseLoading(bool value)
-    Set verbose loading to \a value. If true, the plugin manager will log (using dtkLog) failures at the warn level and normal loading at the trace level
+    Set verbose loading to \a value. If true, the plugin manager will log (using
+   dtkLog) failures at the warn level and normal loading at the trace level
 
     \sa verboseLoading()
 */
@@ -60,7 +64,9 @@
 */
 
 /*! \fn void dtkCorePluginManager::setAutoLoading(bool value)
-    Set auto loading to \a value. If true, the plugin manager will load all the plugins it found in the given path. Otherwize, it will only store plugins names and metadata. Plugin can be manual loaded with loadFromName
+    Set auto loading to \a value. If true, the plugin manager will load all the
+   plugins it found in the given path. Otherwize, it will only store plugins
+   names and metadata. Plugin can be manual loaded with loadFromName
 
     \sa autoLoading(), loadFromName()
 */
@@ -72,12 +78,14 @@
 */
 
 /*! \fn void dtkCorePluginManager::setLayerVersion(const QString& layer_version)
-     Set layer version to \a layer_version value. This will be used when checking plugins: plugins compiled for another layer version will not be loaded.
+     Set layer version to \a layer_version value. This will be used when
+   checking plugins: plugins compiled for another layer version will not be
+   loaded.
  */
 
-
 /*! \fn void dtkCorePluginManager::load(const QString& path)
-    Checks the validity of the plugin library \a path, and if so creates the plugin.
+    Checks the validity of the plugin library \a path, and if so creates the
+   plugin.
 
     \sa initialize(), scan(), unload()
  */
@@ -88,9 +96,9 @@
     \sa initialize(), scan(), unload()
  */
 
-
 /*! \fn void dtkCorePluginManager::unload(const QString& path)
-    Destroys the plugin of the plugin library \a path. Destroys the related plugin loader.
+    Destroys the plugin of the plugin library \a path. Destroys the related
+   plugin loader.
 
     \sa load()
  */

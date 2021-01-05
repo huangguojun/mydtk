@@ -1,4 +1,4 @@
-// Version: $Id: 
+// Version: $Id:
 //
 //
 
@@ -21,7 +21,7 @@
 class DTKIO_EXPORT dtkIoSettings : public QSettings
 {
 public:
-     dtkIoSettings(void);
+    dtkIoSettings(void);
     ~dtkIoSettings(void);
 };
 

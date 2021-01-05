@@ -17,16 +17,16 @@
 #include "dtkScreenMenu.h"
 
 #if defined(DTK_BUILD_VIDEO) && defined(DTK_HAVE_FFMPEG)
-#include <dtkVideo/dtkVideoEncoder.h>
+#    include <dtkVideo/dtkVideoEncoder.h>
 #endif
 
 class dtkScreenMenuPrivate
 {
 public:
-    int  fps;
-    int  bitrate;
-    int  width;
-    int  height;
+    int fps;
+    int bitrate;
+    int width;
+    int height;
 
 public:
     QTimer timer;
@@ -37,7 +37,8 @@ public:
 #endif
 };
 
-dtkScreenMenu::dtkScreenMenu(const QString& title, QWidget *parent) : QMenu(title, parent), d(new dtkScreenMenuPrivate)
+dtkScreenMenu::dtkScreenMenu(const QString &title, QWidget *parent)
+    : QMenu(title, parent), d(new dtkScreenMenuPrivate)
 {
 #if defined(DTK_BUILD_VIDEO) && defined(DTK_HAVE_FFMPEG)
     d->encoder = NULL;
@@ -45,12 +46,13 @@ dtkScreenMenu::dtkScreenMenu(const QString& title, QWidget *parent) : QMenu(titl
     d->fps = 10;
     d->bitrate = 4000000;
 
-    QAction *screenshot = this->addAction(QString("Take screenshot")); screenshot->setVisible(true);
+    QAction *screenshot = this->addAction(QString("Take screenshot"));
+    screenshot->setVisible(true);
     screenshot->setShortcut(Qt::Key_Print);
 
     this->addSeparator();
     QAction *screencast_start = this->addAction(QString("Start screencast"));
-    QAction *screencast_stop  = this->addAction(QString("Stop screencast"));
+    QAction *screencast_stop = this->addAction(QString("Stop screencast"));
     screencast_start->setShortcut(Qt::ControlModifier + Qt::Key_Print);
     screencast_stop->setShortcut(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Print);
 
@@ -72,9 +74,12 @@ void dtkScreenMenu::startScreencast(void)
         d->encoder = new dtkVideoEncoder;
 
     QString path = QDir::homePath();
-    QString name = QString("%1 - Screencast - %2").arg(qApp->applicationName()).arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
+    QString name = QString("%1 - Screencast - %2")
+                           .arg(qApp->applicationName())
+                           .arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
     QString file = QDir::home().filePath(name);
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save screencast"), file, tr("Screencast (*.avi *.mpg *.mp4 *.mov *.ogv)"));
+    QString fileName = QFileDialog::getSaveFileName(
+            this, tr("Save screencast"), file, tr("Screencast (*.avi *.mpg *.mp4 *.mov *.ogv)"));
 
     if (fileName.isEmpty())
         return;
@@ -84,12 +89,12 @@ void dtkScreenMenu::startScreencast(void)
         int gop = 20;
         int FULLHD = 1920;
 
-        d->width  = widget->width();
+        d->width = widget->width();
         d->height = widget->height();
 
         if (widget->width() > FULLHD) {
-            d->width  = FULLHD;
-            d->height = widget->height() *  FULLHD / widget->width() ;
+            d->width = FULLHD;
+            d->height = widget->height() * FULLHD / widget->width();
         }
 
         d->encoder->createFile(fileName, d->width, d->height, d->bitrate, gop, d->fps);
@@ -124,7 +129,7 @@ void dtkScreenMenu::addFrameToVideo(void)
         int length = 8;
         QLine line1(x - length, y, x + length, y);
         QLine line2(x, y - length, x, y + length);
-        painter.setPen( Qt::red );
+        painter.setPen(Qt::red);
         painter.drawLine(line1);
         painter.drawLine(line2);
         d->encoder->encodeImage(image);
@@ -138,7 +143,7 @@ QImage dtkScreenMenu::screenshot(QWidget *widget, qlonglong maxsize)
     QPixmap pixmap(widget->size());
     widget->render(&pixmap);
 
-    if ( maxsize > 0 && pixmap.width() > maxsize) {
+    if (maxsize > 0 && pixmap.width() > maxsize) {
         return pixmap.scaledToWidth(maxsize).toImage();
     }
 
@@ -150,9 +155,13 @@ void dtkScreenMenu::takeScreenshot(void)
     if (QWidget *widget = dynamic_cast<QWidget *>(parent())) {
 
         QString path = QDir::homePath();
-        QString name = QString("%1 - Screenshot - %2").arg(qApp->applicationName()).arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
+        QString name =
+                QString("%1 - Screenshot - %2")
+                        .arg(qApp->applicationName())
+                        .arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
         QString file = QDir::home().filePath(name);
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save screenshot"), file, tr("Screenshot (*.png)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save screenshot"), file,
+                                                        tr("Screenshot (*.png)"));
 
         if (fileName.isEmpty())
             return;

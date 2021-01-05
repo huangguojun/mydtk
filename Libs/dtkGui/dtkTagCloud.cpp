@@ -17,33 +17,33 @@
  *
  */
 
+#include "dtkTagCloud.h"
 #include "dtkFlowLayout.h"
 #include "dtkSwitch.h"
-#include "dtkTagCloud.h"
 
-#include <QtDebug>
 #include <QWidget>
+#include <QtDebug>
 
 // /////////////////////////////////////////////////////////////////
 // Helper functions
 // /////////////////////////////////////////////////////////////////
 
-bool dtkTagAlphaLessThan(const dtkTag& t1, const dtkTag& t2)
+bool dtkTagAlphaLessThan(const dtkTag &t1, const dtkTag &t2)
 {
     return t1.text() < t2.text();
 }
 
-bool dtkTagNumLessThan(const dtkTag& t1, const dtkTag& t2)
+bool dtkTagNumLessThan(const dtkTag &t1, const dtkTag &t2)
 {
     return t1.count() < t2.count();
 }
 
-bool dtkTagAlphaMoreThan(const dtkTag& t1, const dtkTag& t2)
+bool dtkTagAlphaMoreThan(const dtkTag &t1, const dtkTag &t2)
 {
     return t1.text() >= t2.text();
 }
 
-bool dtkTagNumMoreThan(const dtkTag& t1, const dtkTag& t2)
+bool dtkTagNumMoreThan(const dtkTag &t1, const dtkTag &t2)
 {
     return t1.count() >= t2.count();
 }
@@ -55,7 +55,8 @@ bool dtkTagNumMoreThan(const dtkTag& t1, const dtkTag& t2)
 class dtkTagCloudHasher
 {
 public:
-    dtkTagCloudHasher(int buckets, int min, int max) {
+    dtkTagCloudHasher(int buckets, int min, int max)
+    {
         if (buckets < 1)
             qDebug() << "dtkTagCloudHasher: Must have at least one bucket.";
 
@@ -66,9 +67,7 @@ public:
         this->width = ((double)(this->max - this->min)) / ((double)(this->buckets));
     }
 
-    int bucket(dtkTag tag) {
-        return ((float)(tag.count() - this->min)) / ((float)(this->width));
-    }
+    int bucket(dtkTag tag) { return ((float)(tag.count() - this->min)) / ((float)(this->width)); }
 
 private:
     int min, max, buckets;
@@ -94,10 +93,7 @@ public:
 // dtkTag
 // /////////////////////////////////////////////////////////////////
 
-dtkTag::dtkTag(void) : d(new dtkTagPrivate)
-{
-
-}
+dtkTag::dtkTag(void) : d(new dtkTagPrivate) {}
 
 dtkTag::dtkTag(QString text, int count) : d(new dtkTagPrivate)
 {
@@ -120,7 +116,7 @@ dtkTag::dtkTag(QString text, int count, QStringList items, QString color) : d(ne
     d->color = color;
 }
 
-dtkTag::dtkTag(const dtkTag& other) : d(new dtkTagPrivate)
+dtkTag::dtkTag(const dtkTag &other) : d(new dtkTagPrivate)
 {
     d->text = other.d->text;
     d->count = other.d->count;
@@ -202,7 +198,7 @@ public:
     int maxcount;
     int tagCount;
 
-    dtkTagCloud::SortingType  sortingType;
+    dtkTagCloud::SortingType sortingType;
     dtkTagCloud::SortingOrder sortingOrder;
 };
 
@@ -215,14 +211,14 @@ dtkTagCloud::dtkTagCloud(QWidget *parent) : QTextBrowser(parent)
     d = new dtkTagCloudPrivate;
 
     d->averageFontSize = 0;
-    d->fontSizeRange   = 0;
+    d->fontSizeRange = 0;
 
-    d->sortingType  = Alpha;
+    d->sortingType = Alpha;
     d->sortingOrder = Asc;
 
     this->setFrameShape(QFrame::NoFrame);
 
-    connect(this, SIGNAL(anchorClicked(const QUrl&)), this, SLOT(onLinkClicked(const QUrl&)));
+    connect(this, SIGNAL(anchorClicked(const QUrl &)), this, SLOT(onLinkClicked(const QUrl &)));
 }
 
 dtkTagCloud::~dtkTagCloud(void)
@@ -324,7 +320,8 @@ void dtkTagCloud::render(void)
 
     int baseFontSize = d->averageFontSize - ((double)(d->fontSizeRange - 1) / 2);
 
-    QString cloud; cloud.append(QString("<div align=\"justify\">\n"));
+    QString cloud;
+    cloud.append(QString("<div align=\"justify\">\n"));
 
     foreach (dtkTag tag, d->tags) {
 
@@ -333,7 +330,7 @@ void dtkTagCloud::render(void)
         QString color = "";
 
         if (!tag.color().isEmpty()) {
-            color  = "color: ";
+            color = "color: ";
             color += (!tag.color().startsWith("#")) ? "#" : "";
             color += tag.color();
             color += ";";
@@ -343,12 +340,13 @@ void dtkTagCloud::render(void)
 
         QString count = QString::number(tag.count()) + " item" + ((tag.count() != 1) ? "s" : "");
 
-        cloud.append(QString("<a href=\"tag://%1\" title=\"%2\" style=\"font-size: %4px; text-decoration: none; %5\" item=\"%3\">%1</a> ")
-                     .arg(tag.text())
-                     .arg(count)
-                     .arg(tag.items().first())
-                     .arg(fontSize)
-                     .arg(color));
+        cloud.append(QString("<a href=\"tag://%1\" title=\"%2\" style=\"font-size: "
+                             "%4px; text-decoration: none; %5\" item=\"%3\">%1</a> ")
+                             .arg(tag.text())
+                             .arg(count)
+                             .arg(tag.items().first())
+                             .arg(fontSize)
+                             .arg(color));
     }
 
     cloud.append("</div>\n");
@@ -356,7 +354,7 @@ void dtkTagCloud::render(void)
     this->setHtml(cloud);
 }
 
-void dtkTagCloud::onLinkClicked(const QUrl& url)
+void dtkTagCloud::onLinkClicked(const QUrl &url)
 {
     emit tagClicked(url.host());
 }
@@ -390,27 +388,25 @@ dtkTagScopeTag::dtkTagScopeTag(QWidget *parent) : QWidget(parent), d(new dtkTagS
     d->bg->move(d->offset_min, 1);
     d->bg->setFixedHeight(d->height);
     d->bg->setFixedWidth(d->width);
-    d->bg->setStyleSheet(
-        "border-image: url(:dtkGui/pixmaps/dtk-tag_bg.png) 3 10 3 10;"
-        "border-top: 3px transparent;"
-        "border-bottom: 3px transparent;"
-        "border-right: 10px transparent;"
-        "border-left: 10px transparent;"
-        "padding-right: 0px;"
-        "color: white;"
-        "font-size: 10px;");
+    d->bg->setStyleSheet("border-image: url(:dtkGui/pixmaps/dtk-tag_bg.png) 3 10 3 10;"
+                         "border-top: 3px transparent;"
+                         "border-bottom: 3px transparent;"
+                         "border-right: 10px transparent;"
+                         "border-left: 10px transparent;"
+                         "padding-right: 0px;"
+                         "color: white;"
+                         "font-size: 10px;");
     d->bg->lower();
 
     d->fg = new QLabel(this);
     d->fg->setAlignment(Qt::AlignCenter);
     d->fg->setFixedHeight(d->height);
     d->fg->setFixedWidth(d->width);
-    d->fg->setStyleSheet(
-        "border-image: url(:dtkGui/pixmaps/dtk-tag_fg.png) 3 10 3 10;"
-        "border-top: 3px transparent;"
-        "border-bottom: 3px transparent;"
-        "border-right: 10px transparent;"
-        "border-left: 10px transparent;");
+    d->fg->setStyleSheet("border-image: url(:dtkGui/pixmaps/dtk-tag_fg.png) 3 10 3 10;"
+                         "border-top: 3px transparent;"
+                         "border-bottom: 3px transparent;"
+                         "border-right: 10px transparent;"
+                         "border-left: 10px transparent;");
     d->fg->raise();
 
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
@@ -425,22 +421,20 @@ dtkTagScopeTag::~dtkTagScopeTag(void)
 
 void dtkTagScopeTag::setBlue(void)
 {
-    d->fg->setStyleSheet(
-        "border-image: url(:dtkGui/pixmaps/dtk-tag_fg_blue.png) 3 10 3 10;"
-        "border-top: 3px transparent;"
-        "border-bottom: 3px transparent;"
-        "border-right: 10px transparent;"
-        "border-left: 10px transparent;");
+    d->fg->setStyleSheet("border-image: url(:dtkGui/pixmaps/dtk-tag_fg_blue.png) 3 10 3 10;"
+                         "border-top: 3px transparent;"
+                         "border-bottom: 3px transparent;"
+                         "border-right: 10px transparent;"
+                         "border-left: 10px transparent;");
 }
 
 void dtkTagScopeTag::setDark(void)
 {
-    d->fg->setStyleSheet(
-        "border-image: url(:dtkGui/pixmaps/dtk-tag_fg_dark.png) 3 10 3 10;"
-        "border-top: 3px transparent;"
-        "border-bottom: 3px transparent;"
-        "border-right: 10px transparent;"
-        "border-left: 10px transparent;");
+    d->fg->setStyleSheet("border-image: url(:dtkGui/pixmaps/dtk-tag_fg_dark.png) 3 10 3 10;"
+                         "border-top: 3px transparent;"
+                         "border-bottom: 3px transparent;"
+                         "border-right: 10px transparent;"
+                         "border-left: 10px transparent;");
 }
 
 QSize dtkTagScopeTag::sizeHint(void) const
@@ -453,11 +447,11 @@ QString dtkTagScopeTag::text(void)
     return d->fg->text();
 }
 
-void dtkTagScopeTag::setText(const QString& text)
+void dtkTagScopeTag::setText(const QString &text)
 {
     d->fg->setText(text);
 
-    static int   margin = 2;
+    static int margin = 2;
     static int h_border = 10;
     static int v_border = 3;
 
@@ -569,15 +563,15 @@ dtkTagScope::dtkTagScope(QWidget *parent) : QFrame(parent)
     d->switsh->setMinimumHeight(21);
     d->switsh->setMaximumWidth(39);
     d->switsh->setMinimumWidth(39);
-    //QWidget *switsh_container = QWidget::createWindowContainer(d->switsh, this);
-    //d->switsh->setAttribute(Qt::WA_MacShowFocusRect, false);
+    // QWidget *switsh_container = QWidget::createWindowContainer(d->switsh,
+    // this); d->switsh->setAttribute(Qt::WA_MacShowFocusRect, false);
 
     QHBoxLayout *t_layout = new QHBoxLayout;
     t_layout->setContentsMargins(5, 5, 5, 5);
     // t_layout->setSpacing(0);
     t_layout->addWidget(d->edit);
     t_layout->addWidget(d->clear);
-    //t_layout->addWidget(switsh_container);
+    // t_layout->addWidget(switsh_container);
 
     d->layout = new dtkFlowLayout;
     d->layout->setContentsMargins(5, 5, 5, 5);
@@ -642,14 +636,14 @@ void dtkTagScope::toggle(void)
     d->switsh->toggle();
 }
 
-
 void dtkTagScope::render(void)
 {
     foreach (dtkTagScopeTag *tag, d->tags) {
         d->layout->removeWidget(tag);
     }
 
-    qDeleteAll(d->tags); d->tags.clear();
+    qDeleteAll(d->tags);
+    d->tags.clear();
 
     foreach (QString filter, d->filters) {
         dtkTagScopeTag *tag = new dtkTagScopeTag;
@@ -686,7 +680,7 @@ void dtkTagScope::addTag(QString tag, int count)
     d->counts[tag] = count;
 }
 
-void dtkTagScope::setTags(const QStringList& tags)
+void dtkTagScope::setTags(const QStringList &tags)
 {
     QList<QString> t = tags;
     qSort(t.begin(), t.end(), qLess<QString>());
@@ -750,7 +744,8 @@ dtkItem::dtkItem(QString name, QString description, QStringList tags) : QListWid
     d->tags = tags;
 }
 
-dtkItem::dtkItem(QString name, QString description, QStringList tags, QString kind, QString type) : QListWidgetItem(name)
+dtkItem::dtkItem(QString name, QString description, QStringList tags, QString kind, QString type)
+    : QListWidgetItem(name)
 {
     d = new dtkItemPrivate;
     d->name = name;
@@ -760,7 +755,7 @@ dtkItem::dtkItem(QString name, QString description, QStringList tags, QString ki
     d->type = type;
 }
 
-dtkItem::dtkItem(const dtkItem& item) : QListWidgetItem(item.name())
+dtkItem::dtkItem(const dtkItem &item) : QListWidgetItem(item.name())
 {
     d = new dtkItemPrivate;
     d->name = item.d->name;
@@ -822,7 +817,8 @@ dtkItemList::dtkItemList(QWidget *parent) : QListWidget(parent)
     this->setItemDelegate(new dtkItemListDelegate(this));
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(onItemClicked(QListWidgetItem *)));
+    connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this,
+            SLOT(onItemClicked(QListWidgetItem *)));
 }
 
 dtkItemList::~dtkItemList(void)
@@ -851,7 +847,8 @@ void dtkItemList::addItem(QString name, QString description, QStringList tags)
     QListWidget::addItem(d->items.last());
 }
 
-void dtkItemList::addItem(QString name, QString description, QStringList tags, QString kind, QString type)
+void dtkItemList::addItem(QString name, QString description, QStringList tags, QString kind,
+                          QString type)
 {
     d->items << new dtkItem(name, description, tags, kind, type);
 
@@ -915,7 +912,7 @@ QStringList dtkItemList::mimeTypes(void) const
 // Helper function
 // /////////////////////////////////////////////////////////////////
 
-QString dtkItemListDelegateUnhtmlize(const QString& htmlString)
+QString dtkItemListDelegateUnhtmlize(const QString &htmlString)
 {
     QString textString;
 
@@ -937,14 +934,16 @@ dtkItemListDelegate::dtkItemListDelegate(dtkItemList *list) : QStyledItemDelegat
     this->list = list;
 }
 
-void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                                const QModelIndex &index) const
 {
     dtkItem *item = dynamic_cast<dtkItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
 
-    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(), option.rect.bottom());
+    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(),
+                             option.rect.bottom());
     gradiant.setColorAt(0.0, QColor(247, 247, 247));
     gradiant.setColorAt(0.3, QColor(240, 240, 240));
     gradiant.setColorAt(1.0, QColor(220, 220, 220));
@@ -957,7 +956,7 @@ void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     static QPixmap arrow = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-arrow.png");
     static QPixmap tags = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -967,8 +966,8 @@ void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,       w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,    w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -977,10 +976,13 @@ void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::gray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop,
+                      metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()),
+                                         Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(Qt::darkGray);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -990,7 +992,8 @@ void dtkItemListDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkItemListDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkItemListDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                    const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
@@ -1007,14 +1010,16 @@ dtkItemDarkDelegate::dtkItemDarkDelegate(dtkItemList *list) : QStyledItemDelegat
     this->list = list;
 }
 
-void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                                const QModelIndex &index) const
 {
     dtkItem *item = dynamic_cast<dtkItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
 
-    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(), option.rect.bottom());
+    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(),
+                             option.rect.bottom());
     gradiant.setColorAt(0.0, QColor(047, 047, 047));
     gradiant.setColorAt(0.3, QColor(040, 040, 040));
     gradiant.setColorAt(1.0, QColor(020, 020, 020));
@@ -1027,7 +1032,7 @@ void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     static QPixmap arrow = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-arrow.png");
     static QPixmap tags = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -1037,8 +1042,8 @@ void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,       w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,    w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -1047,10 +1052,13 @@ void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::darkGray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop,
+                      metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()),
+                                         Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(Qt::black);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -1060,7 +1068,8 @@ void dtkItemDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkItemDarkDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkItemDarkDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                    const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
@@ -1077,14 +1086,16 @@ dtkItemBlueDelegate::dtkItemBlueDelegate(dtkItemList *list) : QStyledItemDelegat
     this->list = list;
 }
 
-void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                                const QModelIndex &index) const
 {
     dtkItem *item = dynamic_cast<dtkItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
 
-    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(), option.rect.bottom());
+    QLinearGradient gradiant(option.rect.left(), option.rect.top(), option.rect.left(),
+                             option.rect.bottom());
     gradiant.setColorAt(0.0, QColor("#60666c"));
     gradiant.setColorAt(1.0, QColor("#4b5157"));
 
@@ -1096,7 +1107,7 @@ void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     static QPixmap arrow = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-arrow.png");
     static QPixmap tags = QPixmap(":dtkGui/pixmaps/dtk-item-list-delegate-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -1106,8 +1117,8 @@ void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,       w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,    w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -1116,10 +1127,13 @@ void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::lightGray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop,
+                      metrics.elidedText(dtkItemListDelegateUnhtmlize(item->description()),
+                                         Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(QColor("#1f2025"));
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -1129,7 +1143,8 @@ void dtkItemBlueDelegate::paint(QPainter *painter, const QStyleOptionViewItem& o
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkItemBlueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkItemBlueDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                    const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
@@ -1182,7 +1197,7 @@ void dtkItemDesc::clear(void)
     d->browser->clear();
 }
 
-void dtkItemDesc::setDescription(const QString& description)
+void dtkItemDesc::setDescription(const QString &description)
 {
     d->browser->setHtml(description);
 }
@@ -1239,7 +1254,8 @@ dtkItemView::dtkItemView(QWidget *parent) : QStackedWidget(parent), d(new dtkIte
     this->addWidget(d->list);
     this->addWidget(d->desc);
 
-    connect(d->list, SIGNAL(itemClicked(const QString&)), this, SLOT(onItemClicked(const QString&)));
+    connect(d->list, SIGNAL(itemClicked(const QString &)), this,
+            SLOT(onItemClicked(const QString &)));
     connect(d->desc, SIGNAL(back()), this, SLOT(slideInPrev()));
 }
 
@@ -1270,7 +1286,7 @@ void dtkItemView::setDark(void)
     d->list->setDark();
 }
 
-void dtkItemView::onItemClicked(const QString& description)
+void dtkItemView::onItemClicked(const QString &description)
 {
     d->desc->setDescription(description);
 
@@ -1319,11 +1335,11 @@ void dtkItemView::slideInIdx(int idx, Direction direction)
         direction = d->vertical ? Top2Bottom : Right2Left;
         idx = (idx) % count();
     } else if (idx < 0) {
-        direction =  d->vertical ? Bottom2Top : Left2Right;
+        direction = d->vertical ? Bottom2Top : Left2Right;
         idx = (idx + count()) % count();
     }
 
-    slideInWgt(widget ( idx ), direction);
+    slideInWgt(widget(idx), direction);
 }
 
 void dtkItemView::slideInWgt(QWidget *newwidget, Direction direction)
@@ -1353,9 +1369,9 @@ void dtkItemView::slideInWgt(QWidget *newwidget, Direction direction)
     int offsetx = frameRect().width();
     int offsety = frameRect().height();
 
-    widget(next)->setGeometry ( 0,  0, offsetx, offsety );
+    widget(next)->setGeometry(0, 0, offsetx, offsety);
 
-    if (direction == Bottom2Top)  {
+    if (direction == Bottom2Top) {
         offsetx = 0;
         offsety = -offsety;
     } else if (direction == Top2Bottom) {
@@ -1423,9 +1439,9 @@ public:
     dtkTagCloud *cloud;
     dtkTagScope *scope;
 
-    QList<dtkTag>  tags;
+    QList<dtkTag> tags;
     QList<dtkItem> items;
-    QStringList    filters;
+    QStringList filters;
 
     bool union_mode;
 };
@@ -1463,7 +1479,7 @@ void dtkTagController::attach(dtkTagScope *scope)
 {
     d->scope = scope;
 
-    connect(d->scope, SIGNAL(tagSet(QString)),   this, SLOT(setFilter(QString)));
+    connect(d->scope, SIGNAL(tagSet(QString)), this, SLOT(setFilter(QString)));
     connect(d->scope, SIGNAL(tagAdded(QString)), this, SLOT(addFilter(QString)));
     connect(d->scope, SIGNAL(tagRemoved(QString)), this, SLOT(remFilter(QString)));
     connect(d->scope, SIGNAL(cleared(void)), this, SLOT(clear()));
@@ -1494,7 +1510,8 @@ void dtkTagController::addItem(QString name, QString description, QStringList ta
     this->render();
 }
 
-void dtkTagController::addItem(QString name, QString description, QStringList tags, QString kind, QString type)
+void dtkTagController::addItem(QString name, QString description, QStringList tags, QString kind,
+                               QString type)
 {
     d->items << dtkItem(name, description, tags, kind, type);
 
@@ -1520,18 +1537,23 @@ static bool intersect(QStringList l1, QStringList l2)
 {
     bool pass = true;
 
-    foreach(QString s, l1) if (!l2.contains(s)) pass = false;
+    foreach (QString s, l1)
+        if (!l2.contains(s))
+            pass = false;
 
     return pass;
 }
 
 static bool unite(QStringList l1, QStringList l2)
 {
-    if (l1.isEmpty()) return true;
+    if (l1.isEmpty())
+        return true;
 
     bool pass = false;
 
-    foreach(QString s, l1) if (l2.contains(s)) pass = true;
+    foreach (QString s, l1)
+        if (l2.contains(s))
+            pass = true;
 
     return pass;
 }
@@ -1561,7 +1583,8 @@ void dtkTagController::render(void)
         d->list->clear();
 
         foreach (dtkItem item, d->items)
-            if ((d->union_mode && unite(d->filters, item.tags())) || (!d->union_mode && intersect(d->filters, item.tags())))
+            if ((d->union_mode && unite(d->filters, item.tags()))
+                || (!d->union_mode && intersect(d->filters, item.tags())))
                 d->list->addItem(item);
     }
 

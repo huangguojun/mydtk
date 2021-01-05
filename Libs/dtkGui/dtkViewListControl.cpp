@@ -13,10 +13,10 @@
  *
  */
 
+#include "dtkViewListControl.h"
 #include "dtkViewLayout.h"
 #include "dtkViewLayoutItem.h"
 #include "dtkViewList.h"
-#include "dtkViewListControl.h"
 
 #include <dtkCoreSupport/dtkAbstractView.h>
 #include <dtkCoreSupport/dtkAbstractViewFactory.h>
@@ -34,7 +34,8 @@ public:
     QPushButton *cls;
 };
 
-dtkViewListControl::dtkViewListControl(QWidget *parent) : QFrame(parent), d(new dtkViewListControlPrivate)
+dtkViewListControl::dtkViewListControl(QWidget *parent)
+    : QFrame(parent), d(new dtkViewListControlPrivate)
 {
     d->layout = NULL;
     d->list = NULL;
@@ -116,7 +117,8 @@ void dtkViewListControl::layoutHorizontally(void)
 
         dtkViewLayoutItem *current = d->layout->current();
         current->setOrientation(Qt::Horizontal);
-        current->proxy()->setView(dtkAbstractViewFactory::instance()->view(d->list->item(i - 1)->text().split(" ").first()));
+        current->proxy()->setView(dtkAbstractViewFactory::instance()->view(
+                d->list->item(i - 1)->text().split(" ").first()));
 
         if (i != n) {
 
@@ -153,7 +155,8 @@ void dtkViewListControl::layoutVertically(void)
 
         dtkViewLayoutItem *current = d->layout->current();
         current->setOrientation(Qt::Vertical);
-        current->proxy()->setView(dtkAbstractViewFactory::instance()->view(d->list->item(i - 1)->text().split(" ").first()));
+        current->proxy()->setView(dtkAbstractViewFactory::instance()->view(
+                d->list->item(i - 1)->text().split(" ").first()));
 
         if (i != n) {
 
@@ -183,9 +186,11 @@ void dtkViewListControl::layoutGrid(void)
 
     d->layout->clear();
     d->layout->setCurrent(d->layout->root());
-    d->layout->current()->proxy()->setView(dtkAbstractViewFactory::instance()->view(d->list->item(i)->text().split(" ").first()));
+    d->layout->current()->proxy()->setView(
+            dtkAbstractViewFactory::instance()->view(d->list->item(i)->text().split(" ").first()));
 
-    QList<item_t> items; items << qMakePair(d->layout->current(), Qt::Horizontal);
+    QList<item_t> items;
+    items << qMakePair(d->layout->current(), Qt::Horizontal);
 
     for (int i = 1; i < n; i++) {
 
@@ -196,10 +201,13 @@ void dtkViewListControl::layoutGrid(void)
         dtkViewLayoutItem *current = item.first;
         current->setOrientation(item.second);
         current->split();
-        current->second()->proxy()->setView(dtkAbstractViewFactory::instance()->view(d->list->item(i)->text().split(" ").first()));
+        current->second()->proxy()->setView(dtkAbstractViewFactory::instance()->view(
+                d->list->item(i)->text().split(" ").first()));
 
-        items << qMakePair(current->first(), item.second == Qt::Horizontal ? Qt::Vertical : Qt::Horizontal);
-        items << qMakePair(current->second(), item.second == Qt::Horizontal ? Qt::Vertical : Qt::Horizontal);
+        items << qMakePair(current->first(),
+                           item.second == Qt::Horizontal ? Qt::Vertical : Qt::Horizontal);
+        items << qMakePair(current->second(),
+                           item.second == Qt::Horizontal ? Qt::Vertical : Qt::Horizontal);
     }
 }
 

@@ -37,13 +37,15 @@ public:
 // dtkWidgetsMenuItemDIY implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemDIY::dtkWidgetsMenuItemDIY(const QString& title) : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemDIYPrivate)
+dtkWidgetsMenuItemDIY::dtkWidgetsMenuItemDIY(const QString &title)
+    : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemDIYPrivate)
 {
     d->source = new QWidget;
     d->source->setLayout(new QVBoxLayout);
 }
 
-dtkWidgetsMenuItemDIY::dtkWidgetsMenuItemDIY(const QString& title, QWidget *widget) : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemDIYPrivate)
+dtkWidgetsMenuItemDIY::dtkWidgetsMenuItemDIY(const QString &title, QWidget *widget)
+    : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemDIYPrivate)
 {
     d->source = widget;
 }
@@ -55,13 +57,13 @@ dtkWidgetsMenuItemDIY::~dtkWidgetsMenuItemDIY(void)
 
 void dtkWidgetsMenuItemDIY::addLayout(QLayout *layout)
 {
-    if(QBoxLayout *l = dynamic_cast<QBoxLayout *>(d->source->layout()))
+    if (QBoxLayout *l = dynamic_cast<QBoxLayout *>(d->source->layout()))
         l->addLayout(layout);
 }
 
 void dtkWidgetsMenuItemDIY::addWidget(QWidget *widget)
 {
-    if(QBoxLayout *l = dynamic_cast<QBoxLayout *>(d->source->layout()))
+    if (QBoxLayout *l = dynamic_cast<QBoxLayout *>(d->source->layout()))
         l->addWidget(widget);
 }
 
@@ -132,7 +134,9 @@ public:
 // dtkWidgetsMenuItemWorkspace implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemWorkspace::dtkWidgetsMenuItemWorkspace(const QString& title, dtkWidgetsWorkspaceStackBar *bar) : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemWorkspacePrivate)
+dtkWidgetsMenuItemWorkspace::dtkWidgetsMenuItemWorkspace(const QString &title,
+                                                         dtkWidgetsWorkspaceStackBar *bar)
+    : dtkWidgetsMenuItemCustom(title), d(new dtkWidgetsMenuItemWorkspacePrivate)
 {
     d->widget = bar;
 }
@@ -164,7 +168,8 @@ public:
 // dtkWidgetsMenuItemTheme implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemTheme::dtkWidgetsMenuItemTheme(const QString& theme) : dtkWidgetsMenuItemCustom(theme), d(new dtkWidgetsMenuItemThemePrivate)
+dtkWidgetsMenuItemTheme::dtkWidgetsMenuItemTheme(const QString &theme)
+    : dtkWidgetsMenuItemCustom(theme), d(new dtkWidgetsMenuItemThemePrivate)
 {
     d->theme = theme;
 }

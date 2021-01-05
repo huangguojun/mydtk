@@ -29,7 +29,8 @@ public:
     QColor color;
 };
 
-dtkProgressIndicator::dtkProgressIndicator(QWidget *parent) : QWidget(parent), d(new dtkProgressIndicatorPrivate)
+dtkProgressIndicator::dtkProgressIndicator(QWidget *parent)
+    : QWidget(parent), d(new dtkProgressIndicatorPrivate)
 {
     d->angle = 0;
     d->timerId = -1;
@@ -46,7 +47,7 @@ int dtkProgressIndicator::animationDelay(void) const
     return d->delay;
 }
 
-const QColor& dtkProgressIndicator::color(void) const
+const QColor &dtkProgressIndicator::color(void) const
 {
     return d->color;
 }
@@ -97,7 +98,7 @@ void dtkProgressIndicator::setAnimationDelay(int delay)
         d->timerId = startTimer(d->delay);
 }
 
-void dtkProgressIndicator::setColor(const QColor& color)
+void dtkProgressIndicator::setColor(const QColor &color)
 {
     d->color = color;
 
@@ -139,7 +140,7 @@ void dtkProgressIndicator::paintEvent(QPaintEvent *event)
     int innerRadius = (width - 1) * 0.5 * 0.38;
 
     int capsuleHeight = outerRadius - innerRadius;
-    int capsuleWidth  = (width > 32 ) ? capsuleHeight * .23 : capsuleHeight * .35;
+    int capsuleWidth = (width > 32) ? capsuleHeight * .23 : capsuleHeight * .35;
     int capsuleRadius = capsuleWidth / 2;
 
     for (int i = 0; i < 12; i++) {
@@ -150,7 +151,8 @@ void dtkProgressIndicator::paintEvent(QPaintEvent *event)
         p.save();
         p.translate(rect().center());
         p.rotate(d->angle - i * 30.0f);
-        p.drawRoundedRect(-capsuleWidth * 0.5, -(innerRadius + capsuleHeight), capsuleWidth, capsuleHeight, capsuleRadius, capsuleRadius);
+        p.drawRoundedRect(-capsuleWidth * 0.5, -(innerRadius + capsuleHeight), capsuleWidth,
+                          capsuleHeight, capsuleRadius, capsuleRadius);
         p.restore();
     }
 }

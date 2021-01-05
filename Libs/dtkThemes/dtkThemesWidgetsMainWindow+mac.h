@@ -29,7 +29,7 @@ class DTKTHEMESWIDGETS_EXPORT dtkThemesWidgetsMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-     dtkThemesWidgetsMainWindow(QWidget *parent = 0);
+    dtkThemesWidgetsMainWindow(QWidget *parent = 0);
     ~dtkThemesWidgetsMainWindow(void);
 
 public:
@@ -55,7 +55,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
-    void resizeEvent(QResizeEvent *)   override;
+    void resizeEvent(QResizeEvent *) override;
 
 private:
     class dtkThemesWidgetsMainWindowPrivate *d;

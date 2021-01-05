@@ -23,9 +23,8 @@
 #include <QtWidgets>
 
 #include <vtkActor.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkLookupTable.h>
 #include <vtkCellData.h>
+#include <vtkColorTransferFunction.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDelaunay2D.h>
@@ -34,9 +33,9 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRendererCollection.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
 #include <vtkVertexGlyphFilter.h>
 
@@ -73,13 +72,14 @@ public:
 // dtkVisualizationDecoratorDelaunay2D implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorDelaunay2D::dtkVisualizationDecoratorDelaunay2D(void): d(new dtkVisualizationDecoratorDelaunay2DPrivate())
+dtkVisualizationDecoratorDelaunay2D::dtkVisualizationDecoratorDelaunay2D(void)
+    : d(new dtkVisualizationDecoratorDelaunay2DPrivate())
 {
     this->setObjectName("Delaunay 2D");
 
     d->data = vtkSmartPointer<vtkPolyData>::New();
 
-    d->delaunay = vtkSmartPointer< vtkDelaunay2D >::New();
+    d->delaunay = vtkSmartPointer<vtkDelaunay2D>::New();
 
     d->mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     d->mapper->SetInputConnection(d->delaunay->GetOutputPort());
@@ -91,14 +91,14 @@ dtkVisualizationDecoratorDelaunay2D::dtkVisualizationDecoratorDelaunay2D(void): 
     d->actor->SetMapper(d->mapper);
     d->actor->SetVisibility(d->default_visibility);
     d->actor->GetProperty()->SetPointSize(30);
-    d->actor->GetProperty()->SetColor(0.5,0.5,0.5);
+    d->actor->GetProperty()->SetColor(0.5, 0.5, 0.5);
 
     //////////
     // Inspectors creation
 
-    d->color_button    = new QPushButton("Color");
+    d->color_button = new QPushButton("Color");
     d->opacity_spinbox = new QDoubleSpinBox;
-    d->show_actor_cb   = new QCheckBox;
+    d->show_actor_cb = new QCheckBox;
 
     d->opacity_spinbox->setObjectName("Opacity");
     d->opacity_spinbox->setRange(0, 1);
@@ -112,20 +112,21 @@ dtkVisualizationDecoratorDelaunay2D::dtkVisualizationDecoratorDelaunay2D(void): 
     //////////
     // Inspectors connections
 
-    connect(d->color_button, &QPushButton::released, [=] (void) {
+    connect(d->color_button, &QPushButton::released, [=](void) {
         double *vtk_color = d->actor->GetProperty()->GetColor();
         QColor qt_color = QColor(vtk_color[0], vtk_color[1], vtk_color[2]);
         qt_color = QColorDialog::getColor(qt_color, d->color_button);
         this->setColor(qt_color);
     });
 
-    connect(d->opacity_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &dtkVisualizationDecoratorDelaunay2D::setOpacity);
+    connect(d->opacity_spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &dtkVisualizationDecoratorDelaunay2D::setOpacity);
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("visibility",state == Qt::Checked);
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
     d->inspectors << d->color_button << d->opacity_spinbox << d->show_actor_cb;
 }
@@ -146,13 +147,13 @@ void dtkVisualizationDecoratorDelaunay2D::restoreSettings(void)
 
     QSettings settings;
     settings.beginGroup("canvas");
-    d->default_visibility = settings.value(name+"_visibility", false).toBool();
+    d->default_visibility = settings.value(name + "_visibility", false).toBool();
     settings.endGroup();
 }
 
 void dtkVisualizationDecoratorDelaunay2D::touch(void)
 {
-    if(!this->canvas()) {
+    if (!this->canvas()) {
         dtkWarn() << Q_FUNC_INFO << "No canvas was set, call setCanvas to call draw on a canvas.";
         return;
     }
@@ -160,13 +161,12 @@ void dtkVisualizationDecoratorDelaunay2D::touch(void)
     this->draw();
 }
 
-
 bool dtkVisualizationDecoratorDelaunay2D::isDecorating(void)
 {
     return d->points;
 }
 
-void dtkVisualizationDecoratorDelaunay2D::setData(const QVariant& data)
+void dtkVisualizationDecoratorDelaunay2D::setData(const QVariant &data)
 {
     d->points = data.value<vtkPoints *>();
     if (!d->points) {
@@ -174,7 +174,9 @@ void dtkVisualizationDecoratorDelaunay2D::setData(const QVariant& data)
         if (point_set) {
             d->points = point_set->GetPoints();
         } else {
-            dtkWarn() << Q_FUNC_INFO << "vtkPoints or vtkPointSet are expected. Input data is not stored.";
+            dtkWarn() << Q_FUNC_INFO
+                      << "vtkPoints or vtkPointSet are expected. Input data is "
+                         "not stored.";
             return;
         }
     }
@@ -188,7 +190,7 @@ void dtkVisualizationDecoratorDelaunay2D::setData(const QVariant& data)
     d->mapper->SetInputConnection(d->delaunay->GetOutputPort());
     d->mapper->Modified();
 
-    if(this->canvas()) {
+    if (this->canvas()) {
         this->canvas()->renderer()->AddActor(d->actor);
     }
 }
@@ -199,7 +201,9 @@ void dtkVisualizationDecoratorDelaunay2D::setCanvas(dtkVisualizationCanvas *canv
 
     d->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -225,14 +229,14 @@ void dtkVisualizationDecoratorDelaunay2D::setVisibility(bool visible)
     d->show_actor_cb->blockSignals(false);
 }
 
-void dtkVisualizationDecoratorDelaunay2D::setColor(const QColor& color)
+void dtkVisualizationDecoratorDelaunay2D::setColor(const QColor &color)
 {
     d->actor->GetProperty()->SetColor(color.red(), color.green(), color.blue());
 
     this->draw();
 }
 
-void dtkVisualizationDecoratorDelaunay2D::setOpacity(const double& alpha)
+void dtkVisualizationDecoratorDelaunay2D::setOpacity(const double &alpha)
 {
     d->actor->GetProperty()->SetOpacity(alpha);
 

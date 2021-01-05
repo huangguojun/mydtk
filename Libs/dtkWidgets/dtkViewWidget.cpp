@@ -17,7 +17,6 @@
 class dtkViewWidgetPrivate
 {
 public:
-
 };
 
 dtkViewWidget::dtkViewWidget(QWidget *parent) : QWidget(parent)

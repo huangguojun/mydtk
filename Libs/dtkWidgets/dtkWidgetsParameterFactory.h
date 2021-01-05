@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include<dtkWidgetsExport>
+#include <dtkWidgetsExport>
 
 #include "dtkWidgetsParameter.h"
 
@@ -24,26 +24,33 @@
 // dtkWidgetsParameterPlugin declaration
 // ///////////////////////////////////////////////////////////////////
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterPlugin : public dtkCorePluginBase {};
+class DTKWIDGETS_EXPORT dtkWidgetsParameterPlugin : public dtkCorePluginBase
+{
+};
 
 Q_DECLARE_METATYPE(dtkWidgetsParameterPlugin *);
-Q_DECLARE_INTERFACE(dtkWidgetsParameterPlugin, DTK_DECLARE_PLUGIN_INTERFACE(dtkWidgetsParameterPlugin));
+Q_DECLARE_INTERFACE(dtkWidgetsParameterPlugin,
+                    DTK_DECLARE_PLUGIN_INTERFACE(dtkWidgetsParameterPlugin));
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsParameterPluginManager declaration
 // ///////////////////////////////////////////////////////////////////
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterPluginManager : public dtkCorePluginManager<dtkWidgetsParameterPlugin> {};
+class DTKWIDGETS_EXPORT dtkWidgetsParameterPluginManager
+    : public dtkCorePluginManager<dtkWidgetsParameterPlugin>
+{
+};
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsParameterFactory declaration
 // ///////////////////////////////////////////////////////////////////
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterFactory : public dtkCorePluginFactory<dtkWidgetsParameter>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterFactory
+    : public dtkCorePluginFactory<dtkWidgetsParameter>
 {
 public:
-    dtkWidgetsParameter *create(const QString& key);
-    dtkWidgetsParameter *create(dtkCoreParameter *parameter, const QString& key);
+    dtkWidgetsParameter *create(const QString &key);
+    dtkWidgetsParameter *create(dtkCoreParameter *parameter, const QString &key);
 };
 
 // /////////////////////////////////////////////////////////////////
@@ -51,13 +58,13 @@ public:
 // /////////////////////////////////////////////////////////////////
 
 namespace dtk {
-    namespace widgets {
-        namespace parameters {
-            DTKWIDGETS_EXPORT dtkWidgetsParameterFactory& pluginFactory(void);
-            DTKWIDGETS_EXPORT dtkWidgetsParameterPluginManager& pluginManager(void);
-        }
-    }
-}
+namespace widgets {
+namespace parameters {
+DTKWIDGETS_EXPORT dtkWidgetsParameterFactory &pluginFactory(void);
+DTKWIDGETS_EXPORT dtkWidgetsParameterPluginManager &pluginManager(void);
+} // namespace parameters
+} // namespace widgets
+} // namespace dtk
 
 //
 // dtkWidgetsParameterFactory.h ends here

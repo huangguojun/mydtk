@@ -37,7 +37,7 @@ public:
 public:
     QSize sizeHint(void) const override;
 
- signals:
+signals:
     void clicked(void);
 
 protected:
@@ -74,17 +74,18 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewOverlay : public QFrame
     Q_OBJECT
 
 public:
-     dtkVisualizationViewOverlay(QChar, QString = "", QWidget *parent = nullptr);
-     dtkVisualizationViewOverlay(fa::icon, QString = "", QWidget *parent = nullptr);
-     dtkVisualizationViewOverlay(const QString& path_on, const QString& path_off, QString = "", QWidget *parent = nullptr);
+    dtkVisualizationViewOverlay(QChar, QString = "", QWidget *parent = nullptr);
+    dtkVisualizationViewOverlay(fa::icon, QString = "", QWidget *parent = nullptr);
+    dtkVisualizationViewOverlay(const QString &path_on, const QString &path_off, QString = "",
+                                QWidget *parent = nullptr);
     ~dtkVisualizationViewOverlay(void);
 
     void activate(bool);
     void toggle(bool);
 
-    void changePixmaps(const QPixmap&, const QPixmap&);
-    void changeColor(const QColor&);
-    void changePaths(const QString&, const QString&);
+    void changePixmaps(const QPixmap &, const QPixmap &);
+    void changeColor(const QColor &);
+    void changePaths(const QString &, const QString &);
     void changeIcon(fa::icon);
 
     QString text(void) const;

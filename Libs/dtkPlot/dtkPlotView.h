@@ -37,17 +37,9 @@ class DTKPLOT_EXPORT dtkPlotView : public dtkAbstractView
     Q_OBJECT
 
 public:
-    enum Scale {
-        Linear,
-        Logarithmic
-    };
+    enum Scale { Linear, Logarithmic };
 
-    enum LegendPosition {
-        LeftLegend,
-        RightLegend,
-        BottomLegend,
-        TopLegend
-    };
+    enum LegendPosition { LeftLegend, RightLegend, BottomLegend, TopLegend };
 
 public:
     dtkPlotView(void);
@@ -60,30 +52,30 @@ public:
     QList<dtkPlotCurve *> curves(void);
 
 public:
-    void   activatePanning(void);
+    void activatePanning(void);
     void deactivatePanning(void);
 
-    void   activatePicking(void);
+    void activatePicking(void);
     void deactivatePicking(void);
 
-    void   activateZooming(void);
+    void activateZooming(void);
     void deactivateZooming(void);
 
-    void   activateGrid(void);
+    void activateGrid(void);
     void deactivateGrid(void);
 
-    void   activateLegend(void);
+    void activateLegend(void);
     void deactivateLegend(void);
 
 public:
-    void setTitle(const QString&);
-    void setTitleSize(const int&);
+    void setTitle(const QString &);
+    void setTitleSize(const int &);
 
-    void setAxisTitleX(const QString& title);
-    void setAxisTitleY(const QString& title);
+    void setAxisTitleX(const QString &title);
+    void setAxisTitleY(const QString &title);
 
-    void setAxisTitleSizeX(const int&);
-    void setAxisTitleSizeY(const int&);
+    void setAxisTitleSizeX(const int &);
+    void setAxisTitleSizeY(const int &);
 
     void setAxisScaleX(double min, double max);
     void setAxisScaleY(double min, double max);
@@ -97,7 +89,7 @@ public:
 
     int alphaCurveArea(void) const;
 
-    void setStyleSheet(const QString& sheet);
+    void setStyleSheet(const QString &sheet);
 
 public:
     QString title(void) const;
@@ -113,13 +105,13 @@ public:
     int axisTitleSizeY(void) const;
 
     QColor gridColor(void) const;
-    void setGridColor(const QColor& color);
+    void setGridColor(const QColor &color);
 
     QColor pickingColor(void) const;
-    void setPickingColor(const QColor& color);
+    void setPickingColor(const QColor &color);
 
     QColor zoomColor(void) const;
-    void setZoomColor(const QColor& color);
+    void setZoomColor(const QColor &color);
     bool isZoomActivated(void) const;
 
     void updateAxes(void);
@@ -127,8 +119,8 @@ public:
 public:
     void setBackgroundColor(int red, int green, int blue);
     void setBackgroundColor(double red, double green, double blue);
-    void setBackgroundColor(const QColor& color);
-    void setForegroundColor(const QColor& color);
+    void setBackgroundColor(const QColor &color);
+    void setForegroundColor(const QColor &color);
     void setDark(bool dark);
 
 public:
@@ -145,7 +137,7 @@ public:
     QWidget *widget(void);
 
 public:
-    dtkPlotView& operator<<(dtkPlotCurve *curve);
+    dtkPlotView &operator<<(dtkPlotCurve *curve);
 
 protected:
     void readSettings(void);

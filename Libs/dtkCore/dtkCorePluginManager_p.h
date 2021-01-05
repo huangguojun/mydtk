@@ -16,4 +16,3 @@
 
 #include <QtCore>
 #include <QtDebug>
-

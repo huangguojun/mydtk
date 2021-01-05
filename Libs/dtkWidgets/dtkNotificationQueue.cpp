@@ -12,31 +12,30 @@
 
 // Code:
 
-
+#include "dtkNotificationQueue.h"
 #include "dtkNotifiable.h"
 #include "dtkNotification.h"
 #include "dtkNotificationEvent.h"
-#include "dtkNotificationQueue.h"
 
 #define DTK_NOTIFICATION_PERSISTENT_DURATION 10000
 
 class dtkNotificationQueuePrivate
 {
 public:
-    QQueue<dtkNotificationEvent>     persistent;
+    QQueue<dtkNotificationEvent> persistent;
     QQueue<dtkNotificationEvent> non_persistent;
 
 public:
     QList<dtkNotifiable *> notifiables;
 
 public:
-    QTimer     persistent_timer;
+    QTimer persistent_timer;
     QTimer non_persistent_timer;
 };
 
 dtkNotificationQueue *dtkNotificationQueue::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkNotificationQueue;
 
     return s_instance;
@@ -173,12 +172,13 @@ bool dtkNotificationQueue::event(QEvent *event)
     return true;
 }
 
-dtkNotificationQueue::dtkNotificationQueue(QObject *parent) : QObject(parent), d(new dtkNotificationQueuePrivate)
+dtkNotificationQueue::dtkNotificationQueue(QObject *parent)
+    : QObject(parent), d(new dtkNotificationQueuePrivate)
 {
     d->persistent_timer.setSingleShot(true);
     d->non_persistent_timer.setSingleShot(true);
 
-    connect(    &(d->persistent_timer), SIGNAL(timeout()), this, SLOT(idle()));
+    connect(&(d->persistent_timer), SIGNAL(timeout()), this, SLOT(idle()));
     connect(&(d->non_persistent_timer), SIGNAL(timeout()), this, SLOT(idle()));
 }
 

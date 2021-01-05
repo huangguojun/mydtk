@@ -36,7 +36,7 @@ public:
     virtual void setNonPersistentCount(int count) = 0;
 
 public:
-    virtual void display(const QString& message) = 0;
+    virtual void display(const QString &message) = 0;
 };
 
 //

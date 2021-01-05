@@ -23,7 +23,7 @@ public:
     dtkWidgetsTag(QString text, int instances);
     dtkWidgetsTag(QString text, int instances, QStringList items);
     dtkWidgetsTag(QString text, int instances, QStringList items, QString color);
-    dtkWidgetsTag(const dtkWidgetsTag& other);
+    dtkWidgetsTag(const dtkWidgetsTag &other);
     ~dtkWidgetsTag(void);
 
     int count(void) const;

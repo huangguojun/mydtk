@@ -24,15 +24,14 @@
 #include "dtkCpuid.h"
 
 #if defined(Q_OS_WIN) && !defined(__MINGW32__)
-#include <limits.h>
-#if defined(Q_CC_MSVC)
-typedef unsigned __int32  uint32_t;
-#include <intrin.h>
-#endif
+#    include <limits.h>
+#    if defined(Q_CC_MSVC)
+typedef unsigned __int32 uint32_t;
+#        include <intrin.h>
+#    endif
 #else
-#include <stdint.h>
+#    include <stdint.h>
 #endif
-
 
 class dtkCpuidPrivate
 {
@@ -40,10 +39,7 @@ public:
     uint32_t regs[4];
 };
 
-dtkCpuid::dtkCpuid(void) : d (new dtkCpuidPrivate)
-{
-
-}
+dtkCpuid::dtkCpuid(void) : d(new dtkCpuidPrivate) {}
 
 dtkCpuid::~dtkCpuid(void)
 {
@@ -55,9 +51,9 @@ void dtkCpuid::load(unsigned i)
 #if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
     __cpuid((int *)d->regs, (int)i);
 #elif defined(DTK_BUILD_64)
-    asm volatile
-    ("cpuid" : "=a" (d->regs[0]), "=b" (d->regs[1]), "=c" (d->regs[2]), "=d" (d->regs[3])
-     : "a" (i), "c" (0));
+    asm volatile("cpuid"
+                 : "=a"(d->regs[0]), "=b"(d->regs[1]), "=c"(d->regs[2]), "=d"(d->regs[3])
+                 : "a"(i), "c"(0));
 #endif
 }
 

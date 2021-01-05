@@ -25,14 +25,13 @@ class dtkIoDataModelPluginManager;
 // dtkIo factories and managers
 // ///////////////////////////////////////////////////////////////////
 
-namespace dtkIo
-{
-    namespace dataModel {
-        DTKIO_EXPORT void                          initialize(const QString& path);
-        DTKIO_EXPORT dtkIoDataModelPluginFactory&  pluginFactory(void);
-        DTKIO_EXPORT dtkIoDataModelPluginManager&  pluginManager(void);
-    }
-}
+namespace dtkIo {
+namespace dataModel {
+DTKIO_EXPORT void initialize(const QString &path);
+DTKIO_EXPORT dtkIoDataModelPluginFactory &pluginFactory(void);
+DTKIO_EXPORT dtkIoDataModelPluginManager &pluginManager(void);
+} // namespace dataModel
+} // namespace dtkIo
 
 //
 // dtkIo.h ends here

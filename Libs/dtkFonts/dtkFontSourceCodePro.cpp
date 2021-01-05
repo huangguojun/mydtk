@@ -16,26 +16,23 @@
 
 dtkFontSourceCodePro *dtkFontSourceCodePro::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkFontSourceCodePro;
 
     return s_instance;
 }
 
-dtkFontSourceCodePro::dtkFontSourceCodePro(QObject *parent) : QObject(parent)
-{
-
-}
+dtkFontSourceCodePro::dtkFontSourceCodePro(QObject *parent) : QObject(parent) {}
 
 bool dtkFontSourceCodePro::initFontSourceCodePro(void)
 {
     static int fontSourceCodeProFontId = -1;
 
-    if(fontSourceCodeProFontId < 0) {
+    if (fontSourceCodeProFontId < 0) {
 
         QFile res(":dtkFontSourceCodePro.ttf");
 
-        if(!res.open(QIODevice::ReadOnly)) {
+        if (!res.open(QIODevice::ReadOnly)) {
             qDebug() << "Font awesome font could not be loaded!";
             return false;
         }
@@ -46,10 +43,11 @@ bool dtkFontSourceCodePro::initFontSourceCodePro(void)
         fontSourceCodeProFontId = QFontDatabase::addApplicationFontFromData(fontData);
     }
 
-    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(fontSourceCodeProFontId);
+    QStringList loadedFontFamilies =
+            QFontDatabase::applicationFontFamilies(fontSourceCodeProFontId);
 
-    if(!loadedFontFamilies.empty()) {
-        fontName_= loadedFontFamilies.at(0);
+    if (!loadedFontFamilies.empty()) {
+        fontName_ = loadedFontFamilies.at(0);
     } else {
         qDebug() << "Source code font is empty?!";
         fontSourceCodeProFontId = -1;

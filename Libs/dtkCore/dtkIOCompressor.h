@@ -57,7 +57,6 @@
 
 #include <QIODevice>
 
-
 class dtkIOCompressorPrivate;
 class DTKCORE_EXPORT dtkIOCompressor : public QIODevice
 {
@@ -74,9 +73,11 @@ public:
     void close();
     void flush();
     qint64 bytesAvailable() const;
+
 protected:
     qint64 readData(char *data, qint64 maxSize);
     qint64 writeData(const char *data, qint64 maxSize);
+
 private:
     static bool checkGzipSupport(const char *const versionString);
     dtkIOCompressorPrivate *d_ptr;

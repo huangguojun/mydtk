@@ -18,10 +18,11 @@
 // dtkFontAllTheIconsCharIconPainter
 // ///////////////////////////////////////////////////////////////////
 
-class dtkFontAllTheIconsCharIconPainter: public dtkFontAllTheIconsIconPainter
+class dtkFontAllTheIconsCharIconPainter : public dtkFontAllTheIconsIconPainter
 {
 public:
-    virtual void paint(dtkFontAllTheIcons *awesome, QPainter *painter, const QRect& rect, QIcon::Mode mode, QIcon::State state, const QVariantMap& options)
+    virtual void paint(dtkFontAllTheIcons *awesome, QPainter *painter, const QRect &rect,
+                       QIcon::Mode mode, QIcon::State state, const QVariantMap &options)
     {
         Q_UNUSED(mode);
         Q_UNUSED(state);
@@ -32,29 +33,29 @@ public:
         QColor color = options.value("color").value<QColor>();
         QString text = options.value("text").toString();
 
-        if(mode == QIcon::Disabled) {
+        if (mode == QIcon::Disabled) {
             color = options.value("color-disabled").value<QColor>();
             QVariant alt = options.value("text-disabled");
-            if(alt.isValid()) {
+            if (alt.isValid()) {
                 text = alt.toString();
             }
-        } else if(mode == QIcon::Active) {
+        } else if (mode == QIcon::Active) {
             color = options.value("color-active").value<QColor>();
             QVariant alt = options.value("text-active");
-            if(alt.isValid()) {
+            if (alt.isValid()) {
                 text = alt.toString();
             }
-        } else if(mode == QIcon::Selected) {
+        } else if (mode == QIcon::Selected) {
             color = options.value("color-selected").value<QColor>();
             QVariant alt = options.value("text-selected");
-            if(alt.isValid()) {
+            if (alt.isValid()) {
                 text = alt.toString();
             }
         }
 
         painter->setPen(color);
 
-        int drawSize = qRound(rect.height()*options.value("scale-factor").toFloat());
+        int drawSize = qRound(rect.height() * options.value("scale-factor").toFloat());
 
         painter->setFont(awesome->font(drawSize));
         painter->drawText(rect, text, QTextOption(Qt::AlignCenter | Qt::AlignVCenter));
@@ -69,9 +70,11 @@ public:
 class dtkFontAllTheIconsIconPainterIconEngine : public QIconEngine
 {
 public:
-    dtkFontAllTheIconsIconPainterIconEngine(dtkFontAllTheIcons *awesome, dtkFontAllTheIconsIconPainter *painter, const QVariantMap& options) : awesomeRef_(awesome), iconPainterRef_(painter), options_(options)
+    dtkFontAllTheIconsIconPainterIconEngine(dtkFontAllTheIcons *awesome,
+                                            dtkFontAllTheIconsIconPainter *painter,
+                                            const QVariantMap &options)
+        : awesomeRef_(awesome), iconPainterRef_(painter), options_(options)
     {
-
     }
 
     virtual ~dtkFontAllTheIconsIconPainterIconEngine(void) {}
@@ -81,7 +84,7 @@ public:
         return new dtkFontAllTheIconsIconPainterIconEngine(awesomeRef_, iconPainterRef_, options_);
     }
 
-    virtual void paint(QPainter *painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
+    virtual void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
     {
         Q_UNUSED(mode);
         Q_UNUSED(state);
@@ -89,13 +92,13 @@ public:
         iconPainterRef_->paint(awesomeRef_, painter, rect, mode, state, options_);
     }
 
-    virtual QPixmap pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state)
+    virtual QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
     {
         QPixmap pm(size);
         pm.fill(Qt::transparent);
 
         QPainter p(&pm);
-        paint(&p, QRect(QPoint(0,0),size), mode, state);
+        paint(&p, QRect(QPoint(0, 0), size), mode, state);
 
         return pm;
     }
@@ -112,10 +115,10 @@ private:
 
 dtkFontAllTheIcons::dtkFontAllTheIcons(QObject *parent) : QObject(parent)
 {
-    setDefaultOption("color", QColor(50,50,50));
-    setDefaultOption("color-disabled", QColor(70,70,70,60));
-    setDefaultOption("color-active", QColor(10,10,10));
-    setDefaultOption("color-selected", QColor(10,10,10));
+    setDefaultOption("color", QColor(50, 50, 50));
+    setDefaultOption("color-disabled", QColor(70, 70, 70, 60));
+    setDefaultOption("color-active", QColor(10, 10, 10));
+    setDefaultOption("color-selected", QColor(10, 10, 10));
     setDefaultOption("scale-factor", 0.9);
 
     setDefaultOption("text", QVariant());
@@ -132,7 +135,7 @@ dtkFontAllTheIcons::~dtkFontAllTheIcons(void)
     qDeleteAll(painterMap_);
 }
 
-void dtkFontAllTheIcons::init(const QString& fontname)
+void dtkFontAllTheIcons::init(const QString &fontname)
 {
     fontName_ = fontname;
 }
@@ -141,10 +144,10 @@ bool dtkFontAllTheIcons::initFontAllTheIcons()
 {
     static int fontAllTheIconsFontId = -1;
 
-    if(fontAllTheIconsFontId < 0) {
+    if (fontAllTheIconsFontId < 0) {
 
         QFile res(":dtkFontAllTheIcons.ttf");
-        if(!res.open(QIODevice::ReadOnly)) {
+        if (!res.open(QIODevice::ReadOnly)) {
             qDebug() << Q_FUNC_INFO << "Unable to open font resource";
             return false;
         }
@@ -156,8 +159,8 @@ bool dtkFontAllTheIcons::initFontAllTheIcons()
     }
 
     QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(fontAllTheIconsFontId);
-    if(!loadedFontFamilies.empty()) {
-        fontName_= loadedFontFamilies.at(0);
+    if (!loadedFontFamilies.empty()) {
+        fontName_ = loadedFontFamilies.at(0);
     } else {
         fontAllTheIconsFontId = -1;
         qDebug() << Q_FUNC_INFO << "Unable to load font family";
@@ -167,22 +170,22 @@ bool dtkFontAllTheIcons::initFontAllTheIcons()
     return true;
 }
 
-void dtkFontAllTheIcons::setDefaultOption(const QString& name, const QVariant& value)
+void dtkFontAllTheIcons::setDefaultOption(const QString &name, const QVariant &value)
 {
     defaultOptions_.insert(name, value);
 }
 
-QVariant dtkFontAllTheIcons::defaultOption(const QString& name)
+QVariant dtkFontAllTheIcons::defaultOption(const QString &name)
 {
     return defaultOptions_.value(name);
 }
 
-static QVariantMap mergeOptions(const QVariantMap& defaults, const QVariantMap& override)
+static QVariantMap mergeOptions(const QVariantMap &defaults, const QVariantMap &override)
 {
-    QVariantMap result= defaults;
-    if(!override.isEmpty()) {
-        QMapIterator<QString,QVariant> itr(override);
-        while(itr.hasNext()) {
+    QVariantMap result = defaults;
+    if (!override.isEmpty()) {
+        QMapIterator<QString, QVariant> itr(override);
+        while (itr.hasNext()) {
             itr.next();
             result.insert(itr.key(), itr.value());
         }
@@ -198,14 +201,15 @@ QIcon dtkFontAllTheIcons::icon(int character, const QVariantMap &options)
     return icon(fontIconPainter_, optionMap);
 }
 
-QIcon dtkFontAllTheIcons::icon(dtkFontAllTheIconsIconPainter *painter, const QVariantMap& optionMap)
+QIcon dtkFontAllTheIcons::icon(dtkFontAllTheIconsIconPainter *painter, const QVariantMap &optionMap)
 {
-    dtkFontAllTheIconsIconPainterIconEngine *engine = new dtkFontAllTheIconsIconPainterIconEngine(this, painter, optionMap);
+    dtkFontAllTheIconsIconPainterIconEngine *engine =
+            new dtkFontAllTheIconsIconPainterIconEngine(this, painter, optionMap);
 
     return QIcon(engine);
 }
 
-void dtkFontAllTheIcons::give(const QString& name, dtkFontAllTheIconsIconPainter *painter)
+void dtkFontAllTheIcons::give(const QString &name, dtkFontAllTheIconsIconPainter *painter)
 {
     delete painterMap_.value(name);
 
@@ -221,7 +225,7 @@ QFont dtkFontAllTheIcons::font(int size)
 
 dtkFontAllTheIcons *dtkFontAllTheIcons::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkFontAllTheIcons;
 
     return s_instance;

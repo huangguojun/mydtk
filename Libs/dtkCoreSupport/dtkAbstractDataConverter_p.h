@@ -20,9 +20,9 @@
 #ifndef DTKABSTRACTDATACONVERTER_P
 #define DTKABSTRACTDATACONVERTER_P
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
 #include "dtkSmartPointer.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractDataConverter;
 class dtkAbstractData;
@@ -34,10 +34,13 @@ class dtkAbstractData;
 class DTKCORESUPPORT_EXPORT dtkAbstractDataConverterPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractDataConverterPrivate(dtkAbstractDataConverter *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractDataConverterPrivate(const dtkAbstractDataConverterPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(false),
-        data(other.data) {}
+    dtkAbstractDataConverterPrivate(dtkAbstractDataConverter *q = 0) : dtkAbstractObjectPrivate(q)
+    {
+    }
+    dtkAbstractDataConverterPrivate(const dtkAbstractDataConverterPrivate &other)
+        : dtkAbstractObjectPrivate(other), enabled(false), data(other.data)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataConverterPrivate(void) {}

@@ -16,7 +16,7 @@
 
 // /////////////////////////////////////////////////////////////////
 
-void dtkRoundUpNextPowerOfTwo(quint32& nalloc)
+void dtkRoundUpNextPowerOfTwo(quint32 &nalloc)
 {
     nalloc |= nalloc >> 1;
     nalloc |= nalloc >> 2;
@@ -26,7 +26,7 @@ void dtkRoundUpNextPowerOfTwo(quint32& nalloc)
     ++nalloc;
 };
 
-void dtkRoundUpNextPowerOfTwo(quint64& nalloc)
+void dtkRoundUpNextPowerOfTwo(quint64 &nalloc)
 {
     nalloc |= nalloc >> 1;
     nalloc |= nalloc >> 2;
@@ -40,7 +40,8 @@ void dtkRoundUpNextPowerOfTwo(quint64& nalloc)
 qintptr dtkAllocMore(qintptr alloc, qintptr extra)
 {
     Q_ASSERT(alloc >= 0 && extra >= 0);
-    Q_ASSERT_X(alloc < (quint64(1) << 63) - (extra + 1), "dtkAllocMore", "Requested size is too large!");
+    Q_ASSERT_X(alloc < (quint64(1) << 63) - (extra + 1), "dtkAllocMore",
+               "Requested size is too large!");
 
     quint64 nalloc = alloc + extra;
 
@@ -65,16 +66,17 @@ const dtkArrayData dtkArrayData::shared_null[2] = {
 
 static const dtkArrayData dtk_array[3] = {
     { -1, 0, 0, 0, sizeof(dtkArrayData) }, // shared empty
-    {  0, 0, 0, 0, sizeof(dtkArrayData) }, // unsharable empty
+    { 0, 0, 0, 0, sizeof(dtkArrayData) }, // unsharable empty
     /* zero initialized terminator */
 };
 
-static const dtkArrayData& dtk_array_empty = dtk_array[0];
-static const dtkArrayData& dtk_array_unsharable_empty = dtk_array[1];
+static const dtkArrayData &dtk_array_empty = dtk_array[0];
+static const dtkArrayData &dtk_array_unsharable_empty = dtk_array[1];
 
 // /////////////////////////////////////////////////////////////////
 
-dtkArrayData *dtkArrayData::allocate(size_t objectSize, size_t alignment, size_t capacity, AllocationOptions options)
+dtkArrayData *dtkArrayData::allocate(size_t objectSize, size_t alignment, size_t capacity,
+                                     AllocationOptions options)
 {
     // Alignment is a power of two
     Q_ASSERT(alignment >= Q_ALIGNOF(dtkArrayData) && !(alignment & (alignment - 1)));
@@ -108,7 +110,8 @@ dtkArrayData *dtkArrayData::allocate(size_t objectSize, size_t alignment, size_t
     dtkArrayData *header = static_cast<dtkArrayData *>(::malloc(allocSize));
 
     if (header) {
-        quintptr data = (quintptr(header) + sizeof(dtkArrayData) + alignment - 1) & ~(alignment - 1);
+        quintptr data =
+                (quintptr(header) + sizeof(dtkArrayData) + alignment - 1) & ~(alignment - 1);
 
         header->ref.atomic.store(bool(!(options & Unsharable)));
         header->size = 0;
@@ -124,7 +127,8 @@ void dtkArrayData::deallocate(dtkArrayData *data, size_t objectSize, size_t alig
 {
     // Alignment is a power of two
     Q_ASSERT(alignment >= Q_ALIGNOF(dtkArrayData) && !(alignment & (alignment - 1)));
-    Q_UNUSED(objectSize) Q_UNUSED(alignment)
+    Q_UNUSED(objectSize)
+    Q_UNUSED(alignment)
 
 #if QT_SUPPORTS(UNSHARABLE_CONTAINERS)
 

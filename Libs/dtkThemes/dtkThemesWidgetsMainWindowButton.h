@@ -26,14 +26,10 @@ class DTKTHEMESWIDGETS_EXPORT dtkThemesWidgetsMainWindowButton : public QFrame
     Q_OBJECT
 
 public:
-    enum Kind {
-        Maximize,
-        Minimize,
-        Close
-    };
+    enum Kind { Maximize, Minimize, Close };
 
 public:
-     dtkThemesWidgetsMainWindowButton(Kind kind, QWidget *parent = nullptr);
+    dtkThemesWidgetsMainWindowButton(Kind kind, QWidget *parent = nullptr);
     ~dtkThemesWidgetsMainWindowButton(void);
 
 public:

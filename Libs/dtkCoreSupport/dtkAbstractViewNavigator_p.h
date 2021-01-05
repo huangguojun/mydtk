@@ -37,11 +37,16 @@ class dtkAbstractViewNavigator;
 class DTKCORESUPPORT_EXPORT dtkAbstractViewNavigatorPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractViewNavigatorPrivate(dtkAbstractViewNavigator *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractViewNavigatorPrivate(const dtkAbstractViewNavigatorPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(other.enabled),
-        data(other.data),
-        view(other.view) {}
+    dtkAbstractViewNavigatorPrivate(dtkAbstractViewNavigator *q = 0) : dtkAbstractObjectPrivate(q)
+    {
+    }
+    dtkAbstractViewNavigatorPrivate(const dtkAbstractViewNavigatorPrivate &other)
+        : dtkAbstractObjectPrivate(other),
+          enabled(other.enabled),
+          data(other.data),
+          view(other.view)
+    {
+    }
 
 public:
     virtual ~dtkAbstractViewNavigatorPrivate(void) {}

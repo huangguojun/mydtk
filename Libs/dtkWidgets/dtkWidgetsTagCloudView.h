@@ -27,13 +27,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsTagCloudView : public QStackedWidget
     Q_OBJECT
 
 public:
-    enum Direction {
-        Left2Right,
-        Right2Left,
-        Top2Bottom,
-        Bottom2Top,
-        Automatic
-    };
+    enum Direction { Left2Right, Right2Left, Top2Bottom, Bottom2Top, Automatic };
 
 public:
     dtkWidgetsTagCloudView(QWidget *parent = 0);
@@ -48,7 +42,7 @@ public:
     void setDoom(void);
 
 public slots:
-    void onItemClicked(const QString& description);
+    void onItemClicked(const QString &description);
 
 protected slots:
     void setSpeed(int speed);

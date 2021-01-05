@@ -21,8 +21,8 @@
 
 #include "NetworkPacket.h"
 //#include "vtkLidarPacketInterpreter.h"
-#include "vtkSmartPointer.h"
 #include "vtkPolyData.h"
+#include "vtkSmartPointer.h"
 
 template<typename T>
 class SynchronizedQueue;
@@ -30,38 +30,39 @@ class SynchronizedQueue;
 class PacketConsumer
 {
 public:
-  PacketConsumer();
+    PacketConsumer();
 
-  void HandleSensorData(const unsigned char* data, unsigned int length);
+    void HandleSensorData(const unsigned char *data, unsigned int length);
 
-  vtkSmartPointer<vtkPolyData> GetLastAvailableFrame();
+    vtkSmartPointer<vtkPolyData> GetLastAvailableFrame();
 
-  int CheckForNewData();
+    int CheckForNewData();
 
-  void ClearAllFrames() { this->Frames.clear(); }
+    void ClearAllFrames() { this->Frames.clear(); }
 
-  void Start();
+    void Start();
 
-  void Stop();
+    void Stop();
 
-  void Enqueue(NetworkPacket* packet);
+    void Enqueue(NetworkPacket *packet);
 
-  //void SetInterpreter(vtkLidarPacketInterpreter* inter) { this->Interpreter = inter; }
+    // void SetInterpreter(vtkLidarPacketInterpreter* inter) { this->Interpreter
+    // = inter; }
 
-  // Hold this when modifying internals of reader
-  boost::mutex ConsumerMutex;
+    // Hold this when modifying internals of reader
+    boost::mutex ConsumerMutex;
 
 protected:
-  void ThreadLoop();
+    void ThreadLoop();
 
-  void HandleNewData(vtkSmartPointer<vtkPolyData> polyData);
+    void HandleNewData(vtkSmartPointer<vtkPolyData> polyData);
 
-  std::deque<vtkSmartPointer<vtkPolyData> > Frames;
- // vtkLidarPacketInterpreter* Interpreter;
+    std::deque<vtkSmartPointer<vtkPolyData>> Frames;
+    // vtkLidarPacketInterpreter* Interpreter;
 
-  boost::shared_ptr<SynchronizedQueue<NetworkPacket*> > Packets;
+    boost::shared_ptr<SynchronizedQueue<NetworkPacket *>> Packets;
 
-  boost::shared_ptr<boost::thread> Thread;
+    boost::shared_ptr<boost::thread> Thread;
 };
 
 #endif // PACKETCONSUMER_H

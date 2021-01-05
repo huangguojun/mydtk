@@ -20,29 +20,29 @@
 #include <queue>
 #include <string>
 
-#include "SynchronizedQueue.h"
 #include "NetworkPacket.h"
+#include "SynchronizedQueue.h"
 //#include "vtkPacketFileWriter.h"
 
 class PacketFileWriter
 {
 public:
-  void ThreadLoop();
+    void ThreadLoop();
 
-  void Start(const std::string& filename);
+    void Start(const std::string &filename);
 
-  void Stop();
+    void Stop();
 
-  void Enqueue(NetworkPacket* packet);
+    void Enqueue(NetworkPacket *packet);
 
-  //bool IsOpen() { return this->PacketWriter.IsOpen(); }
+    // bool IsOpen() { return this->PacketWriter.IsOpen(); }
 
-  //void Close() { this->PacketWriter.Close(); }
+    // void Close() { this->PacketWriter.Close(); }
 
 private:
-  //vtkPacketFileWriter PacketWriter;
-  boost::shared_ptr<boost::thread> Thread;
-  boost::shared_ptr<SynchronizedQueue<NetworkPacket*> > Packets;
+    // vtkPacketFileWriter PacketWriter;
+    boost::shared_ptr<boost::thread> Thread;
+    boost::shared_ptr<SynchronizedQueue<NetworkPacket *>> Packets;
 };
 
 #endif // PACKETWRITER_H

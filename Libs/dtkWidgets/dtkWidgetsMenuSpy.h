@@ -27,14 +27,14 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuSpy : public QObject
 
 public:
     dtkWidgetsMenuSpy(QObject *parent = nullptr);
-   ~dtkWidgetsMenuSpy(void);
+    ~dtkWidgetsMenuSpy(void);
 
 public:
-   void setMenuBar         (dtkWidgetsMenuBar *);
-   void setMenuBarContainer(dtkWidgetsMenuBarContainer *);
+    void setMenuBar(dtkWidgetsMenuBar *);
+    void setMenuBarContainer(dtkWidgetsMenuBarContainer *);
 
 private:
-   class dtkWidgetsMenuSpyPrivate *d;
+    class dtkWidgetsMenuSpyPrivate *d;
 };
 
 //

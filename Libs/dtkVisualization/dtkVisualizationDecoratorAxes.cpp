@@ -24,9 +24,9 @@
 #include <vtkActor.h>
 #include <vtkAxesActor.h>
 #include <vtkAxisActor.h>
+#include <vtkCellData.h>
 #include <vtkCellDataToPointData.h>
 #include <vtkColorTransferFunction.h>
-#include <vtkCellData.h>
 #include <vtkCubeAxesActor2D.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
@@ -37,8 +37,8 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSmartVolumeMapper.h>
 #include <vtkTextProperty.h>
@@ -66,8 +66,8 @@ public:
     vtkSmartPointer<vtkTransform> transform;
 
 public:
-    QCheckBox *show_actor_cb     = nullptr;
-    QCheckBox *show_axes_cb      = nullptr;
+    QCheckBox *show_actor_cb = nullptr;
+    QCheckBox *show_axes_cb = nullptr;
     QCheckBox *show_cube_axes_cb = nullptr;
 
 public:
@@ -84,7 +84,8 @@ public slots:
 // dtkVisualizationDecoratorAxes implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorAxes::dtkVisualizationDecoratorAxes(void): dtkVisualizationDecorator(), d(new dtkVisualizationDecoratorAxesPrivate())
+dtkVisualizationDecoratorAxes::dtkVisualizationDecoratorAxes(void)
+    : dtkVisualizationDecorator(), d(new dtkVisualizationDecoratorAxesPrivate())
 {
     d->transform = vtkSmartPointer<vtkTransform>::New();
 
@@ -103,23 +104,23 @@ dtkVisualizationDecoratorAxes::dtkVisualizationDecoratorAxes(void): dtkVisualiza
     d->marker->SetOrientationMarker(d->axes);
     d->marker->SetViewport(0.0, 0.0, 0.25, 0.25);
 
-    d->show_axes_cb      = new QCheckBox;
+    d->show_axes_cb = new QCheckBox;
     d->show_cube_axes_cb = new QCheckBox;
 
     //////////
     // Inspectors connections
 
-    connect(d->show_axes_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("show_axes", state == Qt::Checked);
-            d->marker->SetEnabled(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_axes_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("show_axes", state == Qt::Checked);
+        d->marker->SetEnabled(state == Qt::Checked);
+        this->draw();
+    });
 
-    connect(d->show_cube_axes_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("show_cube_axes", state == Qt::Checked);
-            d->cube_axes_actor->SetVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_cube_axes_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("show_cube_axes", state == Qt::Checked);
+        d->cube_axes_actor->SetVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
     this->setObjectName("Axes");
     d->show_axes_cb->setObjectName("Display Orientation");
@@ -136,7 +137,7 @@ dtkVisualizationDecoratorAxes::~dtkVisualizationDecoratorAxes(void)
     d = nullptr;
 }
 
-void dtkVisualizationDecoratorAxes::setData(const QVariant& data)
+void dtkVisualizationDecoratorAxes::setData(const QVariant &data)
 {
     d->dataset = data.value<vtkDataSet *>();
     if (!d->dataset) {
@@ -164,7 +165,9 @@ void dtkVisualizationDecoratorAxes::setCanvas(dtkVisualizationCanvas *canvas)
 
     d->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -175,7 +178,7 @@ void dtkVisualizationDecoratorAxes::setCanvas(dtkVisualizationCanvas *canvas)
 
     d->cube_axes_actor->SetCamera(d->view->renderer()->GetActiveCamera());
 
-    if(!d->dataset) {
+    if (!d->dataset) {
         d->cube_axes_actor->SetBounds(d->view->renderer()->ComputeVisiblePropBounds());
     } else {
         d->cube_axes_actor->SetBounds(d->dataset->GetBounds());
@@ -211,7 +214,7 @@ QVariant dtkVisualizationDecoratorAxes::data(void) const
 
 void dtkVisualizationDecoratorAxes::touch(void)
 {
-    if(!this->canvas()) {
+    if (!this->canvas()) {
         dtkWarn() << Q_FUNC_INFO << "No canvas was set, call setCanvas to call draw on a canvas.";
         return;
     }
@@ -238,8 +241,8 @@ void dtkVisualizationDecoratorAxes::restoreSettings(void)
 
     QSettings settings;
     settings.beginGroup("canvas");
-    bool show_axes = settings.value(name+"_show_axes", true).toBool();
-    bool show_cube_axes = settings.value(name+"_show_cube_axes", true).toBool();
+    bool show_axes = settings.value(name + "_show_axes", true).toBool();
+    bool show_cube_axes = settings.value(name + "_show_cube_axes", true).toBool();
     settings.endGroup();
 
     d->show_axes_cb->blockSignals(true);
@@ -250,7 +253,6 @@ void dtkVisualizationDecoratorAxes::restoreSettings(void)
     d->show_cube_axes_cb->blockSignals(true);
     d->show_cube_axes_cb->setChecked(show_cube_axes);
     d->show_cube_axes_cb->blockSignals(false);
-
 }
 
 QList<QWidget *> dtkVisualizationDecoratorAxes::inspectors(void) const

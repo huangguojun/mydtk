@@ -35,19 +35,21 @@ public:
 // dtkWidgetsMenuItem implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItem::dtkWidgetsMenuItem(QObject *parent) : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
+dtkWidgetsMenuItem::dtkWidgetsMenuItem(QObject *parent)
+    : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
 {
-
 }
 
-dtkWidgetsMenuItem::dtkWidgetsMenuItem(const QString& title, QObject *parent) : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
+dtkWidgetsMenuItem::dtkWidgetsMenuItem(const QString &title, QObject *parent)
+    : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
 {
-    d->title   = title;
+    d->title = title;
 }
 
-dtkWidgetsMenuItem::dtkWidgetsMenuItem(int icon_id, const QString& title, QObject *parent) : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
+dtkWidgetsMenuItem::dtkWidgetsMenuItem(int icon_id, const QString &title, QObject *parent)
+    : QAction(parent), d(new dtkWidgetsMenuItemPrivate)
 {
-    d->title   = title;
+    d->title = title;
     d->icon_id = icon_id;
 }
 
@@ -56,7 +58,7 @@ dtkWidgetsMenuItem::~dtkWidgetsMenuItem(void)
     delete d;
 }
 
-const QString& dtkWidgetsMenuItem::title(void) const
+const QString &dtkWidgetsMenuItem::title(void) const
 {
     return d->title;
 }
@@ -81,7 +83,10 @@ public:
 // dtkWidgetsMenuItem implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemParameter::dtkWidgetsMenuItemParameter(const QString& title, dtkCoreParameter *parameter, const QString& representation) : dtkWidgetsMenuItem(0, title, 0), d(new dtkWidgetsMenuItemParameterPrivate)
+dtkWidgetsMenuItemParameter::dtkWidgetsMenuItemParameter(const QString &title,
+                                                         dtkCoreParameter *parameter,
+                                                         const QString &representation)
+    : dtkWidgetsMenuItem(0, title, 0), d(new dtkWidgetsMenuItemParameterPrivate)
 {
     d->parameter = parameter;
     d->widget = ::dtk::widgets::parameters::pluginFactory().create(parameter, representation);
@@ -89,7 +94,7 @@ dtkWidgetsMenuItemParameter::dtkWidgetsMenuItemParameter(const QString& title, d
 
 dtkWidgetsMenuItemParameter::~dtkWidgetsMenuItemParameter(void)
 {
-    if(d->widget)
+    if (d->widget)
         delete d->widget;
 
     delete d;
@@ -109,9 +114,9 @@ dtkWidgetsParameter *dtkWidgetsMenuItemParameter::widget(void)
 // dtkWidgetsMenuItemCustom implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemCustom::dtkWidgetsMenuItemCustom(const QString& title) : dtkWidgetsMenuItem(0, title, 0)
+dtkWidgetsMenuItemCustom::dtkWidgetsMenuItemCustom(const QString &title)
+    : dtkWidgetsMenuItem(0, title, 0)
 {
-
 }
 
 //

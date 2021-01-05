@@ -18,15 +18,17 @@ class NetworkSource;
 class PacketReceiver
 {
 public:
-    PacketReceiver(boost::asio::io_service& io, int port, int forwardport,std::string forwarddestinationIp, bool isforwarding, NetworkSource* parent);
+    PacketReceiver(boost::asio::io_service &io, int port, int forwardport,
+                   std::string forwarddestinationIp, bool isforwarding, NetworkSource *parent);
 
     ~PacketReceiver();
 
     void StartReceive();
 
-    void EnableCrashAnalysing(std::string filenameCrashAnalysis_, unsigned int nbrPacketToStore_, bool isCrashAnalysing_);
+    void EnableCrashAnalysing(std::string filenameCrashAnalysis_, unsigned int nbrPacketToStore_,
+                              bool isCrashAnalysing_);
 
-    void SocketCallback(const boost::system::error_code& error, std::size_t numberOfBytes);
+    void SocketCallback(const boost::system::error_code &error, std::size_t numberOfBytes);
 
 private:
     bool isForwarding;
@@ -43,17 +45,17 @@ private:
 
     boost::asio::ip::udp::socket ForwardedSocket;
 
-    NetworkSource* Parent;
+    NetworkSource *Parent;
 
     unsigned char RXBuffer[BUFFER_SIZE];
 
-    bool IsReceiving; 
-    bool ShouldStop;  
-    boost::mutex IsReceivingMtx; 
+    bool IsReceiving;
+    bool ShouldStop;
+    boost::mutex IsReceivingMtx;
     boost::condition_variable IsReceivingCond;
     boost::mutex IsWriting;
     bool IsCrashAnalysing = false;
-    //CrashAnalysisWriter CrashAnalysis;
+    // CrashAnalysisWriter CrashAnalysis;
 };
 
 #endif // PACKETRECEIVER_H

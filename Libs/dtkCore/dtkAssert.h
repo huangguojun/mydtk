@@ -14,24 +14,28 @@
 
 #pragma once
 
-#include <iostream>
-#include <cstdlib>
 #include <cassert>
+#include <cstdlib>
+#include <iostream>
 
 namespace dtk {
 
-    inline void assert_yes(bool cond, const char *msg) {
-        if(!cond) std::cerr << msg << std::endl;
-        assert(cond);
-    }
-
-    inline void assert_no(bool, const char *) {}
+inline void assert_yes(bool cond, const char *msg)
+{
+    if (!cond)
+        std::cerr << msg << std::endl;
+    assert(cond);
 }
 
+inline void assert_no(bool, const char *) {}
+} // namespace dtk
+
 #ifndef NDEBUG
-#define DTK_ASSERT(cond, msg) dtk::assert_yes(cond, msg); assert(cond);
+#    define DTK_ASSERT(cond, msg)                                                                  \
+        dtk::assert_yes(cond, msg);                                                                \
+        assert(cond);
 #else
-#define DTK_ASSERT(cond, msg) dtk::assert_no(cond, msg);
+#    define DTK_ASSERT(cond, msg) dtk::assert_no(cond, msg);
 #endif
 
 //

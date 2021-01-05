@@ -19,7 +19,7 @@
 dtkApplicationPrivate::dtkApplicationPrivate(void)
 {
     settings = NULL;
-    app      = NULL;
+    app = NULL;
     parser = new QCommandLineParser;
     parser->setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
 }
@@ -42,7 +42,7 @@ void dtkApplicationPrivate::initialize(void)
     qputenv("LC_ALL", "C");
     QLocale::setDefault(QLocale::c());
 
-#if defined (Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // to avoid troubles with floats separators ('.' and not ',')
     setlocale(LC_NUMERIC, "C");
 #endif
@@ -53,20 +53,31 @@ void dtkApplicationPrivate::initialize(void)
     QCommandLineOption settingsOption("settings", "main settings file", "filename");
     parser->addOption(settingsOption);
 
-    QCommandLineOption verboseOption("verbose", QCoreApplication::translate("main", "verbose plugin initialization"));
+    QCommandLineOption verboseOption(
+            "verbose", QCoreApplication::translate("main", "verbose plugin initialization"));
     parser->addOption(verboseOption);
 
-    QCommandLineOption nonguiOption(QStringList() << "nw" << "no-window", QCoreApplication::translate("main", "non GUI application (no window)"));
+    QCommandLineOption nonguiOption(
+            QStringList() << "nw"
+                          << "no-window",
+            QCoreApplication::translate("main", "non GUI application (no window)"));
     parser->addOption(nonguiOption);
 
     QString verbosity = "info";
-    QCommandLineOption loglevelOption("loglevel", "log level used by dtkLog (default is info), available: trace|debug|info|warn|error|fatal", "level", verbosity);
+    QCommandLineOption loglevelOption("loglevel",
+                                      "log level used by dtkLog (default is info), available: "
+                                      "trace|debug|info|warn|error|fatal",
+                                      "level", verbosity);
     parser->addOption(loglevelOption);
 
-    QCommandLineOption logfileOption("logfile", qPrintable(QString("log file used by dtkLog; default is: ").append(dtkLogPath(app))), "filename | console", dtkLogPath(app));
+    QCommandLineOption logfileOption(
+            "logfile",
+            qPrintable(QString("log file used by dtkLog; default is: ").append(dtkLogPath(app))),
+            "filename | console", dtkLogPath(app));
     parser->addOption(logfileOption);
 
-    QCommandLineOption logfileMaxSizeOption("logfilemax", "log file max size  (in MB); default is: 3072 (3GB)", "size");
+    QCommandLineOption logfileMaxSizeOption(
+            "logfilemax", "log file max size  (in MB); default is: 3072 (3GB)", "size");
     parser->addOption(logfileMaxSizeOption);
 
     parser->process(*app);
@@ -103,7 +114,3 @@ void dtkApplicationPrivate::initialize(void)
         dtkLogger::instance().attachFile(dtkLogPath(app), max_size);
     }
 }
-
-
-
-

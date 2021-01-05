@@ -31,7 +31,7 @@ public slots:
     void clear(void);
 
 public slots:
-    void setDescription(const QString& description);
+    void setDescription(const QString &description);
 
 protected:
     dtkWidgetsTagCloudDescPrivate *d;

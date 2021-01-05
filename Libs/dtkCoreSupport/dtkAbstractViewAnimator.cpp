@@ -24,7 +24,8 @@
 // dtkAbstractViewAnimator implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractViewAnimator::dtkAbstractViewAnimator(void) : dtkAbstractObject(*new dtkAbstractViewAnimatorPrivate(this), 0)
+dtkAbstractViewAnimator::dtkAbstractViewAnimator(void)
+    : dtkAbstractObject(*new dtkAbstractViewAnimatorPrivate(this), 0)
 {
     DTK_D(dtkAbstractViewAnimator);
 
@@ -32,15 +33,12 @@ dtkAbstractViewAnimator::dtkAbstractViewAnimator(void) : dtkAbstractObject(*new 
     d->view = NULL;
 }
 
-dtkAbstractViewAnimator::dtkAbstractViewAnimator(const dtkAbstractViewAnimator& other) : dtkAbstractObject(*new dtkAbstractViewAnimatorPrivate(*other.d_func()), other)
+dtkAbstractViewAnimator::dtkAbstractViewAnimator(const dtkAbstractViewAnimator &other)
+    : dtkAbstractObject(*new dtkAbstractViewAnimatorPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractViewAnimator::~dtkAbstractViewAnimator(void)
-{
-
-}
+dtkAbstractViewAnimator::~dtkAbstractViewAnimator(void) {}
 
 dtkAbstractData *dtkAbstractViewAnimator::data(void) const
 {
@@ -93,10 +91,10 @@ void dtkAbstractViewAnimator::disable(void)
 
 void dtkAbstractViewAnimator::start(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 }
 
 void dtkAbstractViewAnimator::stop(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 }

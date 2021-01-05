@@ -39,24 +39,23 @@ public:
     dtkFinderToolBar(QWidget *parent = 0);
     ~dtkFinderToolBar(void);
 
-    QSize sizeHint (void) const;
+    QSize sizeHint(void) const;
 
 signals:
-    void changed(const QString& path);
-    void listView (void);
-    void treeView (void);
+    void changed(const QString &path);
+    void listView(void);
+    void treeView(void);
     void showHiddenFiles(bool);
 
 public slots:
-    void setPath(const QString& path);
-    void onPrev (void);
-    void onNext (void);
+    void setPath(const QString &path);
+    void onPrev(void);
+    void onNext(void);
     void onListView(void);
     void onTreeView(void);
     void onShowHiddenFiles(bool);
 
 protected:
-
 private:
     dtkFinderToolBarPrivate *d;
 };
@@ -71,9 +70,7 @@ class DTKGUISUPPORT_EXPORT dtkFinderSideView : public QTreeWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY(int   headerFontSize
-               READ  headerFontSize
-               WRITE setHeaderFontSize)
+    Q_PROPERTY(int headerFontSize READ headerFontSize WRITE setHeaderFontSize)
 
 public:
     dtkFinderSideView(QWidget *parent = 0);
@@ -83,23 +80,23 @@ public:
 
     int headerFontSize(void) const;
 
-    QSize sizeHint (void) const;
+    QSize sizeHint(void) const;
 
 signals:
-    void changed(const QString& path);
+    void changed(const QString &path);
 
 public slots:
-    void setPath(const QString& path);
+    void setPath(const QString &path);
     void setHeaderFontSize(int value);
 
 public slots:
-    void    addBookmark(const QString& path);
-    void removeBookmark(const QString& path);
-    void  clearBookmarks(void);
+    void addBookmark(const QString &path);
+    void removeBookmark(const QString &path);
+    void clearBookmarks(void);
 
 private slots:
     void onItemCicked(QTreeWidgetItem *, int);
-    void onContextMenu(const QPoint&);
+    void onContextMenu(const QPoint &);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -126,13 +123,13 @@ public:
     dtkFinderPathBar(QWidget *parent = 0);
     ~dtkFinderPathBar(void);
 
-    QSize sizeHint (void) const;
+    QSize sizeHint(void) const;
 
 signals:
-    void changed(const QString& path);
+    void changed(const QString &path);
 
 public slots:
-    void setPath(const QString& path);
+    void setPath(const QString &path);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -167,14 +164,14 @@ public:
     void allowFileBookmarking(bool isAllowed);
 
 signals:
-    void changed(const QString& path);
-    void bookmarked(const QString& path);
+    void changed(const QString &path);
+    void bookmarked(const QString &path);
 
 public slots:
     void onBookmarkSelectedItemsRequested(void);
 
 protected slots:
-    void updateContextMenu(const QPoint&);
+    void updateContextMenu(const QPoint &);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -212,14 +209,14 @@ public:
     void allowFileBookmarking(bool isAllowed);
 
 signals:
-    void changed(const QString& path);
-    void bookmarked(const QString& path);
+    void changed(const QString &path);
+    void bookmarked(const QString &path);
 
 public slots:
     void onBookmarkSelectedItemsRequested(void);
 
 protected slots:
-    void updateContextMenu(const QPoint&);
+    void updateContextMenu(const QPoint &);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -256,18 +253,18 @@ public:
     void allowMultipleSelection(bool isAllowed);
 
 signals:
-    void changed(const QString& path);
-    void bookmarked(const QString& path);
-    void fileDoubleClicked(const QString& filename);
-    void fileClicked(const QFileInfo& info);
-    void selectionChanged(const QStringList& paths);
+    void changed(const QString &path);
+    void bookmarked(const QString &path);
+    void fileDoubleClicked(const QString &filename);
+    void fileClicked(const QFileInfo &info);
+    void selectionChanged(const QStringList &paths);
     void nothingSelected();
-    void listView (void);
-    void treeView (void);
+    void listView(void);
+    void treeView(void);
     void showHiddenFiles(bool);
 
 public slots:
-    void setPath(const QString& path);
+    void setPath(const QString &path);
     void switchToListView(void);
     void switchToTreeView(void);
     void onShowHiddenFiles(bool);
@@ -278,7 +275,7 @@ public slots:
 protected slots:
     void onIndexDoubleClicked(QModelIndex);
     void onIndexClicked(QModelIndex);
-    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void emitSelectedItems();
 
 private:

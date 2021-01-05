@@ -31,21 +31,21 @@ class DTKPLOT_EXPORT dtkPlotCurve : public QObject
     Q_OBJECT
 
 public:
-    dtkPlotCurve(const QString& title = QString());
-    dtkPlotCurve(const dtkPlotCurve& other);
+    dtkPlotCurve(const QString &title = QString());
+    dtkPlotCurve(const dtkPlotCurve &other);
     ~dtkPlotCurve(void);
 
 public:
-    dtkPlotCurve& operator=(const dtkPlotCurve& other);
+    dtkPlotCurve &operator=(const dtkPlotCurve &other);
 
 public:
-    void append(const QPointF& data);
+    void append(const QPointF &data);
 
 public:
-    void setName(const QString& name);
+    void setName(const QString &name);
     void setAntialiased(bool antiliased);
-    void setColor(const QColor& color);
-    void setColorArea(const QColor& color);
+    void setColor(const QColor &color);
+    void setColorArea(const QColor &color);
     void clear();
 
     QString name(void) const;
@@ -54,7 +54,7 @@ public:
     QRectF boundingRect(void) const;
 
 public:
-    void setData(const QVector<QPointF>& data);
+    void setData(const QVector<QPointF> &data);
 
 public:
     const QVector<QPointF> data(void) const;

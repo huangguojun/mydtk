@@ -1,15 +1,13 @@
 #ifndef CCMAINWINDOW_H
 #define CCMAINWINDOW_H
 
-
-#include <QtGui>
 #include <QMainWindow>
+#include <QtGui>
 
 class ccMainWindow : public QMainWindow
 {
 public:
-     ccMainWindow(QWidget *parent = 0);
-
+    ccMainWindow(QWidget *parent = 0);
 };
 
 #endif

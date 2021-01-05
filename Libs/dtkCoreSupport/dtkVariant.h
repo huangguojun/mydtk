@@ -15,9 +15,9 @@
 #ifndef DTKVARIANT_H
 #define DTKVARIANT_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkGlobal.h"
 #include <dtkContainer/dtkAbstractContainerWrapper.h>
+#include <dtkCoreSupportExport.h>
 
 #include <QVariant>
 
@@ -26,10 +26,14 @@ class dtkAbstractData;
 class dtkAbstractProcess;
 class dtkAbstractView;
 
-template <typename T> class dtkMatrix;
-template <typename T> class dtkVector;
-template <typename T> class dtkVector3D;
-template <typename T> class dtkQuaternion;
+template<typename T>
+class dtkMatrix;
+template<typename T>
+class dtkVector;
+template<typename T>
+class dtkVector3D;
+template<typename T>
+class dtkQuaternion;
 
 // /////////////////////////////////////////////////////////////////
 // dtkVariant interface
@@ -58,7 +62,7 @@ public:
 
     /* dtkVariant(const dtkAbstractContainerWrapper *value); */
 
-    dtkVariant(const dtkVariant& other);
+    dtkVariant(const dtkVariant &other);
     ~dtkVariant(void);
 
     /* public: */
@@ -69,7 +73,7 @@ public:
     /*     bool operator != (const dtkVariant& other); */
 
 public:
-    QString  identifier(void) const;
+    QString identifier(void) const;
     QString description(void) const;
 
 public:
@@ -107,9 +111,11 @@ public:
     /*     dtkAbstractContainerWrapper *toAbstractContainer(void) const; */
 
 public:
-    template<typename T> void setValue(const T& value);
+    template<typename T>
+    void setValue(const T &value);
 
-    template<typename T> T value(void) const;
+    template<typename T>
+    T value(void) const;
 
 public:
     dtkAbstractObject *m_object;
@@ -117,23 +123,26 @@ public:
     dtkAbstractContainerWrapper *m_container;
 
 private:
-    mutable bool      m_value_b;
+    mutable bool m_value_b;
     mutable qlonglong m_value_i;
-    mutable qreal     m_value_r;
-    mutable QString   m_value_s;
+    mutable qreal m_value_r;
+    mutable QString m_value_s;
 
 public:
-    template<typename T, bool> friend class dtkVariantPrivate;
+    template<typename T, bool>
+    friend class dtkVariantPrivate;
 };
 
 // /////////////////////////////////////////////////////////////////
 // dtkVariantPrivate interface
 // /////////////////////////////////////////////////////////////////
 
-template<typename T, bool> class dtkVariantPrivate
+template<typename T, bool>
+class dtkVariantPrivate
 {
 public:
-    static void setValue(dtkVariant& variant, const T& value) {
+    static void setValue(dtkVariant &variant, const T &value)
+    {
         variant.QVariant::setValue(value);
 
         variant.m_object = NULL;
@@ -141,66 +150,64 @@ public:
         variant.m_container = NULL;
     }
 
-    static void setObject(dtkVariant& variant, const T& value) {
+    static void setObject(dtkVariant &variant, const T &value)
+    {
         variant.m_object = NULL;
         variant.m_container = NULL;
     }
 
-    static void setMatrixReal(dtkVariant& variant, const T& value) {
-        variant.m_matrix = NULL;
-    }
+    static void setMatrixReal(dtkVariant &variant, const T &value) { variant.m_matrix = NULL; }
 
 public:
-    static T value(const dtkVariant& variant) {
-        return variant.QVariant::value<T>();
-    }
+    static T value(const dtkVariant &variant) { return variant.QVariant::value<T>(); }
 
-    static T objectValue(const dtkVariant& variant) {
-        return NULL;
-    }
+    static T objectValue(const dtkVariant &variant) { return NULL; }
 
-    static T matrixRealValue(const dtkVariant& variant) {
-        return NULL;
-    }
+    static T matrixRealValue(const dtkVariant &variant) { return NULL; }
 };
 
 // /////////////////////////////////////////////////////////////////
 // dtkVariantPrivate specific interface
 // /////////////////////////////////////////////////////////////////
 
-template<typename T> class dtkVariantPrivate<T, true>
+template<typename T>
+class dtkVariantPrivate<T, true>
 {
 public:
-    static void setObject(dtkVariant& variant, const T& value) {
+    static void setObject(dtkVariant &variant, const T &value)
+    {
         variant.m_object = value;
         variant.m_container = dynamic_cast<dtkAbstractContainerWrapper *>(variant.m_object);
 
         variant.QVariant::setValue(variant.m_object);
     }
 
-    static void setMatrixReal(dtkVariant& variant, const T& value) {
+    static void setMatrixReal(dtkVariant &variant, const T &value)
+    {
         variant.m_matrix = value;
 
         variant.QVariant::setValue(variant.m_matrix);
     }
 
-    static void setValue(dtkVariant& variant, const T& value) {
+    static void setValue(dtkVariant &variant, const T &value)
+    {
         dtkVariantPrivate<T, dtkTypeInfo<T>::dtkAbstractObjectPointer>::setObject(variant, value);
         dtkVariantPrivate<T, dtkTypeInfo<T>::dtkMatrixRealPointer>::setMatrixReal(variant, value);
     }
 
 public:
-    static T objectValue(const dtkVariant& variant) {
-        return dynamic_cast<T>(variant.m_object);
-    }
+    static T objectValue(const dtkVariant &variant) { return dynamic_cast<T>(variant.m_object); }
 
-    static T matrixRealValue(const dtkVariant& variant) {
+    static T matrixRealValue(const dtkVariant &variant)
+    {
         return dynamic_cast<T>(variant.m_matrix);
     }
 
-    static T value(const dtkVariant& variant) {
+    static T value(const dtkVariant &variant)
+    {
         if (dtkTypeInfo<T>::dtkAbstractObjectPointer)
-            return dtkVariantPrivate<T, dtkTypeInfo<T>::dtkAbstractObjectPointer>::objectValue(variant);
+            return dtkVariantPrivate<T, dtkTypeInfo<T>::dtkAbstractObjectPointer>::objectValue(
+                    variant);
 
         return dtkVariantPrivate<T, dtkTypeInfo<T>::dtkMatrixRealPointer>::matrixRealValue(variant);
     }

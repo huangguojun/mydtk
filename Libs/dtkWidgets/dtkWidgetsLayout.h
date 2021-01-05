@@ -28,14 +28,14 @@ class DTKWIDGETS_EXPORT dtkWidgetsLayout : public QFrame
     Q_OBJECT
 
 public:
-    typedef dtkWidgetsWidget *(*creator)(const QString& name);
+    typedef dtkWidgetsWidget *(*creator)(const QString &name);
 
 public:
-     dtkWidgetsLayout(QWidget *parent = 0);
+    dtkWidgetsLayout(QWidget *parent = 0);
     ~dtkWidgetsLayout(void);
 
 signals:
-    void   focused(dtkWidgetsWidget *view);
+    void focused(dtkWidgetsWidget *view);
     void unfocused(dtkWidgetsWidget *view);
 
 public:
@@ -51,7 +51,7 @@ public slots:
 
 public slots:
     void create(void);
-    void create(const QString&);
+    void create(const QString &);
 
 protected:
     void keyPressEvent(QKeyEvent *);

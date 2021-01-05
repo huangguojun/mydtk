@@ -23,8 +23,8 @@
 #include <QtWidgets>
 
 #include <vtkActor.h>
-#include <vtkColorTransferFunction.h>
 #include <vtkCellData.h>
+#include <vtkColorTransferFunction.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
@@ -55,7 +55,8 @@ public slots:
 // dtkVisualizationDecoratorScalarColorMap implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorScalarColorMap::dtkVisualizationDecoratorScalarColorMap(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarColorMapPrivate())
+dtkVisualizationDecoratorScalarColorMap::dtkVisualizationDecoratorScalarColorMap(void)
+    : dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarColorMapPrivate())
 {
     d->mapper = vtkSmartPointer<vtkDataSetMapper>::New();
     d->mapper->SetColorModeToMapScalars();
@@ -72,17 +73,16 @@ dtkVisualizationDecoratorScalarColorMap::dtkVisualizationDecoratorScalarColorMap
     //////////
     // Inspectors connections
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("visibility", state == Qt::Checked);
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
     this->setObjectName("Scalar ColorMap");
     d->show_actor_cb->setObjectName("Display");
 
     d_func()->inspectors << d->show_actor_cb;
-
 }
 
 dtkVisualizationDecoratorScalarColorMap::~dtkVisualizationDecoratorScalarColorMap(void)
@@ -93,7 +93,7 @@ dtkVisualizationDecoratorScalarColorMap::~dtkVisualizationDecoratorScalarColorMa
     d = nullptr;
 }
 
-void dtkVisualizationDecoratorScalarColorMap::setData(const QVariant& data)
+void dtkVisualizationDecoratorScalarColorMap::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -130,7 +130,9 @@ void dtkVisualizationDecoratorScalarColorMap::setCanvas(dtkVisualizationCanvas *
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -168,8 +170,7 @@ void dtkVisualizationDecoratorScalarColorMap::restoreSettings(void)
     d->show_actor_cb->blockSignals(false);
 }
 
-
-bool dtkVisualizationDecoratorScalarColorMap::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorScalarColorMap::setCurrentFieldName(const QString &field_name)
 {
     if (!dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name)) {
         return false;
@@ -177,9 +178,9 @@ bool dtkVisualizationDecoratorScalarColorMap::setCurrentFieldName(const QString&
 
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
-    if(support == Support::Point) {
+    if (support == Support::Point) {
         d->mapper->SetScalarModeToUsePointFieldData();
-    } else if(support == Support::Cell) {
+    } else if (support == Support::Cell) {
         d->mapper->SetScalarModeToUseCellFieldData();
     }
     d->mapper->SelectColorArray(qPrintable(field_name));
@@ -188,13 +189,13 @@ bool dtkVisualizationDecoratorScalarColorMap::setCurrentFieldName(const QString&
     return true;
 }
 
-void dtkVisualizationDecoratorScalarColorMap::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorScalarColorMap::setColorMap(const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 
     d->mapper->SetLookupTable(d_func()->color_function);
     d->mapper->SelectColorArray(qPrintable(d_func()->current_field_name));
-    auto&& range = d_func()->ranges[d_func()->current_field_name];
+    auto &&range = d_func()->ranges[d_func()->current_field_name];
     d->mapper->SetScalarRange(range[0], range[1]);
     d->mapper->Modified();
 

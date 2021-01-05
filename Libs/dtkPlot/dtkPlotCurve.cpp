@@ -24,7 +24,7 @@
 // dtkPlotCurvePrivateData
 // /////////////////////////////////////////////////////////////////
 
-void dtkPlotCurvePrivateData::append(const QPointF& data)
+void dtkPlotCurvePrivateData::append(const QPointF &data)
 {
     this->d_samples << data;
 }
@@ -36,9 +36,9 @@ QRectF dtkPlotCurvePrivateData::boundingRect(void) const
     return poly.boundingRect();
 }
 
-void dtkPlotCurvePrivateData::setData(const QVector<QPointF>& data)
+void dtkPlotCurvePrivateData::setData(const QVector<QPointF> &data)
 {
-    foreach (const QPointF& point, data) {
+    foreach (const QPointF &point, data) {
         this->append(point);
     }
 }
@@ -52,7 +52,7 @@ void dtkPlotCurvePrivateData::clear(void)
 // dtkPlotCurvePrivate
 // /////////////////////////////////////////////////////////////////
 
-dtkPlotCurvePrivate::dtkPlotCurvePrivate(const QString& title) : QwtPlotCurve(title)
+dtkPlotCurvePrivate::dtkPlotCurvePrivate(const QString &title) : QwtPlotCurve(title)
 {
     this->data = new dtkPlotCurvePrivateData;
     this->setData(this->data);
@@ -67,7 +67,7 @@ dtkPlotCurvePrivate::~dtkPlotCurvePrivate(void)
 // dtkPlotCurve
 // /////////////////////////////////////////////////////////////////
 
-dtkPlotCurve::dtkPlotCurve(const QString& title) : QObject(), d(new dtkPlotCurvePrivate(title))
+dtkPlotCurve::dtkPlotCurve(const QString &title) : QObject(), d(new dtkPlotCurvePrivate(title))
 {
     d->setLegendAttribute(QwtPlotCurve::LegendShowLine);
     this->setName("curve");
@@ -75,7 +75,8 @@ dtkPlotCurve::dtkPlotCurve(const QString& title) : QObject(), d(new dtkPlotCurve
     this->setColor(Qt::black);
 }
 
-dtkPlotCurve::dtkPlotCurve(const dtkPlotCurve& other) : QObject(), d(new dtkPlotCurvePrivate(other.d->title().text()))
+dtkPlotCurve::dtkPlotCurve(const dtkPlotCurve &other)
+    : QObject(), d(new dtkPlotCurvePrivate(other.d->title().text()))
 {
     d->data->setSamples(other.d->data->samples());
 }
@@ -87,7 +88,7 @@ dtkPlotCurve::~dtkPlotCurve(void)
     d = NULL;
 }
 
-dtkPlotCurve& dtkPlotCurve::operator=(const dtkPlotCurve& other)
+dtkPlotCurve &dtkPlotCurve::operator=(const dtkPlotCurve &other)
 {
     d->setTitle(other.d->title().text());
 
@@ -101,13 +102,13 @@ void dtkPlotCurve::clear(void)
     d->data->clear();
 }
 
-void dtkPlotCurve::append(const QPointF& data)
+void dtkPlotCurve::append(const QPointF &data)
 {
     d->data->append(data);
     d->itemChanged();
 }
 
-void dtkPlotCurve::setName(const QString& name)
+void dtkPlotCurve::setName(const QString &name)
 {
     d->setTitle(name);
 }
@@ -117,12 +118,12 @@ void dtkPlotCurve::setAntialiased(bool antiliased)
     d->setRenderHint(QwtPlotItem::RenderAntialiased, antiliased);
 }
 
-void dtkPlotCurve::setColor(const QColor& color)
+void dtkPlotCurve::setColor(const QColor &color)
 {
     d->setPen(color);
 }
 
-void dtkPlotCurve::setColorArea(const QColor& color)
+void dtkPlotCurve::setColorArea(const QColor &color)
 {
     d->setBrush(color);
 }
@@ -142,7 +143,7 @@ QRectF dtkPlotCurve::boundingRect(void) const
     return d->boundingRect();
 }
 
-void dtkPlotCurve::setData(const QVector<QPointF>& data)
+void dtkPlotCurve::setData(const QVector<QPointF> &data)
 {
     d->data->setData(data);
 
@@ -154,11 +155,11 @@ const QVector<QPointF> dtkPlotCurve::data(void) const
     return d->data->samples();
 }
 
-QString  dtkPlotCurve::description(void)
+QString dtkPlotCurve::description(void)
 {
     QString string;
 
-    string = "[ " ;
+    string = "[ ";
 
     for (int i = 0; i < d->data->samples().count(); i++) {
         if (i > 0)

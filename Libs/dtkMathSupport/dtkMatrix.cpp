@@ -18,7 +18,8 @@
 // Partial specializations for atomic types
 // /////////////////////////////////////////////////////////////////
 
-template <> QByteArray *dtkDeprecated::dtkMatrix<double>::serialize(void)
+template<>
+QByteArray *dtkDeprecated::dtkMatrix<double>::serialize(void)
 {
     unsigned i_end = m_crow * m_ccol;
 
@@ -36,7 +37,8 @@ template <> QByteArray *dtkDeprecated::dtkMatrix<double>::serialize(void)
     return array;
 };
 
-template <> void dtkDeprecated::dtkMatrix<double>::deserialize(const QByteArray& array)
+template<>
+void dtkDeprecated::dtkMatrix<double>::deserialize(const QByteArray &array)
 {
     QDataStream stream(array);
 

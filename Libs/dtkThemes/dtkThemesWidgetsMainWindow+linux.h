@@ -25,7 +25,7 @@ class DTKTHEMES_EXPORT dtkThemesWidgetsMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-     dtkThemesWidgetsMainWindow(QWidget *parent = 0);
+    dtkThemesWidgetsMainWindow(QWidget *parent = 0);
     ~dtkThemesWidgetsMainWindow(void);
 
 public slots:
@@ -39,7 +39,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *) override;
     void mousePressEvent(QMouseEvent *) override;
     void mouseReleaseEvent(QMouseEvent *) override;
-    void resizeEvent(QResizeEvent *)   override;
+    void resizeEvent(QResizeEvent *) override;
 
 protected:
     bool eventFilter(QObject *, QEvent *) override;

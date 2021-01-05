@@ -24,22 +24,20 @@
 // dtkAbstractDataSerializer implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractDataSerializer::dtkAbstractDataSerializer(void) : dtkAbstractObject(*new dtkAbstractDataSerializerPrivate(this), 0)
+dtkAbstractDataSerializer::dtkAbstractDataSerializer(void)
+    : dtkAbstractObject(*new dtkAbstractDataSerializerPrivate(this), 0)
 {
     DTK_D(dtkAbstractDataSerializer);
 
     d->enabled = false;
 }
 
-dtkAbstractDataSerializer::dtkAbstractDataSerializer(const dtkAbstractDataSerializer& other) : dtkAbstractObject(*new dtkAbstractDataSerializerPrivate(*other.d_func()), other)
+dtkAbstractDataSerializer::dtkAbstractDataSerializer(const dtkAbstractDataSerializer &other)
+    : dtkAbstractObject(*new dtkAbstractDataSerializerPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractDataSerializer::~dtkAbstractDataSerializer(void)
-{
-
-}
+dtkAbstractDataSerializer::~dtkAbstractDataSerializer(void) {}
 
 bool dtkAbstractDataSerializer::enabled(void) const
 {
@@ -89,6 +87,5 @@ QByteArray *dtkAbstractDataSerializer::serialize(dtkAbstractData *data)
 
 void dtkAbstractDataSerializer::setProgress(int value)
 {
-    emit progressed (value);
+    emit progressed(value);
 }
-

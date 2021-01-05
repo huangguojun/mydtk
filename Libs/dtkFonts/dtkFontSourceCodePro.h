@@ -30,7 +30,7 @@ protected:
     static dtkFontSourceCodePro *s_instance;
 
 private:
-     dtkFontSourceCodePro(QObject *parent = 0);
+    dtkFontSourceCodePro(QObject *parent = 0);
     ~dtkFontSourceCodePro(void) = default;
 
 public:
@@ -38,7 +38,7 @@ public:
 
     QFont font(int size);
 
-    QString fontName(void) { return fontName_ ; }
+    QString fontName(void) { return fontName_; }
 
 private:
     QString fontName_;

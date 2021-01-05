@@ -12,8 +12,8 @@
  *
  */
 
-#include "dtkAbstractProcess.h"
 #include "dtkAbstractProcessController.h"
+#include "dtkAbstractProcess.h"
 
 #include <QtCore>
 
@@ -40,7 +40,8 @@ void dtkAbstractProcessControllerPrivate::run(void)
 // dtkAbstractProcessController
 // ///////////////////////////////////////////////////////////////////
 
-dtkAbstractProcessController::dtkAbstractProcessController(void) : dtkAbstractObject(), d(new dtkAbstractProcessControllerPrivate)
+dtkAbstractProcessController::dtkAbstractProcessController(void)
+    : dtkAbstractObject(), d(new dtkAbstractProcessControllerPrivate)
 {
     d->process = NULL;
 }

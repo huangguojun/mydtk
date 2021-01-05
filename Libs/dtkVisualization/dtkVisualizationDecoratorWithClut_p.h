@@ -39,20 +39,12 @@ class vtkScalarBarActor;
 class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorWithClutPrivate
 {
 public:
-    enum Support {
-        Unknown = 0,
-        Point = 1,
-        Cell = 2
-    };
+    enum Support { Unknown = 0, Point = 1, Cell = 2 };
 
-    enum Kind {
-        Scalar = 0x001,
-        Vector = 0x003,
-        Tensor = 0x009
-    };
+    enum Kind { Scalar = 0x001, Vector = 0x003, Tensor = 0x009 };
 
 public:
-     dtkVisualizationDecoratorWithClutPrivate(void);
+    dtkVisualizationDecoratorWithClutPrivate(void);
     ~dtkVisualizationDecoratorWithClutPrivate(void) = default;
 
 public:
@@ -62,10 +54,10 @@ public:
 public:
     QList<QWidget *> inspectors;
 
-    QComboBox *fields_box  = nullptr;
+    QComboBox *fields_box = nullptr;
     QCheckBox *fixed_range = nullptr;
-    QLineEdit *min_range   = nullptr;
-    QLineEdit *max_range   = nullptr;
+    QLineEdit *min_range = nullptr;
+    QLineEdit *max_range = nullptr;
     QCheckBox *show_scalar_bar = nullptr;
 
 public:
@@ -81,14 +73,14 @@ public:
 
 public:
     vtkSmartPointer<vtkColorTransferFunction> color_function;
-    vtkSmartPointer<vtkPiecewiseFunction>     opacity;
-    vtkSmartPointer<vtkTransform>             transform;
+    vtkSmartPointer<vtkPiecewiseFunction> opacity;
+    vtkSmartPointer<vtkTransform> transform;
 
     vtkSmartPointer<vtkScalarBarActor> scalar_bar;
 
     QHash<QString, QString> color_transfer_functions; // <field_name, colormap_name>
     QHash<QString, vtkSmartPointer<vtkPiecewiseFunction>> opacity_functions;
-    QHash<QString, std::array<double,2>> ranges;
+    QHash<QString, std::array<double, 2>> ranges;
     QHash<QString, Support> supports;
     QHash<QString, Kind> kinds;
 

@@ -96,7 +96,7 @@ int dtkFlowLayout::heightForWidth(int width) const
     return height;
 }
 
-void dtkFlowLayout::setGeometry(const QRect& rect)
+void dtkFlowLayout::setGeometry(const QRect &rect)
 {
     QLayout::setGeometry(rect);
     doLayout(rect, false);
@@ -119,7 +119,7 @@ QSize dtkFlowLayout::minimumSize() const
     return size;
 }
 
-int dtkFlowLayout::doLayout(const QRect& rect, bool testOnly) const
+int dtkFlowLayout::doLayout(const QRect &rect, bool testOnly) const
 {
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
@@ -135,14 +135,14 @@ int dtkFlowLayout::doLayout(const QRect& rect, bool testOnly) const
         int spaceX = horizontalSpacing();
 
         if (spaceX == -1)
-            spaceX = wid->style()->layoutSpacing(
-                         QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Horizontal);
+            spaceX = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
+                                                 Qt::Horizontal);
 
         int spaceY = verticalSpacing();
 
         if (spaceY == -1)
-            spaceY = wid->style()->layoutSpacing(
-                         QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Vertical);
+            spaceY = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
+                                                 Qt::Vertical);
 
         int nextX = x + item->sizeHint().width() + spaceX;
 

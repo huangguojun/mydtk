@@ -7,9 +7,9 @@
 /*!
   \class dtkCorePluginFactory
   \inmodule dtkCore
-  \brief The dtkCorePluginFactory class is a template class that provides a plugin factory for any type.
+  \brief The dtkCorePluginFactory class is a template class that provides a
+  plugin factory for any type.
  */
-
 
 /*! \fn dtkCorePluginFactory::dtkCorePluginFactory(void)
     Constructs the plugin factory.

@@ -18,11 +18,11 @@
  */
 
 #ifndef DTKVECTOR_H
-#define DTKVECTOR_H
+#    define DTKVECTOR_H
 
-#include <cmath>
+#    include <cmath>
 
-#include "dtkMatrix.h"
+#    include "dtkMatrix.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkVector interface
@@ -30,127 +30,108 @@
 
 namespace dtkDeprecated {
 
-    template <class T = double> class dtkVector : public dtkMatrix<T>
+template<class T = double>
+class dtkVector : public dtkMatrix<T>
+{
+public:
+    dtkVector(void) : dtkMatrix<T>(){};
+    dtkVector(unsigned crowInit) : dtkMatrix<T>(crowInit, 1){};
+    dtkVector(T *array, unsigned crowInit) : dtkMatrix<T>(array, crowInit, 1){};
+    dtkVector(const dtkMatrix<T> &mat) : dtkMatrix<T>(mat){};
+    dtkVector(const dtkVector &vec) : dtkMatrix<T>(vec){};
+    dtkVector(const dtkMatrix<T> &, unsigned, unsigned, unsigned);
+    dtkVector(const dtkVector &, unsigned, unsigned);
+    virtual ~dtkVector(void){};
+
+public:
+    QString identifier(void) const;
+
+public:
+    void allocate(unsigned crowInit) { dtkMatrix<T>::allocate(crowInit, 1); }
+    void allocate(unsigned crowInit, T *buffer) { dtkMatrix<T>::allocate(crowInit, 1, buffer); }
+
+    void fromRawData(T *array, unsigned crowInit) { dtkMatrix<T>::fromRawData(array, crowInit, 1); }
+
+    void mapInto(const dtkMatrix<T> &, unsigned, unsigned, unsigned);
+    void mapInto(const dtkVector &, unsigned, unsigned);
+
+    unsigned size(void) const { return this->numberOfRows(); };
+
+public:
+    T &operator[](unsigned irow) { return this->dtkMatrix<T>::operator[](irow)[0]; }
+    const T &operator[](unsigned irow) const { return this->dtkMatrix<T>::operator[](irow)[0]; }
+
+public:
+    dtkVector operator+(const dtkVector &) const;
+    dtkVector operator-(const dtkVector &) const;
+    dtkVector operator-(void) const;
+    dtkVector operator*(const T &)const;
+
+    T operator*(const dtkVector &)const;
+
+    dtkVector operator/(const T &value) const
     {
-    public:
-        dtkVector(void): dtkMatrix<T>() {};
-        dtkVector(unsigned crowInit): dtkMatrix<T>(crowInit, 1) {};
-        dtkVector(T *array, unsigned crowInit): dtkMatrix<T>(array, crowInit, 1) {};
-        dtkVector(const dtkMatrix<T>& mat): dtkMatrix<T>(mat) {};
-        dtkVector(const dtkVector& vec): dtkMatrix<T>(vec) {};
-        dtkVector(const dtkMatrix<T>&, unsigned, unsigned, unsigned);
-        dtkVector(const dtkVector&, unsigned, unsigned);
-        virtual ~dtkVector(void) {};
+        T tTmp = dtkUnity<T>();
+        tTmp /= value;
+        return (*this) * tTmp;
+    }
 
-    public:
-        QString identifier(void) const;
+public:
+    dtkVector &operator=(const dtkVector &vec);
+    dtkVector &operator+=(const dtkVector &vec);
+    dtkVector &operator-=(const dtkVector &vec);
+    dtkVector &operator*=(const T &value);
+    dtkVector &operator/=(const T &value);
 
-    public:
-        void allocate(unsigned crowInit) {
-            dtkMatrix<T>::allocate(crowInit, 1);
-        }
-        void allocate(unsigned crowInit, T *buffer) {
-            dtkMatrix<T>::allocate(crowInit, 1, buffer);
-        }
+    T operator!(void) const { return (*this).norm(); };
 
-        void fromRawData(T *array, unsigned crowInit) {
-            dtkMatrix<T>::fromRawData(array, crowInit, 1);
-        }
+public:
+    void storeAtRow(unsigned, const dtkVector &);
 
-        void mapInto(const dtkMatrix<T>&, unsigned, unsigned, unsigned);
-        void mapInto(const dtkVector&, unsigned, unsigned);
+    T norm(void) const;
 
-        unsigned size(void) const {
-            return this->numberOfRows();
-        };
+    dtkVector unit(void) const { return (*this) / this->norm(); }
 
-    public:
-        T& operator [](unsigned irow)       {
-            return this->dtkMatrix<T>::operator[](irow)[0];
-        }
-        const T& operator [](unsigned irow) const {
-            return this->dtkMatrix<T>::operator[](irow)[0];
-        }
-
-    public:
-        dtkVector operator +(const dtkVector&) const;
-        dtkVector operator -(const dtkVector&) const;
-        dtkVector operator -(void) const;
-        dtkVector operator *(const T&) const;
-
-        T operator *(const dtkVector&) const;
-
-        dtkVector operator /(const T& value) const {
-            T tTmp = dtkUnity<T>();
-            tTmp /= value;
-            return (*this) * tTmp;
-        }
-
-    public:
-        dtkVector& operator  =(const dtkVector& vec);
-        dtkVector& operator +=(const dtkVector& vec);
-        dtkVector& operator -=(const dtkVector& vec);
-        dtkVector& operator *=(const T& value);
-        dtkVector& operator /=(const T& value);
-
-        T operator !(void) const {
-            return (*this).norm();
-        };
-
-    public:
-        void storeAtRow(unsigned, const dtkVector&);
-
-        T norm(void) const;
-
-        dtkVector unit(void) const {
-            return (*this) / this->norm();
-        }
-
-        void makeUnit(void) {
-            (*this) /= this->norm();
-        }
-    };
+    void makeUnit(void) { (*this) /= this->norm(); }
+};
 
 // /////////////////////////////////////////////////////////////////
 //
 // /////////////////////////////////////////////////////////////////
 
-    template <class T, unsigned crow> class dtkVec: public T
-    {
-    public:
-        dtkVec(void): T(crow) {}
+template<class T, unsigned crow>
+class dtkVec : public T
+{
+public:
+    dtkVec(void) : T(crow) {}
 
-        T& operator =(const T& mtx) {
-            return T::operator=(mtx);
-        }
-    };
+    T &operator=(const T &mtx) { return T::operator=(mtx); }
+};
 
 // /////////////////////////////////////////////////////////////////
 //
 // /////////////////////////////////////////////////////////////////
 
-    template <class T, unsigned crow> class dtkZero< dtkVec<dtkVector<T>, crow> >: public dtkVec<dtkVector<T>, crow>
-    {
-    public:
-        dtkZero(void) {
-            fill(dtkZero<T>());
-        }
-    };
+template<class T, unsigned crow>
+class dtkZero<dtkVec<dtkVector<T>, crow>> : public dtkVec<dtkVector<T>, crow>
+{
+public:
+    dtkZero(void) { fill(dtkZero<T>()); }
+};
 
-} // end of namespace
+} // namespace dtkDeprecated
 
 // /////////////////////////////////////////////////////////////////
 // Implementation of the template class dtkVector's methods
 // /////////////////////////////////////////////////////////////////
 
-#include "dtkVector.tpp"
+#    include "dtkVector.tpp"
 
 // /////////////////////////////////////////////////////////////////
 //
 // /////////////////////////////////////////////////////////////////
 
-#include <QtCore>
-
+#    include <QtCore>
 
 typedef dtkDeprecated::dtkVector<qlonglong> dtkVectorInteger;
 

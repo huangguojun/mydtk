@@ -23,14 +23,15 @@ dtkRecentFilesMenu::dtkRecentFilesMenu(QWidget *parent) : QMenu(parent), m_maxCo
     setMaxCount(m_maxCount);
 }
 
-dtkRecentFilesMenu::dtkRecentFilesMenu(const QString& title, QWidget *parent) : QMenu(title, parent), m_maxCount(8)
+dtkRecentFilesMenu::dtkRecentFilesMenu(const QString &title, QWidget *parent)
+    : QMenu(title, parent), m_maxCount(8)
 {
     connect(this, SIGNAL(triggered(QAction *)), this, SLOT(menuTriggered(QAction *)));
 
     setMaxCount(m_maxCount);
 }
 
-void dtkRecentFilesMenu::addRecentFile(const QString& fileName)
+void dtkRecentFilesMenu::addRecentFile(const QString &fileName)
 {
     QSettings settings;
     QStringList files = settings.value("recentFileList").toStringList();

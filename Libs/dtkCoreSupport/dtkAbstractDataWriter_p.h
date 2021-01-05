@@ -20,9 +20,9 @@
 #ifndef DTKABSTRACTDATAWRITER_P_H
 #define DTKABSTRACTDATAWRITER_P_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
 #include "dtkSmartPointer.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractDataWriter;
 class dtkAbstractData;
@@ -34,10 +34,14 @@ class dtkAbstractData;
 class DTKCORESUPPORT_EXPORT dtkAbstractDataWriterPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractDataWriterPrivate(dtkAbstractDataWriter *q = 0) : dtkAbstractObjectPrivate(q), data(NULL) {}
-    dtkAbstractDataWriterPrivate(const dtkAbstractDataWriterPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(false),
-        data(other.data) {}
+    dtkAbstractDataWriterPrivate(dtkAbstractDataWriter *q = 0)
+        : dtkAbstractObjectPrivate(q), data(NULL)
+    {
+    }
+    dtkAbstractDataWriterPrivate(const dtkAbstractDataWriterPrivate &other)
+        : dtkAbstractObjectPrivate(other), enabled(false), data(other.data)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataWriterPrivate(void) {}

@@ -22,17 +22,21 @@
 // dtkGraphTemplate interface
 // /////////////////////////////////////////////////////////////////
 
-template < typename Node, typename Edge > class dtkGraphTemplate {};
+template<typename Node, typename Edge>
+class dtkGraphTemplate
+{
+};
 
-template < typename Node, typename Edge > class dtkGraphTemplate<Node *, Edge>
+template<typename Node, typename Edge>
+class dtkGraphTemplate<Node *, Edge>
 {
 public:
-             dtkGraphTemplate(void) = default;
-             dtkGraphTemplate(const dtkGraphTemplate& o);
+    dtkGraphTemplate(void) = default;
+    dtkGraphTemplate(const dtkGraphTemplate &o);
     virtual ~dtkGraphTemplate(void);
 
 public:
-    dtkGraphTemplate& operator = (const dtkGraphTemplate& o);
+    dtkGraphTemplate &operator=(const dtkGraphTemplate &o);
 
 public:
     QString description(void) const;
@@ -42,13 +46,13 @@ public:
 
 public:
     bool contains(Node *n) const;
-    bool contains(const Edge& e) const;
+    bool contains(const Edge &e) const;
 
 public:
     virtual void addNode(Node *n);
-    virtual void addEdge(const Edge& e);
+    virtual void addEdge(const Edge &e);
     virtual void removeNode(Node *n);
-    virtual void removeEdge(const Edge& e);
+    virtual void removeEdge(const Edge &e);
 
 public:
     QList<Node *> rootNodes(void) const;
@@ -56,8 +60,8 @@ public:
     QList<Node *> predecessors(Node *n) const;
 
 public:
-    const QList<Node *>& nodes(void) const;
-    const QList<Edge  >& edges(void) const;
+    const QList<Node *> &nodes(void) const;
+    const QList<Edge> &edges(void) const;
 
 public:
     QList<Node *> topologicalSort(void) const;
@@ -67,10 +71,10 @@ public:
 
 protected:
     QList<Node *> m_nodes;
-    QList<Edge  > m_edges;
+    QList<Edge> m_edges;
 
-    QHash< Node *, QList<Node *> > m_predecessors;
-    QHash< Node *, QList<Node *> > m_successors;
+    QHash<Node *, QList<Node *>> m_predecessors;
+    QHash<Node *, QList<Node *>> m_successors;
 };
 
 // /////////////////////////////////////////////////////////////////

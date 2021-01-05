@@ -13,7 +13,6 @@
 // Code:
 
 #include "dtkWidgetsMenuBar.h"
-#include "dtkWidgetsMenuBar_p.h"
 #include "dtkWidgetsMenu+ux.h"
 #include "dtkWidgetsMenu.h"
 #include "dtkWidgetsMenuBar_p.h"
@@ -29,21 +28,28 @@
 
 namespace dtkWidgetsMenuBarHelper {
 
-void handle(const QList<QWidget *>& items, dtkWidgetsMenuBarContainer *c, dtkWidgetsMenuBar *mb = nullptr)
+void handle(const QList<QWidget *> &items, dtkWidgetsMenuBarContainer *c,
+            dtkWidgetsMenuBar *mb = nullptr)
 {
-    auto setup = [=] (QWidget *facade, int i) {
-        if (items.count() == 1 || (i > 1 && i < items.count() - 1 && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i - 1)) && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1)))) {
+    auto setup = [=](QWidget *facade, int i) {
+        if (items.count() == 1
+            || (i > 1 && i < items.count() - 1
+                && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i - 1))
+                && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1)))) {
             facade->setProperty("state", "alone");
         } else if (facade == items.last()) {
             facade->setProperty("state", "last");
-            if(items.count() > 1 && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i - 1))) {
+            if (items.count() > 1
+                && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i - 1))) {
                 facade->setProperty("state", "alone");
             }
-        } else if (i < items.count() - 1 && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1))) {
+        } else if (i < items.count() - 1
+                   && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1))) {
             facade->setProperty("state", "last");
         } else if (i == 0) {
             facade->setProperty("state", "first");
-            if(items.count() > 1 && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1))) {
+            if (items.count() > 1
+                && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i + 1))) {
                 facade->setProperty("state", "alone");
             }
         } else if (i > 1 && dynamic_cast<dtkWidgetsMenuItemSpacerFacade *>(items.at(i - 1))) {
@@ -59,18 +65,17 @@ void handle(const QList<QWidget *>& items, dtkWidgetsMenuBarContainer *c, dtkWid
             continue;
 
         if (dtkWidgetsMenuItemFacade *facade = dynamic_cast<dtkWidgetsMenuItemFacade *>(item)) {
-            QObject::connect(facade, &dtkWidgetsMenuItemFacade::clicked, [=] (void) -> void
-            {
+            QObject::connect(facade, &dtkWidgetsMenuItemFacade::clicked, [=](void) -> void {
                 facade->menu_item->emit triggered();
                 facade->menu_item->emit clicked();
             });
 
-        } else if (dtkWidgetsMenuInnerFacade *facade = dynamic_cast<dtkWidgetsMenuInnerFacade *>(item)) {
+        } else if (dtkWidgetsMenuInnerFacade *facade =
+                           dynamic_cast<dtkWidgetsMenuInnerFacade *>(item)) {
 
             facade->parent_index = i;
 
-            QObject::connect(facade, &dtkWidgetsMenuInnerFacade::clicked, [=](void) -> void
-            {
+            QObject::connect(facade, &dtkWidgetsMenuInnerFacade::clicked, [=](void) -> void {
                 c->switchToNextSlide(facade->menu);
 
                 if (mb && facade->parent_index >= 0) {
@@ -94,7 +99,7 @@ class dtkWidgetsMenuBarButtonCollapse : public QLabel
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuBarButtonCollapse(dtkWidgetsMenuBar *parent = nullptr);
+    dtkWidgetsMenuBarButtonCollapse(dtkWidgetsMenuBar *parent = nullptr);
     ~dtkWidgetsMenuBarButtonCollapse(void);
 
 signals:
@@ -117,7 +122,8 @@ public:
     dtkWidgetsMenuBar *q;
 };
 
-dtkWidgetsMenuBarButtonCollapse::dtkWidgetsMenuBarButtonCollapse(dtkWidgetsMenuBar *parent) : QLabel(parent)
+dtkWidgetsMenuBarButtonCollapse::dtkWidgetsMenuBarButtonCollapse(dtkWidgetsMenuBar *parent)
+    : QLabel(parent)
 {
     this->setAlignment(Qt::AlignCenter);
     this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -125,10 +131,8 @@ dtkWidgetsMenuBarButtonCollapse::dtkWidgetsMenuBarButtonCollapse(dtkWidgetsMenuB
     this->q = parent;
     this->touch();
 
-    m_connection = connect(dtkThemesEngine::instance(), &dtkThemesEngine::changed, [=]()
-    {
-        this->touch();
-    });
+    m_connection = connect(dtkThemesEngine::instance(), &dtkThemesEngine::changed,
+                           [=]() { this->touch(); });
 }
 
 dtkWidgetsMenuBarButtonCollapse::~dtkWidgetsMenuBarButtonCollapse(void)
@@ -144,10 +148,13 @@ QSize dtkWidgetsMenuBarButtonCollapse::sizeHint(void) const
 void dtkWidgetsMenuBarButtonCollapse::touch(void)
 {
     dtkFontAwesome::instance()->initFontAwesome();
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@base7"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@base7"));
 
     this->setToolTip(this->collapsed ? "Expand" : "Collapse");
-    this->setPixmap(dtkFontAwesome::instance()->icon(this->collapsed ? fa::chevronright : fa::chevronleft).pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
+    this->setPixmap(dtkFontAwesome::instance()
+                            ->icon(this->collapsed ? fa::chevronright : fa::chevronleft)
+                            .pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
 
     dtkThemesEngine::instance()->polish(this);
 }
@@ -176,7 +183,7 @@ class dtkWidgetsMenuBarButton : public QLabel
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuBarButton(int id, const QString &title, dtkWidgetsMenuBar *parent = nullptr);
+    dtkWidgetsMenuBarButton(int id, const QString &title, dtkWidgetsMenuBar *parent = nullptr);
     ~dtkWidgetsMenuBarButton(void);
 
 signals:
@@ -213,7 +220,9 @@ private:
 //
 // /////////////////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuBarButton::dtkWidgetsMenuBarButton(int id, const QString &title, dtkWidgetsMenuBar *parent) : QLabel(parent)
+dtkWidgetsMenuBarButton::dtkWidgetsMenuBarButton(int id, const QString &title,
+                                                 dtkWidgetsMenuBar *parent)
+    : QLabel(parent)
 {
     this->icon_id = id;
     this->setAlignment(Qt::AlignCenter);
@@ -225,10 +234,8 @@ dtkWidgetsMenuBarButton::dtkWidgetsMenuBarButton(int id, const QString &title, d
 
     this->touch(false);
 
-    m_connection = connect(dtkThemesEngine::instance(), &dtkThemesEngine::changed, [=]()
-    {
-        this->touch(this->m_selected);
-    });
+    m_connection = connect(dtkThemesEngine::instance(), &dtkThemesEngine::changed,
+                           [=]() { this->touch(this->m_selected); });
 }
 
 dtkWidgetsMenuBarButton::~dtkWidgetsMenuBarButton(void)
@@ -246,15 +253,19 @@ void dtkWidgetsMenuBarButton::touch(bool selected)
     this->m_selected = selected;
 
     if (!selected) {
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@base7"));
+        dtkFontAwesome::instance()->setDefaultOption("color",
+                                                     dtkThemesEngine::instance()->color("@base7"));
         this->setProperty("state", "default");
 
     } else {
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+        dtkFontAwesome::instance()->setDefaultOption("color",
+                                                     dtkThemesEngine::instance()->color("@fg"));
         this->setProperty("state", "current");
     }
 
-    this->setPixmap(dtkFontAwesome::instance()->icon(this->icon_id).pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
+    this->setPixmap(dtkFontAwesome::instance()
+                            ->icon(this->icon_id)
+                            .pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
 
     dtkThemesEngine::instance()->polish(this);
 }
@@ -273,16 +284,22 @@ void dtkWidgetsMenuBarButton::mousePressEvent(QMouseEvent *event)
 
 void dtkWidgetsMenuBarButton::enterEvent(QEvent *)
 {
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@fg"));
 
-    this->setPixmap(dtkFontAwesome::instance()->icon(this->icon_id).pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
+    this->setPixmap(dtkFontAwesome::instance()
+                            ->icon(this->icon_id)
+                            .pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
 }
 
 void dtkWidgetsMenuBarButton::leaveEvent(QEvent *)
 {
     if (!this->m_selected) {
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@base7"));
-        this->setPixmap(dtkFontAwesome::instance()->icon(this->icon_id).pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
+        dtkFontAwesome::instance()->setDefaultOption("color",
+                                                     dtkThemesEngine::instance()->color("@base7"));
+        this->setPixmap(dtkFontAwesome::instance()
+                                ->icon(this->icon_id)
+                                .pixmap(QSize(q->d->size * 3 / 4, q->d->size * 3 / 4)));
     }
 }
 
@@ -290,7 +307,9 @@ void dtkWidgetsMenuBarButton::leaveEvent(QEvent *)
 //
 // /////////////////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q, dtkWidgetsMenuBarContainer *parent) : QFrame(parent)
+dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q,
+                                                                 dtkWidgetsMenuBarContainer *parent)
+    : QFrame(parent)
 {
     this->q = q;
 
@@ -305,7 +324,10 @@ dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuB
     this->setAttribute(Qt::WA_TranslucentBackground);
 }
 
-dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q, dtkWidgetsMenu *m, dtkWidgetsMenuBarContainer *c) : QFrame(c), menu(m)
+dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q,
+                                                                 dtkWidgetsMenu *m,
+                                                                 dtkWidgetsMenuBarContainer *c)
+    : QFrame(c), menu(m)
 {
     this->q = q;
 
@@ -323,7 +345,10 @@ dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuB
     this->setAttribute(Qt::WA_TranslucentBackground);
 }
 
-dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q, dtkWidgetsMenuBar *mb, dtkWidgetsMenuBarContainer *c) : QFrame(c), menu_bar(mb)
+dtkWidgetsMenuBarContainerSlide::dtkWidgetsMenuBarContainerSlide(dtkWidgetsMenuBar *q,
+                                                                 dtkWidgetsMenuBar *mb,
+                                                                 dtkWidgetsMenuBarContainer *c)
+    : QFrame(c), menu_bar(mb)
 {
     this->q = q;
 
@@ -351,7 +376,8 @@ void dtkWidgetsMenuBarContainerSlide::touch(dtkWidgetsMenu *m, dtkWidgetsMenuBar
 {
     dtkWidgetsMenuFacade *facade = new dtkWidgetsMenuFacade(m);
 
-    this->layout()->addWidget(new dtkWidgetsMenuItemSpacerFacade(q->d->margin/2, q->d->margin/2, this));
+    this->layout()->addWidget(
+            new dtkWidgetsMenuItemSpacerFacade(q->d->margin / 2, q->d->margin / 2, this));
     this->layout()->addWidget(facade);
 
     ::dtkWidgetsMenuBarHelper::handle(facade->items(), c);
@@ -361,7 +387,9 @@ void dtkWidgetsMenuBarContainerSlide::touch(dtkWidgetsMenu *m, dtkWidgetsMenuBar
 
 void dtkWidgetsMenuBarContainerSlide::touch(dtkWidgetsMenuBar *mb, dtkWidgetsMenuBarContainer *c)
 {
-    QLayoutItem *item = nullptr; while ((item = this->layout()->takeAt(0))) delete item->widget();
+    QLayoutItem *item = nullptr;
+    while ((item = this->layout()->takeAt(0)))
+        delete item->widget();
 
     for (dtkWidgetsMenu *m : mb->menus()) {
 
@@ -374,14 +402,18 @@ void dtkWidgetsMenuBarContainerSlide::touch(dtkWidgetsMenuBar *mb, dtkWidgetsMen
         ::dtkWidgetsMenuBarHelper::handle(widget->items(), c);
     }
 
-    this->layout()->addWidget(new dtkWidgetsMenuItemSpacerFacade(q->d->margin/2, q->d->margin/2, this));
+    this->layout()->addWidget(
+            new dtkWidgetsMenuItemSpacerFacade(q->d->margin / 2, q->d->margin / 2, this));
 
     static_cast<QBoxLayout *>(this->layout())->addStretch();
 }
 
-void dtkWidgetsMenuBarContainerSlide::touch(const QVector<dtkWidgetsMenu *>& menus, dtkWidgetsMenuBarContainer *c)
+void dtkWidgetsMenuBarContainerSlide::touch(const QVector<dtkWidgetsMenu *> &menus,
+                                            dtkWidgetsMenuBarContainer *c)
 {
-    QLayoutItem *item = nullptr; while ((item = this->layout()->takeAt(0))) delete item->widget();
+    QLayoutItem *item = nullptr;
+    while ((item = this->layout()->takeAt(0)))
+        delete item->widget();
 
     for (dtkWidgetsMenu *m : menus) {
 
@@ -394,9 +426,10 @@ void dtkWidgetsMenuBarContainerSlide::touch(const QVector<dtkWidgetsMenu *>& men
         ::dtkWidgetsMenuBarHelper::handle(widget->items(), c);
     }
 
-    int margin; q ? margin = q->d->margin : margin = 12;
+    int margin;
+    q ? margin = q->d->margin : margin = 12;
 
-    this->layout()->addWidget(new dtkWidgetsMenuItemSpacerFacade(margin/2, margin/2, this));
+    this->layout()->addWidget(new dtkWidgetsMenuItemSpacerFacade(margin / 2, margin / 2, this));
 
     static_cast<QBoxLayout *>(this->layout())->addStretch();
 }
@@ -407,7 +440,8 @@ void dtkWidgetsMenuBarContainerSlide::touch(const QVector<dtkWidgetsMenu *>& men
 
 QList<dtkWidgetsMenu *> stack;
 
-dtkWidgetsMenuBarContainer::dtkWidgetsMenuBarContainer(QWidget *parent) : dtkWidgetsOverlayPane(parent)
+dtkWidgetsMenuBarContainer::dtkWidgetsMenuBarContainer(QWidget *parent)
+    : dtkWidgetsOverlayPane(parent)
 {
     this->slider = new dtkWidgetsOverlayPaneSlider;
     this->slider->setBound(300);
@@ -419,9 +453,8 @@ dtkWidgetsMenuBarContainer::dtkWidgetsMenuBarContainer(QWidget *parent) : dtkWid
     this->addWidget(this->navigator);
     this->addWidget(this->slider);
 
-    connect(navigator, &dtkWidgetsMenuNavigationFacade::clicked, [=] (void) -> void
-    {
-        if (this->slider->is_in_transition) 
+    connect(navigator, &dtkWidgetsMenuNavigationFacade::clicked, [=](void) -> void {
+        if (this->slider->is_in_transition)
             return;
         dtkWidgetsMenu *menu = nullptr;
 
@@ -432,12 +465,9 @@ dtkWidgetsMenuBarContainer::dtkWidgetsMenuBarContainer(QWidget *parent) : dtkWid
     });
 }
 
-dtkWidgetsMenuBarContainer::~dtkWidgetsMenuBarContainer(void)
-{
+dtkWidgetsMenuBarContainer::~dtkWidgetsMenuBarContainer(void) {}
 
-}
-
-void dtkWidgetsMenuBarContainer::setCurrentIndex(int index, std::function<void ()>& callback)
+void dtkWidgetsMenuBarContainer::setCurrentIndex(int index, std::function<void()> &callback)
 {
     if (this->slider->is_in_transition)
         return;
@@ -445,17 +475,13 @@ void dtkWidgetsMenuBarContainer::setCurrentIndex(int index, std::function<void (
     this->slider->enableSpying(false);
     this->slider->blockSignals(true);
 
-    static std::function<void (void)> ca = [=] (void) -> void
-    {
+    static std::function<void(void)> ca = [=](void) -> void {
         this->slider->blockSignals(false);
         this->slider->enableSpying(true);
         callback();
     };
 
-    std::function<void (void)> cb = [=] (void) -> void
-    {
-        this->slider->setCurrentIndex(index, ca);
-    };
+    std::function<void(void)> cb = [=](void) -> void { this->slider->setCurrentIndex(index, ca); };
 
     if (::stack.count())
         this->switchToRoot(cb);
@@ -473,8 +499,7 @@ void dtkWidgetsMenuBarContainer::switchToRoot(std::function<void(void)> &callbac
     this->slider->enableSpying(false);
     this->slider->blockSignals(true);
 
-    static std::function<void(void)> cb = [=](void) -> void
-    {
+    static std::function<void(void)> cb = [=](void) -> void {
         while (!::stack.isEmpty())
             this->slider->remSlide(this->slides[::stack.takeLast()]);
 
@@ -500,10 +525,7 @@ void dtkWidgetsMenuBarContainer::switchToPrevSlide(dtkWidgetsMenu *m)
     else
         this->navigator->setMenu(0);
 
-    std::function<void()> callback = [=] (void) -> void
-    {
-        this->slider->remSlide(this->slides[m]);
-    };
+    std::function<void()> callback = [=](void) -> void { this->slider->remSlide(this->slides[m]); };
 
     if (!m) {
         this->q->d->toggle->collapsed = !this->q->d->toggle->collapsed;
@@ -513,7 +535,7 @@ void dtkWidgetsMenuBarContainer::switchToPrevSlide(dtkWidgetsMenu *m)
         this->slider->slideToPrevious(callback);
     }
 
-    if(::stack.count())
+    if (::stack.count())
         emit q->entered(::stack.last());
 }
 
@@ -522,7 +544,7 @@ void dtkWidgetsMenuBarContainer::switchToNextSlide(dtkWidgetsMenu *m)
     if (this->slider->is_in_transition)
         return;
 
-    if(::stack.count())
+    if (::stack.count())
         emit q->left(::stack.last());
 
     this->slider->addSlide(fa::cogs, this->slides[m]);
@@ -553,7 +575,7 @@ void dtkWidgetsMenuBarContainer::touch(dtkWidgetsMenuBar *mb)
     ::stack.clear();
     navigator->setMenu(0);
 
-    if(!this->master_slide) {
+    if (!this->master_slide) {
 
         this->master_slide = new dtkWidgetsMenuBarContainerSlide(this->q, mb, this);
         this->slider->addSlide(fa::cogs, this->master_slide);
@@ -586,9 +608,9 @@ void dtkWidgetsMenuBarContainer::decr(void)
     ::stack.takeLast();
 }
 
-void dtkWidgetsMenuBarContainer::build(const QVector<dtkWidgetsMenu *>& menus)
+void dtkWidgetsMenuBarContainer::build(const QVector<dtkWidgetsMenu *> &menus)
 {
-    if(!this->master_slide) {
+    if (!this->master_slide) {
         this->master_slide = new dtkWidgetsMenuBarContainerSlide(q, this);
         this->slider->addSlide(fa::cogs, this->master_slide);
     }
@@ -615,22 +637,24 @@ void dtkWidgetsMenuBarContainer::buildChildSlide(dtkWidgetsMenu *menu)
 
 void dtkWidgetsMenuBarPrivate::touch(void)
 {
-    QLayoutItem *child; while ((child = this->layout->takeAt(0)) != 0) delete child->widget();
+    QLayoutItem *child;
+    while ((child = this->layout->takeAt(0)) != 0)
+        delete child->widget();
 
     for (dtkWidgetsMenu *m : menu_list) {
 
         dtkWidgetsMenuBarButton *b = new dtkWidgetsMenuBarButton(m->icon(), m->title(), q);
         b->menu = m;
 
-        QObject::connect(b, &dtkWidgetsMenuBarButton::clicked, [=] (void) -> void {
-
+        QObject::connect(b, &dtkWidgetsMenuBarButton::clicked, [=](void) -> void {
             int index = 0;
             int target = 0;
             bool selected = b->selected();
 
             for (int i = 0; i < this->layout->count(); ++i) {
 
-                if (dtkWidgetsMenuBarButton *button = dynamic_cast<dtkWidgetsMenuBarButton *>(this->layout->itemAt(i)->widget())) {
+                if (dtkWidgetsMenuBarButton *button = dynamic_cast<dtkWidgetsMenuBarButton *>(
+                            this->layout->itemAt(i)->widget())) {
                     if (button == b) {
                         button->touch(true);
                         target = index;
@@ -647,7 +671,7 @@ void dtkWidgetsMenuBarPrivate::touch(void)
                 q->emit clicked(target);
             };
 
-            if(!this->c->width() || selected) {
+            if (!this->c->width() || selected) {
                 this->toggle->collapsed = !this->toggle->collapsed;
                 this->toggle->touch();
                 this->c->slider->blockSignals(true);
@@ -668,7 +692,8 @@ void dtkWidgetsMenuBarPrivate::touch(void)
 // dtkWidgetsMenuBar
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuBar::dtkWidgetsMenuBar(QWidget *parent) : QFrame(parent), d(new dtkWidgetsMenuBarPrivate)
+dtkWidgetsMenuBar::dtkWidgetsMenuBar(QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsMenuBarPrivate)
 {
     d->q = this;
 
@@ -706,13 +731,12 @@ dtkWidgetsMenuBar::dtkWidgetsMenuBar(QWidget *parent) : QFrame(parent), d(new dt
 
     d->toggle = new dtkWidgetsMenuBarButtonCollapse(this);
 
-    static std::function<void(void)> callback = [=] (void) -> void {
-
+    static std::function<void(void)> callback = [=](void) -> void {
         d->c->blockSignals(false);
         d->c->slider->blockSignals(false);
     };
 
-    connect(d->toggle, &dtkWidgetsMenuBarButtonCollapse::clicked, [=] (void) -> void {
+    connect(d->toggle, &dtkWidgetsMenuBarButtonCollapse::clicked, [=](void) -> void {
         d->c->slider->blockSignals(true);
         d->c->blockSignals(true);
         d->c->toggle(callback);
@@ -747,7 +771,7 @@ dtkWidgetsMenu *dtkWidgetsMenuBar::addMenu(int icon_id, const QString &title)
     auto m = this->addMenu(menu);
 
     if (m != menu)
-      delete menu;
+        delete menu;
 
     return m;
 }
@@ -755,7 +779,7 @@ dtkWidgetsMenu *dtkWidgetsMenuBar::addMenu(int icon_id, const QString &title)
 dtkWidgetsMenu *dtkWidgetsMenuBar::insertMenu(int pos, dtkWidgetsMenu *menu)
 {
     if (pos < 0 || pos > d->menu_list.size() || !menu || d->menu_hash.contains(menu->title())) {
-      return nullptr;
+        return nullptr;
     }
 
     menu->setParent(this);
@@ -802,18 +826,18 @@ void dtkWidgetsMenuBar::removeMenu(const QString &title)
 
 void build(QMenu *menu, dtkWidgetsMenu *w_menu)
 {
-    foreach(QAction *action, menu->actions()) {
+    foreach (QAction *action, menu->actions()) {
 
         dtkWidgetsMenu *w_s_menu = 0;
 
-        if(QMenu *s_menu = action->menu()) {
+        if (QMenu *s_menu = action->menu()) {
 
             w_s_menu = w_menu->addMenu(fa::circle, action->text());
 
             build(s_menu, w_s_menu);
         } else {
 
-            if(action->isSeparator()) {
+            if (action->isSeparator()) {
                 w_menu->addSeparator();
             } else {
 
@@ -827,16 +851,17 @@ void build(QMenu *menu, dtkWidgetsMenu *w_menu)
 
 // /////////////////////////////////////////////////////////////////////////////
 
-QList<dtkWidgetsMenu *> dtkWidgetsMenuBar::build(const QString& prefix, QMenuBar *bar)
+QList<dtkWidgetsMenu *> dtkWidgetsMenuBar::build(const QString &prefix, QMenuBar *bar)
 {
     QList<dtkWidgetsMenu *> menus;
 
-    foreach(QAction *action, bar->actions()) {
+    foreach (QAction *action, bar->actions()) {
 
-        if(action->text().isEmpty())
+        if (action->text().isEmpty())
             continue;
 
-        dtkWidgetsMenu *w_menu = new dtkWidgetsMenu(fa::circle, QString(prefix + "::" + action->text()));
+        dtkWidgetsMenu *w_menu =
+                new dtkWidgetsMenu(fa::circle, QString(prefix + "::" + action->text()));
 
         ::build(action->menu(), w_menu);
 
@@ -846,22 +871,21 @@ QList<dtkWidgetsMenu *> dtkWidgetsMenuBar::build(const QString& prefix, QMenuBar
     return menus;
 }
 
-dtkWidgetsMenu *dtkWidgetsMenuBar::menu(const QString& id)
+dtkWidgetsMenu *dtkWidgetsMenuBar::menu(const QString &id)
 {
     QStringList path = id.split(":", QString::SkipEmptyParts);
 
-    if(path.isEmpty())
+    if (path.isEmpty())
         return nullptr;
 
-    if(!d->menu_hash.contains(path.first()))
+    if (!d->menu_hash.contains(path.first()))
         return nullptr;
 
     dtkWidgetsMenu *root = d->menu_hash[path.takeFirst()];
     dtkWidgetsMenu *meny = root;
 
-    std::function<void (dtkWidgetsMenu *)> sniff = [&] (dtkWidgetsMenu *menu) -> void {
-
-        if(path.isEmpty())
+    std::function<void(dtkWidgetsMenu *)> sniff = [&](dtkWidgetsMenu *menu) -> void {
+        if (path.isEmpty())
             return;
 
         QObject *object = menu->object(path.takeFirst());
@@ -872,7 +896,7 @@ dtkWidgetsMenu *dtkWidgetsMenuBar::menu(const QString& id)
         }
     };
 
-    if(root)
+    if (root)
         sniff(root);
 
     if (meny)
@@ -881,19 +905,18 @@ dtkWidgetsMenu *dtkWidgetsMenuBar::menu(const QString& id)
         return nullptr;
 }
 
-dtkCoreParameter *dtkWidgetsMenuBar::parameter(const QString& id)
+dtkCoreParameter *dtkWidgetsMenuBar::parameter(const QString &id)
 {
     QStringList path = id.split(":", QString::SkipEmptyParts);
 
-    if(path.isEmpty())
+    if (path.isEmpty())
         return nullptr;
 
     dtkWidgetsMenu *root = d->menu_hash[path.takeFirst()];
     dtkWidgetsMenuItemParameter *parameter = nullptr;
 
-    std::function<void (dtkWidgetsMenu *)> sniff = [&] (dtkWidgetsMenu *menu) -> void {
-
-        if(path.isEmpty())
+    std::function<void(dtkWidgetsMenu *)> sniff = [&](dtkWidgetsMenu *menu) -> void {
+        if (path.isEmpty())
             return;
 
         QObject *object = menu->object(path.takeFirst());
@@ -904,7 +927,7 @@ dtkCoreParameter *dtkWidgetsMenuBar::parameter(const QString& id)
             parameter = qobject_cast<dtkWidgetsMenuItemParameter *>(object);
     };
 
-    if(root)
+    if (root)
         sniff(root);
 
     if (parameter)
@@ -913,19 +936,18 @@ dtkCoreParameter *dtkWidgetsMenuBar::parameter(const QString& id)
         return nullptr;
 }
 
-dtkWidgetsParameter *dtkWidgetsMenuBar::parameterWidget(const QString& id)
+dtkWidgetsParameter *dtkWidgetsMenuBar::parameterWidget(const QString &id)
 {
     QStringList path = id.split(":", QString::SkipEmptyParts);
 
-    if(path.isEmpty())
+    if (path.isEmpty())
         return nullptr;
 
     dtkWidgetsMenu *root = d->menu_hash[path.takeFirst()];
     dtkWidgetsMenuItemParameter *parameter = nullptr;
 
-    std::function<void (dtkWidgetsMenu *)> sniff = [&] (dtkWidgetsMenu *menu) -> void {
-
-        if(path.isEmpty())
+    std::function<void(dtkWidgetsMenu *)> sniff = [&](dtkWidgetsMenu *menu) -> void {
+        if (path.isEmpty())
             return;
 
         QObject *object = menu->object(path.takeFirst());
@@ -936,7 +958,7 @@ dtkWidgetsParameter *dtkWidgetsMenuBar::parameterWidget(const QString& id)
             parameter = qobject_cast<dtkWidgetsMenuItemParameter *>(object);
     };
 
-    if(root)
+    if (root)
         sniff(root);
 
     if (parameter)
@@ -949,7 +971,8 @@ void dtkWidgetsMenuBar::setCurrentIndex(int index)
 {
     int n = 0;
     for (int i = 0; i < d->layout->count(); ++i) {
-        if (dtkWidgetsMenuBarButton *button = dynamic_cast<dtkWidgetsMenuBarButton *>(d->layout->itemAt(i)->widget())) {
+        if (dtkWidgetsMenuBarButton *button =
+                    dynamic_cast<dtkWidgetsMenuBarButton *>(d->layout->itemAt(i)->widget())) {
             button->touch(n == index);
             (n == index) ? d->scroll->ensureWidgetVisible(button) : (void)index;
             ++n;
@@ -957,7 +980,7 @@ void dtkWidgetsMenuBar::setCurrentIndex(int index)
     }
 }
 
-void dtkWidgetsMenuBar::setCurrentIndex(int index, std::function<void (void)>& callback)
+void dtkWidgetsMenuBar::setCurrentIndex(int index, std::function<void(void)> &callback)
 {
     this->setCurrentIndex(index);
 
@@ -966,7 +989,7 @@ void dtkWidgetsMenuBar::setCurrentIndex(int index, std::function<void (void)>& c
 
 int dtkWidgetsMenuBar::size(void) const
 {
-  return d->menu_list.size();
+    return d->menu_list.size();
 }
 
 QVector<dtkWidgetsMenu *> dtkWidgetsMenuBar::menus(void) const
@@ -1016,7 +1039,8 @@ void dtkWidgetsMenuBar::setOffset(int offset)
 
 void dtkWidgetsMenuBar::resizeEvent(QResizeEvent *event)
 {
-    d->scroll->move(0, 20); // small vertical offset is needed to not overlap MainWindowButton on Mac (left-hand side)
+    d->scroll->move(0, 20); // small vertical offset is needed to not overlap
+                            // MainWindowButton on Mac (left-hand side)
     d->scroll->resize(event->size() - QSize(0, d->size + 2 * d->margin));
 
     d->toggle->move(0, event->size().height() - d->size - 2 * d->margin);
@@ -1028,7 +1052,7 @@ void dtkWidgetsMenuBar::resizeEvent(QResizeEvent *event)
 
 void dtkWidgetsMenuBar::mousePressEvent(QMouseEvent *event)
 {
-    if(!(event->buttons() & Qt::LeftButton))
+    if (!(event->buttons() & Qt::LeftButton))
         return;
 
     d->o_pos = event->globalPos();
@@ -1036,11 +1060,11 @@ void dtkWidgetsMenuBar::mousePressEvent(QMouseEvent *event)
 
 void dtkWidgetsMenuBar::mouseMoveEvent(QMouseEvent *event)
 {
-    if(!(event->buttons() & Qt::LeftButton))
+    if (!(event->buttons() & Qt::LeftButton))
         return;
 
-    if ((event->pos().y() < ((d->size + d->margin) * this->size())) ||
-        (event->pos().y() > d->c->size().height() - (d->size + d->margin)))
+    if ((event->pos().y() < ((d->size + d->margin) * this->size()))
+        || (event->pos().y() > d->c->size().height() - (d->size + d->margin)))
         return;
 
     d->c_pos = event->globalPos();
@@ -1076,7 +1100,7 @@ QDebug operator<<(QDebug debug, const dtkWidgetsMenuBar &c)
     debug << "MenuBar state in ";
     debug << "d->layout->count() = " << c.d->layout->count();
     debug << "::stack.count() = " << ::stack.count();
-    //c.d->c->slider->print();
+    // c.d->c->slider->print();
     return debug;
 }
 
@@ -1085,10 +1109,9 @@ QDebug operator<<(QDebug debug, dtkWidgetsMenuBar *c)
     debug << "MenuBar state in ";
     debug << "d->layout->count() = " << c->d->layout->count();
     debug << "::stack.count() = " << ::stack.count();
-    //c->d->c->slider->print();
+    // c->d->c->slider->print();
     return debug;
 }
-
 
 // /////////////////////////////////////////////////////////////////////////////
 

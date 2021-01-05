@@ -24,7 +24,8 @@
 // dtkAbstractViewNavigator implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractViewNavigator::dtkAbstractViewNavigator(void) : dtkAbstractObject(*new dtkAbstractViewNavigatorPrivate(this), 0)
+dtkAbstractViewNavigator::dtkAbstractViewNavigator(void)
+    : dtkAbstractObject(*new dtkAbstractViewNavigatorPrivate(this), 0)
 {
     DTK_D(dtkAbstractViewNavigator);
 
@@ -32,15 +33,12 @@ dtkAbstractViewNavigator::dtkAbstractViewNavigator(void) : dtkAbstractObject(*ne
     d->view = NULL;
 }
 
-dtkAbstractViewNavigator::dtkAbstractViewNavigator(const dtkAbstractViewNavigator& other) : dtkAbstractObject(*new dtkAbstractViewNavigatorPrivate(*other.d_func()), other)
+dtkAbstractViewNavigator::dtkAbstractViewNavigator(const dtkAbstractViewNavigator &other)
+    : dtkAbstractObject(*new dtkAbstractViewNavigatorPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractViewNavigator::~dtkAbstractViewNavigator(void)
-{
-
-}
+dtkAbstractViewNavigator::~dtkAbstractViewNavigator(void) {}
 
 bool dtkAbstractViewNavigator::enabled(void) const
 {
@@ -97,8 +95,8 @@ dtkAbstractData *dtkAbstractViewNavigator::output(int channel)
 
 dtkAbstractData *dtkAbstractViewNavigator::output(int channel, int frame)
 {
-    DTK_UNUSED (channel);
-    DTK_UNUSED (frame);
+    DTK_UNUSED(channel);
+    DTK_UNUSED(frame);
 
     return 0;
 }

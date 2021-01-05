@@ -35,7 +35,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataWriter : public dtkAbstractObject
 
 public:
     dtkAbstractDataWriter(void);
-    dtkAbstractDataWriter(const dtkAbstractDataWriter& other);
+    dtkAbstractDataWriter(const dtkAbstractDataWriter &other);
     virtual ~dtkAbstractDataWriter(void);
 
 public:
@@ -43,7 +43,7 @@ public:
     virtual QStringList handled(void) const = 0;
 
     bool enabled(void) const;
-    void  enable(void);
+    void enable(void);
     void disable(void);
 
     dtkAbstractData *data(void) const;
@@ -53,16 +53,16 @@ public:
     virtual QStringList supportedFileExtensions(void) const;
 
 signals:
-    void started(const QString& message);
+    void started(const QString &message);
     void progressed(int step);
     void finished(void);
 
 public slots:
-    virtual bool canWrite(const QString& file);
-    virtual bool canWrite(const QStringList& files);
+    virtual bool canWrite(const QString &file);
+    virtual bool canWrite(const QStringList &files);
 
-    virtual bool write(const QString& file);
-    virtual bool write(const QStringList& files);
+    virtual bool write(const QString &file);
+    virtual bool write(const QStringList &files);
 
     virtual void setProgress(int value);
 

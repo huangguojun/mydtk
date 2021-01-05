@@ -23,11 +23,11 @@ class DTKWIDGETS_EXPORT dtkWidgetsOverlayPaneItem : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneItem(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneItem(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneItem(void);
 
 public slots:
-    void setTitle(const QString& title);
+    void setTitle(const QString &title);
 
 public slots:
     void toggle(void);

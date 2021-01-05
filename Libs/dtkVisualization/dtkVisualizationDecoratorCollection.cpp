@@ -14,8 +14,8 @@
 
 #include "dtkVisualizationDecoratorCollection.h"
 
-#include "dtkVisualizationDecorator.h"
 #include "dtkVisualizationCanvas.h"
+#include "dtkVisualizationDecorator.h"
 
 #include <QtCore>
 
@@ -35,34 +35,44 @@ public:
 // dtkVisualizationDecoratorCollection
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(void) : d(new dtkVisualizationDecoratorCollectionPrivate)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(void)
+    : d(new dtkVisualizationDecoratorCollectionPrivate)
 {
-
 }
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(const QList<dtkVisualizationDecorator *>& l) : d(new dtkVisualizationDecoratorCollectionPrivate)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(
+        const QList<dtkVisualizationDecorator *> &l)
+    : d(new dtkVisualizationDecoratorCollectionPrivate)
 {
     for (auto dec : l) {
         d->collection.emplace_back(dec);
     }
 }
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(dtkVisualizationDecorator *dec) : d(new dtkVisualizationDecoratorCollectionPrivate)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(
+        dtkVisualizationDecorator *dec)
+    : d(new dtkVisualizationDecoratorCollectionPrivate)
 {
     d->collection.emplace_back(dec);
 }
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(const std::list<dtkVisualizationDecorator *>& l) : d(new dtkVisualizationDecoratorCollectionPrivate)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(
+        const std::list<dtkVisualizationDecorator *> &l)
+    : d(new dtkVisualizationDecoratorCollectionPrivate)
 {
     d->collection = l;
 }
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(const dtkVisualizationDecoratorCollection& o) : d(new dtkVisualizationDecoratorCollectionPrivate)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(
+        const dtkVisualizationDecoratorCollection &o)
+    : d(new dtkVisualizationDecoratorCollectionPrivate)
 {
     d->collection = o.d->collection;
 }
 
-dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(dtkVisualizationDecoratorCollection&& o) : d(o.d)
+dtkVisualizationDecoratorCollection::dtkVisualizationDecoratorCollection(
+        dtkVisualizationDecoratorCollection &&o)
+    : d(o.d)
 {
     o.d = nullptr;
 }
@@ -118,13 +128,15 @@ std::size_t dtkVisualizationDecoratorCollection::size(void) const
     return d->collection.size();
 }
 
-dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operator << (dtkVisualizationDecorator *dec)
+dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::
+operator<<(dtkVisualizationDecorator *dec)
 {
     this->add(dec);
     return *this;
 }
 
-dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operator << (const QList<dtkVisualizationDecorator *>& l)
+dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::
+operator<<(const QList<dtkVisualizationDecorator *> &l)
 {
     for (auto dec : l) {
         this->add(dec);
@@ -132,7 +144,8 @@ dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operat
     return *this;
 }
 
-dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operator << (const std::list<dtkVisualizationDecorator *>& l)
+dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::
+operator<<(const std::list<dtkVisualizationDecorator *> &l)
 {
     for (auto dec : l) {
         this->add(dec);
@@ -140,7 +153,8 @@ dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operat
     return *this;
 }
 
-dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::operator << (const dtkVisualizationDecoratorCollection& l)
+dtkVisualizationDecoratorCollection &dtkVisualizationDecoratorCollection::
+operator<<(const dtkVisualizationDecoratorCollection &l)
 {
     for (auto dec : l) {
         this->add(dec);

@@ -16,25 +16,22 @@
 
 dtkFontSourceSansPro *dtkFontSourceSansPro::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkFontSourceSansPro;
 
     return s_instance;
 }
 
-dtkFontSourceSansPro::dtkFontSourceSansPro(QObject *parent) : QObject(parent)
-{
-
-}
+dtkFontSourceSansPro::dtkFontSourceSansPro(QObject *parent) : QObject(parent) {}
 
 bool dtkFontSourceSansPro::initFontSourceSansPro(void)
 {
     static int fontSourceSansProFontId = -1;
 
-    if(fontSourceSansProFontId < 0) {
+    if (fontSourceSansProFontId < 0) {
 
         QFile res(":dtkFontSourceSansPro.ttf");
-        if(!res.open(QIODevice::ReadOnly)) {
+        if (!res.open(QIODevice::ReadOnly)) {
             qDebug() << "Font source sans pro font could not be loaded!";
             return false;
         }
@@ -45,9 +42,10 @@ bool dtkFontSourceSansPro::initFontSourceSansPro(void)
         fontSourceSansProFontId = QFontDatabase::addApplicationFontFromData(fontData);
     }
 
-    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(fontSourceSansProFontId);
-    if(!loadedFontFamilies.empty()) {
-        fontName_= loadedFontFamilies.at(0);
+    QStringList loadedFontFamilies =
+            QFontDatabase::applicationFontFamilies(fontSourceSansProFontId);
+    if (!loadedFontFamilies.empty()) {
+        fontName_ = loadedFontFamilies.at(0);
     } else {
         qDebug() << "Font source sans pro font is empty?!";
         fontSourceSansProFontId = -1;

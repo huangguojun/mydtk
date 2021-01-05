@@ -23,11 +23,11 @@ class DTKWIDGETS_EXPORT dtkViewWidget : public QWidget
     Q_OBJECT
 
 public:
-     dtkViewWidget(QWidget *parent = Q_NULLPTR);
+    dtkViewWidget(QWidget *parent = Q_NULLPTR);
     ~dtkViewWidget(void);
 
 signals:
-    void   focused(void);
+    void focused(void);
     void unfocused(void);
 
 public:

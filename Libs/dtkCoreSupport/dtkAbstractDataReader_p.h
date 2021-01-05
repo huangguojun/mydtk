@@ -20,9 +20,9 @@
 #ifndef DTKABSTRACTDATAREADER_P_H
 #define DTKABSTRACTDATAREADER_P_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
 #include "dtkSmartPointer.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractDataReader;
 class dtkAbstractData;
@@ -34,12 +34,18 @@ class dtkAbstractData;
 class DTKCORESUPPORT_EXPORT dtkAbstractDataReaderPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractDataReaderPrivate(dtkAbstractDataReader *q = 0) : dtkAbstractObjectPrivate(q), data(NULL) {}
-    dtkAbstractDataReaderPrivate(const dtkAbstractDataReaderPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(false),
-        data(other.data),
-        file(other.file),
-        files(other.files) {}
+    dtkAbstractDataReaderPrivate(dtkAbstractDataReader *q = 0)
+        : dtkAbstractObjectPrivate(q), data(NULL)
+    {
+    }
+    dtkAbstractDataReaderPrivate(const dtkAbstractDataReaderPrivate &other)
+        : dtkAbstractObjectPrivate(other),
+          enabled(false),
+          data(other.data),
+          file(other.file),
+          files(other.files)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataReaderPrivate(void) {}

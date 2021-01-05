@@ -22,7 +22,7 @@
 #include <dtkCoreSupport/dtkPlugin.h>
 #include <dtkCoreSupport/dtkPluginManager.h>
 
-#include<QtWidgets>
+#include <QtWidgets>
 
 class dtkAboutPluginPrivate
 {
@@ -30,12 +30,14 @@ public:
     QTextBrowser *description;
 };
 
-dtkAboutPlugin::dtkAboutPlugin(dtkPlugin *plugin, QWidget *parent) : QWidget(parent), d(new dtkAboutPluginPrivate)
+dtkAboutPlugin::dtkAboutPlugin(dtkPlugin *plugin, QWidget *parent)
+    : QWidget(parent), d(new dtkAboutPluginPrivate)
 {
     this->setup(plugin);
 }
 
-dtkAboutPlugin::dtkAboutPlugin(const QString& plugin, QWidget *parent) : QWidget(parent), d(new dtkAboutPluginPrivate)
+dtkAboutPlugin::dtkAboutPlugin(const QString &plugin, QWidget *parent)
+    : QWidget(parent), d(new dtkAboutPluginPrivate)
 {
     this->setup(dtkPluginManager::instance()->plugin(plugin));
 }
@@ -58,17 +60,17 @@ void dtkAboutPlugin::setup(dtkPlugin *plugin)
 
     QListWidget *authors = new QListWidget(this);
 
-    foreach (const QString& author, plugin->authors())
+    foreach (const QString &author, plugin->authors())
         authors->addItem(author);
 
     QListWidget *contributors = new QListWidget(this);
 
-    foreach (const QString& contributor, plugin->contributors())
+    foreach (const QString &contributor, plugin->contributors())
         contributors->addItem(contributor);
 
     QListWidget *dependencies = new QListWidget(this);
 
-    foreach (const QString& dependency, plugin->dependencies())
+    foreach (const QString &dependency, plugin->dependencies())
         dependencies->addItem(dependency);
 
     QFormLayout *layout = new QFormLayout(this);

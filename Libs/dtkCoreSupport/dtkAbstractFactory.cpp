@@ -26,7 +26,4 @@ dtkAbstractFactory::dtkAbstractFactory(void)
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(clear()));
 }
 
-dtkAbstractFactory::~dtkAbstractFactory(void)
-{
-
-}
+dtkAbstractFactory::~dtkAbstractFactory(void) {}

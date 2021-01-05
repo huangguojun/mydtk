@@ -36,7 +36,7 @@ public:
     virtual ~dtkLogDestination(void);
 
 public:
-    virtual void write(const QString& message) = 0;
+    virtual void write(const QString &message) = 0;
 };
 
 // /////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ public:
 class DTKLOG_EXPORT dtkLogDestinationConsole : public dtkLogDestination
 {
 public:
-    void write(const QString& message);
+    void write(const QString &message);
 };
 
 // /////////////////////////////////////////////////////////////////
@@ -58,11 +58,11 @@ class dtkLogDestinationFilePrivate;
 class DTKLOG_EXPORT dtkLogDestinationFile : public dtkLogDestination
 {
 public:
-    dtkLogDestinationFile(const QString& path, qlonglong max_file_size);
+    dtkLogDestinationFile(const QString &path, qlonglong max_file_size);
     ~dtkLogDestinationFile(void);
 
 public:
-    void write(const QString& message);
+    void write(const QString &message);
     void setMaxFileSize(qlonglong size);
 
 private:
@@ -82,7 +82,7 @@ public:
     ~dtkLogDestinationModel(void);
 
 public:
-    void write(const QString& message);
+    void write(const QString &message);
 
 private:
     dtkLogDestinationModelPrivate *d;

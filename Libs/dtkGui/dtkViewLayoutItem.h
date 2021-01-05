@@ -104,8 +104,8 @@ public:
     void setLayout(dtkViewLayout *layout);
 
 public slots:
-    void   clear(void);
-    void   split(void);
+    void clear(void);
+    void split(void);
     void unsplit(void);
     void maximize(void);
 

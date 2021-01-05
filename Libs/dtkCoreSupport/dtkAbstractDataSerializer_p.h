@@ -20,9 +20,9 @@
 #ifndef DTKABSTRACTDATASERIALIZER_P
 #define DTKABSTRACTDATASERIALIZER_P
 
-#include <dtkCoreSupportExport.h>
-#include "dtkAbstractObject_p.h"
 #include "dtkAbstractDataSerializer.h"
+#include "dtkAbstractObject_p.h"
+#include <dtkCoreSupportExport.h>
 
 class QByteArray;
 
@@ -33,10 +33,13 @@ class QByteArray;
 class DTKCORESUPPORT_EXPORT dtkAbstractDataSerializerPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractDataSerializerPrivate(dtkAbstractDataSerializer *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractDataSerializerPrivate(const dtkAbstractDataSerializerPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(false),
-        array(other.array) {}
+    dtkAbstractDataSerializerPrivate(dtkAbstractDataSerializer *q = 0) : dtkAbstractObjectPrivate(q)
+    {
+    }
+    dtkAbstractDataSerializerPrivate(const dtkAbstractDataSerializerPrivate &other)
+        : dtkAbstractObjectPrivate(other), enabled(false), array(other.array)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataSerializerPrivate(void) {}

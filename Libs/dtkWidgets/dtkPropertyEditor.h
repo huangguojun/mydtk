@@ -30,18 +30,18 @@ class DTKWIDGETS_EXPORT dtkPropertyEditor : public QFrame
     Q_OBJECT
 
 public:
-    dtkPropertyEditor(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditor(const QString &property_name, QObject *object, QWidget *parent = 0);
     virtual ~dtkPropertyEditor(void);
 
 public:
-    void  setValue(const QVariant& value);
+    void setValue(const QVariant &value);
     QVariant value(void) const;
 
 public:
     QObject *propertyObject(void);
 
 public:
-    virtual void  setEditorData(const QVariant& data) = 0;
+    virtual void setEditorData(const QVariant &data) = 0;
     virtual QVariant editorData(void) = 0;
 
 protected:
@@ -57,11 +57,11 @@ class DTKWIDGETS_EXPORT dtkPropertyEditorDouble : public dtkPropertyEditor
     Q_OBJECT
 
 public:
-    dtkPropertyEditorDouble(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditorDouble(const QString &property_name, QObject *object, QWidget *parent = 0);
     ~dtkPropertyEditorDouble(void);
 
 public:
-    void  setEditorData(const QVariant& data);
+    void setEditorData(const QVariant &data);
     QVariant editorData(void);
 
 public slots:
@@ -77,11 +77,11 @@ class DTKWIDGETS_EXPORT dtkPropertyEditorInteger : public dtkPropertyEditor
     Q_OBJECT
 
 public:
-    dtkPropertyEditorInteger(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditorInteger(const QString &property_name, QObject *object, QWidget *parent = 0);
     ~dtkPropertyEditorInteger(void);
 
 public:
-    void  setEditorData(const QVariant& data);
+    void setEditorData(const QVariant &data);
     QVariant editorData(void);
 
 public slots:
@@ -97,11 +97,11 @@ class DTKWIDGETS_EXPORT dtkPropertyEditorString : public dtkPropertyEditor
     Q_OBJECT
 
 public:
-    dtkPropertyEditorString(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditorString(const QString &property_name, QObject *object, QWidget *parent = 0);
     ~dtkPropertyEditorString(void);
 
 public:
-    void  setEditorData(const QVariant& data);
+    void setEditorData(const QVariant &data);
     QVariant editorData(void);
 
 public slots:
@@ -117,14 +117,13 @@ class DTKWIDGETS_EXPORT dtkPropertyEditorEnum : public dtkPropertyEditor
     Q_OBJECT
 
 public:
-    dtkPropertyEditorEnum(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditorEnum(const QString &property_name, QObject *object, QWidget *parent = 0);
     ~dtkPropertyEditorEnum(void);
 
 public:
-    void  setEditorData(const QVariant& data);
+    void setEditorData(const QVariant &data);
     QVariant editorData(void);
 
 public slots:
     void onIndexChanged(int index);
 };
-

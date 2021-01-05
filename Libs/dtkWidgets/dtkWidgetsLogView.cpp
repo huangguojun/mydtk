@@ -31,8 +31,8 @@ dtkWidgetsLogViewBar::dtkWidgetsLogViewBar(QWidget *parent) : QFrame(parent)
 {
     QPushButton *b_trace = new QPushButton("Trace", this);
     QPushButton *b_debug = new QPushButton("Debug", this);
-    QPushButton *b_info  = new QPushButton("Info", this);
-    QPushButton *b_warn  = new QPushButton("Warn", this);
+    QPushButton *b_info = new QPushButton("Info", this);
+    QPushButton *b_warn = new QPushButton("Warn", this);
     QPushButton *b_error = new QPushButton("Error", this);
     QPushButton *b_fatal = new QPushButton("Fatal", this);
 
@@ -60,16 +60,13 @@ dtkWidgetsLogViewBar::dtkWidgetsLogViewBar(QWidget *parent) : QFrame(parent)
 
     connect(b_trace, SIGNAL(clicked(bool)), this, SIGNAL(displayTrace(bool)));
     connect(b_debug, SIGNAL(clicked(bool)), this, SIGNAL(displayDebug(bool)));
-    connect(b_info,  SIGNAL(clicked(bool)), this, SIGNAL(displayInfo(bool)));
-    connect(b_warn,  SIGNAL(clicked(bool)), this, SIGNAL(displayWarn(bool)));
+    connect(b_info, SIGNAL(clicked(bool)), this, SIGNAL(displayInfo(bool)));
+    connect(b_warn, SIGNAL(clicked(bool)), this, SIGNAL(displayWarn(bool)));
     connect(b_error, SIGNAL(clicked(bool)), this, SIGNAL(displayError(bool)));
     connect(b_fatal, SIGNAL(clicked(bool)), this, SIGNAL(displayFatal(bool)));
 }
 
-dtkWidgetsLogViewBar::~dtkWidgetsLogViewBar(void)
-{
-
-}
+dtkWidgetsLogViewBar::~dtkWidgetsLogViewBar(void) {}
 
 // /////////////////////////////////////////////////////////////////
 // dtkWidgetsLogViewTree
@@ -89,13 +86,11 @@ dtkWidgetsLogViewTree::dtkWidgetsLogViewTree(QWidget *parent) : QTreeWidget(pare
     this->addTopLevelItem(this->runtime);
     this->addTopLevelItem(this->file);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(onItemClicked(QTreeWidgetItem *, int)));
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this,
+            SLOT(onItemClicked(QTreeWidgetItem *, int)));
 }
 
-dtkWidgetsLogViewTree::~dtkWidgetsLogViewTree(void)
-{
-
-}
+dtkWidgetsLogViewTree::~dtkWidgetsLogViewTree(void) {}
 
 void dtkWidgetsLogViewTree::onItemClicked(QTreeWidgetItem *item, int)
 {
@@ -134,9 +129,11 @@ dtkWidgetsLogViewList::~dtkWidgetsLogViewList(void)
 void dtkWidgetsLogViewList::setAutoScroll(bool autoScroll)
 {
     if (autoScroll)
-        connect(this->model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(scrollToBottom()));
+        connect(this->model, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+                SLOT(scrollToBottom()));
     else
-        disconnect(this->model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(scrollToBottom()));
+        disconnect(this->model, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+                   SLOT(scrollToBottom()));
 }
 
 void dtkWidgetsLogViewList::setRuntime(void)
@@ -146,7 +143,7 @@ void dtkWidgetsLogViewList::setRuntime(void)
     this->proxy->setSourceModel(this->model);
 }
 
-void dtkWidgetsLogViewList::setFile(const QString& path)
+void dtkWidgetsLogViewList::setFile(const QString &path)
 {
     if (this->models.contains(path))
         this->models.remove(path);
@@ -166,12 +163,14 @@ void dtkWidgetsLogViewList::setFile(const QString& path)
 
     this->models.insert(path, model);
 
-    // QFileSystemWatcher *watcher = new QFileSystemWatcher(QStringList() << path, this);
+    // QFileSystemWatcher *watcher = new QFileSystemWatcher(QStringList() <<
+    // path, this);
 
-    // connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(setFile(const QString&)));
+    // connect(watcher, SIGNAL(fileChanged(const QString&)), this,
+    // SLOT(setFile(const QString&)));
 }
 
-void dtkWidgetsLogViewList::setFilter(const QRegExp& expression)
+void dtkWidgetsLogViewList::setFilter(const QRegExp &expression)
 {
     this->proxy->setFilterRegExp(expression);
 }
@@ -199,7 +198,8 @@ QRegExp dtkWidgetsLogViewPrivate::expression(void)
 // dtkWidgetsLogView
 // /////////////////////////////////////////////////////////////////
 
-dtkWidgetsLogView::dtkWidgetsLogView(QWidget *parent) : QWidget(parent), d(new dtkWidgetsLogViewPrivate)
+dtkWidgetsLogView::dtkWidgetsLogView(QWidget *parent)
+    : QWidget(parent), d(new dtkWidgetsLogViewPrivate)
 {
     d->bar = new dtkWidgetsLogViewBar(this);
 
@@ -228,14 +228,14 @@ dtkWidgetsLogView::dtkWidgetsLogView(QWidget *parent) : QWidget(parent), d(new d
     layout->addLayout(h_layout);
 
     connect(d->tree, SIGNAL(runtimeClicked()), d->list, SLOT(setRuntime()));
-    connect(d->tree, SIGNAL(fileClicked(const QString&)), d->list, SLOT(setFile(const QString&)));
+    connect(d->tree, SIGNAL(fileClicked(const QString &)), d->list, SLOT(setFile(const QString &)));
 
     connect(d->checkbox_auto_scroll, SIGNAL(stateChanged(int)), this, SLOT(autoScrollChecked(int)));
-    connect(d->list, SIGNAL(clicked(const QModelIndex&)), this, SLOT(disableAutoScroll()));
+    connect(d->list, SIGNAL(clicked(const QModelIndex &)), this, SLOT(disableAutoScroll()));
     connect(d->bar, SIGNAL(displayTrace(bool)), this, SLOT(displayTrace(bool)));
     connect(d->bar, SIGNAL(displayDebug(bool)), this, SLOT(displayDebug(bool)));
-    connect(d->bar, SIGNAL(displayInfo(bool)),  this, SLOT(displayInfo(bool)));
-    connect(d->bar, SIGNAL(displayWarn(bool)),  this, SLOT(displayWarn(bool)));
+    connect(d->bar, SIGNAL(displayInfo(bool)), this, SLOT(displayInfo(bool)));
+    connect(d->bar, SIGNAL(displayWarn(bool)), this, SLOT(displayWarn(bool)));
     connect(d->bar, SIGNAL(displayError(bool)), this, SLOT(displayError(bool)));
     connect(d->bar, SIGNAL(displayFatal(bool)), this, SLOT(displayFatal(bool)));
 

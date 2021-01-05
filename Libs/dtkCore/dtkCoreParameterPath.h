@@ -25,22 +25,22 @@
 class DTKCORE_EXPORT dtkCoreParameterPath : public dtkCoreParameterBase<dtkCoreParameterPath>
 {
 public:
-     dtkCoreParameterPath(void) = default;
+    dtkCoreParameterPath(void) = default;
     ~dtkCoreParameterPath(void) = default;
 
     dtkCoreParameterPath(const dtkCoreParameter *);
-    dtkCoreParameterPath(const QVariant&);
-    dtkCoreParameterPath(const dtkCoreParameterPath&);
+    dtkCoreParameterPath(const QVariant &);
+    dtkCoreParameterPath(const dtkCoreParameterPath &);
 
-    dtkCoreParameterPath(const QString& label, const QString& path,
-                         const QStringList& filters, const QString& = QString());
+    dtkCoreParameterPath(const QString &label, const QString &path, const QStringList &filters,
+                         const QString & = QString());
 
-    dtkCoreParameterPath& operator = (const dtkCoreParameter *);
-    dtkCoreParameterPath& operator = (const QVariant&);
-    dtkCoreParameterPath& operator = (const dtkCoreParameterPath&);
+    dtkCoreParameterPath &operator=(const dtkCoreParameter *);
+    dtkCoreParameterPath &operator=(const QVariant &);
+    dtkCoreParameterPath &operator=(const dtkCoreParameterPath &);
 
-    void setValue(const QString&);
-    void setValue(const QVariant&) override;
+    void setValue(const QString &);
+    void setValue(const QVariant &) override;
     QVariantHash toVariantHash(void) override;
 
     QString path(void) const;
@@ -50,8 +50,8 @@ public:
     QString baseName(void) const;
 
 private:
-    using dtkCoreParameter::m_label;
     using dtkCoreParameter::m_doc;
+    using dtkCoreParameter::m_label;
 
     QString m_path;
     QStringList m_filters;
@@ -59,10 +59,10 @@ private:
 
 // ///////////////////////////////////////////////////////////////////
 
-DTKCORE_EXPORT QDataStream& operator << (QDataStream&, const dtkCoreParameterPath&);
-DTKCORE_EXPORT QDataStream& operator >> (QDataStream&, dtkCoreParameterPath&);
+DTKCORE_EXPORT QDataStream &operator<<(QDataStream &, const dtkCoreParameterPath &);
+DTKCORE_EXPORT QDataStream &operator>>(QDataStream &, dtkCoreParameterPath &);
 
-DTKCORE_EXPORT QDebug operator << (QDebug, dtkCoreParameterPath);
+DTKCORE_EXPORT QDebug operator<<(QDebug, dtkCoreParameterPath);
 
 // ///////////////////////////////////////////////////////////////////
 // Alias and QMetaType
@@ -70,7 +70,7 @@ DTKCORE_EXPORT QDebug operator << (QDebug, dtkCoreParameterPath);
 
 namespace dtk {
 
-    using d_path = dtkCoreParameterPath;
+using d_path = dtkCoreParameterPath;
 }
 
 Q_DECLARE_METATYPE(dtk::d_path);

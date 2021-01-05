@@ -24,8 +24,8 @@ class dtkWidgetsMenuPrivate
 {
 public:
     QHash<QString, QObject *> object_hash;
-    QVector<QObject *>        object_list;
-    QVector<dtkWidgetsMenu *>   menu_list;
+    QVector<QObject *> object_list;
+    QVector<dtkWidgetsMenu *> menu_list;
 
 public:
     QString title;
@@ -38,9 +38,10 @@ public:
 // dtkWidgetsMenu
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenu::dtkWidgetsMenu(int icon_id, const QString& title, QObject *parent): QObject(parent), d(new dtkWidgetsMenuPrivate)
+dtkWidgetsMenu::dtkWidgetsMenu(int icon_id, const QString &title, QObject *parent)
+    : QObject(parent), d(new dtkWidgetsMenuPrivate)
 {
-    d->title   = title;
+    d->title = title;
     d->icon_id = icon_id;
 }
 
@@ -63,7 +64,7 @@ dtkWidgetsMenu *dtkWidgetsMenu::addMenu(dtkWidgetsMenu *menu)
     return nullptr;
 }
 
-dtkWidgetsMenu *dtkWidgetsMenu::addMenu(int icon_id, const QString& title)
+dtkWidgetsMenu *dtkWidgetsMenu::addMenu(int icon_id, const QString &title)
 {
     dtkWidgetsMenu *menu = new dtkWidgetsMenu(icon_id, title);
 
@@ -78,8 +79,8 @@ dtkWidgetsMenu *dtkWidgetsMenu::addMenu(int icon_id, const QString& title)
 
 dtkWidgetsMenu *dtkWidgetsMenu::insertMenu(int pos, dtkWidgetsMenu *menu)
 {
-    if (pos < 0 || pos > d->menu_list.size() || !menu ) {
-      return nullptr;
+    if (pos < 0 || pos > d->menu_list.size() || !menu) {
+        return nullptr;
     }
 
     menu->setParent(this);
@@ -102,7 +103,6 @@ dtkWidgetsMenu *dtkWidgetsMenu::insertMenu(int pos, int icon_id, const QString &
     return m;
 }
 
-
 void dtkWidgetsMenu::clear(void)
 {
     d->object_hash.clear();
@@ -121,7 +121,7 @@ dtkWidgetsMenuItem *dtkWidgetsMenu::addItem(dtkWidgetsMenuItem *item)
     return nullptr;
 }
 
-dtkWidgetsMenuItem *dtkWidgetsMenu::addItem(int icon_id, const QString& title)
+dtkWidgetsMenuItem *dtkWidgetsMenu::addItem(int icon_id, const QString &title)
 {
     dtkWidgetsMenuItem *item = new dtkWidgetsMenuItem(icon_id, title);
 
@@ -145,7 +145,7 @@ dtkWidgetsMenuItem *dtkWidgetsMenu::insertItem(int pos, dtkWidgetsMenuItem *item
     return nullptr;
 }
 
-dtkWidgetsMenuItem *dtkWidgetsMenu::insertItem(int pos, int icon_id, const QString& title)
+dtkWidgetsMenuItem *dtkWidgetsMenu::insertItem(int pos, int icon_id, const QString &title)
 {
     dtkWidgetsMenuItem *item = new dtkWidgetsMenuItem(icon_id, title);
 
@@ -178,7 +178,8 @@ dtkWidgetsMenuItem *dtkWidgetsMenu::addParameter(dtkWidgetsMenuItem *item)
     return this->addItem(item);
 }
 
-dtkWidgetsMenuItem *dtkWidgetsMenu::addParameter(const QString& title, dtkCoreParameter *parameter, const QString& representation)
+dtkWidgetsMenuItem *dtkWidgetsMenu::addParameter(const QString &title, dtkCoreParameter *parameter,
+                                                 const QString &representation)
 {
     dtkWidgetsMenuItem *item = new dtkWidgetsMenuItemParameter(title, parameter, representation);
 
@@ -219,17 +220,17 @@ QVector<dtkWidgetsMenu *> dtkWidgetsMenu::menus(void) const
     return d->menu_list;
 }
 
-dtkWidgetsMenu * dtkWidgetsMenu::menu(const QString& id) const
+dtkWidgetsMenu *dtkWidgetsMenu::menu(const QString &id) const
 {
-    if(!d->object_hash.contains(id))
+    if (!d->object_hash.contains(id))
         return nullptr;
 
     return dynamic_cast<dtkWidgetsMenu *>(d->object_hash[id]);
 }
 
-QObject *dtkWidgetsMenu::object(const QString& id)
+QObject *dtkWidgetsMenu::object(const QString &id)
 {
-    if(!d->object_hash.contains(id))
+    if (!d->object_hash.contains(id))
         return nullptr;
 
     return d->object_hash[id];

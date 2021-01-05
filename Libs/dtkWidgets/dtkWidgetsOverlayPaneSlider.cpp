@@ -36,7 +36,7 @@ class dtkWidgetsOverlayPaneSliderBar : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneSliderBar(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneSliderBar(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneSliderBar(void);
 
 signals:
@@ -44,7 +44,7 @@ signals:
 
 public:
     void addItem(fa::icon);
-    void addItem(fa::icon icon, const QString& tooltip);
+    void addItem(fa::icon icon, const QString &tooltip);
 
 public:
     QVBoxLayout *layout;
@@ -67,10 +67,7 @@ dtkWidgetsOverlayPaneSliderBar::dtkWidgetsOverlayPaneSliderBar(QWidget *parent) 
     this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 }
 
-dtkWidgetsOverlayPaneSliderBar::~dtkWidgetsOverlayPaneSliderBar(void)
-{
-
-}
+dtkWidgetsOverlayPaneSliderBar::~dtkWidgetsOverlayPaneSliderBar(void) {}
 
 void dtkWidgetsOverlayPaneSliderBar::addItem(fa::icon icon)
 {
@@ -78,7 +75,8 @@ void dtkWidgetsOverlayPaneSliderBar::addItem(fa::icon icon)
 
     QToolButton *button = new QToolButton(this);
     button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    button->setIcon(dtkFontAwesome::instance()->icon(icon).pixmap(QSize(this->icon_size, this->icon_size)));
+    button->setIcon(
+            dtkFontAwesome::instance()->icon(icon).pixmap(QSize(this->icon_size, this->icon_size)));
     button->setFixedWidth(this->icon_size);
     button->setFixedHeight(this->icon_size);
 
@@ -86,12 +84,11 @@ void dtkWidgetsOverlayPaneSliderBar::addItem(fa::icon icon)
 
     this->layout->addWidget(button);
 
-    connect(button, &QToolButton::clicked, [=] (void) {
-        emit clicked(this->buttons.indexOf(button));
-    });
+    connect(button, &QToolButton::clicked,
+            [=](void) { emit clicked(this->buttons.indexOf(button)); });
 }
 
-void dtkWidgetsOverlayPaneSliderBar::addItem(fa::icon icon, const QString& tooltip)
+void dtkWidgetsOverlayPaneSliderBar::addItem(fa::icon icon, const QString &tooltip)
 {
     this->addItem(icon);
     this->buttons.last()->setToolTip(tooltip);
@@ -106,7 +103,7 @@ class dtkWidgetsOverlayPaneSliderViewPort : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneSliderViewPort(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneSliderViewPort(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneSliderViewPort(void);
 
 public slots:
@@ -121,17 +118,15 @@ public:
     int bound = 300;
 };
 
-dtkWidgetsOverlayPaneSliderViewPort::dtkWidgetsOverlayPaneSliderViewPort(QWidget *parent) : QFrame(parent)
+dtkWidgetsOverlayPaneSliderViewPort::dtkWidgetsOverlayPaneSliderViewPort(QWidget *parent)
+    : QFrame(parent)
 {
     this->layout = new QHBoxLayout(this);
     this->layout->setContentsMargins(0, 0, 0, 0);
     this->layout->setSpacing(0);
 }
 
-dtkWidgetsOverlayPaneSliderViewPort::~dtkWidgetsOverlayPaneSliderViewPort(void)
-{
-
-}
+dtkWidgetsOverlayPaneSliderViewPort::~dtkWidgetsOverlayPaneSliderViewPort(void) {}
 
 void dtkWidgetsOverlayPaneSliderViewPort::addWidget(QWidget *widget)
 {
@@ -146,7 +141,8 @@ void dtkWidgetsOverlayPaneSliderViewPort::addWidget(QWidget *widget)
 
 void dtkWidgetsOverlayPaneSliderViewPort::remWidget(QWidget *widget)
 {
-    this->layout->removeWidget(widget); widget->setParent(0);
+    this->layout->removeWidget(widget);
+    widget->setParent(0);
 
     this->repaint();
 
@@ -162,7 +158,7 @@ class dtkWidgetsOverlayPaneSliderArea : public QScrollArea
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneSliderArea(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneSliderArea(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneSliderArea(void);
 
 public:
@@ -195,15 +191,13 @@ public:
     int to = 0;
 };
 
-dtkWidgetsOverlayPaneSliderArea::dtkWidgetsOverlayPaneSliderArea(QWidget *parent) : QScrollArea(parent)
+dtkWidgetsOverlayPaneSliderArea::dtkWidgetsOverlayPaneSliderArea(QWidget *parent)
+    : QScrollArea(parent)
 {
     this->setFrameShape(QFrame::NoFrame);
 }
 
-dtkWidgetsOverlayPaneSliderArea::~dtkWidgetsOverlayPaneSliderArea(void)
-{
-
-}
+dtkWidgetsOverlayPaneSliderArea::~dtkWidgetsOverlayPaneSliderArea(void) {}
 
 void dtkWidgetsOverlayPaneSliderArea::slideH(int dx)
 {
@@ -233,43 +227,42 @@ void dtkWidgetsOverlayPaneSliderArea::keyPressEvent(QKeyEvent *)
 void dtkWidgetsOverlayPaneSliderArea::wheelEvent(QWheelEvent *event)
 {
     QWheelEvent *e = new QWheelEvent(
-        event->posF(),
-        event->globalPosF(),
-        QPoint(0, event->pixelDelta().y()),
-        QPoint(0, event->angleDelta().y()),
-        event->delta(),
-        Qt::Vertical,
-        event->buttons(),
-        event->modifiers(),
-        event->phase(),
-        event->source(),
-        event->inverted());
+            event->posF(), event->globalPosF(), QPoint(0, event->pixelDelta().y()),
+            QPoint(0, event->angleDelta().y()), event->delta(), Qt::Vertical, event->buttons(),
+            event->modifiers(), event->phase(), event->source(), event->inverted());
 
     QScrollArea::wheelEvent(e);
 }
 
 QWidget *dtkWidgetsOverlayPaneSliderArea::widget(int index)
 {
-    if(this->size().width() < 100)
+    if (this->size().width() < 100)
         return nullptr;
 
-    if (dtkWidgetsOverlayPaneSliderViewPort *viewport = dynamic_cast<dtkWidgetsOverlayPaneSliderViewPort *>(QScrollArea::widget())) {
+    if (dtkWidgetsOverlayPaneSliderViewPort *viewport =
+                dynamic_cast<dtkWidgetsOverlayPaneSliderViewPort *>(QScrollArea::widget())) {
 
         for (int i = 0; i < viewport->layout->count(); ++i) {
 
-            if (dtkWidgetsMenuBarContainerSlide *slide = dynamic_cast<dtkWidgetsMenuBarContainerSlide *>(viewport->layout->itemAt(i)->widget())) {
+            if (dtkWidgetsMenuBarContainerSlide *slide =
+                        dynamic_cast<dtkWidgetsMenuBarContainerSlide *>(
+                                viewport->layout->itemAt(i)->widget())) {
 
                 int k = 0;
 
                 for (int j = 0; j < slide->layout()->count(); ++j) {
 
-                    if (dtkWidgetsMenuHeaderFacade *facade = dynamic_cast<dtkWidgetsMenuHeaderFacade *>(slide->layout()->itemAt(j)->widget())) {
+                    if (dtkWidgetsMenuHeaderFacade *facade =
+                                dynamic_cast<dtkWidgetsMenuHeaderFacade *>(
+                                        slide->layout()->itemAt(j)->widget())) {
 
-                        if(k == index) {
+                        if (k == index) {
 
                             for (int k = j; k < slide->layout()->count(); ++k) {
 
-                                if (dtkWidgetsMenuFacade *facade = dynamic_cast<dtkWidgetsMenuFacade *>(slide->layout()->itemAt(k)->widget())) {
+                                if (dtkWidgetsMenuFacade *facade =
+                                            dynamic_cast<dtkWidgetsMenuFacade *>(
+                                                    slide->layout()->itemAt(k)->widget())) {
 
                                     return facade;
                                 }
@@ -292,22 +285,27 @@ void dtkWidgetsOverlayPaneSliderArea::scrollContentsBy(int dx, int dy)
 
     if (this->spying && !this->to) {
 
-        if (dtkWidgetsOverlayPaneSliderViewPort *viewport = dynamic_cast<dtkWidgetsOverlayPaneSliderViewPort *>(QScrollArea::widget())) {
+        if (dtkWidgetsOverlayPaneSliderViewPort *viewport =
+                    dynamic_cast<dtkWidgetsOverlayPaneSliderViewPort *>(QScrollArea::widget())) {
 
             for (int i = 0; i < viewport->layout->count(); i++) {
 
-                if (dtkWidgetsMenuBarContainerSlide *slide = dynamic_cast<dtkWidgetsMenuBarContainerSlide *>(viewport->layout->itemAt(i)->widget())) {
+                if (dtkWidgetsMenuBarContainerSlide *slide =
+                            dynamic_cast<dtkWidgetsMenuBarContainerSlide *>(
+                                    viewport->layout->itemAt(i)->widget())) {
 
                     int k = 0;
 
                     for (int j = 0; j < slide->layout()->count(); j++) {
 
-                        if (dtkWidgetsMenuHeaderFacade *facade = dynamic_cast<dtkWidgetsMenuHeaderFacade *>(slide->layout()->itemAt(j)->widget())) {
+                        if (dtkWidgetsMenuHeaderFacade *facade =
+                                    dynamic_cast<dtkWidgetsMenuHeaderFacade *>(
+                                            slide->layout()->itemAt(j)->widget())) {
 
-                            int p_y =   this->mapToGlobal(this->rect().topLeft()).y();
+                            int p_y = this->mapToGlobal(this->rect().topLeft()).y();
                             int s_y = facade->mapToGlobal(this->rect().topLeft()).y();
 
-                            if(s_y > p_y) {
+                            if (s_y > p_y) {
 
                                 emit q->indexVisible(k);
 
@@ -324,7 +322,7 @@ void dtkWidgetsOverlayPaneSliderArea::scrollContentsBy(int dx, int dy)
 }
 
 // ///////////////////////////////////////////////////////////////////
-//dtkWidgetsOverlayPaneSliderPrivate
+// dtkWidgetsOverlayPaneSliderPrivate
 // ///////////////////////////////////////////////////////////////////
 
 class dtkWidgetsOverlayPaneSliderPrivate : public QFrame
@@ -332,31 +330,31 @@ class dtkWidgetsOverlayPaneSliderPrivate : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneSliderPrivate(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneSliderPrivate(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneSliderPrivate(void);
 
 public:
     void addWidget(fa::icon, QWidget *);
-    void addWidget(fa::icon, QWidget *, const QString&);
+    void addWidget(fa::icon, QWidget *, const QString &);
 
 public:
     void remWidget(QWidget *);
 
 public slots:
     void slideTo(int);
-    void slideTo(int, std::function<void(void)>&);
+    void slideTo(int, std::function<void(void)> &);
     void slideToNext(void);
     void slideToPrevious(void);
-    void slideToPrevious(std::function<void(void)>&);
+    void slideToPrevious(std::function<void(void)> &);
 
 public slots:
-    void setCurrentIndex(int, std::function<void (void)>&);
+    void setCurrentIndex(int, std::function<void(void)> &);
 
 private slots:
-    QAbstractAnimation *slideToPrivate(int, std::function<void (void)>&);
+    QAbstractAnimation *slideToPrivate(int, std::function<void(void)> &);
 
 public:
- // dtkWidgetsOverlayPaneSliderBar *bar;
+    // dtkWidgetsOverlayPaneSliderBar *bar;
     dtkWidgetsOverlayPaneSliderArea *area;
     dtkWidgetsOverlayPaneSliderViewPort *viewport;
 
@@ -374,7 +372,8 @@ public:
     QSequentialAnimationGroup *animation = nullptr;
 };
 
-dtkWidgetsOverlayPaneSliderPrivate::dtkWidgetsOverlayPaneSliderPrivate(QWidget *parent) : QFrame(parent)
+dtkWidgetsOverlayPaneSliderPrivate::dtkWidgetsOverlayPaneSliderPrivate(QWidget *parent)
+    : QFrame(parent)
 {
     this->viewport = new dtkWidgetsOverlayPaneSliderViewPort(this);
 
@@ -389,16 +388,13 @@ dtkWidgetsOverlayPaneSliderPrivate::dtkWidgetsOverlayPaneSliderPrivate(QWidget *
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-//  layout->addWidget(this->bar);
+    //  layout->addWidget(this->bar);
     layout->addWidget(this->area);
 
-//  connect(this->bar, SIGNAL(clicked(int)), this, SLOT(slideTo(int)));
+    //  connect(this->bar, SIGNAL(clicked(int)), this, SLOT(slideTo(int)));
 }
 
-dtkWidgetsOverlayPaneSliderPrivate::~dtkWidgetsOverlayPaneSliderPrivate(void)
-{
-
-}
+dtkWidgetsOverlayPaneSliderPrivate::~dtkWidgetsOverlayPaneSliderPrivate(void) {}
 
 void dtkWidgetsOverlayPaneSliderPrivate::addWidget(fa::icon icon, QWidget *widget)
 {
@@ -416,7 +412,8 @@ void dtkWidgetsOverlayPaneSliderPrivate::addWidget(fa::icon icon, QWidget *widge
     this->area->repaint();
 }
 
-void dtkWidgetsOverlayPaneSliderPrivate::addWidget(fa::icon icon, QWidget *widget, const QString& tooltip)
+void dtkWidgetsOverlayPaneSliderPrivate::addWidget(fa::icon icon, QWidget *widget,
+                                                   const QString &tooltip)
 {
     widget->show();
 
@@ -445,23 +442,26 @@ void dtkWidgetsOverlayPaneSliderPrivate::remWidget(QWidget *widget)
     this->area->repaint();
 }
 
-QAbstractAnimation *dtkWidgetsOverlayPaneSliderPrivate::slideToPrivate(int to, std::function<void (void)>& callback)
+QAbstractAnimation *
+dtkWidgetsOverlayPaneSliderPrivate::slideToPrivate(int to, std::function<void(void)> &callback)
 {
-    if(this->viewport->count <= 1)
+    if (this->viewport->count <= 1)
         return 0;
 
-    if(to > this->viewport->count)
+    if (to > this->viewport->count)
         return 0;
 
-    if(to < 0)
+    if (to < 0)
         return 0;
 
-    if(this->animation)
+    if (this->animation)
         return 0;
 
-    double h_xf = this->from; this->from = to; this->area->to = to;
+    double h_xf = this->from;
+    this->from = to;
+    this->area->to = to;
     double h_xt = to;
-     this->h_ss = this->area->horizontalScrollBar()->value();
+    this->h_ss = this->area->horizontalScrollBar()->value();
 
     QVariantAnimation *h_animation = new QVariantAnimation;
     h_animation->setEasingCurve(QEasingCurve::OutBounce);
@@ -469,8 +469,7 @@ QAbstractAnimation *dtkWidgetsOverlayPaneSliderPrivate::slideToPrivate(int to, s
     h_animation->setEndValue(h_xt);
     h_animation->setDuration(::duration);
 
-    connect(h_animation, &QVariantAnimation::valueChanged, [=] (const QVariant& value)
-    {
+    connect(h_animation, &QVariantAnimation::valueChanged, [=](const QVariant &value) {
         double ss = this->h_ss;
         double sm = this->area->horizontalScrollBar()->maximum();
         double sc = this->viewport->count - 1;
@@ -488,25 +487,23 @@ QAbstractAnimation *dtkWidgetsOverlayPaneSliderPrivate::slideToPrivate(int to, s
     v_animation->setStartValue(v_xf);
     v_animation->setEndValue(v_xt);
 
-    // the vertical scroll duration is proportional to the height we need to scroll up.
-    // this way it ends the transition as soon as it has finished and it frees up the dirty flag is_in_transition.
+    // the vertical scroll duration is proportional to the height we need to
+    // scroll up. this way it ends the transition as soon as it has finished and
+    // it frees up the dirty flag is_in_transition.
     double ratio_to_scroll = v_xf;
     if (this->area->verticalScrollBar()->maximum() > 0)
         ratio_to_scroll /= this->area->verticalScrollBar()->maximum();
 
     v_animation->setDuration(::duration * ratio_to_scroll);
 
-    connect(v_animation, &QVariantAnimation::valueChanged, [=] (const QVariant& value)
-    {
-        this->area->slideV(value.toDouble());
-    });
+    connect(v_animation, &QVariantAnimation::valueChanged,
+            [=](const QVariant &value) { this->area->slideV(value.toDouble()); });
 
     this->animation = new QSequentialAnimationGroup(this);
     this->animation->addAnimation(h_animation);
     this->animation->addAnimation(v_animation);
 
-    connect(this->animation, &QAbstractAnimation::finished, [=] (void) -> void
-    {
+    connect(this->animation, &QAbstractAnimation::finished, [=](void) -> void {
         this->animation->deleteLater();
         this->animation = nullptr;
 
@@ -524,15 +521,14 @@ QAbstractAnimation *dtkWidgetsOverlayPaneSliderPrivate::slideToPrivate(int to, s
     return animation;
 }
 
-
 void dtkWidgetsOverlayPaneSliderPrivate::slideTo(int to)
 {
-    std::function<void(void)> callback = [=] (void) -> void {}; // empty callback to call the same function with it
+    std::function<void(void)> callback = [=](void) -> void {
+    }; // empty callback to call the same function with it
     Q_UNUSED(this->slideToPrivate(to, callback));
 }
 
-
-void dtkWidgetsOverlayPaneSliderPrivate::slideTo(int to, std::function<void(void)>& callback)
+void dtkWidgetsOverlayPaneSliderPrivate::slideTo(int to, std::function<void(void)> &callback)
 {
     Q_UNUSED(this->slideToPrivate(to, callback));
 }
@@ -547,12 +543,13 @@ void dtkWidgetsOverlayPaneSliderPrivate::slideToPrevious(void)
     this->slideTo(this->from - 1);
 }
 
-void dtkWidgetsOverlayPaneSliderPrivate::slideToPrevious(std::function<void(void)>& callback)
+void dtkWidgetsOverlayPaneSliderPrivate::slideToPrevious(std::function<void(void)> &callback)
 {
     this->slideTo(this->from - 1, callback);
 }
 
-void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index, std::function<void (void)>& callback)
+void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index,
+                                                         std::function<void(void)> &callback)
 {
     if (this->size().width() < 100)
         return;
@@ -562,19 +559,21 @@ void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index, std::functio
 
     QWidget *destination = this->area->widget(index);
 
-    const QRect microFocus        = destination         ->inputMethodQuery(Qt::ImMicroFocus).toRect();
-    const QRect defaultMicroFocus = destination->QWidget::inputMethodQuery(Qt::ImMicroFocus).toRect();
+    const QRect microFocus = destination->inputMethodQuery(Qt::ImMicroFocus).toRect();
+    const QRect defaultMicroFocus =
+            destination->QWidget::inputMethodQuery(Qt::ImMicroFocus).toRect();
 
     QRect focusRect = (microFocus != defaultMicroFocus)
-        ? QRect(destination->mapTo(this->viewport, microFocus.topLeft()), microFocus.size())
-        : QRect(destination->mapTo(this->viewport, QPoint(0,0)), destination->size());
+            ? QRect(destination->mapTo(this->viewport, microFocus.topLeft()), microFocus.size())
+            : QRect(destination->mapTo(this->viewport, QPoint(0, 0)), destination->size());
 
     const QRect visibleRect(-this->viewport->pos(), this->area->viewport()->size());
 
     if (visibleRect.contains(focusRect))
         return;
 
-    focusRect.adjust(0, -32, 0, 32 + 1); // No bug. To include title. // TODO: use theme
+    focusRect.adjust(0, -32, 0,
+                     32 + 1); // No bug. To include title. // TODO: use theme
 
     double xf = this->area->verticalScrollBar()->value();
     double xt = -1.0;
@@ -586,7 +585,7 @@ void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index, std::functio
     else
         xt = focusRect.top();
 
-    if(xt < 0)
+    if (xt < 0)
         return;
 
     QVariantAnimation *t_animation = new QVariantAnimation;
@@ -595,13 +594,10 @@ void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index, std::functio
     t_animation->setEndValue(xt);
     t_animation->setDuration(::duration);
 
-    connect(t_animation, &QVariantAnimation::valueChanged, [=] (const QVariant& value)
-    {
-        this->area->slideV(value.toDouble());
-    });
+    connect(t_animation, &QVariantAnimation::valueChanged,
+            [=](const QVariant &value) { this->area->slideV(value.toDouble()); });
 
-    connect(t_animation, &QAbstractAnimation::finished, [=] (void) -> void
-    {
+    connect(t_animation, &QAbstractAnimation::finished, [=](void) -> void {
         if (this->animation) {
             this->animation->deleteLater();
             this->animation = nullptr;
@@ -623,7 +619,8 @@ void dtkWidgetsOverlayPaneSliderPrivate::setCurrentIndex(int index, std::functio
 //
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsOverlayPaneSlider::dtkWidgetsOverlayPaneSlider(QWidget *parent) : dtkWidgetsOverlayPaneItem(parent)
+dtkWidgetsOverlayPaneSlider::dtkWidgetsOverlayPaneSlider(QWidget *parent)
+    : dtkWidgetsOverlayPaneItem(parent)
 {
     d = new dtkWidgetsOverlayPaneSliderPrivate;
     d->q = this;
@@ -646,8 +643,8 @@ void dtkWidgetsOverlayPaneSlider::setBound(int bound)
 {
     d->viewport->bound = bound;
 
-    for (int i=0; i <d->viewport->layout->count(); ++i) {
-        QLayoutItem * item = d->viewport->layout->itemAt(i);
+    for (int i = 0; i < d->viewport->layout->count(); ++i) {
+        QLayoutItem *item = d->viewport->layout->itemAt(i);
         if (item->widget())
             item->widget()->setFixedWidth(bound);
     }
@@ -658,7 +655,7 @@ void dtkWidgetsOverlayPaneSlider::addSlide(fa::icon icon, QWidget *contents)
     d->addWidget(icon, contents);
 }
 
-void dtkWidgetsOverlayPaneSlider::addSlide(fa::icon icon, QWidget *contents, const QString& tooltip)
+void dtkWidgetsOverlayPaneSlider::addSlide(fa::icon icon, QWidget *contents, const QString &tooltip)
 {
     d->addWidget(icon, contents, tooltip);
 }
@@ -673,7 +670,7 @@ void dtkWidgetsOverlayPaneSlider::slideTo(int index)
     d->slideTo(index);
 }
 
-void dtkWidgetsOverlayPaneSlider::slideTo(int index, std::function<void ()>& callback)
+void dtkWidgetsOverlayPaneSlider::slideTo(int index, std::function<void()> &callback)
 {
     d->slideTo(index, callback);
 }
@@ -688,18 +685,19 @@ void dtkWidgetsOverlayPaneSlider::slideToPrevious(void)
     d->slideToPrevious();
 }
 
-void dtkWidgetsOverlayPaneSlider::slideToPrevious(std::function<void ()>& callback)
+void dtkWidgetsOverlayPaneSlider::slideToPrevious(std::function<void()> &callback)
 {
     d->slideToPrevious(callback);
 }
 
 void dtkWidgetsOverlayPaneSlider::setCurrentIndex(int index)
 {
-    std::function<void(void)> callback = [=] (void) -> void {}; // empty callback to call the same function with it
+    std::function<void(void)> callback = [=](void) -> void {
+    }; // empty callback to call the same function with it
     d->setCurrentIndex(index, callback);
 }
 
-void dtkWidgetsOverlayPaneSlider::setCurrentIndex(int index, std::function<void ()>& callback)
+void dtkWidgetsOverlayPaneSlider::setCurrentIndex(int index, std::function<void()> &callback)
 {
     d->setCurrentIndex(index, callback);
 }

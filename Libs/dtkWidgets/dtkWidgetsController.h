@@ -31,7 +31,7 @@ public:
     void insert(dtkWidgetsWidget *);
 
 public:
-    dtkWidgetsWidget *view(const QString& name);
+    dtkWidgetsWidget *view(const QString &name);
 
 public:
     QStringList viewNames(void);
@@ -43,7 +43,7 @@ signals:
     void inserted(dtkWidgetsWidget *);
 
 protected:
-     dtkWidgetsController(void);
+    dtkWidgetsController(void);
     ~dtkWidgetsController(void);
 
 private:

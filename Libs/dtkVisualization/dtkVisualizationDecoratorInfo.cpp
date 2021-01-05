@@ -18,9 +18,9 @@
 #include "dtkVisualizationMetaType.h"
 #include "dtkVisualizationView2D.h"
 
-#include <dtkThemes/dtkThemesEngine>
-#include <dtkMeta>
 #include <QtWidgets>
+#include <dtkMeta>
+#include <dtkThemes/dtkThemesEngine>
 
 #include <vtkCellData.h>
 #include <vtkDataArray.h>
@@ -57,17 +57,15 @@ void dtkVisualizationDecoratorInfoPrivate::update(void)
 
     QString scalar_color = dtkThemesEngine::instance()->value("@cyan");
     QString vector_color = dtkThemesEngine::instance()->value("@green");
-    QString fields_tooltip = "<font color=\""
-        + scalar_color + "\">scalar</font> , <font color=\""
-        + vector_color + "\">vector</font>";
+    QString fields_tooltip = "<font color=\"" + scalar_color + "\">scalar</font> , <font color=\""
+            + vector_color + "\">vector</font>";
 
     QStringList point_fields;
-    for (int i=0; i < dataset->GetPointData()->GetNumberOfArrays(); ++i) {
-        switch(dataset->GetPointData()->GetArray(i)->GetNumberOfComponents()) {
+    for (int i = 0; i < dataset->GetPointData()->GetNumberOfArrays(); ++i) {
+        switch (dataset->GetPointData()->GetArray(i)->GetNumberOfComponents()) {
         case 1: {
             QString s = "<font color=\"" + scalar_color + "\">"
-                + QString::fromUtf8(dataset->GetPointData()->GetArrayName(i))
-                + "</font>";
+                    + QString::fromUtf8(dataset->GetPointData()->GetArrayName(i)) + "</font>";
 
             point_fields << s;
             break;
@@ -75,8 +73,7 @@ void dtkVisualizationDecoratorInfoPrivate::update(void)
 
         case 3: {
             QString s = "<font color=\"" + vector_color + "\">"
-                + QString::fromUtf8(dataset->GetPointData()->GetArrayName(i))
-                + "</font>";
+                    + QString::fromUtf8(dataset->GetPointData()->GetArrayName(i)) + "</font>";
 
             point_fields << s;
             break;
@@ -90,12 +87,11 @@ void dtkVisualizationDecoratorInfoPrivate::update(void)
     q->setInformation("PointFields:", point_fields.join("; "), fields_tooltip);
 
     QStringList cell_fields;
-    for (int i=0; i < dataset->GetCellData()->GetNumberOfArrays(); ++i) {
-        switch(dataset->GetCellData()->GetArray(i)->GetNumberOfComponents()) {
+    for (int i = 0; i < dataset->GetCellData()->GetNumberOfArrays(); ++i) {
+        switch (dataset->GetCellData()->GetArray(i)->GetNumberOfComponents()) {
         case 1: {
             QString s = "<font color=\"" + scalar_color + "\">"
-                + QString::fromUtf8(dataset->GetCellData()->GetArrayName(i))
-                + "</font>";
+                    + QString::fromUtf8(dataset->GetCellData()->GetArrayName(i)) + "</font>";
 
             cell_fields << s;
             break;
@@ -103,8 +99,7 @@ void dtkVisualizationDecoratorInfoPrivate::update(void)
 
         case 3: {
             QString s = "<font color=\"" + vector_color + "\">"
-                + QString::fromUtf8(dataset->GetCellData()->GetArrayName(i))
-                + "</font>";
+                    + QString::fromUtf8(dataset->GetCellData()->GetArrayName(i)) + "</font>";
 
             cell_fields << s;
             break;
@@ -119,20 +114,19 @@ void dtkVisualizationDecoratorInfoPrivate::update(void)
     double bounds[6];
     dataset->GetBounds(bounds);
     QString bounds_s = "[" + QString::number(bounds[0], 'f', 2) + ", "
-        + QString::number(bounds[1], 'f', 2) + ", "
-        + QString::number(bounds[2], 'f', 2) + ", "
-        + QString::number(bounds[3], 'f', 2) + ", "
-        + QString::number(bounds[4], 'f', 2) + ", "
-        + QString::number(bounds[5], 'f', 2) + "]";
+            + QString::number(bounds[1], 'f', 2) + ", " + QString::number(bounds[2], 'f', 2) + ", "
+            + QString::number(bounds[3], 'f', 2) + ", " + QString::number(bounds[4], 'f', 2) + ", "
+            + QString::number(bounds[5], 'f', 2) + "]";
     q->setInformation("Bounds:", bounds_s, "[xmin, xmax, ymin, ymax, zmin, zmax]");
-    //dataset->GetCellTypes()
+    // dataset->GetCellTypes()
 }
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationDecorator implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorInfo::dtkVisualizationDecoratorInfo(void) : dtkVisualizationDecorator(), d(new dtkVisualizationDecoratorInfoPrivate)
+dtkVisualizationDecoratorInfo::dtkVisualizationDecoratorInfo(void)
+    : dtkVisualizationDecorator(), d(new dtkVisualizationDecoratorInfoPrivate)
 {
     d->q = this;
 
@@ -166,12 +160,12 @@ bool dtkVisualizationDecoratorInfo::isDecorating(void)
 
 void dtkVisualizationDecoratorInfo::setVisibility(bool visible)
 {
-    for (QWidget * w: d->inspectors) {
+    for (QWidget *w : d->inspectors) {
         w->setVisible(visible);
     }
 }
 
-void dtkVisualizationDecoratorInfo::setData(const QVariant& data)
+void dtkVisualizationDecoratorInfo::setData(const QVariant &data)
 {
     d->dataset = data.value<vtkDataSet *>();
 
@@ -187,28 +181,42 @@ void dtkVisualizationDecoratorInfo::setCanvas(dtkVisualizationCanvas *canvas)
 {
     d->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 }
 
-void dtkVisualizationDecoratorInfo::setFileInfo(const QFileInfo& f_info)
+void dtkVisualizationDecoratorInfo::setFileInfo(const QFileInfo &f_info)
 {
     this->setInformation("Name:", f_info.fileName());
     this->setInformation("Path:", f_info.absolutePath());
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-    this->setInformation("Creation Time", f_info.fileTime(QFileDevice::FileBirthTime).toString("dd-MMM-yyyy: HH:mm"));
+    this->setInformation(
+            "Creation Time",
+            f_info.fileTime(QFileDevice::FileBirthTime).toString("dd-MMM-yyyy: HH:mm"));
 #endif
     double s = f_info.size();
     QString unit = " B";
-    if(s > 1000.) { s /= 1000.; unit = " KB"; }
-    if(s > 1000.) { s /= 1000.; unit = " MB"; }
-    if(s > 1000.) { s /= 1000.; unit = " GB"; }
+    if (s > 1000.) {
+        s /= 1000.;
+        unit = " KB";
+    }
+    if (s > 1000.) {
+        s /= 1000.;
+        unit = " MB";
+    }
+    if (s > 1000.) {
+        s /= 1000.;
+        unit = " GB";
+    }
 
     this->setInformation("Size:", QString::number(s, 'f', 2) + unit); // in bytes
 }
 
-void dtkVisualizationDecoratorInfo::setInformation(const QString& key, const QString& value, const QString& tooltip)
+void dtkVisualizationDecoratorInfo::setInformation(const QString &key, const QString &value,
+                                                   const QString &tooltip)
 {
     // if(!d->view) {
     //     qDebug() << Q_FUNC_INFO << "setCanvas must be called first";
@@ -218,21 +226,18 @@ void dtkVisualizationDecoratorInfo::setInformation(const QString& key, const QSt
     QLabel *v = new QLabel(value);
     v->setWordWrap(true);
 
-    if(!tooltip.isEmpty())
+    if (!tooltip.isEmpty())
         v->setToolTip(tooltip);
 
     this->setInformation(key, v);
 }
 
-void dtkVisualizationDecoratorInfo::setInformation(const QString& key, QWidget *value)
+void dtkVisualizationDecoratorInfo::setInformation(const QString &key, QWidget *value)
 {
     d->layout->addRow(key, value);
 }
 
-void dtkVisualizationDecoratorInfo::touch(void)
-{
-
-}
+void dtkVisualizationDecoratorInfo::touch(void) {}
 
 void dtkVisualizationDecoratorInfo::unsetCanvas(void)
 {

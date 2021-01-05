@@ -12,8 +12,8 @@
 
 // Code:
 
-#include "dtkTheme.h"
 #include "dtkThemesEngine.h"
+#include "dtkTheme.h"
 #include "dtkThemesParser.h"
 
 #include <QtWidgets>
@@ -35,7 +35,7 @@ public:
 
 dtkThemesEngine *dtkThemesEngine::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkThemesEngine;
 
     return s_instance;
@@ -45,12 +45,14 @@ const QStringList dtkThemesEngine::themes(void)
 {
     QDir ressources(":dtk-themes/mixins");
 
-    return ressources.entryList(QStringList() << "*.qless").replaceInStrings("dtkTheme", "").replaceInStrings(".qless", "");
+    return ressources.entryList(QStringList() << "*.qless")
+            .replaceInStrings("dtkTheme", "")
+            .replaceInStrings(".qless", "");
 }
 
-void dtkThemesEngine::apply(const QString& theme)
+void dtkThemesEngine::apply(const QString &theme)
 {
-    if(!d->parser)
+    if (!d->parser)
         d->parser = new dtkThemesParser(this);
 
     QString chosen = theme;
@@ -85,12 +87,12 @@ void dtkThemesEngine::polish(QWidget *w)
     d->theme->touch(w);
 }
 
-const QColor dtkThemesEngine::color(const QString& key) const
+const QColor dtkThemesEngine::color(const QString &key) const
 {
     return d->parser->color(key);
 }
 
-const QString dtkThemesEngine::value(const QString& key) const
+const QString dtkThemesEngine::value(const QString &key) const
 {
     return d->parser->values()[key];
 }

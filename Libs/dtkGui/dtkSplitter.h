@@ -27,7 +27,7 @@ class DTKGUISUPPORT_EXPORT dtkSplitter : public QSplitter
     Q_OBJECT
 
 public:
-     dtkSplitter(QWidget *parent = 0, bool slim = true);
+    dtkSplitter(QWidget *parent = 0, bool slim = true);
     ~dtkSplitter(void);
 
     QSplitterHandle *createHandle(void);

@@ -25,18 +25,18 @@
 class dtkSearchFieldPrivate : public QObject
 {
 public:
-    dtkSearchFieldPrivate(dtkSearchField *searchField, QLineEdit *lineEdit, QToolButton *clearButton)
-        : QObject(searchField), lineEdit(lineEdit), clearButton(clearButton) {}
+    dtkSearchFieldPrivate(dtkSearchField *searchField, QLineEdit *lineEdit,
+                          QToolButton *clearButton)
+        : QObject(searchField), lineEdit(lineEdit), clearButton(clearButton)
+    {
+    }
 
-    int lineEditFrameWidth() const {
+    int lineEditFrameWidth() const
+    {
         return lineEdit->style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
     }
-    int clearButtonPaddedWidth() const {
-        return clearButton->width() + lineEditFrameWidth() * 2;
-    }
-    int clearButtonPaddedHeight() const {
-        return clearButton->height() + lineEditFrameWidth() * 2;
-    }
+    int clearButtonPaddedWidth() const { return clearButton->width() + lineEditFrameWidth() * 2; }
+    int clearButtonPaddedHeight() const { return clearButton->height() + lineEditFrameWidth() * 2; }
 
     QPointer<QLineEdit> lineEdit;
     QPointer<QToolButton> clearButton;
@@ -45,12 +45,9 @@ public:
 dtkSearchField::dtkSearchField(QWidget *parent) : QWidget(parent)
 {
     QLineEdit *lineEdit = new QLineEdit(this);
-    connect(lineEdit, SIGNAL(textChanged(QString)),
-            this, SIGNAL(textChanged(QString)));
-    connect(lineEdit, SIGNAL(editingFinished()),
-            this, SIGNAL(editingFinished()));
-    connect(lineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(setText(QString)));
+    connect(lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(textChanged(QString)));
+    connect(lineEdit, SIGNAL(editingFinished()), this, SIGNAL(editingFinished()));
+    connect(lineEdit, SIGNAL(textChanged(QString)), this, SLOT(setText(QString)));
 
     QToolButton *clearButton = new QToolButton(this);
     QPixmap clearIcon(QString(":/Qocoa/qsearchfield_nonmac.png"));
@@ -63,7 +60,8 @@ dtkSearchField::dtkSearchField(QWidget *parent) : QWidget(parent)
 
     d = new dtkSearchFieldPrivate(this, lineEdit, clearButton);
 
-    lineEdit->setStyleSheet(QString("QLineEdit { padding-right: %1px; } ").arg(d->clearButtonPaddedWidth()));
+    lineEdit->setStyleSheet(
+            QString("QLineEdit { padding-right: %1px; } ").arg(d->clearButtonPaddedWidth()));
     const int width = qMax(lineEdit->minimumSizeHint().width(), d->clearButtonPaddedWidth());
     const int height = qMax(lineEdit->minimumSizeHint().height(), d->clearButtonPaddedHeight());
     lineEdit->setMinimumSize(width, height);
@@ -80,7 +78,7 @@ dtkSearchField::~dtkSearchField(void)
     d = NULL;
 }
 
-void dtkSearchField::setText(const QString& text)
+void dtkSearchField::setText(const QString &text)
 {
     Q_ASSERT(d && d->clearButton && d->lineEdit);
 
@@ -93,7 +91,7 @@ void dtkSearchField::setText(const QString& text)
         d->lineEdit->setText(text);
 }
 
-void dtkSearchField::setPlaceholderText(const QString& text)
+void dtkSearchField::setPlaceholderText(const QString &text)
 {
     Q_ASSERT(d && d->lineEdit);
 

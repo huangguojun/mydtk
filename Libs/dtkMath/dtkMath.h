@@ -22,11 +22,11 @@ class dtkMatrixPluginFactory;
 class dtkMatrixPluginManager;
 
 namespace dtkMath {
-    namespace matrix {
-        DTKMATH_EXPORT dtkMatrixPluginFactory& pluginFactory(void);
-        DTKMATH_EXPORT dtkMatrixPluginManager& pluginManager(void);
-    }
-}
+namespace matrix {
+DTKMATH_EXPORT dtkMatrixPluginFactory &pluginFactory(void);
+DTKMATH_EXPORT dtkMatrixPluginManager &pluginManager(void);
+} // namespace matrix
+} // namespace dtkMath
 
 //
 // dtkMath.h ends here

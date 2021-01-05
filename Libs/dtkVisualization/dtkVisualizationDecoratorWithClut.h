@@ -29,14 +29,10 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorWithClut : public dtkVisu
     Q_OBJECT
 
 public:
-    enum Support {
-        Unknown = 0,
-        Point = 1,
-        Cell = 2
-    };
+    enum Support { Unknown = 0, Point = 1, Cell = 2 };
 
 public:
-     dtkVisualizationDecoratorWithClut(void);
+    dtkVisualizationDecoratorWithClut(void);
     ~dtkVisualizationDecoratorWithClut(void);
 
 public:
@@ -53,18 +49,18 @@ public:
 public:
     virtual void setVisibility(bool visible) override;
 
- public:
+public:
     QString fieldName(void) const;
 
 protected:
     virtual void restoreSettings(void) override;
     virtual void setCurrentRange(double, double);
-    virtual bool setCurrentFieldName(const QString&);
-    virtual void setColorMap(const QMap<double, QColor>&);
+    virtual bool setCurrentFieldName(const QString &);
+    virtual void setColorMap(const QMap<double, QColor> &);
 
 protected:
     class dtkVisualizationDecoratorWithClutPrivate *d;
-          dtkVisualizationDecoratorWithClutPrivate *d_func(void);
+    dtkVisualizationDecoratorWithClutPrivate *d_func(void);
     const dtkVisualizationDecoratorWithClutPrivate *d_func(void) const;
 };
 

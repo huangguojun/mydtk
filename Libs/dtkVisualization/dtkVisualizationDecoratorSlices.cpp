@@ -24,10 +24,10 @@
 #include <QtWidgets>
 
 #include <vtkActor.h>
+#include <vtkCellData.h>
 #include <vtkCellDataToPointData.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkCommand.h>
-#include <vtkCellData.h>
 #include <vtkCubeAxesActor.h>
 #include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
@@ -39,13 +39,12 @@
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkTextProperty.h>
 #include <vtkTransformFilter.h>
 #include <vtkTransformPolyDataFilter.h>
-
 
 // /////////////////////////////////////////////////////////////////
 // dtkSliceActorObserver
@@ -54,19 +53,16 @@
 class dtkSliceActorObserver : public vtkCommand
 {
 private:
-    dtkSliceActorObserver(void) {
-       // control = nullptr;
+    dtkSliceActorObserver(void)
+    {
+        // control = nullptr;
         origin = 0.0;
     };
 
 public:
-    static dtkSliceActorObserver *New(void)
-    {
-        return new dtkSliceActorObserver;
-    };
+    static dtkSliceActorObserver *New(void) { return new dtkSliceActorObserver; };
 
-    virtual void Execute(vtkObject *caller, unsigned long event, void *)
-    {
+    virtual void Execute(vtkObject *caller, unsigned long event, void *){
         /*
         vtkImagePlaneWidget *w = reinterpret_cast<vtkImagePlaneWidget*>(caller);
 
@@ -79,7 +75,7 @@ public:
     };
 
 public:
-    //dtkVisualizationWidgetsSliceControls *control;
+    // dtkVisualizationWidgetsSliceControls *control;
     double origin;
 };
 
@@ -97,10 +93,10 @@ public:
     vtkSmartPointer<vtkCellDataToPointData> c2p_filter;
 
 public:
-    QCheckBox *show_actor_cb     = nullptr;
-   // dtkVisualizationWidgetsSliceControls *enable_slicing_x = nullptr;
-   // dtkVisualizationWidgetsSliceControls *enable_slicing_y = nullptr;
-   // dtkVisualizationWidgetsSliceControls *enable_slicing_z = nullptr;
+    QCheckBox *show_actor_cb = nullptr;
+    // dtkVisualizationWidgetsSliceControls *enable_slicing_x = nullptr;
+    // dtkVisualizationWidgetsSliceControls *enable_slicing_y = nullptr;
+    // dtkVisualizationWidgetsSliceControls *enable_slicing_z = nullptr;
     dtkSliceActorObserver *observer_x = nullptr;
     dtkSliceActorObserver *observer_y = nullptr;
     dtkSliceActorObserver *observer_z = nullptr;
@@ -111,7 +107,6 @@ public:
 public slots:
     void onCanvasFocused(void);
 };
-
 
 void dtkVisualizationDecoratorSlicesPrivate::setupSlices(void)
 {
@@ -142,13 +137,14 @@ void dtkVisualizationDecoratorSlicesPrivate::setupSlices(void)
     this->observer_x->origin = origin[0];
     this->observer_y->origin = origin[1];
     this->observer_z->origin = origin[2];
-    }
+}
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationDecoratorSlices implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorSlices::dtkVisualizationDecoratorSlices(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorSlicesPrivate())
+dtkVisualizationDecoratorSlices::dtkVisualizationDecoratorSlices(void)
+    : dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorSlicesPrivate())
 {
     /*
     d->c2p_filter = vtkSmartPointer<vtkCellDataToPointData>::New();
@@ -183,54 +179,54 @@ dtkVisualizationDecoratorSlices::dtkVisualizationDecoratorSlices(void): dtkVisua
             this->draw();
         });
 
-    connect(d->enable_slicing_x, &dtkVisualizationWidgetsSliceControls::toggled, [=] (bool checked) {
-        d->volume_slice_x->SetEnabled(checked);
-        this->draw();
+    connect(d->enable_slicing_x, &dtkVisualizationWidgetsSliceControls::toggled,
+    [=] (bool checked) { d->volume_slice_x->SetEnabled(checked); this->draw();
     });
-    connect(d->enable_slicing_x, &dtkVisualizationWidgetsSliceControls::reset, [=] () {
-            double *origin;
-            origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
+    connect(d->enable_slicing_x, &dtkVisualizationWidgetsSliceControls::reset,
+    [=] () { double *origin; origin =
+    vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_x->SetPlaneOrientationToXAxes();
             d->volume_slice_x->SetSlicePosition(origin[0]);
             this->draw();
     });
-    connect(d->enable_slicing_x, &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
+    connect(d->enable_slicing_x,
+    &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
             double *origin;
             origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_x->SetSlicePosition(value + origin[0]);
             this->draw();
     });
 
-    connect(d->enable_slicing_y, &dtkVisualizationWidgetsSliceControls::toggled, [=] (bool checked) {
-        d->volume_slice_y->SetEnabled(checked);
-        this->draw();
+    connect(d->enable_slicing_y, &dtkVisualizationWidgetsSliceControls::toggled,
+    [=] (bool checked) { d->volume_slice_y->SetEnabled(checked); this->draw();
     });
-    connect(d->enable_slicing_y, &dtkVisualizationWidgetsSliceControls::reset, [=] () {
-            double *origin;
-            origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
+    connect(d->enable_slicing_y, &dtkVisualizationWidgetsSliceControls::reset,
+    [=] () { double *origin; origin =
+    vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_y->SetPlaneOrientationToYAxes();
             d->volume_slice_y->SetSlicePosition(origin[1]);
             this->draw();
     });
-    connect(d->enable_slicing_y, &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
+    connect(d->enable_slicing_y,
+    &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
             double *origin;
             origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_y->SetSlicePosition(value + origin[1]);
             this->draw();
     });
 
-    connect(d->enable_slicing_z, &dtkVisualizationWidgetsSliceControls::toggled, [=] (bool checked) {
-        d->volume_slice_z->SetEnabled(checked);
-        this->draw();
+    connect(d->enable_slicing_z, &dtkVisualizationWidgetsSliceControls::toggled,
+    [=] (bool checked) { d->volume_slice_z->SetEnabled(checked); this->draw();
     });
-    connect(d->enable_slicing_z, &dtkVisualizationWidgetsSliceControls::reset, [=] () {
-            double *origin;
-            origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
+    connect(d->enable_slicing_z, &dtkVisualizationWidgetsSliceControls::reset,
+    [=] () { double *origin; origin =
+    vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_z->SetPlaneOrientationToZAxes();
             d->volume_slice_z->SetSlicePosition(origin[2]);
             this->draw();
     });
-    connect(d->enable_slicing_z, &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
+    connect(d->enable_slicing_z,
+    &dtkVisualizationWidgetsSliceControls::valueChanged, [=] (double value) {
             double *origin;
             origin = vtkImageData::SafeDownCast(d_func()->dataset)->GetOrigin();
             d->volume_slice_z->SetSlicePosition((value + origin[2]));
@@ -244,7 +240,8 @@ dtkVisualizationDecoratorSlices::dtkVisualizationDecoratorSlices(void): dtkVisua
     d->enable_slicing_y->setObjectName("Y");
     d->enable_slicing_z->setObjectName("Z");
 
-    d_func()->inspectors << d->show_actor_cb << d->enable_slicing_x << d->enable_slicing_y << d->enable_slicing_z ;
+    d_func()->inspectors << d->show_actor_cb << d->enable_slicing_x <<
+    d->enable_slicing_y << d->enable_slicing_z ;
     */
 }
 
@@ -256,7 +253,7 @@ dtkVisualizationDecoratorSlices::~dtkVisualizationDecoratorSlices(void)
     d = nullptr;
 }
 
-void dtkVisualizationDecoratorSlices::setData(const QVariant& data)
+void dtkVisualizationDecoratorSlices::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -281,9 +278,12 @@ void dtkVisualizationDecoratorSlices::setData(const QVariant& data)
     this->setCurrentFieldName(d_func()->current_field_name);
 
     if (this->canvas()) {
-        d->volume_slice_x->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
-        d->volume_slice_y->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
-        d->volume_slice_z->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+        d->volume_slice_x->SetInteractor(
+                d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+        d->volume_slice_y->SetInteractor(
+                d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+        d->volume_slice_z->SetInteractor(
+                d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
 
         d->setupSlices();
     }
@@ -297,18 +297,22 @@ void dtkVisualizationDecoratorSlices::setCanvas(dtkVisualizationCanvas *canvas)
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
-    d->volume_slice_x->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
-    d->volume_slice_y->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
-    d->volume_slice_z->SetInteractor(d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+    d->volume_slice_x->SetInteractor(
+            d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+    d->volume_slice_y->SetInteractor(
+            d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
+    d->volume_slice_z->SetInteractor(
+            d_func()->view->renderer()->GetRenderWindow()->GetInteractor());
 
     if (d->volume_slice_x->GetInput()) {
         d->setupSlices();
     }
-
 
     d_func()->enableScalarBar();
 }
@@ -354,7 +358,8 @@ void dtkVisualizationDecoratorSlices::touch(void)
     /*
     dtkVisualizationDecoratorWithClut::touch();
 
-    vtkSmartPointer<vtkImageData> data = vtkImageData::SafeDownCast(d->c2p_filter->GetOutput());
+    vtkSmartPointer<vtkImageData> data =
+    vtkImageData::SafeDownCast(d->c2p_filter->GetOutput());
     d->c2p_filter->Update();
     data->GetPointData()->SetActiveScalars(qPrintable(d_func()->current_field_name));
 
@@ -368,7 +373,7 @@ void dtkVisualizationDecoratorSlices::touch(void)
 */
 }
 
-bool dtkVisualizationDecoratorSlices::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorSlices::setCurrentFieldName(const QString &field_name)
 {
     /*
     if (!dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name)) {
@@ -378,8 +383,10 @@ bool dtkVisualizationDecoratorSlices::setCurrentFieldName(const QString& field_n
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
      if(support == Support::Cell) {
-         d->c2p_filter->SetInputArrayToProcess(0, 0, 0, vtkDataObject::FIELD_ASSOCIATION_CELLS, qPrintable(field_name));
-         vtkSmartPointer<vtkImageData> data = vtkImageData::SafeDownCast(d->c2p_filter->GetOutput());
+         d->c2p_filter->SetInputArrayToProcess(0, 0, 0,
+    vtkDataObject::FIELD_ASSOCIATION_CELLS, qPrintable(field_name));
+         vtkSmartPointer<vtkImageData> data =
+    vtkImageData::SafeDownCast(d->c2p_filter->GetOutput());
          d->c2p_filter->Update();
          data->GetPointData()->SetActiveScalars(qPrintable(field_name));
 
@@ -400,7 +407,7 @@ bool dtkVisualizationDecoratorSlices::setCurrentFieldName(const QString& field_n
      */
 }
 
-void dtkVisualizationDecoratorSlices::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorSlices::setColorMap(const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 

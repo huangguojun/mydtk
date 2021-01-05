@@ -32,7 +32,8 @@ public:
 // dtkWidgetsParameterIntSpinBox implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterIntSpinBox::dtkWidgetsParameterIntSpinBox(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterIntSpinBoxPrivate)
+dtkWidgetsParameterIntSpinBox::dtkWidgetsParameterIntSpinBox(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterIntSpinBoxPrivate)
 {
     d->spin_box = new dtkWidgetsSpinBoxLong;
 
@@ -56,8 +57,10 @@ bool dtkWidgetsParameterIntSpinBox::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_int *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterIntSpinBox.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterIntSpinBox.";
         return false;
     }
 
@@ -68,19 +71,17 @@ bool dtkWidgetsParameterIntSpinBox::connect(dtkCoreParameter *p)
 
     d->spin_box->setValue(m_parameter->value());
 
-    m_parameter->connect([=] (QVariant v)
-    {
+    m_parameter->connect([=](QVariant v) {
         int value = v.value<dtk::d_int>().value();
         d->spin_box->blockSignals(true);
         d->spin_box->setValue(value);
         d->spin_box->blockSignals(false);
     });
 
-    //Note: here the type is "long long" instead of "int", to inherit the focus manager from the BaseSpinBox.
-    QObject::connect(d->spin_box, QOverload<long long>::of(&dtkWidgetsSpinBoxLong::valueChanged), [=] (int v)
-    {
-        m_parameter->shareValue(QVariant::fromValue(v));
-    });
+    // Note: here the type is "long long" instead of "int", to inherit the focus
+    // manager from the BaseSpinBox.
+    QObject::connect(d->spin_box, QOverload<long long>::of(&dtkWidgetsSpinBoxLong::valueChanged),
+                     [=](int v) { m_parameter->shareValue(QVariant::fromValue(v)); });
 
     return true;
 }

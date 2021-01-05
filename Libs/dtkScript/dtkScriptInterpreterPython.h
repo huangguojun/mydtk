@@ -23,18 +23,19 @@ class DTKSCRIPT_EXPORT dtkScriptInterpreterPython : public dtkScriptInterpreter
     Q_OBJECT
 
 public:
-     static dtkScriptInterpreterPython *instance();
+    static dtkScriptInterpreterPython *instance();
 
 protected:
-     static dtkScriptInterpreterPython *s_instance;
+    static dtkScriptInterpreterPython *s_instance;
 
 public slots:
-    QString interpret(const QString& command, int *stat) override;
-    void init(bool redirect_io = false, const QString& settings_file = QString("dtk-script") ) override ;
+    QString interpret(const QString &command, int *stat) override;
+    void init(bool redirect_io = false,
+              const QString &settings_file = QString("dtk-script")) override;
 
 public:
-    void allowThreads(void);     // need to be called from main thread
-    void endAllowThreads(void);  // need to be called from main thread
+    void allowThreads(void); // need to be called from main thread
+    void endAllowThreads(void); // need to be called from main thread
     void childAcquireLock(void); // need to be called from child thread
     void childReleaseLock(void); // need to be called from child thread
 
@@ -42,8 +43,8 @@ public:
     void release(void);
 
 private:
-     dtkScriptInterpreterPython(void);
-     ~dtkScriptInterpreterPython(void);
+    dtkScriptInterpreterPython(void);
+    ~dtkScriptInterpreterPython(void);
 
 private:
     class dtkScriptInterpreterPythonPrivate *d;

@@ -33,18 +33,16 @@ public:
 // dtkTheme
 // /////////////////////////////////////////////////////////////////////////////
 
-dtkTheme::dtkTheme(const QString& sheet) : dtkTheme(sheet, dtkTheme::styleBase())
-{
+dtkTheme::dtkTheme(const QString &sheet) : dtkTheme(sheet, dtkTheme::styleBase()) {}
 
-}
-
-dtkTheme::dtkTheme(const QString& sheet, QStyle *style) : QProxyStyle(style)
+dtkTheme::dtkTheme(const QString &sheet, QStyle *style) : QProxyStyle(style)
 {
     d = new dtkThemePrivate;
     d->sheet = sheet;
 }
 
-void dtkTheme::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+void dtkTheme::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option,
+                             QPainter *painter, const QWidget *widget) const
 {
     return QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
@@ -70,7 +68,8 @@ void dtkTheme::polish(QPalette &palette)
     palette.setColor(QPalette::Foreground, dtkThemesEngine::instance()->color("@fg"));
 
     palette.setColor(QPalette::Base, dtkThemesEngine::instance()->color("@bgalt"));
-    palette.setColor(QPalette::AlternateBase, dtkThemesEngine::instance()->color("@bgalt").lighter());
+    palette.setColor(QPalette::AlternateBase,
+                     dtkThemesEngine::instance()->color("@bgalt").lighter());
     palette.setColor(QPalette::Text, dtkThemesEngine::instance()->color("@fg"));
 
     palette.setColor(QPalette::ToolTipBase, dtkThemesEngine::instance()->color("@base2"));
@@ -102,7 +101,8 @@ void dtkTheme::polish(QPalette &palette)
     palette.setBrush(QPalette::Foreground, QBrush());
 
     palette.setBrush(QPalette::Base, QBrush(dtkThemesEngine::instance()->color("@bgalt")));
-    palette.setBrush(QPalette::AlternateBase, QBrush(dtkThemesEngine::instance()->color("@bgalt").lighter()));
+    palette.setBrush(QPalette::AlternateBase,
+                     QBrush(dtkThemesEngine::instance()->color("@bgalt").lighter()));
     palette.setBrush(QPalette::Text, QBrush(dtkThemesEngine::instance()->color("@fg")));
 
     palette.setBrush(QPalette::ToolTipBase, QBrush(dtkThemesEngine::instance()->color("@base2")));
@@ -130,7 +130,7 @@ void dtkTheme::polish(QPalette &palette)
 
 void dtkTheme::polish(QApplication *application)
 {
-    if(!application)
+    if (!application)
         return;
 
     application->setStyleSheet(d->sheet);
@@ -143,12 +143,14 @@ void dtkTheme::touch(QWidget *w)
     this->QProxyStyle::polish(w);
 }
 
-QPixmap dtkTheme::generatedIconPixmap(QIcon::Mode mode, const QPixmap &pixmap, const QStyleOption *option) const
+QPixmap dtkTheme::generatedIconPixmap(QIcon::Mode mode, const QPixmap &pixmap,
+                                      const QStyleOption *option) const
 {
     return QProxyStyle::generatedIconPixmap(mode, pixmap, option);
 }
 
-QIcon dtkTheme::standardIcon(StandardPixmap icon, const QStyleOption *option, const QWidget *widget) const
+QIcon dtkTheme::standardIcon(StandardPixmap icon, const QStyleOption *option,
+                             const QWidget *widget) const
 {
     return QProxyStyle::standardIcon(icon, option, widget);
 }

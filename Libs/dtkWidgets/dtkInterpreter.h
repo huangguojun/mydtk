@@ -31,7 +31,7 @@ class DTKWIDGETS_EXPORT dtkInterpreter : public QPlainTextEdit
     Q_OBJECT
 
 public:
-             dtkInterpreter(QWidget *parent = 0);
+    dtkInterpreter(QWidget *parent = 0);
     virtual ~dtkInterpreter(void);
 
 #pragma mark -
@@ -44,7 +44,7 @@ public:
 #pragma mark -
 #pragma mark - Graphical interface
 
-    void output(const QString& result);
+    void output(const QString &result);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

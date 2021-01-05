@@ -16,7 +16,8 @@
 
 #include <QtCore>
 
-template <typename T> class dtkMatrixPrivate
+template<typename T>
+class dtkMatrixPrivate
 {
 public:
     dtkMatrixPrivate(void);

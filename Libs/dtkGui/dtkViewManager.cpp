@@ -18,8 +18,8 @@
  */
 
 #include "dtkViewManager.h"
-#include "dtkViewList.h"
 #include "dtkViewLayout.h"
+#include "dtkViewList.h"
 #include "dtkViewListControl.h"
 
 #include <QtWidgets>
@@ -61,7 +61,8 @@ dtkViewManager::dtkViewManager(QWidget *parent) : QFrame(parent), d(new dtkViewM
 
     // Behaviour
 
-    connect(d->view_layout, SIGNAL(focused(dtkAbstractView *)), this, SIGNAL(focused(dtkAbstractView *)));
+    connect(d->view_layout, SIGNAL(focused(dtkAbstractView *)), this,
+            SIGNAL(focused(dtkAbstractView *)));
     connect(d->view_layout, SIGNAL(unfocused(dtkAbstractView *)), this, SLOT(hideCurrentWidget()));
 }
 

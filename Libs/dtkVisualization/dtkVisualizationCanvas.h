@@ -16,7 +16,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationCanvas : public dtkWidgetsWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationCanvas(QWidget *parent = nullptr);
+    dtkVisualizationCanvas(QWidget *parent = nullptr);
     ~dtkVisualizationCanvas(void);
 
 public:

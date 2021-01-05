@@ -20,8 +20,8 @@
 #ifndef DTKABSTRACTPROCESS_P_H
 #define DTKABSTRACTPROCESS_P_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractProcess;
 
@@ -33,7 +33,10 @@ class DTKCORESUPPORT_EXPORT dtkAbstractProcessPrivate : public dtkAbstractObject
 {
 public:
     dtkAbstractProcessPrivate(dtkAbstractProcess *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractProcessPrivate(const dtkAbstractProcessPrivate& other) : dtkAbstractObjectPrivate(other) {}
+    dtkAbstractProcessPrivate(const dtkAbstractProcessPrivate &other)
+        : dtkAbstractObjectPrivate(other)
+    {
+    }
 
 public:
     virtual ~dtkAbstractProcessPrivate(void) {}

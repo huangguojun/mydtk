@@ -35,7 +35,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataSerializer : public dtkAbstractObject
 
 public:
     dtkAbstractDataSerializer(void);
-    dtkAbstractDataSerializer(const dtkAbstractDataSerializer& other);
+    dtkAbstractDataSerializer(const dtkAbstractDataSerializer &other);
     virtual ~dtkAbstractDataSerializer(void);
 
 public:
@@ -48,7 +48,7 @@ public:
     QByteArray *data(void) const;
 
 signals:
-    void started(const QString& message);
+    void started(const QString &message);
     void progressed(int step);
     void finished(void);
 
@@ -61,7 +61,6 @@ public slots:
 
 protected:
     virtual void setData(QByteArray *array);
-
 
 private:
     DTK_DECLARE_PRIVATE(dtkAbstractDataSerializer);

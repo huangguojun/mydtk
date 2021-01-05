@@ -37,9 +37,9 @@ public:
 //
 // /////////////////////////////////////////////////////////////////
 
-dtkCorePluginManagerHandler::dtkCorePluginManagerHandler(void) : d(new dtkCorePluginManagerHandlerPrivate)
+dtkCorePluginManagerHandler::dtkCorePluginManagerHandler(void)
+    : d(new dtkCorePluginManagerHandlerPrivate)
 {
-
 }
 
 dtkCorePluginManagerHandler *dtkCorePluginManagerHandler::instance(void)
@@ -51,7 +51,7 @@ dtkCorePluginManagerHandler *dtkCorePluginManagerHandler::instance(void)
     return s_instance;
 };
 
-void dtkCorePluginManagerHandler::scan(const QString& path, bool verboseLoading)
+void dtkCorePluginManagerHandler::scan(const QString &path, bool verboseLoading)
 {
     if (!QLibrary::isLibrary(path))
         return;
@@ -64,48 +64,57 @@ void dtkCorePluginManagerHandler::scan(const QString& path, bool verboseLoading)
     QPluginLoader *loader = new QPluginLoader(path);
 
     d->names.insert(path, loader->metaData().value("MetaData").toObject().value("name").toString());
-    d->versions.insert(path, loader->metaData().value("MetaData").toObject().value("version").toString());
-    d->concepts.insert(path, loader->metaData().value("MetaData").toObject().value("concept").toString());
+    d->versions.insert(path,
+                       loader->metaData().value("MetaData").toObject().value("version").toString());
+    d->concepts.insert(path,
+                       loader->metaData().value("MetaData").toObject().value("concept").toString());
 
-    d->dependencies.insert(path, loader->metaData().value("MetaData").toObject().value("dependencies").toArray().toVariantList());
-    d->pluginsLayerVersion.insert(path, loader->metaData().value("MetaData").toObject().value("layerVersion").toString());
+    d->dependencies.insert(path,
+                           loader->metaData()
+                                   .value("MetaData")
+                                   .toObject()
+                                   .value("dependencies")
+                                   .toArray()
+                                   .toVariantList());
+    d->pluginsLayerVersion.insert(
+            path, loader->metaData().value("MetaData").toObject().value("layerVersion").toString());
 
     delete loader;
 }
 
-QString dtkCorePluginManagerHandler::pluginPath(const QString& name) const
+QString dtkCorePluginManagerHandler::pluginPath(const QString &name) const
 {
     return d->names.key(name);
 }
 
-QString dtkCorePluginManagerHandler::name(const QString& path) const
+QString dtkCorePluginManagerHandler::name(const QString &path) const
 {
     return d->names.value(path);
 }
 
-QString dtkCorePluginManagerHandler::version(const QString& path) const
+QString dtkCorePluginManagerHandler::version(const QString &path) const
 {
     return d->versions.value(path);
 }
 
-QString dtkCorePluginManagerHandler::concept(const QString& path) const
+QString dtkCorePluginManagerHandler::concept(const QString &path) const
 {
     return d->concepts.value(path);
 }
 
-QVariantList dtkCorePluginManagerHandler::dependencies(const QString& path) const
+QVariantList dtkCorePluginManagerHandler::dependencies(const QString &path) const
 {
     return d->dependencies.value(path);
 }
 
-QString dtkCorePluginManagerHandler::pluginsLayerVersion(const QString& path) const
+QString dtkCorePluginManagerHandler::pluginsLayerVersion(const QString &path) const
 {
     return d->pluginsLayerVersion.value(path);
 }
 
-bool dtkCorePluginManagerHandler::hasName(const QString& name) const
+bool dtkCorePluginManagerHandler::hasName(const QString &name) const
 {
-    for (const QString& n : d->names) {
+    for (const QString &n : d->names) {
         if (n == name) {
             return true;
         }
@@ -114,9 +123,9 @@ bool dtkCorePluginManagerHandler::hasName(const QString& name) const
     return false;
 }
 
-bool dtkCorePluginManagerHandler::hasVersion(const QString& version) const
+bool dtkCorePluginManagerHandler::hasVersion(const QString &version) const
 {
-    for (const QString& v : d->versions) {
+    for (const QString &v : d->versions) {
         if (v == version) {
             return true;
         }
@@ -125,9 +134,9 @@ bool dtkCorePluginManagerHandler::hasVersion(const QString& version) const
     return false;
 }
 
-bool dtkCorePluginManagerHandler::hasConcept(const QString& concept) const
+bool dtkCorePluginManagerHandler::hasConcept(const QString &concept) const
 {
-    for (const QString& c : d->concepts) {
+    for (const QString &c : d->concepts) {
         if (c == concept) {
             return true;
         }

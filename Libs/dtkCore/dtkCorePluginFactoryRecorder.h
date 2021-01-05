@@ -28,7 +28,9 @@ class dtkCorePluginFactoryBase;
 class DTKCORE_EXPORT dtkCorePluginFactoryRecorder
 {
 public:
-    explicit dtkCorePluginFactoryRecorder(dtkCoreLayerManager *layer_manager, dtkCorePluginFactoryBase *plugin_factory, const QString& plugin_name);
+    explicit dtkCorePluginFactoryRecorder(dtkCoreLayerManager *layer_manager,
+                                          dtkCorePluginFactoryBase *plugin_factory,
+                                          const QString &plugin_name);
     ~dtkCorePluginFactoryRecorder(void) = default;
 };
 

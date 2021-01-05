@@ -16,11 +16,12 @@
 
 #include <dtkVisualizationExport>
 
-namespace dtk { namespace visualization {
+namespace dtk {
+namespace visualization {
 
-    DTKVISUALIZATION_EXPORT void registerVTKToMetaType(void);
-
-} };
+DTKVISUALIZATION_EXPORT void registerVTKToMetaType(void);
+}
+}; // namespace dtk
 
 // ///////////////////////////////////////////////////////////////////
 

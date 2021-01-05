@@ -72,7 +72,7 @@ public:
 
 public:
     double default_glyph_size;
-    QString default_glyph_shape ;
+    QString default_glyph_shape;
     double size_multiplier = 1.;
     QHash<QString, double> glyphs_sizes;
     QHash<QString, QString> glyphs_sources;
@@ -82,13 +82,14 @@ public:
 // dtkVisualizationDecoratorScalarGlyphs implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationDecoratorScalarGlyphs::dtkVisualizationDecoratorScalarGlyphs(void): dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarGlyphsPrivate())
+dtkVisualizationDecoratorScalarGlyphs::dtkVisualizationDecoratorScalarGlyphs(void)
+    : dtkVisualizationDecoratorWithClut(), d(new dtkVisualizationDecoratorScalarGlyphsPrivate())
 {
-    d->source_arrow    = vtkSmartPointer<vtkArrowSource>::New();
-    d->source_cube     = vtkSmartPointer<vtkCubeSource>::New();
+    d->source_arrow = vtkSmartPointer<vtkArrowSource>::New();
+    d->source_cube = vtkSmartPointer<vtkCubeSource>::New();
     d->source_cylinder = vtkSmartPointer<vtkCylinderSource>::New();
-    d->source_polygon  = vtkSmartPointer<vtkRegularPolygonSource>::New();
-    d->source_sphere   = vtkSmartPointer<vtkSphereSource>::New();
+    d->source_polygon = vtkSmartPointer<vtkRegularPolygonSource>::New();
+    d->source_sphere = vtkSmartPointer<vtkSphereSource>::New();
 
     d->source_sphere->SetThetaResolution(12.);
     d->source_sphere->SetPhiResolution(12.);
@@ -151,44 +152,47 @@ dtkVisualizationDecoratorScalarGlyphs::dtkVisualizationDecoratorScalarGlyphs(voi
     //////////
     // Inspectors connections
 
-    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=] (int state) {
-            this->saveSettings("visibility",state == Qt::Checked);
-            this->setVisibility(state == Qt::Checked);
-            this->draw();
-        });
+    connect(d->show_actor_cb, &QCheckBox::stateChanged, [=](int state) {
+        this->saveSettings("visibility", state == Qt::Checked);
+        this->setVisibility(state == Qt::Checked);
+        this->draw();
+    });
 
-    connect(d->glyphs_size_sb, QOverload<double>::of(&QDoubleSpinBox::valueChanged), [=] (double value) {
-            this->blockSignals(true);
-            this->saveSettings("glyph_size", value);
-            this->setCurrentGlyphsSize(value);
-            this->blockSignals(false);
-            this->draw();
-        });
+    connect(d->glyphs_size_sb, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+            [=](double value) {
+                this->blockSignals(true);
+                this->saveSettings("glyph_size", value);
+                this->setCurrentGlyphsSize(value);
+                this->blockSignals(false);
+                this->draw();
+            });
 
-    connect(this, &dtkVisualizationDecoratorScalarGlyphs::currentGlyphsSizeChanged, [=] (double value) {
-            d->glyphs_size_sb->blockSignals(true);
-            d->glyphs_size_sb->setValue(value);
-            d->glyphs_size_sb->blockSignals(false);
-            this->draw();
-        });
+    connect(this, &dtkVisualizationDecoratorScalarGlyphs::currentGlyphsSizeChanged,
+            [=](double value) {
+                d->glyphs_size_sb->blockSignals(true);
+                d->glyphs_size_sb->setValue(value);
+                d->glyphs_size_sb->blockSignals(false);
+                this->draw();
+            });
 
-    connect(d->glyphs_source_cb, &QComboBox::currentTextChanged, [=] (const QString& source) {
-            this->blockSignals(true);
-            this->saveSettings("glyph_shape", source);
-            this->setCurrentGlyphsSource(source);
-            this->blockSignals(false);
-            this->draw();
-        });
+    connect(d->glyphs_source_cb, &QComboBox::currentTextChanged, [=](const QString &source) {
+        this->blockSignals(true);
+        this->saveSettings("glyph_shape", source);
+        this->setCurrentGlyphsSource(source);
+        this->blockSignals(false);
+        this->draw();
+    });
 
-    connect(this, &dtkVisualizationDecoratorScalarGlyphs::currentGlyphsSourceChanged, [=] (const QString& source) {
-            d->glyphs_source_cb->blockSignals(true);
-            int index = d->glyphs_source_cb->findText(source);
-            if ( index != -1 ) {
-                d->glyphs_source_cb->setCurrentIndex(index);
-            }
-            d->glyphs_source_cb->blockSignals(false);
-            this->draw();
-        });
+    connect(this, &dtkVisualizationDecoratorScalarGlyphs::currentGlyphsSourceChanged,
+            [=](const QString &source) {
+                d->glyphs_source_cb->blockSignals(true);
+                int index = d->glyphs_source_cb->findText(source);
+                if (index != -1) {
+                    d->glyphs_source_cb->setCurrentIndex(index);
+                }
+                d->glyphs_source_cb->blockSignals(false);
+                this->draw();
+            });
 
     this->setObjectName("Scalar Glyphs");
     d->show_actor_cb->setObjectName("Display");
@@ -216,8 +220,8 @@ void dtkVisualizationDecoratorScalarGlyphs::restoreSettings(void)
 
     QSettings settings;
     settings.beginGroup("canvas");
-    d->default_glyph_size  = settings.value(name+"_glyph_size", 1.0).toDouble();
-    d->default_glyph_shape = settings.value(name+"_glyph_shape", "Sphere").toString();
+    d->default_glyph_size = settings.value(name + "_glyph_size", 1.0).toDouble();
+    d->default_glyph_shape = settings.value(name + "_glyph_shape", "Sphere").toString();
     settings.endGroup();
 
     d->actor->SetVisibility(d_func()->default_visibility);
@@ -226,7 +230,7 @@ void dtkVisualizationDecoratorScalarGlyphs::restoreSettings(void)
     d->show_actor_cb->blockSignals(false);
 }
 
-void dtkVisualizationDecoratorScalarGlyphs::setData(const QVariant& data)
+void dtkVisualizationDecoratorScalarGlyphs::setData(const QVariant &data)
 {
     vtkDataSet *dataset = data.value<vtkDataSet *>();
     if (!dataset) {
@@ -234,7 +238,7 @@ void dtkVisualizationDecoratorScalarGlyphs::setData(const QVariant& data)
         return;
     }
 
-    //size_multiplier to be able to see glyph for big datasets
+    // size_multiplier to be able to see glyph for big datasets
     // from 1 to 10 % of max_dim
 
     double bounds[6];
@@ -243,7 +247,7 @@ void dtkVisualizationDecoratorScalarGlyphs::setData(const QVariant& data)
     max_dim = std::max(max_dim, bounds[3] - bounds[2]);
     max_dim = std::max(max_dim, bounds[5] - bounds[4]);
 
-    d->size_multiplier = max_dim/100;
+    d->size_multiplier = max_dim / 100;
 
     d_func()->clear();
     d_func()->retrieveScalarPoints(dataset);
@@ -262,9 +266,9 @@ void dtkVisualizationDecoratorScalarGlyphs::setData(const QVariant& data)
 
     d->glyphs_sizes.clear();
     d->glyphs_sources.clear();
-    for(auto field_name : d_func()->eligible_field_names) {
-            d->glyphs_sizes[field_name]   = d->default_glyph_size;
-            d->glyphs_sources[field_name] = d->default_glyph_shape;
+    for (auto field_name : d_func()->eligible_field_names) {
+        d->glyphs_sizes[field_name] = d->default_glyph_size;
+        d->glyphs_sources[field_name] = d->default_glyph_shape;
     }
     emit this->currentGlyphsSizeChanged(d->default_glyph_size);
     emit this->currentGlyphsSourceChanged(d->default_glyph_shape);
@@ -285,7 +289,9 @@ void dtkVisualizationDecoratorScalarGlyphs::setCanvas(dtkVisualizationCanvas *ca
 
     d_func()->view = dynamic_cast<dtkVisualizationView2D *>(canvas);
     if (!d_func()->view) {
-        qWarning() << Q_FUNC_INFO << "View 2D or view 3D expected as canvas. Canvas is reset to nullptr.";
+        qWarning() << Q_FUNC_INFO
+                   << "View 2D or view 3D expected as canvas. Canvas is reset "
+                      "to nullptr.";
         return;
     }
 
@@ -315,7 +321,7 @@ void dtkVisualizationDecoratorScalarGlyphs::setVisibility(bool visible)
 
 void dtkVisualizationDecoratorScalarGlyphs::setCurrentGlyphsSize(double size)
 {
-    QString& current_field_name = d_func()->current_field_name;
+    QString &current_field_name = d_func()->current_field_name;
 
     if (current_field_name.isEmpty()) {
         return;
@@ -323,9 +329,9 @@ void dtkVisualizationDecoratorScalarGlyphs::setCurrentGlyphsSize(double size)
 
     d->glyphs_sizes[current_field_name] = size;
 
-    double scaled_size = size*d->size_multiplier;
+    double scaled_size = size * d->size_multiplier;
     QString source = d->glyphs_sources[current_field_name];
-    if(source == "Arrow") {
+    if (source == "Arrow") {
         d->source_arrow->SetShaftRadius(scaled_size);
         d->source_arrow->SetTipRadius(scaled_size);
         d->source_arrow->Modified();
@@ -352,16 +358,15 @@ void dtkVisualizationDecoratorScalarGlyphs::setCurrentGlyphsSize(double size)
 
 void dtkVisualizationDecoratorScalarGlyphs::setCurrentGlyphsSource(const QString &source)
 {
-    QString& current_field_name = d_func()->current_field_name;
+    QString &current_field_name = d_func()->current_field_name;
 
     if (current_field_name.isEmpty()) {
         return;
     }
 
-
     double scaled_size = d->glyphs_size_sb->value() * d->size_multiplier;
 
-    if(source == "Arrow") {
+    if (source == "Arrow") {
         d->source_arrow->SetShaftRadius(scaled_size);
         d->source_arrow->SetTipRadius(scaled_size);
         d->source_arrow->Modified();
@@ -392,7 +397,7 @@ void dtkVisualizationDecoratorScalarGlyphs::setCurrentGlyphsSource(const QString
     emit this->currentGlyphsSourceChanged(source);
 }
 
-bool dtkVisualizationDecoratorScalarGlyphs::setCurrentFieldName(const QString& field_name)
+bool dtkVisualizationDecoratorScalarGlyphs::setCurrentFieldName(const QString &field_name)
 {
     if (!dtkVisualizationDecoratorWithClut::setCurrentFieldName(field_name)) {
         return false;
@@ -402,7 +407,7 @@ bool dtkVisualizationDecoratorScalarGlyphs::setCurrentFieldName(const QString& f
     QString glyphs_source = d->glyphs_sources[field_name];
 
     double scaled_size = glyphs_size * d->size_multiplier;
-    if(glyphs_source == "Arrow") {
+    if (glyphs_source == "Arrow") {
         d->source_arrow->SetShaftRadius(scaled_size);
         d->source_arrow->SetTipRadius(scaled_size);
         d->glyphs->SetSourceConnection(d->source_arrow->GetOutputPort());
@@ -429,9 +434,9 @@ bool dtkVisualizationDecoratorScalarGlyphs::setCurrentFieldName(const QString& f
 
     using Support = dtkVisualizationDecoratorWithClut::Support;
     int support = d_func()->supports[field_name];
-    if(support == Support::Point) {
+    if (support == Support::Point) {
         d->glyphs->SetInputData(d_func()->dataset);
-    } else if(support == Support::Cell) {
+    } else if (support == Support::Cell) {
         d->glyphs->SetInputConnection(d->cell_centers->GetOutputPort());
     }
     d->glyphs->Modified();
@@ -445,13 +450,13 @@ bool dtkVisualizationDecoratorScalarGlyphs::setCurrentFieldName(const QString& f
     return true;
 }
 
-void dtkVisualizationDecoratorScalarGlyphs::setColorMap(const QMap<double, QColor>& new_colormap)
+void dtkVisualizationDecoratorScalarGlyphs::setColorMap(const QMap<double, QColor> &new_colormap)
 {
     dtkVisualizationDecoratorWithClut::setColorMap(new_colormap);
 
     d->mapper->SetLookupTable(d_func()->color_function);
     d->mapper->SelectColorArray(qPrintable(d_func()->current_field_name));
-    auto&& range = d_func()->ranges[d_func()->current_field_name];
+    auto &&range = d_func()->ranges[d_func()->current_field_name];
     d->mapper->SetScalarRange(range[0], range[1]);
     d->mapper->Modified();
 

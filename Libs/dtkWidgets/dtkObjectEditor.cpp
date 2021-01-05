@@ -15,12 +15,12 @@
 #include "dtkObjectEditor.h"
 #include "dtkPropertyEditorFactory.h"
 
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QVBoxLayout>
 
+#include <QMetaProperty>
 #include <QObject>
 #include <QVariant>
-#include <QMetaProperty>
 
 class dtkPropertyEditor;
 
@@ -29,9 +29,10 @@ class dtkObjectEditorPrivate
 public:
 };
 
-dtkObjectEditor::dtkObjectEditor(QObject *object, QWidget *parent) : QFrame(parent), d(new dtkObjectEditorPrivate)
+dtkObjectEditor::dtkObjectEditor(QObject *object, QWidget *parent)
+    : QFrame(parent), d(new dtkObjectEditorPrivate)
 {
-    //QFrame *frame = new QFrame(this);
+    // QFrame *frame = new QFrame(this);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -63,7 +64,8 @@ dtkObjectEditor::dtkObjectEditor(QObject *object, QWidget *parent) : QFrame(pare
 
         for (int i = prev_count; i < count; ++i) {
             name = QString(meta_object->property(i).name());
-            editor = reinterpret_cast<QWidget *>(dtkPropertyEditorFactory::instance()->create(name, object, this));
+            editor = reinterpret_cast<QWidget *>(
+                    dtkPropertyEditorFactory::instance()->create(name, object, this));
             layout->addWidget(new QLabel(name.append(":"), this));
             layout->addWidget(editor);
         }
@@ -73,7 +75,4 @@ dtkObjectEditor::dtkObjectEditor(QObject *object, QWidget *parent) : QFrame(pare
     }
 }
 
-dtkObjectEditor::~dtkObjectEditor(void)
-{
-
-}
+dtkObjectEditor::~dtkObjectEditor(void) {}

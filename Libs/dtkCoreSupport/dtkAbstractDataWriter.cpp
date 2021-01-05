@@ -18,29 +18,27 @@
  */
 
 #include "dtkAbstractDataWriter.h"
-#include "dtkAbstractDataWriter_p.h"
 #include "dtkAbstractData.h"
+#include "dtkAbstractDataWriter_p.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkAbstractDataWriter implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractDataWriter::dtkAbstractDataWriter(void) : dtkAbstractObject(*new dtkAbstractDataWriterPrivate(this), 0)
+dtkAbstractDataWriter::dtkAbstractDataWriter(void)
+    : dtkAbstractObject(*new dtkAbstractDataWriterPrivate(this), 0)
 {
     DTK_D(dtkAbstractDataWriter);
 
     d->enabled = false;
 }
 
-dtkAbstractDataWriter::dtkAbstractDataWriter(const dtkAbstractDataWriter& other) : dtkAbstractObject(*new dtkAbstractDataWriterPrivate(*other.d_func()), other)
+dtkAbstractDataWriter::dtkAbstractDataWriter(const dtkAbstractDataWriter &other)
+    : dtkAbstractObject(*new dtkAbstractDataWriterPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractDataWriter::~dtkAbstractDataWriter(void)
-{
-
-}
+dtkAbstractDataWriter::~dtkAbstractDataWriter(void) {}
 
 bool dtkAbstractDataWriter::enabled(void) const
 {
@@ -81,28 +79,28 @@ void dtkAbstractDataWriter::setData(dtkAbstractData *data)
     d->data = data;
 }
 
-bool dtkAbstractDataWriter::canWrite(const QString& file)
+bool dtkAbstractDataWriter::canWrite(const QString &file)
 {
     DTK_UNUSED(file);
 
     return false;
 }
 
-bool dtkAbstractDataWriter::canWrite(const QStringList& files)
+bool dtkAbstractDataWriter::canWrite(const QStringList &files)
 {
     DTK_UNUSED(files);
 
     return false;
 }
 
-bool dtkAbstractDataWriter::write(const QString& file)
+bool dtkAbstractDataWriter::write(const QString &file)
 {
     DTK_UNUSED(file);
 
     return false;
 }
 
-bool dtkAbstractDataWriter::write(const QStringList& files)
+bool dtkAbstractDataWriter::write(const QStringList &files)
 {
     DTK_UNUSED(files);
 
@@ -111,7 +109,7 @@ bool dtkAbstractDataWriter::write(const QStringList& files)
 
 void dtkAbstractDataWriter::setProgress(int value)
 {
-    emit progressed (value);
+    emit progressed(value);
 }
 
 //!

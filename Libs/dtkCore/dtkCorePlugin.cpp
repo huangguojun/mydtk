@@ -13,7 +13,8 @@
     \title Defining dtk Plugins
     \target dtkplugin-defining-plugins
 
-    \brief The <dtkCorePlugin> header file defines macros for defining dtk plugins.
+    \brief The <dtkCorePlugin> header file defines macros for defining dtk
+   plugins.
 
     \sa {dtk Plugin System}
 */

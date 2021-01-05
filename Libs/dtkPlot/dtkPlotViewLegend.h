@@ -28,7 +28,7 @@ public:
     ~dtkPlotViewLegend(void);
 
 public:
-    void   activate(void);
+    void activate(void);
     void deactivate(void);
 
 public:

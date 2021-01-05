@@ -22,9 +22,10 @@
 
 #include <dtkPlotExport.h>
 
-
 class dtkPlotRendererPrivate;
 class dtkPlotView;
+class QSize;
+class QString;
 
 class DTKPLOT_EXPORT dtkPlotRenderer
 {
@@ -37,8 +38,8 @@ public:
 
 public:
     void setView(dtkPlotView *view);
-    void setSize(const QSize& size);
-    void setPath(const QString& path);
+    void setSize(const QSize &size);
+    void setPath(const QString &path);
 
 private:
     dtkPlotRendererPrivate *d;

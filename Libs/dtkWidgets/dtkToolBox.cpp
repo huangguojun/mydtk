@@ -35,7 +35,8 @@ QSize dtkToolBoxButton::sizeHint(void) const
     QSize iconSize(8, 8);
 
     if (!this->icon().isNull()) {
-        int icone = this->style()->pixelMetric(QStyle::PM_SmallIconSize, 0, this->parentWidget() /* QToolBox */);
+        int icone = this->style()->pixelMetric(QStyle::PM_SmallIconSize, 0,
+                                               this->parentWidget() /* QToolBox */);
         iconSize += QSize(icone + 2, icone);
     }
 
@@ -164,7 +165,7 @@ void dtkToolBoxItem::hideButton(void)
     d->button->hide();
 }
 
-void dtkToolBoxItem::setWidget(QWidget *widget, const QString& text, const QIcon& icon)
+void dtkToolBoxItem::setWidget(QWidget *widget, const QString &text, const QIcon &icon)
 {
     if (!widget) {
         qDebug() << Q_FUNC_INFO << "Widget is not valid, nothing is done.";
@@ -222,7 +223,7 @@ void dtkToolBoxItem::setEnforced(bool enforced)
     }
 }
 
-void dtkToolBoxItem::setName(const QString& name)
+void dtkToolBoxItem::setName(const QString &name)
 {
     d->button->setText(name);
 }
@@ -244,7 +245,8 @@ void dtkToolBoxItem::setToolBox(dtkToolBox *box)
 
 dtkToolBoxItem *dtkToolBoxItem::fromObject(QObject *object, int hierarchy_level)
 {
-    QList<QWidget *> list = dtkPropertyEditorFactory::instance()->createObjectProperties(object, hierarchy_level);
+    QList<QWidget *> list =
+            dtkPropertyEditorFactory::instance()->createObjectProperties(object, hierarchy_level);
 
     QFrame *frame = new QFrame;
 
@@ -418,7 +420,6 @@ void dtkToolBoxPrivate::setCurrentItem(dtkToolBoxItem *item)
         this->current_item = NULL;
     else
         this->current_item = item;
-
 
     if (this->mode == dtkToolBox::OneItemExpanded) {
         foreach (dtkToolBoxItem *it, this->items) {

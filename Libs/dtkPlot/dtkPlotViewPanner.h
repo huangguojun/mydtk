@@ -36,7 +36,7 @@ public:
     ~dtkPlotViewPanner(void);
 
 public:
-    void   activate(void);
+    void activate(void);
     void deactivate(void);
 
 private:

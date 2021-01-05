@@ -14,8 +14,8 @@
 
 #pragma once
 
-#include <dtkWidgetsExport.h>
 #include <QtWidgets>
+#include <dtkWidgetsExport.h>
 
 class dtkWidgetsTagCloudScopeItemPrivate;
 
@@ -24,7 +24,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsTagCloudScopeItem : public QWidget
     Q_OBJECT
 
 public:
-     dtkWidgetsTagCloudScopeItem(QWidget *parent = 0);
+    dtkWidgetsTagCloudScopeItem(QWidget *parent = 0);
     ~dtkWidgetsTagCloudScopeItem(void);
 
 signals:
@@ -41,7 +41,7 @@ public:
     void setDoom(void);
 
 public slots:
-    void setText(const QString& text);
+    void setText(const QString &text);
     void setCount(int count);
 
 protected:

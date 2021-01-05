@@ -30,7 +30,7 @@ public:
     ~dtkPlotViewLegendPrivate(void);
 
 protected slots:
-    void legendChecked(const QVariant& itemInfo, bool value);
+    void legendChecked(const QVariant &itemInfo, bool value);
     void showCurve(QwtPlotItem *item, bool value);
 
 public:

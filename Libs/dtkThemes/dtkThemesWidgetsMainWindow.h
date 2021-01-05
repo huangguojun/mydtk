@@ -17,15 +17,15 @@
 #include <QtCore/QtGlobal>
 
 #if defined(Q_OS_MAC)
-#include "dtkThemesWidgetsMainWindow+mac.h"
+#    include "dtkThemesWidgetsMainWindow+mac.h"
 #endif
 
 #if defined(Q_OS_LINUX)
-#include "dtkThemesWidgetsMainWindow+linux.h"
+#    include "dtkThemesWidgetsMainWindow+linux.h"
 #endif
 
 #if defined(Q_OS_WIN)
-#include "dtkThemesWidgetsMainWindow+win.h"
+#    include "dtkThemesWidgetsMainWindow+win.h"
 #endif
 
 //

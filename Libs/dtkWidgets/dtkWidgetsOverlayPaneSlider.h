@@ -25,7 +25,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsOverlayPaneSlider : public dtkWidgetsOverlayPa
     Q_OBJECT
 
 public:
-     dtkWidgetsOverlayPaneSlider(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPaneSlider(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPaneSlider(void);
 
 signals:
@@ -37,7 +37,7 @@ signals:
 
 public:
     void addSlide(fa::icon, QWidget *);
-    void addSlide(fa::icon, QWidget *, const QString&);
+    void addSlide(fa::icon, QWidget *, const QString &);
 
 public:
     void remSlide(QWidget *);
@@ -47,14 +47,14 @@ public:
 
 public:
     void slideTo(int);
-    void slideTo(int, std::function<void ()>&);
+    void slideTo(int, std::function<void()> &);
     void slideToNext(void);
     void slideToPrevious(void);
-    void slideToPrevious(std::function<void ()>&);
+    void slideToPrevious(std::function<void()> &);
 
 public:
     void setCurrentIndex(int);
-    void setCurrentIndex(int, std::function<void ()>&);
+    void setCurrentIndex(int, std::function<void()> &);
 
 public:
     void enableSpying(bool);
@@ -63,9 +63,10 @@ public:
     void decr(void);
     void print(void);
     void reset(void);
-    
+
 public:
-    bool is_in_transition = false; // this is a dirty flag for parents to check whether they can move the menu or not (if it's transitionning, we forbid that)
+    bool is_in_transition = false; // this is a dirty flag for parents to check whether they can
+                                   // move the menu or not (if it's transitionning, we forbid that)
     void informInTransition(bool);
 
 private:

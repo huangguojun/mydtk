@@ -26,16 +26,15 @@ public:
 
 // ///////////////////////////////////////////////////////////////////
 
-
-dtkCorePluginWidgetManager& dtkCorePluginWidgetManager::instance(void)
+dtkCorePluginWidgetManager &dtkCorePluginWidgetManager::instance(void)
 {
-    if(!s_instance) {
+    if (!s_instance) {
         s_instance = new dtkCorePluginWidgetManager;
     }
     return *s_instance;
 }
 
-void dtkCorePluginWidgetManager::add(const void *ptr, const QVariant& v, QWidget *w)
+void dtkCorePluginWidgetManager::add(const void *ptr, const QVariant &v, QWidget *w)
 {
     d->widgets.insert(ptr, w);
     d->variants.insert(ptr, v);
@@ -48,7 +47,10 @@ int dtkCorePluginWidgetManager::remove(const void *ptr)
     int n_w = d->widgets.remove(ptr);
     int n_v = d->variants.remove(ptr);
     if (n_v != n_w) {
-        dtkWarn() << Q_FUNC_INFO << "Not the same number of variants and objects removed from tables !" << n_w << n_v;
+        dtkWarn() << Q_FUNC_INFO
+                  << "Not the same number of variants and objects removed from "
+                     "tables !"
+                  << n_w << n_v;
     }
     return n_v;
 }
@@ -63,7 +65,7 @@ int dtkCorePluginWidgetManager::remove(QWidget *w)
         }
     }
 
-    for (auto&& k : keys) {
+    for (auto &&k : keys) {
         d->widgets.remove(k);
         d->variants.remove(k);
     }
@@ -96,12 +98,13 @@ QString dtkCorePluginWidgetManager::description(void) const
     QString msg("dtkCorePluginWidgetManager contains : \n");
     QString content("[ ");
     int i = 0;
-    int e = d->widgets.count()-1;
+    int e = d->widgets.count() - 1;
     auto it = d->widgets.cbegin();
     auto end = d->widgets.cend();
     auto vit = d->variants.cbegin();
-    for (;it != end; ++it, ++i, ++vit) {
-        content += vit.value().typeName() + QStringLiteral(" : ") + reinterpret_cast<const QObject *>(it.value())->objectName();
+    for (; it != end; ++it, ++i, ++vit) {
+        content += vit.value().typeName() + QStringLiteral(" : ")
+                + reinterpret_cast<const QObject *>(it.value())->objectName();
         if (i < e) {
             content += "\n";
         } else {
@@ -111,9 +114,9 @@ QString dtkCorePluginWidgetManager::description(void) const
     return (msg + content);
 }
 
-dtkCorePluginWidgetManager::dtkCorePluginWidgetManager(void) : d(new dtkCorePluginWidgetManagerPrivate)
+dtkCorePluginWidgetManager::dtkCorePluginWidgetManager(void)
+    : d(new dtkCorePluginWidgetManagerPrivate)
 {
-
 }
 
 dtkCorePluginWidgetManager::~dtkCorePluginWidgetManager(void)
@@ -121,7 +124,7 @@ dtkCorePluginWidgetManager::~dtkCorePluginWidgetManager(void)
     delete d;
 }
 
-QDebug operator<<(QDebug dbg, dtkCorePluginWidgetManager& m)
+QDebug operator<<(QDebug dbg, dtkCorePluginWidgetManager &m)
 {
     dbg.nospace() << m.description();
 

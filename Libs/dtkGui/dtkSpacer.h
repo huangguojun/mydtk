@@ -24,7 +24,7 @@ public:
     dtkSpacer(QWidget *parent = 0, int width = 0, int height = 0);
     ~dtkSpacer(void);
 
-    QSize sizeHint (void) const;
+    QSize sizeHint(void) const;
 };
 
 //

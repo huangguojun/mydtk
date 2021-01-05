@@ -14,7 +14,8 @@
 
 #include "dtkWidgetsTagCloudLayout.h"
 
-dtkWidgetsTagCloudLayout::dtkWidgetsTagCloudLayout(QWidget *parent, int margin, int hSpacing, int vSpacing)
+dtkWidgetsTagCloudLayout::dtkWidgetsTagCloudLayout(QWidget *parent, int margin, int hSpacing,
+                                                   int vSpacing)
     : QLayout(parent), m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
     setContentsMargins(margin, margin, margin, margin);
@@ -91,7 +92,7 @@ int dtkWidgetsTagCloudLayout::heightForWidth(int width) const
     return height;
 }
 
-void dtkWidgetsTagCloudLayout::setGeometry(const QRect& rect)
+void dtkWidgetsTagCloudLayout::setGeometry(const QRect &rect)
 {
     QLayout::setGeometry(rect);
     doLayout(rect, false);
@@ -114,7 +115,7 @@ QSize dtkWidgetsTagCloudLayout::minimumSize() const
     return size;
 }
 
-int dtkWidgetsTagCloudLayout::doLayout(const QRect& rect, bool testOnly) const
+int dtkWidgetsTagCloudLayout::doLayout(const QRect &rect, bool testOnly) const
 {
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
@@ -130,14 +131,14 @@ int dtkWidgetsTagCloudLayout::doLayout(const QRect& rect, bool testOnly) const
         int spaceX = horizontalSpacing();
 
         if (spaceX == -1)
-            spaceX = wid->style()->layoutSpacing(
-                         QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Horizontal);
+            spaceX = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
+                                                 Qt::Horizontal);
 
         int spaceY = verticalSpacing();
 
         if (spaceY == -1)
-            spaceY = wid->style()->layoutSpacing(
-                         QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Vertical);
+            spaceY = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
+                                                 Qt::Vertical);
 
         int nextX = x + item->sizeHint().width() + spaceX;
 

@@ -9,11 +9,11 @@ class dtkVisualizationViewer : public QMainWindow
     Q_OBJECT
 
 public:
-     dtkVisualizationViewer(QWidget *parent = nullptr);
+    dtkVisualizationViewer(QWidget *parent = nullptr);
     ~dtkVisualizationViewer(void);
 
 public slots:
-    void importDataSet(const QString& path);
+    void importDataSet(const QString &path);
     void applyScale(double x, double y, double z);
 
 signals:

@@ -27,7 +27,7 @@ class dtkCoreParameter;
 class DTKWIDGETS_EXPORT dtkWidgetsParameter : public QWidget
 {
 public:
-     dtkWidgetsParameter(QWidget *);
+    dtkWidgetsParameter(QWidget *);
     ~dtkWidgetsParameter(void) = default;
 
 public:
@@ -43,11 +43,11 @@ Q_DECLARE_METATYPE(dtkWidgetsParameter *);
 // dtkWidgetsParameterBase declaration
 // ///////////////////////////////////////////////////////////////////
 
-template <typename T>
+template<typename T>
 class dtkWidgetsParameterBase : public dtkWidgetsParameter
 {
 public:
-     dtkWidgetsParameterBase(QWidget *);
+    dtkWidgetsParameterBase(QWidget *);
     ~dtkWidgetsParameterBase(void) = default;
 
     dtkCoreParameter *parameter(void) const final;
@@ -58,13 +58,12 @@ protected:
 
 // ///////////////////////////////////////////////////////////////////
 
-template <typename T>
+template<typename T>
 inline dtkWidgetsParameterBase<T>::dtkWidgetsParameterBase(QWidget *p) : dtkWidgetsParameter(p)
 {
-
 }
 
-template <typename T>
+template<typename T>
 inline dtkCoreParameter *dtkWidgetsParameterBase<T>::parameter(void) const
 {
     return m_parameter;

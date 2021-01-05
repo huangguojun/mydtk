@@ -23,13 +23,13 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorAxes : public dtkVisualiz
     Q_OBJECT
 
 public:
-     dtkVisualizationDecoratorAxes(void);
+    dtkVisualizationDecoratorAxes(void);
     ~dtkVisualizationDecoratorAxes(void);
 
 public:
     bool isDecorating(void) override;
 
-    void setData(const QVariant&) override;
+    void setData(const QVariant &) override;
     void setCanvas(dtkVisualizationCanvas *) override;
     void unsetCanvas(void) override;
 

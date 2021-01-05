@@ -39,10 +39,7 @@ class DTKGUISUPPORT_EXPORT dtkColorGrid : public QWidget
     Q_PROPERTY(ClickMode clickMode READ clickMode WRITE setClickMode)
 
 public:
-    enum ClickMode {
-        CM_PRESS,
-        CM_RELEASE
-    };
+    enum ClickMode { CM_PRESS, CM_RELEASE };
 
     dtkColorGrid(QWidget *parent = 0);
     virtual ~dtkColorGrid(void);
@@ -57,8 +54,8 @@ public:
     int widthInCells(void) const;
     int heightInCells(void) const;
 
-    const QColor& lastHighlighted(void) const;
-    const QColor& lastPicked(void) const;
+    const QColor &lastHighlighted(void) const;
+    const QColor &lastPicked(void) const;
 
     bool pickByDrag(void) const;
 
@@ -78,8 +75,8 @@ public:
     static dtkColorList *namedColors(void);
 
 signals:
-    void highlighted(const QColor& color);
-    void picked(const QColor& color);
+    void highlighted(const QColor &color);
+    void picked(const QColor &color);
     void accepted(void);
     void rejected(void);
 

@@ -26,7 +26,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsOverlayPane : public QFrame
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
 
 public:
-     dtkWidgetsOverlayPane(QWidget *parent = nullptr);
+    dtkWidgetsOverlayPane(QWidget *parent = nullptr);
     ~dtkWidgetsOverlayPane(void);
 
 signals:
@@ -45,7 +45,7 @@ public:
 
 public slots:
     void toggle(void);
-    void toggle(std::function<void (void)>&);
+    void toggle(std::function<void(void)> &);
 
 public slots:
     void deactivate(void);

@@ -3,10 +3,12 @@
 
 #include <QtCore/QMutex>
 
-template <class T> class dtkSingleton
+template<class T>
+class dtkSingleton
 {
 public:
-    static T& instance(void) {
+    static T &instance(void)
+    {
         static QMutex mutex;
 
         if (!s_instance) {
@@ -23,8 +25,8 @@ public:
     }
 
 private:
-    dtkSingleton(void) {};
-    ~dtkSingleton(void) {};
+    dtkSingleton(void){};
+    ~dtkSingleton(void){};
 
 private:
     Q_DISABLE_COPY(dtkSingleton)
@@ -33,12 +35,10 @@ private:
     static T *s_instance;
 };
 
-template <class T> T *dtkSingleton<T>::s_instance = NULL;
+template<class T>
+T *dtkSingleton<T>::s_instance = NULL;
 
-#define DTK_IMPLEMENT_SINGLETON(T)              \
-    T *T::instance()                            \
-    {                                           \
-        return &(dtkSingleton<T>::instance());  \
-    }
+#define DTK_IMPLEMENT_SINGLETON(T)                                                                 \
+    T *T::instance() { return &(dtkSingleton<T>::instance()); }
 
-#endif //DTKSINGLETON
+#endif // DTKSINGLETON

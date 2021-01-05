@@ -61,7 +61,7 @@ dtkSwitch::dtkSwitch(QWindow *parent) : QQuickView(parent), d(new dtkSwitchPriva
     d->update();
 
     this->setSource(QUrl("qrc:dtkGui/dtkSwitch.qml"));
-    //this->setStyleSheet("background: transparent;");
+    // this->setStyleSheet("background: transparent;");
     this->setResizeMode(QQuickView::SizeViewToRootObject);
 
     d->root_item = qobject_cast<QQuickItem *>(this->rootObject());
@@ -103,25 +103,25 @@ void dtkSwitch::toggle(void)
     QMetaObject::invokeMethod(d->root_item, "toggle");
 }
 
-void dtkSwitch::setForeground(const QString& pixmap)
+void dtkSwitch::setForeground(const QString &pixmap)
 {
     d->foreground = pixmap;
     d->update();
 }
 
-void dtkSwitch::setBackground(const QString& pixmap)
+void dtkSwitch::setBackground(const QString &pixmap)
 {
     d->background = pixmap;
     d->update();
 }
 
-void dtkSwitch::setLeftLabel(const QString& label)
+void dtkSwitch::setLeftLabel(const QString &label)
 {
     d->l_label = label;
     d->update();
 }
 
-void dtkSwitch::setRightLabel(const QString& label)
+void dtkSwitch::setRightLabel(const QString &label)
 {
     d->r_label = label;
     d->update();

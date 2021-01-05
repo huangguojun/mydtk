@@ -22,8 +22,8 @@
 
 #include <dtkPlotExport.h>
 
-#include <QtCore/QObject>
 #include <QColor>
+#include <QtCore/QObject>
 
 class dtkPlotView;
 class dtkPlotViewPickerPrivate;
@@ -37,13 +37,13 @@ public:
     ~dtkPlotViewPicker(void);
 
 public:
-    void   activate(void);
+    void activate(void);
     void deactivate(void);
 
 public:
     QColor color(void) const;
 
-    void setColor(const QColor& color);
+    void setColor(const QColor &color);
 
 private:
     dtkPlotViewPickerPrivate *d;

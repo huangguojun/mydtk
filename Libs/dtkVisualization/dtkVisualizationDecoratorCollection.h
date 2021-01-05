@@ -35,12 +35,12 @@ public:
     using const_reverse_iterator = typename list::const_reverse_iterator;
 
 public:
-     dtkVisualizationDecoratorCollection(void);
-     dtkVisualizationDecoratorCollection(const QList<dtkVisualizationDecorator *>&);
-     dtkVisualizationDecoratorCollection(dtkVisualizationDecorator *);
-     dtkVisualizationDecoratorCollection(const std::list<dtkVisualizationDecorator *>&);
-     dtkVisualizationDecoratorCollection(const dtkVisualizationDecoratorCollection&);
-     dtkVisualizationDecoratorCollection(dtkVisualizationDecoratorCollection&&);
+    dtkVisualizationDecoratorCollection(void);
+    dtkVisualizationDecoratorCollection(const QList<dtkVisualizationDecorator *> &);
+    dtkVisualizationDecoratorCollection(dtkVisualizationDecorator *);
+    dtkVisualizationDecoratorCollection(const std::list<dtkVisualizationDecorator *> &);
+    dtkVisualizationDecoratorCollection(const dtkVisualizationDecoratorCollection &);
+    dtkVisualizationDecoratorCollection(dtkVisualizationDecoratorCollection &&);
     ~dtkVisualizationDecoratorCollection(void);
 
     bool add(dtkVisualizationDecorator *);
@@ -51,25 +51,25 @@ public:
     bool empty(void) const;
     std::size_t size(void) const;
 
-    dtkVisualizationDecoratorCollection &operator << (dtkVisualizationDecorator *);
-    dtkVisualizationDecoratorCollection &operator << (const QList<dtkVisualizationDecorator *>&);
-    dtkVisualizationDecoratorCollection &operator << (const std::list<dtkVisualizationDecorator *>&);
-    dtkVisualizationDecoratorCollection &operator << (const dtkVisualizationDecoratorCollection&);
+    dtkVisualizationDecoratorCollection &operator<<(dtkVisualizationDecorator *);
+    dtkVisualizationDecoratorCollection &operator<<(const QList<dtkVisualizationDecorator *> &);
+    dtkVisualizationDecoratorCollection &operator<<(const std::list<dtkVisualizationDecorator *> &);
+    dtkVisualizationDecoratorCollection &operator<<(const dtkVisualizationDecoratorCollection &);
 
-          iterator  begin(void);
-    const_iterator  begin(void) const;
+    iterator begin(void);
+    const_iterator begin(void) const;
     const_iterator cbegin(void) const;
 
-          iterator  end(void);
-    const_iterator  end(void) const;
+    iterator end(void);
+    const_iterator end(void) const;
     const_iterator cend(void) const;
 
-          reverse_iterator  rbegin(void);
-    const_reverse_iterator  rbegin(void) const;
+    reverse_iterator rbegin(void);
+    const_reverse_iterator rbegin(void) const;
     const_reverse_iterator crbegin(void) const;
 
-          reverse_iterator  rend(void);
-    const_reverse_iterator  rend(void) const;
+    reverse_iterator rend(void);
+    const_reverse_iterator rend(void) const;
     const_reverse_iterator crend(void) const;
 
 public:

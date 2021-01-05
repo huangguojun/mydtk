@@ -34,14 +34,14 @@ void dtkViewController::insert(dtkViewWidget *view)
     QString name = view->objectName();
 
     if (name.isEmpty())
-        name = QString("View %1").arg(d->views.count()+1);
+        name = QString("View %1").arg(d->views.count() + 1);
 
     d->views.insert(name, view);
 
     emit inserted(view, name);
 }
 
-dtkViewWidget *dtkViewController::view(const QString& name)
+dtkViewWidget *dtkViewController::view(const QString &name)
 {
     return d->views.value(name, nullptr);
 }

@@ -27,8 +27,8 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuItemDIY : public dtkWidgetsMenuItemCustom
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemDIY(const QString& title);
-     dtkWidgetsMenuItemDIY(const QString& title, QWidget *widget);
+    dtkWidgetsMenuItemDIY(const QString &title);
+    dtkWidgetsMenuItemDIY(const QString &title, QWidget *widget);
     ~dtkWidgetsMenuItemDIY(void);
 
 public:
@@ -40,7 +40,7 @@ public:
 
 public:
     void clear(void);
-    
+
 public:
     void setShowTitle(bool);
     bool showTitle(void);
@@ -62,7 +62,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuItemWorkspace : public dtkWidgetsMenuItemC
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemWorkspace(const QString& title, dtkWidgetsWorkspaceStackBar *bar);
+    dtkWidgetsMenuItemWorkspace(const QString &title, dtkWidgetsWorkspaceStackBar *bar);
     ~dtkWidgetsMenuItemWorkspace(void);
 
 public:
@@ -81,7 +81,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuItemTheme : public dtkWidgetsMenuItemCusto
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItemTheme(const QString& theme);
+    dtkWidgetsMenuItemTheme(const QString &theme);
     ~dtkWidgetsMenuItemTheme(void);
 
 public:

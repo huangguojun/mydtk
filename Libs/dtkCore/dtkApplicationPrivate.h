@@ -15,7 +15,6 @@
 
 #pragma once
 
-
 #include <dtkCoreExport.h>
 
 #include <QtCore>

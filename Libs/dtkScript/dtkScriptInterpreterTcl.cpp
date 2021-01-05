@@ -37,7 +37,8 @@ public:
 
 void InitInterpreterChannels(Tcl_Interp *interpreter);
 
-dtkScriptInterpreterTcl::dtkScriptInterpreterTcl(QObject *parent) : dtkScriptInterpreter(parent), d(new dtkScriptInterpreterTclPrivate)
+dtkScriptInterpreterTcl::dtkScriptInterpreterTcl(QObject *parent)
+    : dtkScriptInterpreter(parent), d(new dtkScriptInterpreterTclPrivate)
 {
     d->interpreter = Tcl_CreateInterp();
 
@@ -55,22 +56,33 @@ dtkScriptInterpreterTcl::~dtkScriptInterpreterTcl(void)
     d = NULL;
 }
 
-QString dtkScriptInterpreterTcl::interpret(const QString& command, int *stat)
+QString dtkScriptInterpreterTcl::interpret(const QString &command, int *stat)
 {
     int res = Tcl_Eval(d->interpreter, command.toUtf8().constData());
 
     switch (res) {
-    case TCL_OK:       *stat = Status_Ok;       break;
+    case TCL_OK:
+        *stat = Status_Ok;
+        break;
 
-    case TCL_ERROR:    *stat = Status_Error;    break;
+    case TCL_ERROR:
+        *stat = Status_Error;
+        break;
 
-    case TCL_RETURN:   *stat = Status_Return;   break;
+    case TCL_RETURN:
+        *stat = Status_Return;
+        break;
 
-    case TCL_BREAK:    *stat = Status_Break;    break;
+    case TCL_BREAK:
+        *stat = Status_Break;
+        break;
 
-    case TCL_CONTINUE: *stat = Status_Continue; break;
+    case TCL_CONTINUE:
+        *stat = Status_Continue;
+        break;
 
-    default: break;
+    default:
+        break;
     }
 
     return QString(Tcl_GetString(Tcl_GetObjResult(d->interpreter)));
@@ -82,28 +94,31 @@ QString dtkScriptInterpreterTcl::interpret(const QString& command, int *stat)
 
 TCL_DECLARE_MUTEX(interpreterMutex)
 
-static  int InterpreterInput  _ANSI_ARGS_((ClientData instanceData,       char *buf, int toRead, int *errorCode));
-static  int InterpreterOutput _ANSI_ARGS_((ClientData instanceData, const char *buf, int toWrite, int *errorCode));
-static  int InterpreterClose  _ANSI_ARGS_((ClientData instanceData, Tcl_Interp *interp));
-static void InterpreterWatch  _ANSI_ARGS_((ClientData instanceData, int mask));
-static  int InterpreterHandle _ANSI_ARGS_((ClientData instanceData, int direction, ClientData *handlePtr));
+static int InterpreterInput _ANSI_ARGS_((ClientData instanceData, char *buf, int toRead,
+                                         int *errorCode));
+static int InterpreterOutput _ANSI_ARGS_((ClientData instanceData, const char *buf, int toWrite,
+                                          int *errorCode));
+static int InterpreterClose _ANSI_ARGS_((ClientData instanceData, Tcl_Interp *interp));
+static void InterpreterWatch _ANSI_ARGS_((ClientData instanceData, int mask));
+static int InterpreterHandle _ANSI_ARGS_((ClientData instanceData, int direction,
+                                          ClientData *handlePtr));
 
 static Tcl_ChannelType interpreterChannelType = {
-    (char *)"interpreter",      // Type name.
-    NULL,                   // Always non-blocking.
-    InterpreterClose,       // Close proc.
-    InterpreterInput,       // Input proc.
-    InterpreterOutput,      // Output proc.
-    NULL,           // Seek proc.
-    NULL,           // Set option proc.
-    NULL,           // Get option proc.
-    InterpreterWatch,       // Watch for events on interpreter.
-    InterpreterHandle       // Get a handle from the device.
+    (char *)"interpreter", // Type name.
+    NULL, // Always non-blocking.
+    InterpreterClose, // Close proc.
+    InterpreterInput, // Input proc.
+    InterpreterOutput, // Output proc.
+    NULL, // Seek proc.
+    NULL, // Set option proc.
+    NULL, // Get option proc.
+    InterpreterWatch, // Watch for events on interpreter.
+    InterpreterHandle // Get a handle from the device.
 };
 
 #ifdef __WIN32__
 
-#include <windows.h>
+#    include <windows.h>
 
 static int ShouldUseInterpreterChannel(int type)
 {
@@ -148,7 +163,7 @@ static int ShouldUseInterpreterChannel(int type)
     fileType = GetFileType(handle);
 
     if (fileType == FILE_TYPE_CHAR) {
-        dcb.DCBlength = sizeof( DCB ) ;
+        dcb.DCBlength = sizeof(DCB);
 
         if (!GetConsoleMode(handle, &interpreterParams) && !GetCommState(handle, &dcb)) {
             return 1;
@@ -163,7 +178,7 @@ static int ShouldUseInterpreterChannel(int type)
 }
 
 #else
-#define ShouldUseInterpreterChannel(chan) (1)
+#    define ShouldUseInterpreterChannel(chan) (1)
 #endif
 
 void InitInterpreterChannels(Tcl_Interp *interp)
@@ -179,7 +194,8 @@ void InitInterpreterChannels(Tcl_Interp *interp)
         interpreterInitialized = 1;
 
         if (ShouldUseInterpreterChannel(TCL_STDIN)) {
-            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter0", (ClientData) TCL_STDIN, TCL_READABLE);
+            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter0",
+                                                   (ClientData)TCL_STDIN, TCL_READABLE);
 
             if (interpreterChannel != NULL) {
                 Tcl_SetChannelOption(NULL, interpreterChannel, "-translation", "lf");
@@ -191,7 +207,8 @@ void InitInterpreterChannels(Tcl_Interp *interp)
         }
 
         if (ShouldUseInterpreterChannel(TCL_STDOUT)) {
-            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter1", (ClientData) TCL_STDOUT, TCL_WRITABLE);
+            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter1",
+                                                   (ClientData)TCL_STDOUT, TCL_WRITABLE);
 
             if (interpreterChannel != NULL) {
                 Tcl_SetChannelOption(NULL, interpreterChannel, "-translation", "lf");
@@ -203,7 +220,8 @@ void InitInterpreterChannels(Tcl_Interp *interp)
         }
 
         if (ShouldUseInterpreterChannel(TCL_STDERR)) {
-            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter2", (ClientData) TCL_STDERR, TCL_WRITABLE);
+            interpreterChannel = Tcl_CreateChannel(&interpreterChannelType, "interpreter2",
+                                                   (ClientData)TCL_STDERR, TCL_WRITABLE);
 
             if (interpreterChannel != NULL) {
                 Tcl_SetChannelOption(NULL, interpreterChannel, "-translation", "lf");
@@ -241,10 +259,7 @@ static int InterpreterClose(ClientData instanceData, Tcl_Interp *interp)
     return 0;
 }
 
-static void InterpreterWatch(ClientData instanceData, int mask)
-{
-
-}
+static void InterpreterWatch(ClientData instanceData, int mask) {}
 
 static int InterpreterHandle(ClientData instanceData, int direction, ClientData *handlePtr)
 {

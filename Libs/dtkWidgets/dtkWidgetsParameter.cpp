@@ -18,10 +18,7 @@
 // dtkWidgetsAbstractParameter implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameter::dtkWidgetsParameter(QWidget *p) : QWidget(p)
-{
-
-}
+dtkWidgetsParameter::dtkWidgetsParameter(QWidget *p) : QWidget(p) {}
 
 //
 // dtkWidgetsParameter.cpp ends here

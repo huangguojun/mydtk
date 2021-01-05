@@ -27,14 +27,19 @@
   \inmodule dtkWidgets
   \brief dtkDistributedGuiApplication ...
 
-    \brief This class is used to start GUI applications that use the dtkDistributed framework. The distributed option (plugins, number of process/threads, ...) can be configured on the command line, and also setup settings and dtkLog. The rank 0 will be able to start the main loop and handle the GUI parts. It can also be used to start a non GUI appliation if the \tt{-nw} argument is given and the create method is called (it won't work if you use new directly).
+    \brief This class is used to start GUI applications that use the
+dtkDistributed framework. The distributed option (plugins, number of
+process/threads, ...) can be configured on the command line, and also setup
+settings and dtkLog. The rank 0 will be able to start the main loop and handle
+the GUI parts. It can also be used to start a non GUI appliation if the \tt{-nw}
+argument is given and the create method is called (it won't work if you use new
+directly).
 
     \code
 int main(int argc, char **argv)
 {
-  dtkDistributedGuiApplication *app = dtkDistributedGuiApplication::create(argc, argv);
-  app->setOrganizationName("inria");
-  app->setOrganizationDomain("fr");
+  dtkDistributedGuiApplication *app = dtkDistributedGuiApplication::create(argc,
+argv); app->setOrganizationName("inria"); app->setOrganizationDomain("fr");
   app->setApplicationName("myApp");
   app->setApplicationVersion("0.1.0");
 
@@ -48,8 +53,8 @@ int main(int argc, char **argv)
 
   // ------------ check parameters
    if (!parser->isSet(myOption)) {
-    qFatal("Error: input are not correctly set! you have to set : --myopt <val>") ;
-    return 1;
+    qFatal("Error: input are not correctly set! you have to set : --myopt
+<val>") ; return 1;
   }
 
   // /////////////////////////////////////////////////////////////////
@@ -70,23 +75,27 @@ int main(int argc, char **argv)
 
 */
 
+/*! \fn dtkDistributedGuiApplication::dtkDistributedGuiApplication(int &argc,
+char **argv)
 
-/*! \fn dtkDistributedGuiApplication::dtkDistributedGuiApplication(int &argc, char **argv)
+Constructs a dtkDistributedGuiApplication. Initializes the window system and
+constructs an application object with argc command line arguments in argv.
 
-Constructs a dtkDistributedGuiApplication. Initializes the window system and constructs an application object with argc command line arguments in argv.
+The argc and argv arguments are processed by the application, and made available
+in a more convenient form by the arguments() function.
 
-The argc and argv arguments are processed by the application, and made available in a more convenient form by the arguments() function.
-
-Warning: The data referred to by \a argc and \a argv must stay valid for the entire lifetime of the dtkCoreApplication object. In addition, argc must be greater than zero and argv must contain at least one valid character string.
+Warning: The data referred to by \a argc and \a argv must stay valid for the
+entire lifetime of the dtkCoreApplication object. In addition, argc must be
+greater than zero and argv must contain at least one valid character string.
 */
 
-dtkDistributedGuiApplication::dtkDistributedGuiApplication(int& argc, char **argv): QApplication(argc, argv)
+dtkDistributedGuiApplication::dtkDistributedGuiApplication(int &argc, char **argv)
+    : QApplication(argc, argv)
 {
 
     d = new dtkDistributedApplicationPrivate;
     d->spawned = false;
     d->nospawn = false;
-
 }
 
 /*! \fn dtkDistributedGuiApplication::~dtkDistributedGuiApplication(void)
@@ -95,10 +104,11 @@ Destroys the dtkDistributedGuiApplication object.
 
 */
 
-
 /*! \fn dtkDistributedGuiApplication *create(int &argc, char *argv[])
 
-  Helper function to create an instance of a dtkDistributedGuiApplication. If the \tt{--nw} option is set, it will use a \e{minimal} \tt{QT_QPA_PLATFORM}. \a argc and \a argv are the usual parameters of a QCoreApplication.
+  Helper function to create an instance of a dtkDistributedGuiApplication. If
+  the \tt{--nw} option is set, it will use a \e{minimal} \tt{QT_QPA_PLATFORM}.
+  \a argc and \a argv are the usual parameters of a QCoreApplication.
 
 */
 
@@ -108,10 +118,10 @@ dtkDistributedGuiApplication::~dtkDistributedGuiApplication(void)
     d = NULL;
 }
 
-
 /*! \fn void dtkDistributedGuiApplication::initialize(void)
 
- Initialize the command line parser. Should be called once all the specific options of your application are added in the parser.
+ Initialize the command line parser. Should be called once all the specific
+ options of your application are added in the parser.
 
  \sa parser
 */
@@ -123,7 +133,8 @@ void dtkDistributedGuiApplication::initialize(void)
 
 /*! \fn QCommandLineParser *dtkDistributedGuiApplication::parser(void)
 
-  Return the main QCommandLineParser used by the application. It can be used to app specific options for your application.
+  Return the main QCommandLineParser used by the application. It can be used to
+  app specific options for your application.
 
 */
 
@@ -134,18 +145,21 @@ QCommandLineParser *dtkDistributedGuiApplication::parser(void)
 
 /*! \fn bool dtkDistributedGuiApplication::noGui(void)
 
-  Return true if the application is not a GUI application (ie. the \tt{-nw} was used in the command line)
+  Return true if the application is not a GUI application (ie. the \tt{-nw} was
+  used in the command line)
 
 */
 
 bool dtkDistributedGuiApplication::noGui(void)
 {
-    return !(qApp && qobject_cast<QGuiApplication *>(qApp) && (QGuiApplication::platformName() != "minimal")) ;
+    return !(qApp && qobject_cast<QGuiApplication *>(qApp)
+             && (QGuiApplication::platformName() != "minimal"));
 }
 
 /*! \fn void dtkDistributedGuiApplication::exec(QRunnable *task)
 
-  execute the given QRunnable \a task on the spawned processes/threads. Must be called after spawn()
+  execute the given QRunnable \a task on the spawned processes/threads. Must be
+  called after spawn()
 
   \sa spawn
 */
@@ -155,9 +169,15 @@ void dtkDistributedGuiApplication::exec(QRunnable *task)
     d->policy.communicator()->exec(task);
 }
 
-/*! \fn void dtkDistributedGuiApplication::spawn (QMap <QString,QString> options)
+/*! \fn void dtkDistributedGuiApplication::spawn (QMap <QString,QString>
+  options)
 
-  Spawn processes/threads on one or several hosts (depending on the implementation). This step can be bypassed if the --no-spawn argument is given. This can be useful when you are using an mpi communicator and your mpi implementation or scheduler does not handle the \a Mpi_comm_Spawn gracefully. Will you have to use an external tool to spawn the application (mpirun , srun , ...)
+  Spawn processes/threads on one or several hosts (depending on the
+  implementation). This step can be bypassed if the --no-spawn argument is
+  given. This can be useful when you are using an mpi communicator and your mpi
+  implementation or scheduler does not handle the \a Mpi_comm_Spawn gracefully.
+  Will you have to use an external tool to spawn the application (mpirun , srun
+  , ...)
 
 */
 
@@ -187,7 +207,8 @@ dtkDistributedPolicy *dtkDistributedGuiApplication::policy(void)
     return &(d->policy);
 }
 
-/*! \fn dtkDistributedCommunicator *dtkDistributedGuiApplication::communicator(void)
+/*! \fn dtkDistributedCommunicator
+  *dtkDistributedGuiApplication::communicator(void)
 
   Return the main communicator.
 
@@ -208,4 +229,3 @@ bool dtkDistributedGuiApplication::isMaster(void)
 {
     return (d->policy.communicator()->rank() == 0);
 }
-

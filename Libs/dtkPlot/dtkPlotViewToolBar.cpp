@@ -19,8 +19,8 @@
 
 #include "dtkPlotViewToolBar.h"
 
-#include "dtkPlotView.h"
 #include "dtkPlotRenderer.h"
+#include "dtkPlotView.h"
 
 #include <dtkWidgets/dtkSpacer.h>
 
@@ -37,7 +37,8 @@ public:
     dtkPlotView *view;
 };
 
-dtkPlotViewToolBar::dtkPlotViewToolBar(dtkPlotView *parent) : QFrame(parent->widget()), d(new dtkPlotViewToolBarPrivate())
+dtkPlotViewToolBar::dtkPlotViewToolBar(dtkPlotView *parent)
+    : QFrame(parent->widget()), d(new dtkPlotViewToolBarPrivate())
 {
     QToolBar *bar = new QToolBar(this);
 
@@ -212,7 +213,7 @@ void dtkPlotViewToolBar::setDark(bool dark)
     }
 }
 
-void dtkPlotViewToolBar::onExport(const QString& file)
+void dtkPlotViewToolBar::onExport(const QString &file)
 {
     dtkPlotRenderer renderer;
     renderer.setView(d->view);

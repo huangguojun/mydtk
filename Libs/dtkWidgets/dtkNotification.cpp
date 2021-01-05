@@ -13,12 +13,12 @@
 // Code:
 
 #include "dtkNotification.h"
-#include "dtkNotificationQueue.h"
 #include "dtkNotificationEvent.h"
+#include "dtkNotificationQueue.h"
 
 #include <QtWidgets>
 
-void dtkNotify(const QString& message)
+void dtkNotify(const QString &message)
 {
     dtkNotificationEvent *event = new dtkNotificationEvent;
     event->setType(dtkNotificationEvent::Persistent);
@@ -27,7 +27,7 @@ void dtkNotify(const QString& message)
     dtkNotify(event);
 }
 
-void dtkNotify(const QString& message, int duration)
+void dtkNotify(const QString &message, int duration)
 {
     dtkNotificationEvent *event = new dtkNotificationEvent;
     event->setType(dtkNotificationEvent::NonPersistent);

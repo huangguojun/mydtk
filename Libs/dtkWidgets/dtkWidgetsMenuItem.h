@@ -32,16 +32,16 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuItem : public QAction
     Q_OBJECT
 
 public:
-     dtkWidgetsMenuItem(QObject * = nullptr);
-     dtkWidgetsMenuItem(const QString&, QObject * = nullptr);
-     dtkWidgetsMenuItem(int, const QString&, QObject * = nullptr);
+    dtkWidgetsMenuItem(QObject * = nullptr);
+    dtkWidgetsMenuItem(const QString &, QObject * = nullptr);
+    dtkWidgetsMenuItem(int, const QString &, QObject * = nullptr);
     ~dtkWidgetsMenuItem(void);
 
 signals:
     void clicked(void);
 
 public:
-    const QString& title(void) const;
+    const QString &title(void) const;
 
 public:
     int icon(void) const;
@@ -63,7 +63,8 @@ class DTKWIDGETS_EXPORT dtkWidgetsMenuItemParameter : public dtkWidgetsMenuItem
     Q_OBJECT
 
 public:
-    explicit dtkWidgetsMenuItemParameter(const QString& title, dtkCoreParameter *parameter, const QString& representation);
+    explicit dtkWidgetsMenuItemParameter(const QString &title, dtkCoreParameter *parameter,
+                                         const QString &representation);
     ~dtkWidgetsMenuItemParameter(void);
 
 public:
@@ -95,7 +96,7 @@ signals:
     void clicked(void);
 
 protected:
-     dtkWidgetsMenuItemCustom(const QString& title);
+    dtkWidgetsMenuItemCustom(const QString &title);
     ~dtkWidgetsMenuItemCustom(void) = default;
 };
 

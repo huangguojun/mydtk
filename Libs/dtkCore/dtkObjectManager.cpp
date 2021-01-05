@@ -22,7 +22,7 @@ public:
 
 dtkObjectManager *dtkObjectManager::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkObjectManager;
 
     return s_instance;
@@ -33,19 +33,19 @@ int dtkObjectManager::count(void)
     return d->instances.count();
 }
 
-void dtkObjectManager::add(const QVariant& instance, const QString& name)
+void dtkObjectManager::add(const QVariant &instance, const QString &name)
 {
     d->instances.insert(name, instance);
 }
 
-void dtkObjectManager::add(const QVariant& instance)
+void dtkObjectManager::add(const QVariant &instance)
 {
     static int count = 0;
 
     d->instances.insert(QString("%1 %2").arg(instance.typeName()).arg(count++), instance);
 }
 
-QVariant dtkObjectManager::value(const QString& key) const
+QVariant dtkObjectManager::value(const QString &key) const
 {
     return d->instances.value(key);
 }
@@ -55,7 +55,7 @@ QStringList dtkObjectManager::keys(void) const
     return d->instances.keys();
 }
 
-bool dtkObjectManager::remove(const QVariant& v)
+bool dtkObjectManager::remove(const QVariant &v)
 {
     QList<QString> keys;
 
@@ -65,7 +65,7 @@ bool dtkObjectManager::remove(const QVariant& v)
         }
     }
 
-    for (auto&& k : keys) {
+    for (auto &&k : keys) {
         d->instances.remove(k);
     }
 

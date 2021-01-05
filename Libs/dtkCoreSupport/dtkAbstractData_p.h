@@ -20,8 +20,8 @@
 #ifndef DTKABSTRACTDATA_P_H
 #define DTKABSTRACTDATA_P_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractData;
 
@@ -33,16 +33,19 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataPrivate : public dtkAbstractObjectPri
 {
 public:
     dtkAbstractDataPrivate(dtkAbstractData *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractDataPrivate(const dtkAbstractDataPrivate& other, dtkAbstractData *q = 0) : dtkAbstractObjectPrivate(other, q),
-        readers(other.readers),
-        writers(other.writers),
-        converters(other.converters),
-        serializers(other.serializers),
-        deserializers(other.deserializers),
-        path(other.path),
-        paths(other.paths),
-        numberOfChannels(other.numberOfChannels),
-        thumbnails(other.thumbnails) {}
+    dtkAbstractDataPrivate(const dtkAbstractDataPrivate &other, dtkAbstractData *q = 0)
+        : dtkAbstractObjectPrivate(other, q),
+          readers(other.readers),
+          writers(other.writers),
+          converters(other.converters),
+          serializers(other.serializers),
+          deserializers(other.deserializers),
+          path(other.path),
+          paths(other.paths),
+          numberOfChannels(other.numberOfChannels),
+          thumbnails(other.thumbnails)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataPrivate(void) {}
@@ -55,7 +58,7 @@ public:
     QMap<QString, bool> deserializers;
 
 public:
-    QString     path;
+    QString path;
     QStringList paths;
 
 public:

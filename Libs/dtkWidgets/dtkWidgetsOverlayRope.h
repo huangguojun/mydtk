@@ -23,14 +23,10 @@ class DTKWIDGETS_EXPORT dtkWidgetsOverlayRope : public QFrame
     Q_OBJECT
 
 public:
-    enum Mode {
-        Dragging = 0x00,
-        Collider = 0x01,
-         Dynamic = 0x10
-    };
+    enum Mode { Dragging = 0x00, Collider = 0x01, Dynamic = 0x10 };
 
 public:
-     dtkWidgetsOverlayRope(QWidget *parent = Q_NULLPTR);
+    dtkWidgetsOverlayRope(QWidget *parent = Q_NULLPTR);
     ~dtkWidgetsOverlayRope(void);
 
 public slots:

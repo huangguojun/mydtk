@@ -24,7 +24,8 @@
 // dtkAbstractViewInteractor implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractViewInteractor::dtkAbstractViewInteractor(void) : dtkAbstractObject(*new dtkAbstractViewInteractorPrivate(this), 0)
+dtkAbstractViewInteractor::dtkAbstractViewInteractor(void)
+    : dtkAbstractObject(*new dtkAbstractViewInteractorPrivate(this), 0)
 {
     DTK_D(dtkAbstractViewInteractor);
 
@@ -32,15 +33,12 @@ dtkAbstractViewInteractor::dtkAbstractViewInteractor(void) : dtkAbstractObject(*
     d->view = NULL;
 }
 
-dtkAbstractViewInteractor::dtkAbstractViewInteractor(const dtkAbstractViewInteractor& other) : dtkAbstractObject(*new dtkAbstractViewInteractorPrivate(*other.d_func()), other)
+dtkAbstractViewInteractor::dtkAbstractViewInteractor(const dtkAbstractViewInteractor &other)
+    : dtkAbstractObject(*new dtkAbstractViewInteractorPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractViewInteractor::~dtkAbstractViewInteractor(void)
-{
-
-}
+dtkAbstractViewInteractor::~dtkAbstractViewInteractor(void) {}
 
 bool dtkAbstractViewInteractor::enabled(void) const
 {
@@ -72,14 +70,14 @@ void dtkAbstractViewInteractor::setData(dtkAbstractData *data)
 
 void dtkAbstractViewInteractor::setData(dtkAbstractData *data, int channel)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
     Q_UNUSED(data);
     Q_UNUSED(channel);
 }
 
 void dtkAbstractViewInteractor::setData(dtkAbstractData *data, int channel, int frame)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
     Q_UNUSED(data);
     Q_UNUSED(channel);
     Q_UNUSED(frame);
@@ -101,14 +99,14 @@ dtkAbstractData *dtkAbstractViewInteractor::data(void)
 
 dtkAbstractData *dtkAbstractViewInteractor::output(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 
     return NULL;
 }
 
 dtkAbstractData *dtkAbstractViewInteractor::output(int channel)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
     Q_UNUSED(channel);
 
     return NULL;
@@ -116,7 +114,7 @@ dtkAbstractData *dtkAbstractViewInteractor::output(int channel)
 
 dtkAbstractData *dtkAbstractViewInteractor::output(int channel, int frame)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
     Q_UNUSED(channel);
     Q_UNUSED(frame);
 
@@ -132,15 +130,15 @@ dtkAbstractView *dtkAbstractViewInteractor::view(void)
 
 void dtkAbstractViewInteractor::predraw(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 }
 
 void dtkAbstractViewInteractor::draw(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 }
 
 void dtkAbstractViewInteractor::postdraw(void)
 {
-    //DTK_DEFAULT_IMPLEMENTATION;
+    // DTK_DEFAULT_IMPLEMENTATION;
 }

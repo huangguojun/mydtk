@@ -27,7 +27,8 @@ public:
     QTreeWidget *tree;
 };
 
-dtkPluginsEditor::dtkPluginsEditor(QWidget *parent) : QWidget(parent), d(new dtkPluginsEditorPrivate)
+dtkPluginsEditor::dtkPluginsEditor(QWidget *parent)
+    : QWidget(parent), d(new dtkPluginsEditorPrivate)
 {
     d->tree = new QTreeWidget(this);
     d->tree->setAttribute(Qt::WA_MacShowFocusRect, false);

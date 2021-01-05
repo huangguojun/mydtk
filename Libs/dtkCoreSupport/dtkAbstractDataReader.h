@@ -35,7 +35,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataReader : public dtkAbstractObject
 
 public:
     dtkAbstractDataReader(void);
-    dtkAbstractDataReader(const dtkAbstractDataReader& other);
+    dtkAbstractDataReader(const dtkAbstractDataReader &other);
     virtual ~dtkAbstractDataReader(void);
 
 public:
@@ -51,25 +51,25 @@ public:
     virtual void setData(dtkAbstractData *data);
 
 signals:
-    void started(const QString& message);
+    void started(const QString &message);
     void progressed(int step);
     void finished(void);
 
 public slots:
-    virtual bool canRead(const QString& file);
-    virtual bool canRead(const QStringList& files);
+    virtual bool canRead(const QString &file);
+    virtual bool canRead(const QStringList &files);
 
-    virtual bool read(const QString& file);
-    virtual bool read(const QStringList& files);
+    virtual bool read(const QString &file);
+    virtual bool read(const QStringList &files);
 
-    virtual bool readInformation(const QString& path);
-    virtual bool readInformation(const QStringList& paths);
+    virtual bool readInformation(const QString &path);
+    virtual bool readInformation(const QStringList &paths);
 
     virtual void setProgress(int value);
 
 protected:
-    const QString&     file(void)  const;
-    const QStringList& files(void) const;
+    const QString &file(void) const;
+    const QStringList &files(void) const;
 
 private:
     DTK_DECLARE_PRIVATE(dtkAbstractDataReader);

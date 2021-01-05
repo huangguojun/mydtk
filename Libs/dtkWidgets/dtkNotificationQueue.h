@@ -55,7 +55,7 @@ private:
     static dtkNotificationQueue *s_instance;
 
 private:
-     dtkNotificationQueue(QObject *parent = 0);
+    dtkNotificationQueue(QObject *parent = 0);
     ~dtkNotificationQueue(void);
 
 private:

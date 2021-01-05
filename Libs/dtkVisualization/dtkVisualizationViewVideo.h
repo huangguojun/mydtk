@@ -23,7 +23,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideo : public dtkWidgetsWidge
     Q_OBJECT
 
 public:
-     dtkVisualizationViewVideo(QWidget *parent = nullptr);
+    dtkVisualizationViewVideo(QWidget *parent = nullptr);
     ~dtkVisualizationViewVideo(void);
 
 public:
@@ -33,10 +33,10 @@ public slots:
     void update(void) override;
 
 public:
-    void setTitle(const QString&);
+    void setTitle(const QString &);
 
 public slots:
-    void setImage(const QImage&);
+    void setImage(const QImage &);
 
 private:
     class dtkVisualizationViewVideoPrivate *d;

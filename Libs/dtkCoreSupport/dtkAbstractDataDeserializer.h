@@ -20,7 +20,6 @@
 #ifndef DTKABSTRACTDATADESERIALIZER_H
 #define DTKABSTRACTDATADESERIALIZER_H
 
-
 #include "dtkAbstractObject.h"
 
 class dtkAbstractData;
@@ -36,7 +35,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataDeserializer : public dtkAbstractObje
 
 public:
     dtkAbstractDataDeserializer(void);
-    dtkAbstractDataDeserializer(const dtkAbstractDataDeserializer& other);
+    dtkAbstractDataDeserializer(const dtkAbstractDataDeserializer &other);
     virtual ~dtkAbstractDataDeserializer(void);
 
 public:
@@ -50,12 +49,12 @@ public:
     virtual void setData(dtkAbstractData *data);
 
 signals:
-    void started(const QString& message);
+    void started(const QString &message);
     void progressed(int step);
     void finished(void);
 
 public slots:
-    virtual dtkAbstractData *deserialize(const QByteArray& array);
+    virtual dtkAbstractData *deserialize(const QByteArray &array);
 
     virtual void setProgress(int value);
 

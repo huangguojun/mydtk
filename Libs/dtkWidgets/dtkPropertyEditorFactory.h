@@ -16,8 +16,8 @@
 
 #include <dtkWidgetsExport.h>
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 
 class dtkPropertyEditor;
 class dtkPropertyEditorFactoryPrivate;
@@ -31,7 +31,7 @@ class DTKWIDGETS_EXPORT dtkPropertyEditorFactory : public QObject
     Q_OBJECT
 
 public:
-    typedef dtkPropertyEditor *(*dtkPropertyEditorCreator)(const QString&, QObject *, QWidget *);
+    typedef dtkPropertyEditor *(*dtkPropertyEditorCreator)(const QString &, QObject *, QWidget *);
 
 public:
     static dtkPropertyEditorFactory *instance(void);
@@ -40,7 +40,7 @@ public:
     bool registerCreator(int type, dtkPropertyEditorCreator func);
 
 public slots:
-    dtkPropertyEditor *create(const QString& property_name, QObject *object, QWidget *parent = 0);
+    dtkPropertyEditor *create(const QString &property_name, QObject *object, QWidget *parent = 0);
 
 public slots:
     QList<QWidget *> createObjectProperties(QObject *object, int hierarchy_level = -1);
@@ -56,7 +56,5 @@ private:
     dtkPropertyEditorFactoryPrivate *d;
 
 private slots:
-    void clear(void) {
-        delete this;
-    }
+    void clear(void) { delete this; }
 };

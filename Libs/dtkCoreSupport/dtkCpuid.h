@@ -20,8 +20,8 @@
 #ifndef DTKCPUID_H
 #define DTKCPUID_H
 
-#include <dtkCoreSupportExport.h>
 #include <QtCore>
+#include <dtkCoreSupportExport.h>
 
 class dtkCpuidPrivate;
 
@@ -42,4 +42,3 @@ private:
 };
 
 #endif /* DTKCPUID_H */
-

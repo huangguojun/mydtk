@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterDoubleSpinBox : public dtkWidgetsParameterBase<dtk::d_real>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterDoubleSpinBox
+    : public dtkWidgetsParameterBase<dtk::d_real>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterDoubleSpinBox(QWidget* parent = 0);
+    dtkWidgetsParameterDoubleSpinBox(QWidget *parent = 0);
     ~dtkWidgetsParameterDoubleSpinBox(void);
 
 public:

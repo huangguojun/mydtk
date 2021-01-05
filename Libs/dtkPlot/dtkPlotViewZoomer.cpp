@@ -17,8 +17,8 @@
  *
  */
 
-#include "dtkPlotView.h"
 #include "dtkPlotViewZoomer.h"
+#include "dtkPlotView.h"
 
 #include <qwt_plot.h>
 #include <qwt_plot_canvas.h>
@@ -37,10 +37,7 @@ dtkPlotViewZoomerPrivate::dtkPlotViewZoomerPrivate(QwtPlotCanvas *canvas) : QwtP
     setMousePattern(QwtEventPattern::MouseSelect3, Qt::RightButton);
 }
 
-dtkPlotViewZoomerPrivate::~dtkPlotViewZoomerPrivate(void)
-{
-
-}
+dtkPlotViewZoomerPrivate::~dtkPlotViewZoomerPrivate(void) {}
 
 // /////////////////////////////////////////////////////////////////
 //
@@ -79,12 +76,12 @@ QColor dtkPlotViewZoomer::color(void) const
     return d->rubberBandPen().color();
 }
 
-void dtkPlotViewZoomer::setColor(const QColor& color)
+void dtkPlotViewZoomer::setColor(const QColor &color)
 {
     d->setRubberBandPen(QPen(color));
 }
 
-void dtkPlotViewZoomer::updateBase(const QRectF& rectf)
+void dtkPlotViewZoomer::updateBase(const QRectF &rectf)
 {
     d->setZoomBase(rectf);
 }

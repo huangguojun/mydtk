@@ -20,12 +20,12 @@
 
 #include <dtkCore/dtkCoreParameterPath>
 
-class  DTKWIDGETS_EXPORT dtkWidgetsParameterDirBrowse : public dtkWidgetsParameterBase<dtk::d_path>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterDirBrowse : public dtkWidgetsParameterBase<dtk::d_path>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterDirBrowse(QWidget* parent = 0);
+    dtkWidgetsParameterDirBrowse(QWidget *parent = 0);
     ~dtkWidgetsParameterDirBrowse(void);
 
 public:

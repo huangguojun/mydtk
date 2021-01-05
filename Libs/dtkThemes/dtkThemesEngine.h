@@ -34,20 +34,20 @@ public:
     const QStringList themes(void);
 
 public slots:
-    void apply(const QString& theme = QString());
+    void apply(const QString &theme = QString());
 
 public slots:
     void polish(QWidget *);
 
 public:
-    const QColor  color(const QString& key) const;
-    const QString value(const QString& key) const;
+    const QColor color(const QString &key) const;
+    const QString value(const QString &key) const;
 
 protected:
     static dtkThemesEngine *s_instance;
 
 private:
-     dtkThemesEngine(QObject *parent = nullptr);
+    dtkThemesEngine(QObject *parent = nullptr);
     ~dtkThemesEngine(void);
 
 private:

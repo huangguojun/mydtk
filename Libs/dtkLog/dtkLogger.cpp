@@ -13,11 +13,11 @@
 // Code:
 
 #include "dtkLogger.h"
-#include "dtkLogger_p.h"
 #include "dtkLogDestination.h"
 #include "dtkLogModel.h"
+#include "dtkLogger_p.h"
 
-dtkLogger& dtkLogger::instance(void)
+dtkLogger &dtkLogger::instance(void)
 {
     static dtkLogger log;
 
@@ -32,19 +32,26 @@ dtkLog::Level dtkLogger::level(void) const
 QString dtkLogger::levelString(void) const
 {
     switch (d->level) {
-    case dtkLog::Trace: return "trace";
+    case dtkLog::Trace:
+        return "trace";
 
-    case dtkLog::Debug: return "debug";
+    case dtkLog::Debug:
+        return "debug";
 
-    case dtkLog::Info:  return "info";
+    case dtkLog::Info:
+        return "info";
 
-    case dtkLog::Warn:  return "warn";
+    case dtkLog::Warn:
+        return "warn";
 
-    case dtkLog::Error: return "error";
+    case dtkLog::Error:
+        return "error";
 
-    case dtkLog::Fatal: return "fatal";
+    case dtkLog::Fatal:
+        return "fatal";
 
-    default:            return "info";
+    default:
+        return "info";
     };
 }
 
@@ -86,7 +93,7 @@ void dtkLogger::detachConsole(void)
     d->destinations.removeOne(d->console);
 }
 
-void dtkLogger::attachFile(const QString& path, qlonglong max_file_size)
+void dtkLogger::attachFile(const QString &path, qlonglong max_file_size)
 {
     if (d->files.contains(path))
         return;
@@ -96,7 +103,7 @@ void dtkLogger::attachFile(const QString& path, qlonglong max_file_size)
     d->destinations << d->files[path];
 }
 
-void dtkLogger::detachFile(const QString& path)
+void dtkLogger::detachFile(const QString &path)
 {
     if (!d->files.contains(path))
         return;
@@ -147,13 +154,13 @@ dtkLogger::~dtkLogger(void)
     d = NULL;
 }
 
-void dtkLogger::write(const QString& message)
+void dtkLogger::write(const QString &message)
 {
     for (int i = 0; i < d->destinations.count(); i++)
         d->destinations.at(i)->write(message);
 }
 
-void dtkLogger::write(const QString& message, dtkLog::Level level)
+void dtkLogger::write(const QString &message, dtkLog::Level level)
 {
     for (int i = 0; i < d->destinations.count(); i++) {
 
@@ -169,12 +176,12 @@ void dtkLogger::write(const QString& message, dtkLog::Level level)
 
 void dtkLogger::redirectCout(dtkLog::Level level)
 {
-    d->cout_stream =  new redirectStream(std::cout, level);
+    d->cout_stream = new redirectStream(std::cout, level);
 }
 
 void dtkLogger::redirectCerr(dtkLog::Level level)
 {
-    d->cerr_stream =  new redirectStream(std::cerr, level);
+    d->cerr_stream = new redirectStream(std::cerr, level);
 }
 
 //

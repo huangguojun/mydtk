@@ -29,20 +29,20 @@ public:
     int count(void);
 
 public slots:
-    void add(const QVariant&, const QString&);
-    void add(const QVariant&);
+    void add(const QVariant &, const QString &);
+    void add(const QVariant &);
 
-    bool remove(const QVariant&);
+    bool remove(const QVariant &);
 
 public:
-    QVariant value(const QString& key) const;
+    QVariant value(const QString &key) const;
     QStringList keys(void) const;
 
 protected:
     static dtkObjectManager *s_instance;
 
 private:
-     dtkObjectManager(void);
+    dtkObjectManager(void);
     ~dtkObjectManager(void);
 
 private:

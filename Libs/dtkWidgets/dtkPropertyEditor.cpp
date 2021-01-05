@@ -34,7 +34,8 @@ public:
 // dtkPropertyEditor implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkPropertyEditor::dtkPropertyEditor(const QString& property_name, QObject *object, QWidget *parent) : QFrame(parent), d(new dtkPropertyEditorPrivate)
+dtkPropertyEditor::dtkPropertyEditor(const QString &property_name, QObject *object, QWidget *parent)
+    : QFrame(parent), d(new dtkPropertyEditorPrivate)
 {
     if (!object) {
         qDebug() << Q_FUNC_INFO << "dtkPropertyEditor must be created using a valid QObject.";
@@ -44,7 +45,8 @@ dtkPropertyEditor::dtkPropertyEditor(const QString& property_name, QObject *obje
     d->object = object;
     this->setObjectName(property_name);
 
-    d->meta_property = object->metaObject()->property(object->metaObject()->indexOfProperty(qPrintable(property_name)));
+    d->meta_property = object->metaObject()->property(
+            object->metaObject()->indexOfProperty(qPrintable(property_name)));
 
     d->editor = NULL;
     d->layout = NULL;
@@ -60,7 +62,7 @@ dtkPropertyEditor::~dtkPropertyEditor(void)
     d = NULL;
 }
 
-void dtkPropertyEditor::setValue(const QVariant& value)
+void dtkPropertyEditor::setValue(const QVariant &value)
 {
     d->object->setProperty(d->meta_property.name(), value);
 }
@@ -79,7 +81,9 @@ QObject *dtkPropertyEditor::propertyObject(void)
 // dtkPropertyEditorDouble implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkPropertyEditorDouble::dtkPropertyEditorDouble(const QString& property_name, QObject *object, QWidget *parent) : dtkPropertyEditor(property_name, object, parent)
+dtkPropertyEditorDouble::dtkPropertyEditorDouble(const QString &property_name, QObject *object,
+                                                 QWidget *parent)
+    : dtkPropertyEditor(property_name, object, parent)
 {
     QDoubleSpinBox *spin_d = new QDoubleSpinBox(this);
     spin_d->setObjectName(property_name);
@@ -100,12 +104,9 @@ dtkPropertyEditorDouble::dtkPropertyEditorDouble(const QString& property_name, Q
     d->layout->addWidget(d->editor);
 }
 
-dtkPropertyEditorDouble::~dtkPropertyEditorDouble(void)
-{
+dtkPropertyEditorDouble::~dtkPropertyEditorDouble(void) {}
 
-}
-
-void dtkPropertyEditorDouble::setEditorData(const QVariant& data)
+void dtkPropertyEditorDouble::setEditorData(const QVariant &data)
 {
     d->editor->blockSignals(true);
     static_cast<QDoubleSpinBox *>(d->editor)->setValue(data.toDouble());
@@ -122,17 +123,19 @@ void dtkPropertyEditorDouble::onValueChanged(void)
     d->object->setProperty(d->meta_property.name(), this->editorData());
 }
 
-dtkPropertyEditor *createDtkPropertyEditorDouble(const QString& property_name, QObject *object, QWidget *parent)
+dtkPropertyEditor *createDtkPropertyEditorDouble(const QString &property_name, QObject *object,
+                                                 QWidget *parent)
 {
     return new dtkPropertyEditorDouble(property_name, object, parent);
 }
-
 
 // ///////////////////////////////////////////////////////////////////
 // dtkPropertyEditorInteger implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkPropertyEditorInteger::dtkPropertyEditorInteger(const QString& property_name, QObject *object, QWidget *parent) : dtkPropertyEditor(property_name, object, parent)
+dtkPropertyEditorInteger::dtkPropertyEditorInteger(const QString &property_name, QObject *object,
+                                                   QWidget *parent)
+    : dtkPropertyEditor(property_name, object, parent)
 {
     QSpinBox *spin_i = new QSpinBox(this);
     spin_i->setObjectName(property_name);
@@ -152,12 +155,9 @@ dtkPropertyEditorInteger::dtkPropertyEditorInteger(const QString& property_name,
     d->layout->addWidget(d->editor);
 }
 
-dtkPropertyEditorInteger::~dtkPropertyEditorInteger(void)
-{
+dtkPropertyEditorInteger::~dtkPropertyEditorInteger(void) {}
 
-}
-
-void dtkPropertyEditorInteger::setEditorData(const QVariant& data)
+void dtkPropertyEditorInteger::setEditorData(const QVariant &data)
 {
     d->editor->blockSignals(true);
     static_cast<QSpinBox *>(d->editor)->setValue(data.toLongLong());
@@ -174,7 +174,8 @@ void dtkPropertyEditorInteger::onValueChanged(void)
     d->object->setProperty(d->meta_property.name(), this->editorData());
 }
 
-dtkPropertyEditor *createDtkPropertyEditorInteger(const QString& property_name, QObject *object, QWidget *parent)
+dtkPropertyEditor *createDtkPropertyEditorInteger(const QString &property_name, QObject *object,
+                                                  QWidget *parent)
 {
     return new dtkPropertyEditorInteger(property_name, object, parent);
 }
@@ -183,7 +184,9 @@ dtkPropertyEditor *createDtkPropertyEditorInteger(const QString& property_name, 
 // dtkPropertyEditorString implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkPropertyEditorString::dtkPropertyEditorString(const QString& property_name, QObject *object, QWidget *parent) : dtkPropertyEditor(property_name, object, parent)
+dtkPropertyEditorString::dtkPropertyEditorString(const QString &property_name, QObject *object,
+                                                 QWidget *parent)
+    : dtkPropertyEditor(property_name, object, parent)
 {
     QLineEdit *edit = new QLineEdit(this);
     edit->setObjectName(property_name);
@@ -200,12 +203,9 @@ dtkPropertyEditorString::dtkPropertyEditorString(const QString& property_name, Q
     d->layout->addWidget(d->editor);
 }
 
-dtkPropertyEditorString::~dtkPropertyEditorString(void)
-{
+dtkPropertyEditorString::~dtkPropertyEditorString(void) {}
 
-}
-
-void dtkPropertyEditorString::setEditorData(const QVariant& data)
+void dtkPropertyEditorString::setEditorData(const QVariant &data)
 {
     d->editor->blockSignals(true);
     static_cast<QLineEdit *>(d->editor)->setText(data.toString());
@@ -222,7 +222,8 @@ void dtkPropertyEditorString::onTextChanged(void)
     d->object->setProperty(d->meta_property.name(), this->editorData());
 }
 
-dtkPropertyEditor *createDtkPropertyEditorString(const QString& property_name, QObject *object, QWidget *parent)
+dtkPropertyEditor *createDtkPropertyEditorString(const QString &property_name, QObject *object,
+                                                 QWidget *parent)
 {
     return new dtkPropertyEditorString(property_name, object, parent);
 }
@@ -231,7 +232,9 @@ dtkPropertyEditor *createDtkPropertyEditorString(const QString& property_name, Q
 // dtkPropertyEditorEnum implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkPropertyEditorEnum::dtkPropertyEditorEnum(const QString& property_name, QObject *object, QWidget *parent) : dtkPropertyEditor(property_name, object, parent)
+dtkPropertyEditorEnum::dtkPropertyEditorEnum(const QString &property_name, QObject *object,
+                                             QWidget *parent)
+    : dtkPropertyEditor(property_name, object, parent)
 {
     QComboBox *list = new QComboBox(parent);
     list->setObjectName(property_name);
@@ -262,12 +265,9 @@ dtkPropertyEditorEnum::dtkPropertyEditorEnum(const QString& property_name, QObje
     d->layout->addWidget(d->editor);
 }
 
-dtkPropertyEditorEnum::~dtkPropertyEditorEnum(void)
-{
+dtkPropertyEditorEnum::~dtkPropertyEditorEnum(void) {}
 
-}
-
-void dtkPropertyEditorEnum::setEditorData(const QVariant& data)
+void dtkPropertyEditorEnum::setEditorData(const QVariant &data)
 {
     int current_index = -1;
 
@@ -309,12 +309,15 @@ QVariant dtkPropertyEditorEnum::editorData(void)
 
 void dtkPropertyEditorEnum::onIndexChanged(int index)
 {
-    int value = d->object->metaObject()->property(d->meta_property.propertyIndex()).enumerator().value(index);
+    int value = d->object->metaObject()
+                        ->property(d->meta_property.propertyIndex())
+                        .enumerator()
+                        .value(index);
     d->object->setProperty(d->meta_property.name(), QVariant::fromValue(value));
 }
 
-dtkPropertyEditor *createDtkPropertyEditorEnum(const QString& property_name, QObject *object, QWidget *parent)
+dtkPropertyEditor *createDtkPropertyEditorEnum(const QString &property_name, QObject *object,
+                                               QWidget *parent)
 {
     return new dtkPropertyEditorEnum(property_name, object, parent);
 }
-

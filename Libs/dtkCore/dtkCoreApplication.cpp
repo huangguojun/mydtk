@@ -19,7 +19,9 @@
 /*!
   \class dtkCoreApplication
   \inmodule dtkCore
-  \brief This class is used by non-GUI applications to provide their event loop. It is based on QCoreApplication, and adds a few command line options to setup settings and dtkLog. For GUI applications, see dtkApplication in dtkWidgets.
+  \brief This class is used by non-GUI applications to provide their event loop.
+It is based on QCoreApplication, and adds a few command line options to setup
+settings and dtkLog. For GUI applications, see dtkApplication in dtkWidgets.
 
   \code
    int main(int argc, char *argv[])
@@ -73,14 +75,19 @@ Options:
 
 /*! \fn dtkCoreApplication::dtkCoreApplication(int &argc, char **argv)
 
-Constructs a dtkCoreApplication. Core applications are applications without a graphical user interface. Such applications are used at the console or as server processes.
+Constructs a dtkCoreApplication. Core applications are applications without a
+graphical user interface. Such applications are used at the console or as server
+processes.
 
-The argc and argv arguments are processed by the application, and made available in a more convenient form by the arguments() function.
+The argc and argv arguments are processed by the application, and made available
+in a more convenient form by the arguments() function.
 
-Warning: The data referred to by argc and argv must stay valid for the entire lifetime of the dtkCoreApplication object. In addition, argc must be greater than zero and argv must contain at least one valid character string.
+Warning: The data referred to by argc and argv must stay valid for the entire
+lifetime of the dtkCoreApplication object. In addition, argc must be greater
+than zero and argv must contain at least one valid character string.
 */
 
-dtkCoreApplication::dtkCoreApplication(int& argc, char **argv): QCoreApplication(argc, argv)
+dtkCoreApplication::dtkCoreApplication(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
     d = new dtkApplicationPrivate;
     d->setApplication(this);
@@ -111,7 +118,8 @@ QSettings *dtkCoreApplication::settings(void)
 
 /*! \fn QCommandLineParser *dtkCoreApplication::parser(void)
 
-  Return the main QCommandLineParser used by the application. It can be used to app specific options for your application.
+  Return the main QCommandLineParser used by the application. It can be used to
+  app specific options for your application.
 
 */
 
@@ -122,7 +130,8 @@ QCommandLineParser *dtkCoreApplication::parser(void)
 
 /*! \fn void dtkCoreApplication::initialize(void)
 
- Initialize the command line parser. Should be called once all the specific options of your application are added in the parser.
+ Initialize the command line parser. Should be called once all the specific
+ options of your application are added in the parser.
 
  \sa parser
 */

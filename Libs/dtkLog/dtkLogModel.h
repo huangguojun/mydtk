@@ -34,21 +34,21 @@ public:
     dtkLogModel(QObject *parent = 0);
 
 public:
-    void append(const QString& message);
+    void append(const QString &message);
 
 public:
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 public:
-    QVariant data(const QModelIndex& index, int role) const;
-    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    QVariant data(const QModelIndex &index, int role) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 public:
-    Qt::ItemFlags flags(const QModelIndex& index) const;
+    Qt::ItemFlags flags(const QModelIndex &index) const;
 
 public:
-    bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
-    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
 public:
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);

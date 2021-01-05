@@ -35,15 +35,15 @@ public:
     using PluginFactories = QHash<QString, dtkCorePluginFactoryBase *>;
 
 public:
-     dtkCoreLayerManager(void);
+    dtkCoreLayerManager(void);
     ~dtkCoreLayerManager(void);
 
 public:
-    void record(const QString& plugin_manager_name, dtkCorePluginManagerBase *plugin_manager);
-    void record(const QString& plugin_factory_name, dtkCorePluginFactoryBase *plugin_factory);
+    void record(const QString &plugin_manager_name, dtkCorePluginManagerBase *plugin_manager);
+    void record(const QString &plugin_factory_name, dtkCorePluginFactoryBase *plugin_factory);
 
     void initialize(void);
-    void initialize(const QString& path);
+    void initialize(const QString &path);
 
     void uninitialize(void);
 

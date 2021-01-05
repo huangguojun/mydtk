@@ -33,7 +33,7 @@ public:
 
 dtkWidgetsController *dtkWidgetsController::instance(void)
 {
-    if(!s_instance)
+    if (!s_instance)
         s_instance = new dtkWidgetsController;
 
     return s_instance;
@@ -44,7 +44,7 @@ void dtkWidgetsController::insert(dtkWidgetsWidget *view)
     QString name = view->objectName();
 
     if (name.isEmpty()) {
-        name = QString("View %1").arg(d->views.count()+1);
+        name = QString("View %1").arg(d->views.count() + 1);
         view->setObjectName(name);
     }
 
@@ -53,16 +53,17 @@ void dtkWidgetsController::insert(dtkWidgetsWidget *view)
     emit inserted(view);
 }
 
-dtkWidgetsWidget *dtkWidgetsController::view(const QString& name)
+dtkWidgetsWidget *dtkWidgetsController::view(const QString &name)
 {
-    for(auto view : d->views) {
-        if(view->objectName() == name) {
+    for (auto view : d->views) {
+        if (view->objectName() == name) {
             return view;
         }
     }
 
-    if(name != "") {
-        qWarning() << Q_FUNC_INFO << "No view with name:" << name << "could be retrived. Nullptr is returned.";
+    if (name != "") {
+        qWarning() << Q_FUNC_INFO << "No view with name:" << name
+                   << "could be retrived. Nullptr is returned.";
     }
 
     return nullptr;
@@ -71,7 +72,7 @@ dtkWidgetsWidget *dtkWidgetsController::view(const QString& name)
 QStringList dtkWidgetsController::viewNames(void)
 {
     QStringList view_names;
-    for(auto view : d->views) {
+    for (auto view : d->views) {
         view_names.append(view->objectName());
     }
 
@@ -86,10 +87,7 @@ void dtkWidgetsController::clear(void)
     qDeleteAll(d->views);
 }
 
-dtkWidgetsController::dtkWidgetsController(void) : QObject(), d(new dtkWidgetsControllerPrivate)
-{
-
-}
+dtkWidgetsController::dtkWidgetsController(void) : QObject(), d(new dtkWidgetsControllerPrivate) {}
 
 dtkWidgetsController::~dtkWidgetsController(void)
 {

@@ -17,8 +17,8 @@
  *
  */
 
-#include "dtkPlotView.h"
 #include "dtkPlotViewPicker.h"
+#include "dtkPlotView.h"
 
 #include <qwt_plot.h>
 #include <qwt_plot_canvas.h>
@@ -36,10 +36,7 @@ dtkPlotViewPickerPrivate::dtkPlotViewPickerPrivate(QwtPlotCanvas *canvas) : QwtP
     this->setTrackerMode(QwtPicker::AlwaysOn);
 }
 
-dtkPlotViewPickerPrivate::~dtkPlotViewPickerPrivate(void)
-{
-
-}
+dtkPlotViewPickerPrivate::~dtkPlotViewPickerPrivate(void) {}
 
 // /////////////////////////////////////////////////////////////////
 //
@@ -73,7 +70,7 @@ QColor dtkPlotViewPicker::color(void) const
     return d->trackerPen().color();
 }
 
-void dtkPlotViewPicker::setColor(const QColor& color)
+void dtkPlotViewPicker::setColor(const QColor &color)
 {
     d->setTrackerPen(QPen(color));
 }

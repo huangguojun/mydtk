@@ -38,7 +38,7 @@ public:
     QSize sizeHint(void) const;
 
 public:
-    void addPiece(const QString& key, int val, QColor color);
+    void addPiece(const QString &key, int val, QColor color);
 
 public:
     void paintEvent(QPaintEvent *ev);

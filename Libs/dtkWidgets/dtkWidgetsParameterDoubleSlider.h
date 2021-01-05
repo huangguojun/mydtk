@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterDoubleSlider : public dtkWidgetsParameterBase<dtk::d_real>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterDoubleSlider
+    : public dtkWidgetsParameterBase<dtk::d_real>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterDoubleSlider(QWidget* parent = nullptr);
+    dtkWidgetsParameterDoubleSlider(QWidget *parent = nullptr);
     ~dtkWidgetsParameterDoubleSlider(void);
 
 public:

@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class  DTKWIDGETS_EXPORT dtkWidgetsParameterStringLineEdit : public dtkWidgetsParameterBase<dtk::d_string>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterStringLineEdit
+    : public dtkWidgetsParameterBase<dtk::d_string>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterStringLineEdit(QWidget* parent = 0);
+    dtkWidgetsParameterStringLineEdit(QWidget *parent = 0);
     ~dtkWidgetsParameterStringLineEdit(void);
 
 public:

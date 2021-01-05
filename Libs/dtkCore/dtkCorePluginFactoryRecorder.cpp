@@ -20,7 +20,9 @@
 // dtkCorePluginFactoryRecorder implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkCorePluginFactoryRecorder::dtkCorePluginFactoryRecorder(dtkCoreLayerManager *layer_manager, dtkCorePluginFactoryBase *plugin_factory, const QString& plugin_name)
+dtkCorePluginFactoryRecorder::dtkCorePluginFactoryRecorder(dtkCoreLayerManager *layer_manager,
+                                                           dtkCorePluginFactoryBase *plugin_factory,
+                                                           const QString &plugin_name)
 {
     layer_manager->record(plugin_name, plugin_factory);
 }

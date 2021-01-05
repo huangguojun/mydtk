@@ -25,7 +25,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsParameterIntSlider : public dtkWidgetsParamete
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterIntSlider(QWidget* parent = nullptr);
+    dtkWidgetsParameterIntSlider(QWidget *parent = nullptr);
     ~dtkWidgetsParameterIntSlider(void);
 
 public:

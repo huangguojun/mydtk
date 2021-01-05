@@ -19,8 +19,8 @@
 
 #include "dtkPlotViewSettings.h"
 
-#include "dtkPlotView.h"
 #include "dtkPlotCurve.h"
+#include "dtkPlotView.h"
 
 #include <dtkGui/dtkColorButton.h>
 
@@ -65,7 +65,8 @@ public:
     QSignalMapper *mapperCurvesColor;
 };
 
-dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), d(new dtkPlotViewSettingsPrivate)
+dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent)
+    : dtkToolBox(parent), d(new dtkPlotViewSettingsPrivate)
 {
     d->view = NULL;
 
@@ -100,7 +101,6 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
         item->setWidget(page, "Plot titles");
 
         this->addItem(item);
-
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -137,7 +137,6 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
         item->setWidget(page, "Plot sizes");
 
         this->addItem(item);
-
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -146,7 +145,8 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
 
     {
 
-        QStringList scaleList = QStringList() << "Linear" << "Logarithmic";
+        QStringList scaleList = QStringList() << "Linear"
+                                              << "Logarithmic";
 
         d->axisScaleX = new QComboBox(this);
         d->axisScaleX->addItems(scaleList);
@@ -170,7 +170,6 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
         item->setWidget(page, "Plot scales");
 
         this->addItem(item);
-
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -179,7 +178,10 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
 
     {
 
-        QStringList legendPositionList = QStringList() << "Left" << "Right" << "Bottom" << "Top";
+        QStringList legendPositionList = QStringList() << "Left"
+                                                       << "Right"
+                                                       << "Bottom"
+                                                       << "Top";
 
         d->legendPosition = new QComboBox(this);
         d->legendPosition->addItems(legendPositionList);
@@ -197,7 +199,6 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
         item->setWidget(page, "Plot legend");
 
         this->addItem(item);
-
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -228,7 +229,6 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
         item->setWidget(page, "Plot colors");
 
         this->addItem(item);
-
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -250,23 +250,33 @@ dtkPlotViewSettings::dtkPlotViewSettings(QWidget *parent) : dtkToolBox(parent), 
     connect(d->axisTitleX, SIGNAL(returnPressed()), this, SLOT(onAxisTitleXChanged()));
     connect(d->axisTitleY, SIGNAL(returnPressed()), this, SLOT(onAxisTitleYChanged()));
 
-    connect(d->titleSize, SIGNAL(valueChanged(const int&)), this, SLOT(onTitleSizeChanged(const int&)));
-    connect(d->axesTitleSize, SIGNAL(valueChanged(const int&)), this, SLOT(onAxesTitleSizeChanged(const int&)));
+    connect(d->titleSize, SIGNAL(valueChanged(const int &)), this,
+            SLOT(onTitleSizeChanged(const int &)));
+    connect(d->axesTitleSize, SIGNAL(valueChanged(const int &)), this,
+            SLOT(onAxesTitleSizeChanged(const int &)));
 
-    connect(d->axisScaleX, SIGNAL(currentIndexChanged(const int&)), this, SLOT(onAxisScaleXChanged(const int&)));
-    connect(d->axisScaleY, SIGNAL(currentIndexChanged(const int&)), this, SLOT(onAxisScaleYChanged(const int&)));
+    connect(d->axisScaleX, SIGNAL(currentIndexChanged(const int &)), this,
+            SLOT(onAxisScaleXChanged(const int &)));
+    connect(d->axisScaleY, SIGNAL(currentIndexChanged(const int &)), this,
+            SLOT(onAxisScaleYChanged(const int &)));
 
-    connect(d->legendPosition, SIGNAL(currentIndexChanged(const int&)), this, SLOT(onLegendPositionChanged(const int&)));
+    connect(d->legendPosition, SIGNAL(currentIndexChanged(const int &)), this,
+            SLOT(onLegendPositionChanged(const int &)));
 
     connect(d->mapperCurvesName, SIGNAL(mapped(int)), this, SLOT(updateCurveName(int)));
     connect(d->mapperCurvesColor, SIGNAL(mapped(int)), this, SLOT(updateCurveColor(int)));
 
-    connect(d->gridColor, SIGNAL(colorChanged(const QColor&)), this, SLOT(onGridColorChanged(const QColor&)));
-    connect(d->pickingColor, SIGNAL(colorChanged(const QColor&)), this, SLOT(onPickingColorChanged(const QColor&)));
-    connect(d->zoomColor, SIGNAL(colorChanged(const QColor&)), this, SLOT(onZoomColorChanged(const QColor&)));
+    connect(d->gridColor, SIGNAL(colorChanged(const QColor &)), this,
+            SLOT(onGridColorChanged(const QColor &)));
+    connect(d->pickingColor, SIGNAL(colorChanged(const QColor &)), this,
+            SLOT(onPickingColorChanged(const QColor &)));
+    connect(d->zoomColor, SIGNAL(colorChanged(const QColor &)), this,
+            SLOT(onZoomColorChanged(const QColor &)));
 
-    connect(d->backgroundColor, SIGNAL(colorChanged(const QColor&)), this, SLOT(onBackgroundColorChanged(const QColor&)));
-    connect(d->foregroundColor, SIGNAL(colorChanged(const QColor&)), this, SLOT(onForegroundColorChanged(const QColor&)));
+    connect(d->backgroundColor, SIGNAL(colorChanged(const QColor &)), this,
+            SLOT(onBackgroundColorChanged(const QColor &)));
+    connect(d->foregroundColor, SIGNAL(colorChanged(const QColor &)), this,
+            SLOT(onForegroundColorChanged(const QColor &)));
 
     // ///////////////////////////////////////////////////////////////
 
@@ -304,56 +314,56 @@ void dtkPlotViewSettings::onAxisTitleYChanged(void)
     d->view->setAxisTitleY(d->axisTitleY->text());
 }
 
-void dtkPlotViewSettings::onTitleSizeChanged(const int& value)
+void dtkPlotViewSettings::onTitleSizeChanged(const int &value)
 {
     d->view->setTitleSize(value);
 }
 
-void dtkPlotViewSettings::onAxesTitleSizeChanged(const int& value)
+void dtkPlotViewSettings::onAxesTitleSizeChanged(const int &value)
 {
     d->view->setAxisTitleSizeX(value);
     d->view->setAxisTitleSizeY(value);
 }
 
-void dtkPlotViewSettings::onAxisScaleXChanged(const int& index)
+void dtkPlotViewSettings::onAxisScaleXChanged(const int &index)
 {
     d->view->setAxisScaleX((dtkPlotView::Scale)index);
 }
 
-void dtkPlotViewSettings::onAxisScaleYChanged(const int& index)
+void dtkPlotViewSettings::onAxisScaleYChanged(const int &index)
 {
     d->view->setAxisScaleY((dtkPlotView::Scale)index);
 }
 
-void dtkPlotViewSettings::onLegendPositionChanged(const int& index)
+void dtkPlotViewSettings::onLegendPositionChanged(const int &index)
 {
     d->view->setLegendPosition((dtkPlotView::LegendPosition)index);
 }
 
-void dtkPlotViewSettings::onGridColorChanged(const QColor& color)
+void dtkPlotViewSettings::onGridColorChanged(const QColor &color)
 {
     d->view->setGridColor(d->gridColor->color());
     d->view->update();
 }
 
-void dtkPlotViewSettings::onPickingColorChanged(const QColor& color)
+void dtkPlotViewSettings::onPickingColorChanged(const QColor &color)
 {
     d->view->setPickingColor(d->pickingColor->color());
     d->view->update();
 }
 
-void dtkPlotViewSettings::onZoomColorChanged(const QColor& color)
+void dtkPlotViewSettings::onZoomColorChanged(const QColor &color)
 {
     d->view->setZoomColor(d->zoomColor->color());
     d->view->update();
 }
 
-void dtkPlotViewSettings::onBackgroundColorChanged(const QColor& color)
+void dtkPlotViewSettings::onBackgroundColorChanged(const QColor &color)
 {
     d->view->setBackgroundColor(d->backgroundColor->color());
 }
 
-void dtkPlotViewSettings::onForegroundColorChanged(const QColor& color)
+void dtkPlotViewSettings::onForegroundColorChanged(const QColor &color)
 {
     d->view->setForegroundColor(d->foregroundColor->color());
 }
@@ -383,7 +393,7 @@ void dtkPlotViewSettings::onRandomColorsClicked(void)
     d->view->update();
 }
 
-void dtkPlotViewSettings::onColorAreaChanged(const int& value)
+void dtkPlotViewSettings::onColorAreaChanged(const int &value)
 {
     d->view->fillCurveArea(value);
 }
@@ -455,7 +465,8 @@ void dtkPlotViewSettings::updateCurves(void)
             d->curvesColorLayout->addRow("Alpha", alphaCurveArea);
 
             connect(random, SIGNAL(clicked()), this, SLOT(onRandomColorsClicked()));
-            connect(alphaCurveArea, SIGNAL(valueChanged(const int&)), this, SLOT(onColorAreaChanged(const int&)));
+            connect(alphaCurveArea, SIGNAL(valueChanged(const int &)), this,
+                    SLOT(onColorAreaChanged(const int &)));
 
             if (d->c_count > 1)
                 d->view->setRandomCurvesColor();
@@ -499,7 +510,8 @@ void dtkPlotViewSettings::updateCurves(void)
 
             d->curvesColorLayout->addRow(name, button);
 
-            connect(button, SIGNAL(colorChanged(const QColor&)), d->mapperCurvesColor, SLOT(map()));
+            connect(button, SIGNAL(colorChanged(const QColor &)), d->mapperCurvesColor,
+                    SLOT(map()));
 
             d->mapperCurvesColor->setMapping(button, i);
         }

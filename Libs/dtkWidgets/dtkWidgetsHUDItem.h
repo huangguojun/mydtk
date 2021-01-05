@@ -24,7 +24,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsHUDItem : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsHUDItem(fa::icon icon, QWidget *parent = nullptr);
+    dtkWidgetsHUDItem(fa::icon icon, QWidget *parent = nullptr);
     ~dtkWidgetsHUDItem(void);
 
 signals:

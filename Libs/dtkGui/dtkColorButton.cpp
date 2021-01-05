@@ -61,17 +61,17 @@ int dtkColorButton::cellSize(void) const
     return d->cellSize;
 }
 
-const QColor& dtkColorButton::color(void) const
+const QColor &dtkColorButton::color(void) const
 {
     return d->color;
 }
 
-const dtkColorButton::PickMode& dtkColorButton::pickModeLeft(void) const
+const dtkColorButton::PickMode &dtkColorButton::pickModeLeft(void) const
 {
     return d->modeLeft;
 }
 
-const dtkColorButton::PickMode& dtkColorButton::pickModeRight(void) const
+const dtkColorButton::PickMode &dtkColorButton::pickModeRight(void) const
 {
     return d->modeRight;
 }
@@ -81,7 +81,7 @@ dtkColorList *dtkColorButton::scheme(void) const
     return d->colors;
 }
 
-void dtkColorButton::setColor(const QColor& color)
+void dtkColorButton::setColor(const QColor &color)
 {
     d->color = color;
 
@@ -93,7 +93,7 @@ void dtkColorButton::setColor(const QColor& color)
     setText(color.name());
 }
 
-void dtkColorButton::drawColorItem(QPixmap& pm, const QColor& color)
+void dtkColorButton::drawColorItem(QPixmap &pm, const QColor &color)
 {
     QPainter p(&pm);
     p.setBrush(color);
@@ -101,12 +101,12 @@ void dtkColorButton::drawColorItem(QPixmap& pm, const QColor& color)
     p.drawRect(pm.rect().adjusted(0, 0, -1, -1));
 }
 
-void dtkColorButton::setPickModeLeft(const PickMode& mode)
+void dtkColorButton::setPickModeLeft(const PickMode &mode)
 {
     d->modeLeft = mode;
 }
 
-void dtkColorButton::setPickModeRight(const PickMode& mode)
+void dtkColorButton::setPickModeRight(const PickMode &mode)
 {
     d->modeRight = mode;
 }
@@ -148,8 +148,7 @@ void dtkColorButton::mousePressEvent(QMouseEvent *event)
             setColor(c);
             emit colorChanged(c);
         }
-    }
-    break;
+    } break;
 
     case PM_COLORGRID: {
         dtkColorGrid *grid = new dtkColorGrid;
@@ -158,16 +157,15 @@ void dtkColorButton::mousePressEvent(QMouseEvent *event)
         grid->setAutoSize(true);
         grid->setScheme(d->colors);
         grid->setCellSize(d->cellSize);
-        connect(grid, SIGNAL(picked(const QColor&)), this, SLOT(setColor(const QColor&)));
-        connect(grid, SIGNAL(picked(const QColor&)), this, SIGNAL(colorChanged(const QColor&)));
+        connect(grid, SIGNAL(picked(const QColor &)), this, SLOT(setColor(const QColor &)));
+        connect(grid, SIGNAL(picked(const QColor &)), this, SIGNAL(colorChanged(const QColor &)));
 
         dtkPopup *popup = new dtkPopup(this);
         popup->setWidget(grid);
         popup->show(mapToGlobal(rect().bottomLeft()));
 
         connect(grid, SIGNAL(accepted()), popup, SLOT(close()));
-    }
-    break;
+    } break;
 
     default:;
     }

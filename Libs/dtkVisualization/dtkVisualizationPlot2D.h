@@ -21,7 +21,8 @@
 #include <vtkChartXY.h>
 #include <vtkPlotPoints.h>
 
-template <typename T> class vtkSmartPointer;
+template<typename T>
+class vtkSmartPointer;
 class vtkAbstractArray;
 
 class DTKVISUALIZATION_EXPORT dtkVisualizationPlot2D : public dtkVisualizationCanvas
@@ -29,7 +30,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationPlot2D : public dtkVisualizationCa
     Q_OBJECT
 
 public:
-     dtkVisualizationPlot2D(QWidget *parent = nullptr);
+    dtkVisualizationPlot2D(QWidget *parent = nullptr);
     ~dtkVisualizationPlot2D(void);
 
 public:
@@ -38,20 +39,17 @@ public:
 
 public:
     void addFieldX(vtkSmartPointer<vtkAbstractArray>);
-    void addFieldY(vtkSmartPointer<vtkAbstractArray>,
-                   bool checked = false,
-                   int type = vtkChart::POINTS,
-                   int marker_style = vtkPlotPoints::PLUS,
-                   QColor color = Qt::transparent,
-                   int width = 3);
+    void addFieldY(vtkSmartPointer<vtkAbstractArray>, bool checked = false,
+                   int type = vtkChart::POINTS, int marker_style = vtkPlotPoints::PLUS,
+                   QColor color = Qt::transparent, int width = 3);
 
     void clearFields(void);
     void removeField(vtkSmartPointer<vtkAbstractArray>);
-    void removeField(const QString&);
+    void removeField(const QString &);
 
 public:
     QStringList selectedFields(void);
-    void setAddPlotSuffix(const QString& s);
+    void setAddPlotSuffix(const QString &s);
     void setShowLegend(bool);
 
 private slots:
@@ -60,7 +58,7 @@ private slots:
 
 protected:
     void render(void);
-    //void keyPressEvent(QKeyEvent *e);
+    // void keyPressEvent(QKeyEvent *e);
 
 private:
     class dtkVisualizationPlot2DPrivate *d;

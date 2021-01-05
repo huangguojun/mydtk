@@ -25,14 +25,15 @@ class dtkWidgetsParameterScientificSpinBoxPrivate
 {
 public:
     dtkWidgetsSpinBoxDouble *spin_box = nullptr;
-
 };
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsParameterScientificSpinBox implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterScientificSpinBox::dtkWidgetsParameterScientificSpinBox(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_real>(parent), d(new dtkWidgetsParameterScientificSpinBoxPrivate)
+dtkWidgetsParameterScientificSpinBox::dtkWidgetsParameterScientificSpinBox(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_real>(parent),
+      d(new dtkWidgetsParameterScientificSpinBoxPrivate)
 {
     d->spin_box = new dtkWidgetsSpinBoxDouble(QDoubleValidator::ScientificNotation);
 
@@ -56,8 +57,10 @@ bool dtkWidgetsParameterScientificSpinBox::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_real *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterIntSpinBox.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterIntSpinBox.";
         return false;
     }
 
@@ -68,18 +71,15 @@ bool dtkWidgetsParameterScientificSpinBox::connect(dtkCoreParameter *p)
     d->spin_box->setValue(m_parameter->value());
     d->spin_box->setDecimals(m_parameter->decimals());
 
-    m_parameter->connect([=] (QVariant v)
-    {
+    m_parameter->connect([=](QVariant v) {
         double value = v.value<dtk::d_real>().value();
         d->spin_box->blockSignals(true);
         d->spin_box->setValue(value);
         d->spin_box->blockSignals(false);
     });
 
-    QObject::connect(d->spin_box, QOverload<double>::of(&dtkWidgetsSpinBoxDouble::valueChanged), [=] (double v)
-    {
-        m_parameter->shareValue(QVariant::fromValue(v));
-    });
+    QObject::connect(d->spin_box, QOverload<double>::of(&dtkWidgetsSpinBoxDouble::valueChanged),
+                     [=](double v) { m_parameter->shareValue(QVariant::fromValue(v)); });
 
     return true;
 }

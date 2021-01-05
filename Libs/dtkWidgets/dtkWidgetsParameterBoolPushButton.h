@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterBoolPushButton : public dtkWidgetsParameterBase<dtk::d_bool>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterBoolPushButton
+    : public dtkWidgetsParameterBase<dtk::d_bool>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterBoolPushButton(QWidget* parent = 0);
+    dtkWidgetsParameterBoolPushButton(QWidget *parent = 0);
     ~dtkWidgetsParameterBoolPushButton(void);
 
 public:

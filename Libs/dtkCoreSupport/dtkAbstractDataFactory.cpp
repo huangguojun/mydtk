@@ -17,13 +17,13 @@
  *
  */
 
-#include "dtkAbstractData.h"
 #include "dtkAbstractDataFactory.h"
-#include "dtkAbstractDataReader.h"
-#include "dtkAbstractDataWriter.h"
+#include "dtkAbstractData.h"
 #include "dtkAbstractDataConverter.h"
-#include "dtkAbstractDataSerializer.h"
 #include "dtkAbstractDataDeserializer.h"
+#include "dtkAbstractDataReader.h"
+#include "dtkAbstractDataSerializer.h"
+#include "dtkAbstractDataWriter.h"
 #include "dtkSmartPointer.h"
 
 // /////////////////////////////////////////////////////////////////
@@ -32,59 +32,82 @@
 
 namespace {
 
-    typedef QHash<QString, QList<dtkAbstractData *> > dtkAbstractDataHash;
+typedef QHash<QString, QList<dtkAbstractData *>> dtkAbstractDataHash;
 
-    struct dtkAbstractDataReaderInfo {
-        dtkAbstractDataReaderInfo() : creator(NULL) {}
-        dtkAbstractDataReaderInfo(const QStringList& _handled, dtkAbstractDataFactory::dtkAbstractDataReaderCreator _creator) : handled(_handled) , creator(_creator) {}
-        QStringList handled;
-        dtkAbstractDataFactory::dtkAbstractDataReaderCreator creator;
-    };
+struct dtkAbstractDataReaderInfo
+{
+    dtkAbstractDataReaderInfo() : creator(NULL) {}
+    dtkAbstractDataReaderInfo(const QStringList &_handled,
+                              dtkAbstractDataFactory::dtkAbstractDataReaderCreator _creator)
+        : handled(_handled), creator(_creator)
+    {
+    }
+    QStringList handled;
+    dtkAbstractDataFactory::dtkAbstractDataReaderCreator creator;
+};
 
-    struct dtkAbstractDataWriterInfo {
-        dtkAbstractDataWriterInfo() : creator(NULL) {}
-        dtkAbstractDataWriterInfo(const QStringList& _handled, dtkAbstractDataFactory::dtkAbstractDataWriterCreator _creator) : handled(_handled) , creator(_creator) {}
-        QStringList handled;
-        dtkAbstractDataFactory::dtkAbstractDataWriterCreator creator;
-    };
+struct dtkAbstractDataWriterInfo
+{
+    dtkAbstractDataWriterInfo() : creator(NULL) {}
+    dtkAbstractDataWriterInfo(const QStringList &_handled,
+                              dtkAbstractDataFactory::dtkAbstractDataWriterCreator _creator)
+        : handled(_handled), creator(_creator)
+    {
+    }
+    QStringList handled;
+    dtkAbstractDataFactory::dtkAbstractDataWriterCreator creator;
+};
 
-    struct dtkAbstractDataConverterInfo {
-        dtkAbstractDataConverterInfo() : creator(NULL) {}
-        dtkAbstractDataConverterInfo(const QStringList& _fromTypes, const QString& _toType, dtkAbstractDataFactory::dtkAbstractDataConverterCreator _creator)
-            : fromTypes(_fromTypes) , toType(_toType), creator(_creator) {}
-        QStringList fromTypes;
-        QString toType;
-        dtkAbstractDataFactory::dtkAbstractDataConverterCreator creator;
-    };
+struct dtkAbstractDataConverterInfo
+{
+    dtkAbstractDataConverterInfo() : creator(NULL) {}
+    dtkAbstractDataConverterInfo(const QStringList &_fromTypes, const QString &_toType,
+                                 dtkAbstractDataFactory::dtkAbstractDataConverterCreator _creator)
+        : fromTypes(_fromTypes), toType(_toType), creator(_creator)
+    {
+    }
+    QStringList fromTypes;
+    QString toType;
+    dtkAbstractDataFactory::dtkAbstractDataConverterCreator creator;
+};
 
-    struct dtkAbstractDataSerializerInfo {
-        dtkAbstractDataSerializerInfo() : creator(NULL) {}
-        dtkAbstractDataSerializerInfo(const QStringList& _handled, dtkAbstractDataFactory::dtkAbstractDataSerializerCreator _creator)
-            : handled(_handled) , creator(_creator) {}
-        QStringList handled;
-        dtkAbstractDataFactory::dtkAbstractDataSerializerCreator creator;
-    };
+struct dtkAbstractDataSerializerInfo
+{
+    dtkAbstractDataSerializerInfo() : creator(NULL) {}
+    dtkAbstractDataSerializerInfo(const QStringList &_handled,
+                                  dtkAbstractDataFactory::dtkAbstractDataSerializerCreator _creator)
+        : handled(_handled), creator(_creator)
+    {
+    }
+    QStringList handled;
+    dtkAbstractDataFactory::dtkAbstractDataSerializerCreator creator;
+};
 
-    struct dtkAbstractDataDeserializerInfo {
-        dtkAbstractDataDeserializerInfo() : creator(NULL) {}
-        dtkAbstractDataDeserializerInfo(const QStringList& _handled, dtkAbstractDataFactory::dtkAbstractDataDeserializerCreator _creator)
-            : handled(_handled), creator(_creator) {}
-        QStringList handled;
-        dtkAbstractDataFactory::dtkAbstractDataDeserializerCreator creator;
-    };
+struct dtkAbstractDataDeserializerInfo
+{
+    dtkAbstractDataDeserializerInfo() : creator(NULL) {}
+    dtkAbstractDataDeserializerInfo(
+            const QStringList &_handled,
+            dtkAbstractDataFactory::dtkAbstractDataDeserializerCreator _creator)
+        : handled(_handled), creator(_creator)
+    {
+    }
+    QStringList handled;
+    dtkAbstractDataFactory::dtkAbstractDataDeserializerCreator creator;
+};
 
-    typedef QHash<QString, dtkAbstractDataFactory::dtkAbstractDataCreator> dtkAbstractDataCreatorHash;
-    typedef QHash<QString, dtkAbstractDataReaderInfo> dtkAbstractDataReaderCreatorHash;
-    typedef QHash<QString, dtkAbstractDataWriterInfo> dtkAbstractDataWriterCreatorHash;
-    typedef QHash<QString, dtkAbstractDataConverterInfo> dtkAbstractDataConverterCreatorHash;
-    typedef QHash<QString, dtkAbstractDataSerializerInfo> dtkAbstractDataSerializerCreatorHash;
-    typedef QHash<QString, dtkAbstractDataDeserializerInfo> dtkAbstractDataDeserializerCreatorHash;
+typedef QHash<QString, dtkAbstractDataFactory::dtkAbstractDataCreator> dtkAbstractDataCreatorHash;
+typedef QHash<QString, dtkAbstractDataReaderInfo> dtkAbstractDataReaderCreatorHash;
+typedef QHash<QString, dtkAbstractDataWriterInfo> dtkAbstractDataWriterCreatorHash;
+typedef QHash<QString, dtkAbstractDataConverterInfo> dtkAbstractDataConverterCreatorHash;
+typedef QHash<QString, dtkAbstractDataSerializerInfo> dtkAbstractDataSerializerCreatorHash;
+typedef QHash<QString, dtkAbstractDataDeserializerInfo> dtkAbstractDataDeserializerCreatorHash;
 
-    typedef QPair<QString, QStringList>  dtkAbstractDataTypeHandler;
-    typedef QPair<QString, QPair<QStringList, QString> > dtkAbstractDataConverterTypeHandler;
+typedef QPair<QString, QStringList> dtkAbstractDataTypeHandler;
+typedef QPair<QString, QPair<QStringList, QString>> dtkAbstractDataConverterTypeHandler;
 
-    typedef QHash<QString, QString> dtkAbstractDataInterfacesHash;
-}
+typedef QHash<QString, QString> dtkAbstractDataInterfacesHash;
+} // namespace
 
 // /////////////////////////////////////////////////////////////////
 // dtkAbstractDataFactoryPrivate
@@ -93,13 +116,13 @@ namespace {
 class dtkAbstractDataFactoryPrivate
 {
 public:
-    dtkAbstractDataCreatorHash          creators;
-    dtkAbstractDataReaderCreatorHash    readers;
-    dtkAbstractDataWriterCreatorHash    writers;
+    dtkAbstractDataCreatorHash creators;
+    dtkAbstractDataReaderCreatorHash readers;
+    dtkAbstractDataWriterCreatorHash writers;
     dtkAbstractDataConverterCreatorHash converters;
-    dtkAbstractDataSerializerCreatorHash   serializers;
+    dtkAbstractDataSerializerCreatorHash serializers;
     dtkAbstractDataDeserializerCreatorHash deserializers;
-    dtkAbstractDataInterfacesHash       interfaces;
+    dtkAbstractDataInterfacesHash interfaces;
 
     dtkAbstractDataFactory::dtkAbstractDataFactoryReaderPriorityMap reader_priorities;
     dtkAbstractDataFactory::dtkAbstractDataFactoryWriterPriorityMap writer_priorities;
@@ -118,7 +141,7 @@ DTKCORESUPPORT_EXPORT dtkAbstractDataFactory *dtkAbstractDataFactory::instance(v
     return s_instance;
 }
 
-dtkAbstractData *dtkAbstractDataFactory::create(const QString& type)
+dtkAbstractData *dtkAbstractDataFactory::create(const QString &type)
 {
     static int count = 0;
 
@@ -127,31 +150,36 @@ dtkAbstractData *dtkAbstractDataFactory::create(const QString& type)
 
     dtkAbstractData *data = d->creators[type]();
 
-    for (dtkAbstractDataReaderCreatorHash::const_iterator it(d->readers.begin() ); it != d->readers.end(); ++it) {
+    for (dtkAbstractDataReaderCreatorHash::const_iterator it(d->readers.begin());
+         it != d->readers.end(); ++it) {
         if (it.value().handled.contains(type))
             data->addReader(it.key());
     }
 
-    for (dtkAbstractDataWriterCreatorHash::const_iterator it(d->writers.begin() ); it != d->writers.end(); ++it) {
+    for (dtkAbstractDataWriterCreatorHash::const_iterator it(d->writers.begin());
+         it != d->writers.end(); ++it) {
         if (it.value().handled.contains(type))
             data->addWriter(it.key());
     }
 
-    for (dtkAbstractDataConverterCreatorHash::const_iterator it(d->converters.begin() ); it != d->converters.end(); ++it) {
+    for (dtkAbstractDataConverterCreatorHash::const_iterator it(d->converters.begin());
+         it != d->converters.end(); ++it) {
         if (it.value().fromTypes.contains(type)) {
             data->addConverter(it.key());
             data->enableConverter(it.key());
         }
     }
 
-    for (dtkAbstractDataSerializerCreatorHash::const_iterator it(d->serializers.begin() ); it != d->serializers.end(); ++it) {
+    for (dtkAbstractDataSerializerCreatorHash::const_iterator it(d->serializers.begin());
+         it != d->serializers.end(); ++it) {
         if (it.value().handled.contains(type)) {
             data->addSerializer(it.key());
             data->enableSerializer(it.key());
         }
     }
 
-    for (dtkAbstractDataDeserializerCreatorHash::const_iterator it(d->deserializers.begin() ); it != d->deserializers.end(); ++it) {
+    for (dtkAbstractDataDeserializerCreatorHash::const_iterator it(d->deserializers.begin());
+         it != d->deserializers.end(); ++it) {
         if (it.value().handled.contains(type)) {
             data->addDeserializer(it.key());
             data->enableDeserializer(it.key());
@@ -165,13 +193,13 @@ dtkAbstractData *dtkAbstractDataFactory::create(const QString& type)
     return data;
 }
 
-dtkSmartPointer<dtkAbstractData> dtkAbstractDataFactory::createSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractData> dtkAbstractDataFactory::createSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractData> data = this->create(type);
     return data;
 }
 
-dtkAbstractDataReader *dtkAbstractDataFactory::reader(const QString& type)
+dtkAbstractDataReader *dtkAbstractDataFactory::reader(const QString &type)
 {
     dtkAbstractDataReaderCreatorHash::const_iterator it(d->readers.find(type));
 
@@ -181,13 +209,14 @@ dtkAbstractDataReader *dtkAbstractDataFactory::reader(const QString& type)
         return it->creator();
 }
 
-dtkSmartPointer<dtkAbstractDataReader> dtkAbstractDataFactory::readerSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractDataReader>
+dtkAbstractDataFactory::readerSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractDataReader> reader = this->reader(type);
     return reader;
 }
 
-dtkAbstractDataWriter *dtkAbstractDataFactory::writer(const QString& type)
+dtkAbstractDataWriter *dtkAbstractDataFactory::writer(const QString &type)
 {
     dtkAbstractDataWriterCreatorHash::const_iterator it(d->writers.find(type));
 
@@ -197,13 +226,14 @@ dtkAbstractDataWriter *dtkAbstractDataFactory::writer(const QString& type)
         return it->creator();
 }
 
-dtkSmartPointer<dtkAbstractDataWriter> dtkAbstractDataFactory::writerSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractDataWriter>
+dtkAbstractDataFactory::writerSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractDataWriter> writer = this->writer(type);
     return writer;
 }
 
-dtkAbstractDataConverter *dtkAbstractDataFactory::converter(const QString& type)
+dtkAbstractDataConverter *dtkAbstractDataFactory::converter(const QString &type)
 {
     dtkAbstractDataConverterCreatorHash::const_iterator it(d->converters.find(type));
 
@@ -213,13 +243,14 @@ dtkAbstractDataConverter *dtkAbstractDataFactory::converter(const QString& type)
         return it->creator();
 }
 
-dtkSmartPointer<dtkAbstractDataConverter> dtkAbstractDataFactory::converterSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractDataConverter>
+dtkAbstractDataFactory::converterSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractDataConverter> converter = this->converter(type);
     return converter;
 }
 
-dtkAbstractDataSerializer *dtkAbstractDataFactory::serializer(const QString& type)
+dtkAbstractDataSerializer *dtkAbstractDataFactory::serializer(const QString &type)
 {
     dtkAbstractDataSerializerCreatorHash::const_iterator it(d->serializers.find(type));
 
@@ -229,14 +260,15 @@ dtkAbstractDataSerializer *dtkAbstractDataFactory::serializer(const QString& typ
         return it->creator();
 }
 
-dtkSmartPointer<dtkAbstractDataSerializer> dtkAbstractDataFactory::serializerSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractDataSerializer>
+dtkAbstractDataFactory::serializerSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractDataSerializer> serializer;
-    serializer.takePointer( this->serializer(type) );
+    serializer.takePointer(this->serializer(type));
     return serializer;
 }
 
-dtkAbstractDataDeserializer *dtkAbstractDataFactory::deserializer(const QString& type)
+dtkAbstractDataDeserializer *dtkAbstractDataFactory::deserializer(const QString &type)
 {
     dtkAbstractDataDeserializerCreatorHash::const_iterator it(d->deserializers.find(type));
 
@@ -246,39 +278,46 @@ dtkAbstractDataDeserializer *dtkAbstractDataFactory::deserializer(const QString&
         return it->creator();
 }
 
-dtkSmartPointer<dtkAbstractDataDeserializer> dtkAbstractDataFactory::deserializerSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractDataDeserializer>
+dtkAbstractDataFactory::deserializerSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractDataDeserializer> deserializer;
-    deserializer.takePointer( this->deserializer(type) );
+    deserializer.takePointer(this->deserializer(type));
     return deserializer;
 }
 
-void dtkAbstractDataFactory::setReaderPriorities(const dtkAbstractDataFactoryReaderPriorityMap& priorities)
+void dtkAbstractDataFactory::setReaderPriorities(
+        const dtkAbstractDataFactoryReaderPriorityMap &priorities)
 {
     d->reader_priorities = priorities;
 }
 
-void dtkAbstractDataFactory::setWriterPriorities(const dtkAbstractDataFactoryWriterPriorityMap& priorities)
+void dtkAbstractDataFactory::setWriterPriorities(
+        const dtkAbstractDataFactoryWriterPriorityMap &priorities)
 {
     d->writer_priorities = priorities;
 }
 
-void dtkAbstractDataFactory::setConverterPriorities(const dtkAbstractDataFactoryConverterPriorityMap& priorities)
+void dtkAbstractDataFactory::setConverterPriorities(
+        const dtkAbstractDataFactoryConverterPriorityMap &priorities)
 {
     d->converter_priorities = priorities;
 }
 
-const dtkAbstractDataFactory::dtkAbstractDataFactoryReaderPriorityMap& dtkAbstractDataFactory::readerPriorities(void) const
+const dtkAbstractDataFactory::dtkAbstractDataFactoryReaderPriorityMap &
+dtkAbstractDataFactory::readerPriorities(void) const
 {
     return d->reader_priorities;
 }
 
-const dtkAbstractDataFactory::dtkAbstractDataFactoryWriterPriorityMap& dtkAbstractDataFactory::writerPriorities(void) const
+const dtkAbstractDataFactory::dtkAbstractDataFactoryWriterPriorityMap &
+dtkAbstractDataFactory::writerPriorities(void) const
 {
     return d->writer_priorities;
 }
 
-const dtkAbstractDataFactory::dtkAbstractDataFactoryConverterPriorityMap& dtkAbstractDataFactory::converterPriorities(void) const
+const dtkAbstractDataFactory::dtkAbstractDataFactoryConverterPriorityMap &
+dtkAbstractDataFactory::converterPriorities(void) const
 {
     return d->converter_priorities;
 }
@@ -288,14 +327,14 @@ QStringList dtkAbstractDataFactory::implementations(void)
     return d->interfaces.values();
 }
 
-QStringList dtkAbstractDataFactory::implementations(const QString& interface)
+QStringList dtkAbstractDataFactory::implementations(const QString &interface)
 {
     QStringList implementations;
 
     if (d->interfaces.keys().contains(interface))
         implementations << d->interfaces.values(interface);
     else
-        qDebug() << "There is no available implementation of " << interface ;
+        qDebug() << "There is no available implementation of " << interface;
 
     return implementations;
 }
@@ -305,7 +344,7 @@ QStringList dtkAbstractDataFactory::interfaces(void)
     return d->interfaces.keys();
 }
 
-bool dtkAbstractDataFactory::registerDataType(const QString& type, dtkAbstractDataCreator func)
+bool dtkAbstractDataFactory::registerDataType(const QString &type, dtkAbstractDataCreator func)
 {
     if (!d->creators.contains(type)) {
         d->creators.insert(type, func);
@@ -315,7 +354,8 @@ bool dtkAbstractDataFactory::registerDataType(const QString& type, dtkAbstractDa
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataType(const QString& type, dtkAbstractDataCreator func, const QString& interface)
+bool dtkAbstractDataFactory::registerDataType(const QString &type, dtkAbstractDataCreator func,
+                                              const QString &interface)
 {
     if (!d->creators.contains(type)) {
         d->creators.insert(type, func);
@@ -326,88 +366,96 @@ bool dtkAbstractDataFactory::registerDataType(const QString& type, dtkAbstractDa
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataReaderType(const QString& type, const QStringList& handled, dtkAbstractDataReaderCreator func)
+bool dtkAbstractDataFactory::registerDataReaderType(const QString &type, const QStringList &handled,
+                                                    dtkAbstractDataReaderCreator func)
 {
-    if (!d->readers.contains(type) ) {
-        d->readers.insert(type, dtkAbstractDataReaderInfo(handled, func) );
+    if (!d->readers.contains(type)) {
+        d->readers.insert(type, dtkAbstractDataReaderInfo(handled, func));
         return true;
     }
 
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataWriterType(const QString& type, const QStringList& handled, dtkAbstractDataWriterCreator func)
+bool dtkAbstractDataFactory::registerDataWriterType(const QString &type, const QStringList &handled,
+                                                    dtkAbstractDataWriterCreator func)
 {
-    if (!d->writers.contains(type) ) {
-        d->writers.insert(type, dtkAbstractDataWriterInfo( handled, func) );
+    if (!d->writers.contains(type)) {
+        d->writers.insert(type, dtkAbstractDataWriterInfo(handled, func));
         return true;
     }
 
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataConverterType(const QString& type, const QStringList& fromTypes, const QString& toType, dtkAbstractDataConverterCreator func)
+bool dtkAbstractDataFactory::registerDataConverterType(const QString &type,
+                                                       const QStringList &fromTypes,
+                                                       const QString &toType,
+                                                       dtkAbstractDataConverterCreator func)
 {
-    if (!d->converters.contains(type) ) {
-        d->converters.insert(type, dtkAbstractDataConverterInfo(fromTypes, toType, func) );
+    if (!d->converters.contains(type)) {
+        d->converters.insert(type, dtkAbstractDataConverterInfo(fromTypes, toType, func));
         return true;
     }
 
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataSerializerType(const QString& type, const QStringList& handled, dtkAbstractDataSerializerCreator func)
+bool dtkAbstractDataFactory::registerDataSerializerType(const QString &type,
+                                                        const QStringList &handled,
+                                                        dtkAbstractDataSerializerCreator func)
 {
-    if (!d->serializers.contains(type) ) {
-        d->serializers.insert(type, dtkAbstractDataSerializerInfo(handled, func) );
+    if (!d->serializers.contains(type)) {
+        d->serializers.insert(type, dtkAbstractDataSerializerInfo(handled, func));
         return true;
     }
 
     return false;
 }
 
-bool dtkAbstractDataFactory::registerDataDeserializerType(const QString& type, const QStringList& handled, dtkAbstractDataDeserializerCreator func)
+bool dtkAbstractDataFactory::registerDataDeserializerType(const QString &type,
+                                                          const QStringList &handled,
+                                                          dtkAbstractDataDeserializerCreator func)
 {
-    if (!d->deserializers.contains(type) ) {
-        d->deserializers.insert(type, dtkAbstractDataDeserializerInfo(handled, func) );
+    if (!d->deserializers.contains(type)) {
+        d->deserializers.insert(type, dtkAbstractDataDeserializerInfo(handled, func));
         return true;
     }
 
     return false;
 }
 
-
-unsigned int dtkAbstractDataFactory::count(const QString& type) const
+unsigned int dtkAbstractDataFactory::count(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->creators.keys().count();
 }
 
-unsigned int dtkAbstractDataFactory::countReaders(const QString& type) const
+unsigned int dtkAbstractDataFactory::countReaders(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->readers.keys().count();
 }
 
-unsigned int dtkAbstractDataFactory::countWriters(const QString& type) const
+unsigned int dtkAbstractDataFactory::countWriters(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->writers.keys().count();
 }
 
-unsigned int dtkAbstractDataFactory::countConverters(const QString& type) const
+unsigned int dtkAbstractDataFactory::countConverters(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->converters.keys().count();
 }
 
-unsigned int dtkAbstractDataFactory::countSerializers(const QString& type) const
+unsigned int dtkAbstractDataFactory::countSerializers(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->serializers.keys().count();
 }
 
-unsigned int dtkAbstractDataFactory::countDeserializers(const QString& type) const
+unsigned int dtkAbstractDataFactory::countDeserializers(const QString &type) const
 {
     DTK_UNUSED(type);
     return d->deserializers.keys().count();
@@ -476,9 +524,9 @@ QList<QString> dtkAbstractDataFactory::deserializers(void) const
     return d->deserializers.keys();
 }
 
-dtkAbstractDataFactory::dtkAbstractDataFactory(void) : dtkAbstractFactory(), d(new dtkAbstractDataFactoryPrivate)
+dtkAbstractDataFactory::dtkAbstractDataFactory(void)
+    : dtkAbstractFactory(), d(new dtkAbstractDataFactoryPrivate)
 {
-
 }
 
 dtkAbstractDataFactory::~dtkAbstractDataFactory(void)

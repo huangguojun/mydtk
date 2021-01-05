@@ -20,8 +20,8 @@
 #ifndef DTKABSTRACTOBJECT_H
 #define DTKABSTRACTOBJECT_H
 
-#include <dtkCoreSupportExport.h>
 #include "dtkGlobal.h"
+#include <dtkCoreSupportExport.h>
 
 #include <typeinfo>
 
@@ -33,23 +33,23 @@ class DTKCORESUPPORT_EXPORT dtkAbstractObject : public QObject
 
 public:
     dtkAbstractObject(dtkAbstractObject *parent = 0);
-    dtkAbstractObject(const dtkAbstractObject& other);
+    dtkAbstractObject(const dtkAbstractObject &other);
     virtual ~dtkAbstractObject(void);
 
 public:
     virtual dtkAbstractObject *clone(void);
 
 public:
-    dtkAbstractObject& operator = (const dtkAbstractObject& other);
+    dtkAbstractObject &operator=(const dtkAbstractObject &other);
 
 protected:
-    virtual void copy(const dtkAbstractObject& other);
+    virtual void copy(const dtkAbstractObject &other);
 
 public:
-    bool operator == (const dtkAbstractObject& other) const;
+    bool operator==(const dtkAbstractObject &other) const;
 
 protected:
-    virtual bool isEqual(const dtkAbstractObject& other) const;
+    virtual bool isEqual(const dtkAbstractObject &other) const;
 
 public:
     virtual QString description(void) const;
@@ -61,46 +61,42 @@ public:
     int release(void) const;
 
     void enableDeferredDeletion(bool value);
-    bool     isDeferredDeletionEnabled(void) const;
+    bool isDeferredDeletionEnabled(void) const;
 
-    bool hasProperty(const QString& key) const;
-    void addProperty(const QString& key, const QStringList& values);
-    void addProperty(const QString& key, const QString& value);
-    void setProperty(const QString& key, const QString& value);
+    bool hasProperty(const QString &key) const;
+    void addProperty(const QString &key, const QStringList &values);
+    void addProperty(const QString &key, const QString &value);
+    void setProperty(const QString &key, const QString &value);
     QStringList propertyList(void) const;
-    QStringList propertyValues(const QString& key) const;
-    QString property(const QString& key) const;
+    QStringList propertyValues(const QString &key) const;
+    QString property(const QString &key) const;
 
-    bool hasMetaData(const QString& key) const;
-    void addMetaData(const QString& key, const QStringList& values);
-    void addMetaData(const QString& key, const QString& value);
-    void setMetaData(const QString& key, const QStringList& values);
-    void setMetaData(const QString& key, const QString& value);
+    bool hasMetaData(const QString &key) const;
+    void addMetaData(const QString &key, const QStringList &values);
+    void addMetaData(const QString &key, const QString &value);
+    void setMetaData(const QString &key, const QStringList &values);
+    void setMetaData(const QString &key, const QString &value);
     QStringList metaDataList(void) const;
-    QStringList metaDataValues(const QString& key) const;
-    QString metadata(const QString& key) const;
-    QStringList metadatas(const QString& key) const;
+    QStringList metaDataValues(const QString &key) const;
+    QString metadata(const QString &key) const;
+    QStringList metadatas(const QString &key) const;
     void copyMetaDataFrom(const dtkAbstractObject *obj);
 
 signals:
-    void propertySet(const QString& key, const QString& value);
-    void metaDataSet(const QString& key, const QString& value);
+    void propertySet(const QString &key, const QString &value);
+    void metaDataSet(const QString &key, const QString &value);
 
 public slots:
-    virtual void onPropertySet(const QString& key, const QString& value);
-    virtual void onMetaDataSet(const QString& key, const QString& value);
+    virtual void onPropertySet(const QString &key, const QString &value);
+    virtual void onMetaDataSet(const QString &key, const QString &value);
 
 protected:
-    dtkAbstractObject(dtkAbstractObjectPrivate& dd, QObject *parent);
-    dtkAbstractObject(dtkAbstractObjectPrivate& dd, const dtkAbstractObject& other);
+    dtkAbstractObject(dtkAbstractObjectPrivate &dd, QObject *parent);
+    dtkAbstractObject(dtkAbstractObjectPrivate &dd, const dtkAbstractObject &other);
 
 protected:
-    dtkAbstractObjectPrivate *d_func(void)       {
-        return d_ptr;
-    }
-    const dtkAbstractObjectPrivate *d_func(void) const {
-        return d_ptr;
-    }
+    dtkAbstractObjectPrivate *d_func(void) { return d_ptr; }
+    const dtkAbstractObjectPrivate *d_func(void) const { return d_ptr; }
 
 private:
     dtkAbstractObjectPrivate *d_ptr;

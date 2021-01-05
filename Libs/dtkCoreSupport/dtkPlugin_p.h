@@ -20,8 +20,8 @@
 #ifndef DTKPLUGIN_P
 #define DTKPLUGIN_P
 
-#include <dtkCoreSupportExport.h>
 #include "dtkAbstractObject_p.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkPlugin;
 
@@ -33,7 +33,7 @@ class DTKCORESUPPORT_EXPORT dtkPluginPrivate : public dtkAbstractObjectPrivate
 {
 public:
     dtkPluginPrivate(dtkPlugin *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkPluginPrivate(const dtkPluginPrivate& other) : dtkAbstractObjectPrivate(other) {}
+    dtkPluginPrivate(const dtkPluginPrivate &other) : dtkAbstractObjectPrivate(other) {}
 
 public:
     virtual ~dtkPluginPrivate(void) {}

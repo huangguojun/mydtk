@@ -17,30 +17,28 @@
  *
  */
 
-#include "dtkAbstractData.h"
 #include "dtkAbstractDataDeserializer.h"
+#include "dtkAbstractData.h"
 #include "dtkAbstractDataDeserializer_p.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkAbstractDataDeserializer implementation
 // /////////////////////////////////////////////////////////////////
 
-dtkAbstractDataDeserializer::dtkAbstractDataDeserializer(void) : dtkAbstractObject(*new dtkAbstractDataDeserializerPrivate(this), 0)
+dtkAbstractDataDeserializer::dtkAbstractDataDeserializer(void)
+    : dtkAbstractObject(*new dtkAbstractDataDeserializerPrivate(this), 0)
 {
     DTK_D(dtkAbstractDataDeserializer);
 
     d->enabled = false;
 }
 
-dtkAbstractDataDeserializer::dtkAbstractDataDeserializer(const dtkAbstractDataDeserializer& other) : dtkAbstractObject(*new dtkAbstractDataDeserializerPrivate(*other.d_func()), other)
+dtkAbstractDataDeserializer::dtkAbstractDataDeserializer(const dtkAbstractDataDeserializer &other)
+    : dtkAbstractObject(*new dtkAbstractDataDeserializerPrivate(*other.d_func()), other)
 {
-
 }
 
-dtkAbstractDataDeserializer::~dtkAbstractDataDeserializer(void)
-{
-
-}
+dtkAbstractDataDeserializer::~dtkAbstractDataDeserializer(void) {}
 
 bool dtkAbstractDataDeserializer::enabled(void) const
 {
@@ -77,14 +75,13 @@ void dtkAbstractDataDeserializer::setData(dtkAbstractData *data)
     d->data = data;
 }
 
-dtkAbstractData *dtkAbstractDataDeserializer::deserialize(const QByteArray& array)
+dtkAbstractData *dtkAbstractDataDeserializer::deserialize(const QByteArray &array)
 {
     DTK_UNUSED(array);
-    return NULL ;
+    return NULL;
 }
 
 void dtkAbstractDataDeserializer::setProgress(int value)
 {
-    emit progressed (value);
+    emit progressed(value);
 }
-

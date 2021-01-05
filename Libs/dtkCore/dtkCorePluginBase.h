@@ -12,7 +12,7 @@ public:
     virtual ~dtkCorePluginBase(void) = default;
 
 public:
-    virtual void   initialize(void) = 0;
+    virtual void initialize(void) = 0;
     virtual void uninitialize(void) = 0;
-    virtual void      *create(void) { return nullptr; };
+    virtual void *create(void) { return nullptr; };
 };

@@ -39,8 +39,10 @@
  *  dtkSmartPointer< dtkAbstractData > myInstance;
  *  myInstance = factory->createSmartPointer( "MyDataTypeName" );
  * \endcode
- * Here, the dtkSmartPointer takes ownership of the object created by the factory. It will be
- * deleted when the dtkSmartPointer goes out of scope, unless another object takes it.
+ * Here, the dtkSmartPointer takes ownership of the object created by the
+ factory. It will be
+ * deleted when the dtkSmartPointer goes out of scope, unless another object
+ takes it.
  *
  * It is also safe to use dtkSmartPointer in containers from Qt :
  * \code
@@ -74,9 +76,9 @@
     \param      p : SmartPointer that is copied.
 */
 
-/*! \fn        template < TR > dtkSmartPointer< T >::dtkSmartPointer(const dtkSmartPointer< TR > &p)
-    \brief      Constructor from SmartPointer of other type.
-                Managed pointer is initialized with object from p using dynamic_cast.
+/*! \fn        template < TR > dtkSmartPointer< T >::dtkSmartPointer(const
+   dtkSmartPointer< TR > &p) \brief      Constructor from SmartPointer of other
+   type. Managed pointer is initialized with object from p using dynamic_cast.
                 The reference count of p is increased by 1 if the cast succeeds.
     \param      p : SmartPointer that is copied.
 */
@@ -117,29 +119,29 @@
 */
 
 /*! \fn         bool dtkSmartPointer< T >::operator==(TR r) const
-    \fn         bool dtkSmartPointer< T >::operator==( const dtkSmartPointer< TR > &r ) const
-    \fn         bool dtkSmartPointer< T >::operator==(const dtkSmartPointer &r) const
-    \brief      Compare with another pointer.
-                Explicitly templating for dtkSmartPointer<TR> means that no temporary
-                needs to be created - and hence no additional retain / release.
+    \fn         bool dtkSmartPointer< T >::operator==( const dtkSmartPointer< TR
+   > &r ) const \fn         bool dtkSmartPointer< T >::operator==(const
+   dtkSmartPointer &r) const \brief      Compare with another pointer.
+                Explicitly templating for dtkSmartPointer<TR> means that no
+   temporary needs to be created - and hence no additional retain / release.
     \return     True if static_cast< T* >(r) == d.
 */
 
 /*! \fn         bool dtkSmartPointer< T >::operator!=(TR r) const
-    \fn         bool dtkSmartPointer< T >::operator!=( const dtkSmartPointer< TR > &r ) const
-    \fn         bool dtkSmartPointer< T >::operator!=(const dtkSmartPointer &r) const
-                Explicitly templating for dtkSmartPointer<TR> means that no temporary
-                needs to be created - and hence no additional retain / release.
-    \brief      Compare with another pointer.
-    \return     True if static_cast< T* >(r) != d.
+    \fn         bool dtkSmartPointer< T >::operator!=( const dtkSmartPointer< TR
+   > &r ) const \fn         bool dtkSmartPointer< T >::operator!=(const
+   dtkSmartPointer &r) const Explicitly templating for dtkSmartPointer<TR> means
+   that no temporary needs to be created - and hence no additional retain /
+   release. \brief      Compare with another pointer. \return     True if
+   static_cast< T* >(r) != d.
 */
 
-/*! \fn         bool dtkSmartPointer< T >::operator<(const dtkSmartPointer &r) const
-    \fn         bool dtkSmartPointer< T >::operator<=(const dtkSmartPointer &r) const
-    \fn         bool dtkSmartPointer< T >::operator>(const dtkSmartPointer &r) const
-    \fn         bool dtkSmartPointer< T >::operator>=(const dtkSmartPointer &r) const
-    \brief      Compare with another pointer.
-    \return     Result of pointer comparison.
+/*! \fn         bool dtkSmartPointer< T >::operator<(const dtkSmartPointer &r)
+   const \fn         bool dtkSmartPointer< T >::operator<=(const dtkSmartPointer
+   &r) const \fn         bool dtkSmartPointer< T >::operator>(const
+   dtkSmartPointer &r) const \fn         bool dtkSmartPointer< T
+   >::operator>=(const dtkSmartPointer &r) const \brief      Compare with
+   another pointer. \return     Result of pointer comparison.
 */
 
 /*! \fn         T* dtkSmartPointer::data()
@@ -159,21 +161,20 @@
     \return     The managed pointer (our d)
 */
 
-/*! \fn         dtkSmartPointer& dtkSmartPointer< T >::operator=(const dtkSmartPointer& r)
-    \fn         dtkSmartPointer& dtkSmartPointer< T >::operator=( T *r )
-    \brief      Overload operator assignment.
-                Decrease reference count of existing pointer if not NULL.
-                Assigns value from parameter given.
-                Increases reference count of assigned pointer if not NULL.
-    \return     *this
+/*! \fn         dtkSmartPointer& dtkSmartPointer< T >::operator=(const
+   dtkSmartPointer& r) \fn         dtkSmartPointer& dtkSmartPointer< T
+   >::operator=( T *r ) \brief      Overload operator assignment. Decrease
+   reference count of existing pointer if not NULL. Assigns value from parameter
+   given. Increases reference count of assigned pointer if not NULL. \return
+   *this
 */
 
-/*! \fn         template<TR> dtkSmartPointer& dtkSmartPointer< T >::operator=(const dtkSmartPointer<TR>& r)
-    \brief      Overload operator assignment with dtkSmartPointer of other type.
-                Managed pointer is assigned using dynamic_cast of pointer in r.
-                The reference count of p is increased by 1 if the cast succeeds.
-    \param      r : SmartPointer that is copied.
-    \return     *this.
+/*! \fn         template<TR> dtkSmartPointer& dtkSmartPointer< T
+   >::operator=(const dtkSmartPointer<TR>& r) \brief      Overload operator
+   assignment with dtkSmartPointer of other type. Managed pointer is assigned
+   using dynamic_cast of pointer in r. The reference count of p is increased by
+   1 if the cast succeeds. \param      r : SmartPointer that is copied. \return
+   *this.
 */
 
 /*! \fn         void dtkSmartPointer::swap( dtkSmartPointer &other)
@@ -208,4 +209,3 @@
     \brief      Template which allows dtkSmartPointer to be used in Qt's hash
                 based containers.
 */
-

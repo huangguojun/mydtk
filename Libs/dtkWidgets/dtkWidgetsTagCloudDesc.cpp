@@ -23,7 +23,8 @@ public:
     QPushButton *back;
 };
 
-dtkWidgetsTagCloudDesc::dtkWidgetsTagCloudDesc(QWidget *parent) : QFrame(parent), d(new dtkWidgetsTagCloudDescPrivate)
+dtkWidgetsTagCloudDesc::dtkWidgetsTagCloudDesc(QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsTagCloudDescPrivate)
 {
     d->browser = new QTextBrowser(this);
     d->browser->setAttribute(Qt::WA_MacShowFocusRect, false);
@@ -55,7 +56,7 @@ void dtkWidgetsTagCloudDesc::clear(void)
     d->browser->clear();
 }
 
-void dtkWidgetsTagCloudDesc::setDescription(const QString& description)
+void dtkWidgetsTagCloudDesc::setDescription(const QString &description)
 {
     d->browser->setHtml(description);
 }

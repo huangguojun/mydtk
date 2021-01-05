@@ -12,10 +12,10 @@
 
 // Code:
 
-#include "dtkWidgetsParameter.h" // TODO: Rename to dtkWidgetsParameterBase.h
 #include "dtkWidgetsMenu+ux.h"
-#include "dtkWidgetsParameter.h"
 #include "dtkWidgetsMenuItem+custom.h"
+#include "dtkWidgetsParameter.h" // TODO: Rename to dtkWidgetsParameterBase.h
+#include "dtkWidgetsParameter.h"
 
 #include <dtkFonts/dtkFontAwesome>
 
@@ -40,23 +40,25 @@ static int margin = 10;
 
 namespace dtkWidgetsMenuHelper {
 
-static int margin = 16/2;
+static int margin = 16 / 2;
 
 QWidget *build(QObject *source)
 {
-    if(dtkWidgetsMenu *menu = dynamic_cast<dtkWidgetsMenu *>(source)) {
+    if (dtkWidgetsMenu *menu = dynamic_cast<dtkWidgetsMenu *>(source)) {
 
         return new dtkWidgetsMenuInnerFacade(menu);
 
-    } else if(dtkWidgetsMenuItem *item = dynamic_cast<dtkWidgetsMenuItem *>(source)) {
+    } else if (dtkWidgetsMenuItem *item = dynamic_cast<dtkWidgetsMenuItem *>(source)) {
 
         if (item->isParameter()) {
 
-            return new dtkWidgetsMenuItemParameterFacade(static_cast<dtkWidgetsMenuItemParameter *>(item));
+            return new dtkWidgetsMenuItemParameterFacade(
+                    static_cast<dtkWidgetsMenuItemParameter *>(item));
 
         } else if (item->isCustom()) {
 
-            return new dtkWidgetsMenuItemCustomFacade(static_cast<dtkWidgetsMenuItemCustom *>(item));
+            return new dtkWidgetsMenuItemCustomFacade(
+                    static_cast<dtkWidgetsMenuItemCustom *>(item));
 
         } else if (item->isSeparator()) {
 
@@ -71,7 +73,7 @@ QWidget *build(QObject *source)
     return nullptr;
 }
 
-}
+} // namespace dtkWidgetsMenuHelper
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsMenuNavigationFacade
@@ -82,7 +84,9 @@ dtkWidgetsMenuNavigationFacade::dtkWidgetsMenuNavigationFacade(QWidget *parent) 
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 }
 
-dtkWidgetsMenuNavigationFacade::dtkWidgetsMenuNavigationFacade(dtkWidgetsMenu *source, QWidget *parent) : QFrame(parent), menu(source)
+dtkWidgetsMenuNavigationFacade::dtkWidgetsMenuNavigationFacade(dtkWidgetsMenu *source,
+                                                               QWidget *parent)
+    : QFrame(parent), menu(source)
 {
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 }
@@ -103,7 +107,8 @@ void dtkWidgetsMenuNavigationFacade::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@base0"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@base0"));
 
     QRect rect(5, 10, 28, 32);
 
@@ -112,19 +117,21 @@ void dtkWidgetsMenuNavigationFacade::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::NoPen);
     painter.setBrush(dtkThemesEngine::instance()->color("@base7"));
     painter.drawRoundedRect(rect, 5, 5);
-    painter.drawPixmap(10, 20, 16, 16, dtkFontAwesome::instance()->icon(fa::chevronleft).pixmap(16, 16));
+    painter.drawPixmap(10, 20, 16, 16,
+                       dtkFontAwesome::instance()->icon(fa::chevronleft).pixmap(16, 16));
     painter.setPen(dtkThemesEngine::instance()->color("@base8"));
-    if(this->menu)
-        painter.drawText(::margin*4, ::margin * 2 + 2 + 10, this->menu->title());
+    if (this->menu)
+        painter.drawText(::margin * 4, ::margin * 2 + 2 + 10, this->menu->title());
     else
-        painter.drawText(::margin*4, ::margin * 2 + 2 + 10, "All Items");
+        painter.drawText(::margin * 4, ::margin * 2 + 2 + 10, "All Items");
 }
 
 // ///////////////////////////////////////////////////////////////////
 // dtkWidgetsMenuHeaderFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuHeaderFacade::dtkWidgetsMenuHeaderFacade(dtkWidgetsMenu *source, QWidget *parent) : QFrame(parent), menu(source)
+dtkWidgetsMenuHeaderFacade::dtkWidgetsMenuHeaderFacade(dtkWidgetsMenu *source, QWidget *parent)
+    : QFrame(parent), menu(source)
 {
     Q_ASSERT_X(this->menu, Q_FUNC_INFO, "Input dtkWidgetsMenu must be non void.");
 
@@ -140,12 +147,14 @@ void dtkWidgetsMenuHeaderFacade::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@fg"));
 
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing);
     painter.setPen(dtkThemesEngine::instance()->color("@fg"));
-    painter.drawPixmap(::margin, ::margin, dtkFontAwesome::instance()->icon(this->menu->icon()).pixmap(16, 16));
+    painter.drawPixmap(::margin, ::margin,
+                       dtkFontAwesome::instance()->icon(this->menu->icon()).pixmap(16, 16));
     painter.drawText(::margin + 16 + ::margin, ::margin * 2 + 2, this->menu->title());
 }
 
@@ -153,7 +162,8 @@ void dtkWidgetsMenuHeaderFacade::paintEvent(QPaintEvent *event)
 // dtkWidgetsMenuInnerFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuInnerFacade::dtkWidgetsMenuInnerFacade(dtkWidgetsMenu *source, QWidget *parent) : QFrame(parent), menu(source)
+dtkWidgetsMenuInnerFacade::dtkWidgetsMenuInnerFacade(dtkWidgetsMenu *source, QWidget *parent)
+    : QFrame(parent), menu(source)
 {
     Q_ASSERT_X(this->menu, Q_FUNC_INFO, "Input dtkWidgetsMenu must be non void.");
 
@@ -169,14 +179,17 @@ void dtkWidgetsMenuInnerFacade::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@base8"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@base8"));
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(dtkThemesEngine::instance()->color("@base8"));
-    painter.drawPixmap(10, 10, 16, 16, dtkFontAwesome::instance()->icon(this->menu->icon()).pixmap(16, 16));
+    painter.drawPixmap(10, 10, 16, 16,
+                       dtkFontAwesome::instance()->icon(this->menu->icon()).pixmap(16, 16));
     painter.drawText(::margin + 16 + ::margin, ::margin * 2 + 2, this->menu->title());
-    painter.drawPixmap(this->width() - ::margin - 16, 10, 16, 16, dtkFontAwesome::instance()->icon(fa::chevronright).pixmap(16, 16));
+    painter.drawPixmap(this->width() - ::margin - 16, 10, 16, 16,
+                       dtkFontAwesome::instance()->icon(fa::chevronright).pixmap(16, 16));
 }
 
 void dtkWidgetsMenuInnerFacade::mousePressEvent(QMouseEvent *)
@@ -188,7 +201,8 @@ void dtkWidgetsMenuInnerFacade::mousePressEvent(QMouseEvent *)
 // dtkWidgetsMenuItemFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemFacade::dtkWidgetsMenuItemFacade(dtkWidgetsMenuItem *source, QWidget *parent) : QFrame(parent), menu_item(source)
+dtkWidgetsMenuItemFacade::dtkWidgetsMenuItemFacade(dtkWidgetsMenuItem *source, QWidget *parent)
+    : QFrame(parent), menu_item(source)
 {
     Q_ASSERT_X(this->menu_item, Q_FUNC_INFO, "Input dtkWidgetsMenuItem must be non void.");
 
@@ -206,18 +220,20 @@ void dtkWidgetsMenuItemFacade::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-    if(menu_item->isParameter())
+    if (menu_item->isParameter())
         return;
 
-    if(menu_item->isCustom())
+    if (menu_item->isCustom())
         return;
 
-    dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+    dtkFontAwesome::instance()->setDefaultOption("color",
+                                                 dtkThemesEngine::instance()->color("@fg"));
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(dtkThemesEngine::instance()->color("@fg"));
-    painter.drawPixmap(10, 10, 16, 16, dtkFontAwesome::instance()->icon(this->menu_item->icon()).pixmap(16, 16));
+    painter.drawPixmap(10, 10, 16, 16,
+                       dtkFontAwesome::instance()->icon(this->menu_item->icon()).pixmap(16, 16));
     painter.drawText(::margin + 16 + ::margin, ::margin * 2 + 2, this->menu_item->title());
 }
 
@@ -230,7 +246,9 @@ void dtkWidgetsMenuItemFacade::mousePressEvent(QMouseEvent *)
 // dtkWidgetsMenuItemParameterFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemParameterFacade::dtkWidgetsMenuItemParameterFacade(dtkWidgetsMenuItemParameter *source, QWidget *parent) : dtkWidgetsMenuItemFacade(source, parent)
+dtkWidgetsMenuItemParameterFacade::dtkWidgetsMenuItemParameterFacade(
+        dtkWidgetsMenuItemParameter *source, QWidget *parent)
+    : dtkWidgetsMenuItemFacade(source, parent)
 {
     QFormLayout *layout = new QFormLayout(this);
     layout->setRowWrapPolicy(QFormLayout::WrapAllRows);
@@ -241,9 +259,9 @@ dtkWidgetsMenuItemParameterFacade::dtkWidgetsMenuItemParameterFacade(dtkWidgetsM
         this->hide();
     }
 
-    
-    this->param_connect = connect(source->parameter(), &dtkCoreParameter::advancedChanged, [this] (bool advanced) {
-            if(advanced)
+
+    this->param_connect = connect(source->parameter(),
+    &dtkCoreParameter::advancedChanged, [this] (bool advanced) { if(advanced)
                 this->hide();
             else
                 this->show();
@@ -263,12 +281,14 @@ dtkWidgetsMenuItemParameterFacade::~dtkWidgetsMenuItemParameterFacade(void)
 // dtkWidgetsMenuItemCustomFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuItemCustomFacade::dtkWidgetsMenuItemCustomFacade(dtkWidgetsMenuItemCustom *source, QWidget *parent) : dtkWidgetsMenuItemFacade(source, parent)
+dtkWidgetsMenuItemCustomFacade::dtkWidgetsMenuItemCustomFacade(dtkWidgetsMenuItemCustom *source,
+                                                               QWidget *parent)
+    : dtkWidgetsMenuItemFacade(source, parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(source->widget());
 
-    if(dtkWidgetsMenuItemDIY *item = dynamic_cast<dtkWidgetsMenuItemDIY *>(source))
+    if (dtkWidgetsMenuItemDIY *item = dynamic_cast<dtkWidgetsMenuItemDIY *>(source))
         this->setSizePolicy(QSizePolicy::Expanding, item->policy());
 }
 
@@ -281,7 +301,8 @@ dtkWidgetsMenuItemCustomFacade::~dtkWidgetsMenuItemCustomFacade(void)
 // dtkWidgetsMenuFacade
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuFacade::dtkWidgetsMenuFacade(dtkWidgetsMenu *m, QWidget *parent) : QWidget(parent), menu(m)
+dtkWidgetsMenuFacade::dtkWidgetsMenuFacade(dtkWidgetsMenu *m, QWidget *parent)
+    : QWidget(parent), menu(m)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -293,10 +314,7 @@ dtkWidgetsMenuFacade::dtkWidgetsMenuFacade(dtkWidgetsMenu *m, QWidget *parent) :
     }
 }
 
-dtkWidgetsMenuFacade::~dtkWidgetsMenuFacade(void)
-{
-
-}
+dtkWidgetsMenuFacade::~dtkWidgetsMenuFacade(void) {}
 
 void dtkWidgetsMenuFacade::addItem(QSpacerItem *item)
 {

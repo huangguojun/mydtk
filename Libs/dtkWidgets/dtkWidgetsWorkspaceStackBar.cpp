@@ -14,7 +14,8 @@ protected:
     void paintEvent(QPaintEvent *) override;
 };
 
-dtkWidgetsWorkspaceStackBarOverview::dtkWidgetsWorkspaceStackBarOverview(QWidget *parent): QLabel(parent)
+dtkWidgetsWorkspaceStackBarOverview::dtkWidgetsWorkspaceStackBarOverview(QWidget *parent)
+    : QLabel(parent)
 {
 }
 
@@ -32,9 +33,11 @@ void dtkWidgetsWorkspaceStackBarOverview::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(0, 0, 0, 128));
-    painter.drawRect(0, this->size().height() - offset - margin, this->size().width(), margin * 7/4);
+    painter.drawRect(0, this->size().height() - offset - margin, this->size().width(),
+                     margin * 7 / 4);
     painter.setPen(Qt::white);
-    painter.drawText(this->size().width()/2 - metrics.width(text)/2, this->size().height() - offset, text);
+    painter.drawText(this->size().width() / 2 - metrics.width(text) / 2,
+                     this->size().height() - offset, text);
 }
 
 class dtkWidgetsWorkspaceStackBarItem : public QFrame
@@ -43,7 +46,7 @@ class dtkWidgetsWorkspaceStackBarItem : public QFrame
     Q_PROPERTY(bool active READ active WRITE setActive NOTIFY activeChanged)
 
 public:
-     dtkWidgetsWorkspaceStackBarItem(int index, QWidget *parent = nullptr);
+    dtkWidgetsWorkspaceStackBarItem(int index, QWidget *parent = nullptr);
     ~dtkWidgetsWorkspaceStackBarItem(void);
 
 signals:
@@ -53,11 +56,10 @@ signals:
     void activeChanged(void);
 
 public:
-    bool active(void) {
-        return this->on;
-    }
+    bool active(void) { return this->on; }
 
-    void setActive(bool active) {
+    void setActive(bool active)
+    {
         this->on = active;
 
         emit activeChanged();
@@ -82,7 +84,8 @@ private:
     bool on = false;
 };
 
-dtkWidgetsWorkspaceStackBarItem::dtkWidgetsWorkspaceStackBarItem(int index, QWidget *parent) : QFrame(parent)
+dtkWidgetsWorkspaceStackBarItem::dtkWidgetsWorkspaceStackBarItem(int index, QWidget *parent)
+    : QFrame(parent)
 {
     this->index = index;
 
@@ -97,10 +100,7 @@ dtkWidgetsWorkspaceStackBarItem::dtkWidgetsWorkspaceStackBarItem(int index, QWid
     layout->addStretch();
 }
 
-dtkWidgetsWorkspaceStackBarItem::~dtkWidgetsWorkspaceStackBarItem(void)
-{
-
-}
+dtkWidgetsWorkspaceStackBarItem::~dtkWidgetsWorkspaceStackBarItem(void) {}
 
 void dtkWidgetsWorkspaceStackBarItem::setSource(QWidget *source)
 {
@@ -112,7 +112,7 @@ void dtkWidgetsWorkspaceStackBarItem::setSource(QWidget *source)
     timer->setInterval(1000);
     timer->setSingleShot(false);
 
-    connect(timer, &QTimer::timeout, [=] (void) {
+    connect(timer, &QTimer::timeout, [=](void) {
         if (this->visibleRegion().isNull())
             return;
         QPixmap pixmap(this->source->size());
@@ -157,7 +157,6 @@ dtkWidgetsWorkspaceStackBar::dtkWidgetsWorkspaceStackBar(QWidget *parent) : QFra
     d->layout = new QVBoxLayout(this);
     d->layout->setContentsMargins(0, 0, 1, 0);
     d->layout->setSpacing(1);
-
 }
 
 dtkWidgetsWorkspaceStackBar::~dtkWidgetsWorkspaceStackBar(void)
@@ -174,7 +173,7 @@ void dtkWidgetsWorkspaceStackBar::setStack(QStackedWidget *stack)
 {
     d->stack = stack;
 
-    if(!d->stack->count())
+    if (!d->stack->count())
         qDebug() << "Please setup stack before computing the bar.";
 
     for (int i = 0; i < d->stack->count(); i++) {
@@ -182,21 +181,22 @@ void dtkWidgetsWorkspaceStackBar::setStack(QStackedWidget *stack)
         dtkWidgetsWorkspaceStackBarItem *item = new dtkWidgetsWorkspaceStackBarItem(i, this);
         item->setSource(d->stack->widget(i));
 
-        connect(item, &dtkWidgetsWorkspaceStackBarItem::clicked, [=] (int i) {
-            dtkWidgetsWorkspace *previous = dynamic_cast<dtkWidgetsWorkspace*>(d->stack->currentWidget());
+        connect(item, &dtkWidgetsWorkspaceStackBarItem::clicked, [=](int i) {
+            dtkWidgetsWorkspace *previous =
+                    dynamic_cast<dtkWidgetsWorkspace *>(d->stack->currentWidget());
             previous->leave();
             d->stack->setCurrentIndex(i);
-            dtkWidgetsWorkspace *current = dynamic_cast<dtkWidgetsWorkspace*>(d->stack->currentWidget());
+            dtkWidgetsWorkspace *current =
+                    dynamic_cast<dtkWidgetsWorkspace *>(d->stack->currentWidget());
             current->enter();
         });
         connect(item, SIGNAL(clicked(int)), d->stack, SLOT(setCurrentIndex(int)));
-        connect(item, &dtkWidgetsWorkspaceStackBarItem::clicked, [=] (int) {
-
-            for(dtkWidgetsWorkspaceStackBarItem *it : d->items) {
+        connect(item, &dtkWidgetsWorkspaceStackBarItem::clicked, [=](int) {
+            for (dtkWidgetsWorkspaceStackBarItem *it : d->items) {
                 this->style()->unpolish(it);
                 it->setActive(it == item);
                 this->style()->polish(it);
-             }
+            }
         });
 
         d->layout->addWidget(item);

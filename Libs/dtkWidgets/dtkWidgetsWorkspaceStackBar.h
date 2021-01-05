@@ -9,7 +9,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsWorkspaceStackBar : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsWorkspaceStackBar(QWidget *parent = nullptr);
+    dtkWidgetsWorkspaceStackBar(QWidget *parent = nullptr);
     ~dtkWidgetsWorkspaceStackBar(void);
 
 public:

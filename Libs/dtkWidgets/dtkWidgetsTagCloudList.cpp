@@ -19,16 +19,17 @@
 // dtkWidgetsTagCloudListLightDelegate
 // ///////////////////////////////////////////////////////////////////
 
-class dtkWidgetsTagCloudListLightDelegate: public QStyledItemDelegate
+class dtkWidgetsTagCloudListLightDelegate : public QStyledItemDelegate
 {
 public:
     dtkWidgetsTagCloudListLightDelegate(dtkWidgetsTagCloudList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkWidgetsTagCloudList *list;
@@ -38,16 +39,17 @@ protected:
 // dtkWidgetsTagCloudListDarkDelegate
 // /////////////////////////////////////////////////////////////////
 
-class dtkWidgetsTagCloudListDarkDelegate: public QStyledItemDelegate
+class dtkWidgetsTagCloudListDarkDelegate : public QStyledItemDelegate
 {
 public:
     dtkWidgetsTagCloudListDarkDelegate(dtkWidgetsTagCloudList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkWidgetsTagCloudList *list;
@@ -57,16 +59,17 @@ protected:
 // dtkWidgetsTagCloudListDoomDelegate
 // /////////////////////////////////////////////////////////////////
 
-class dtkWidgetsTagCloudListDoomDelegate: public QStyledItemDelegate
+class dtkWidgetsTagCloudListDoomDelegate : public QStyledItemDelegate
 {
 public:
     dtkWidgetsTagCloudListDoomDelegate(dtkWidgetsTagCloudList *list);
 
 public:
-    virtual void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+                       const QModelIndex &index) const;
 
 public:
-    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 protected:
     dtkWidgetsTagCloudList *list;
@@ -96,7 +99,8 @@ dtkWidgetsTagCloudList::dtkWidgetsTagCloudList(QWidget *parent) : QListWidget(pa
     this->setItemDelegate(new dtkWidgetsTagCloudListLightDelegate(this));
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(onItemClicked(QListWidgetItem *)));
+    connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this,
+            SLOT(onItemClicked(QListWidgetItem *)));
 }
 
 dtkWidgetsTagCloudList::~dtkWidgetsTagCloudList(void)
@@ -125,7 +129,8 @@ void dtkWidgetsTagCloudList::addItem(QString name, QString description, QStringL
     QListWidget::addItem(d->items.last());
 }
 
-void dtkWidgetsTagCloudList::addItem(QString name, QString description, QStringList tags, QString kind, QString type)
+void dtkWidgetsTagCloudList::addItem(QString name, QString description, QStringList tags,
+                                     QString kind, QString type)
 {
     d->items << new dtkWidgetsTagCloudItem(name, description, tags, kind, type);
 
@@ -189,7 +194,7 @@ QStringList dtkWidgetsTagCloudList::mimeTypes(void) const
 // Helper functions
 // ///////////////////////////////////////////////////////////////////
 
-QString dtkWidgetsTagCloudListDelegateUnhtmlize(const QString& htmlString)
+QString dtkWidgetsTagCloudListDelegateUnhtmlize(const QString &htmlString)
 {
     QString textString;
 
@@ -206,14 +211,19 @@ QString dtkWidgetsTagCloudListDelegateUnhtmlize(const QString& htmlString)
 // dtkWidgetsTagCloudListLightDelegate
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsTagCloudListLightDelegate::dtkWidgetsTagCloudListLightDelegate(dtkWidgetsTagCloudList *list) : QStyledItemDelegate(list)
+dtkWidgetsTagCloudListLightDelegate::dtkWidgetsTagCloudListLightDelegate(
+        dtkWidgetsTagCloudList *list)
+    : QStyledItemDelegate(list)
 {
     this->list = list;
 }
 
-void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter,
+                                                const QStyleOptionViewItem &option,
+                                                const QModelIndex &index) const
 {
-    dtkWidgetsTagCloudItem *item = dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
+    dtkWidgetsTagCloudItem *item =
+            dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
@@ -225,7 +235,7 @@ void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter, const QStyleO
     static QPixmap arrow = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-arrow.png");
     static QPixmap tags = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -235,8 +245,8 @@ void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter, const QStyleO
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,           w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,      w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -245,10 +255,14 @@ void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter, const QStyleO
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::gray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(
+            desc_rect, Qt::AlignLeft | Qt::AlignTop,
+            metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()),
+                               Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(Qt::darkGray);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -258,7 +272,8 @@ void dtkWidgetsTagCloudListLightDelegate::paint(QPainter *painter, const QStyleO
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkWidgetsTagCloudListLightDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkWidgetsTagCloudListLightDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                                    const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
@@ -270,14 +285,18 @@ QSize dtkWidgetsTagCloudListLightDelegate::sizeHint(const QStyleOptionViewItem& 
 // dtkWidgetsTagCloudListDarkDelegate
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsTagCloudListDarkDelegate::dtkWidgetsTagCloudListDarkDelegate(dtkWidgetsTagCloudList *list) : QStyledItemDelegate(list)
+dtkWidgetsTagCloudListDarkDelegate::dtkWidgetsTagCloudListDarkDelegate(dtkWidgetsTagCloudList *list)
+    : QStyledItemDelegate(list)
 {
     this->list = list;
 }
 
-void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter,
+                                               const QStyleOptionViewItem &option,
+                                               const QModelIndex &index) const
 {
-    dtkWidgetsTagCloudItem *item = dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
+    dtkWidgetsTagCloudItem *item =
+            dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
@@ -289,7 +308,7 @@ void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter, const QStyleOp
     static QPixmap arrow = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-arrow.png");
     static QPixmap tags = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -299,8 +318,8 @@ void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter, const QStyleOp
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,           w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,      w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -309,10 +328,14 @@ void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter, const QStyleOp
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::darkGray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(
+            desc_rect, Qt::AlignLeft | Qt::AlignTop,
+            metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()),
+                               Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(Qt::black);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -322,7 +345,8 @@ void dtkWidgetsTagCloudListDarkDelegate::paint(QPainter *painter, const QStyleOp
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkWidgetsTagCloudListDarkDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkWidgetsTagCloudListDarkDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                                   const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
@@ -334,14 +358,18 @@ QSize dtkWidgetsTagCloudListDarkDelegate::sizeHint(const QStyleOptionViewItem& o
 // dtkWidgetsTagCloudListDoomDelegate
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsTagCloudListDoomDelegate::dtkWidgetsTagCloudListDoomDelegate(dtkWidgetsTagCloudList *list) : QStyledItemDelegate(list)
+dtkWidgetsTagCloudListDoomDelegate::dtkWidgetsTagCloudListDoomDelegate(dtkWidgetsTagCloudList *list)
+    : QStyledItemDelegate(list)
 {
     this->list = list;
 }
 
-void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter,
+                                               const QStyleOptionViewItem &option,
+                                               const QModelIndex &index) const
 {
-    dtkWidgetsTagCloudItem *item = dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
+    dtkWidgetsTagCloudItem *item =
+            dynamic_cast<dtkWidgetsTagCloudItem *>(list->itemFromIndex(index));
 
     if (!item)
         return;
@@ -353,7 +381,7 @@ void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter, const QStyleOp
     static QPixmap arrow = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-arrow.png");
     static QPixmap tags = QPixmap(":dtkWidgetsTagCloud/dtkWidgetsTagCloudList-tags.png");
 
-    static int m  =  5;
+    static int m = 5;
     static int h1 = 20;
     static int h2 = 20;
     static int h3 = 20;
@@ -363,8 +391,8 @@ void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter, const QStyleOp
     int t = option.rect.top();
     int r = option.rect.right();
 
-    QRect name_rect = QRect(m, t + 1 * m,           w - 2 * m, h1);
-    QRect desc_rect = QRect(m, t + 2 * m + h1,      w - 6 * m, h2);
+    QRect name_rect = QRect(m, t + 1 * m, w - 2 * m, h1);
+    QRect desc_rect = QRect(m, t + 2 * m + h1, w - 6 * m, h2);
     QRect tags_rect = QRect(m, t + 3 * m + h1 + h2, w - 2 * m, h3);
 
     QFontMetrics metrics = QFontMetrics(painter->font());
@@ -373,10 +401,14 @@ void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter, const QStyleOp
     painter->drawText(name_rect, Qt::AlignLeft | Qt::AlignTop, item->name());
 
     painter->setPen(Qt::darkGray);
-    painter->drawText(desc_rect, Qt::AlignLeft | Qt::AlignTop, metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()), Qt::ElideRight, desc_rect.width()));
+    painter->drawText(
+            desc_rect, Qt::AlignLeft | Qt::AlignTop,
+            metrics.elidedText(dtkWidgetsTagCloudListDelegateUnhtmlize(item->description()),
+                               Qt::ElideRight, desc_rect.width()));
 
     painter->setPen(QColor("#6a769d"));
-    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0), Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
+    painter->drawText(tags_rect.adjusted(m + tags.width(), 0, -tags.width(), 0),
+                      Qt::AlignLeft | Qt::AlignTop, item->tags().join(", "));
 
     painter->setPen(Qt::black);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -386,7 +418,8 @@ void dtkWidgetsTagCloudListDoomDelegate::paint(QPainter *painter, const QStyleOp
     painter->drawPixmap(tags_rect.topLeft(), tags);
 }
 
-QSize dtkWidgetsTagCloudListDoomDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize dtkWidgetsTagCloudListDoomDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                                   const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);

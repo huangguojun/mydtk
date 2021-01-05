@@ -37,11 +37,16 @@ class dtkAbstractViewInteractor;
 class DTKCORESUPPORT_EXPORT dtkAbstractViewInteractorPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractViewInteractorPrivate(dtkAbstractViewInteractor *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractViewInteractorPrivate(const dtkAbstractViewInteractorPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(other.enabled),
-        data(other.data),
-        view(other.view) {}
+    dtkAbstractViewInteractorPrivate(dtkAbstractViewInteractor *q = 0) : dtkAbstractObjectPrivate(q)
+    {
+    }
+    dtkAbstractViewInteractorPrivate(const dtkAbstractViewInteractorPrivate &other)
+        : dtkAbstractObjectPrivate(other),
+          enabled(other.enabled),
+          data(other.data),
+          view(other.view)
+    {
+    }
 
 public:
     virtual ~dtkAbstractViewInteractorPrivate(void) {}

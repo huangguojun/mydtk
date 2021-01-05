@@ -14,19 +14,20 @@
 
 #pragma once
 
-#include <dtkWidgetsExport.h>
 #include <QtWidgets>
+#include <dtkWidgetsExport.h>
 
 class dtkWidgetsTagCloudItemPrivate;
 
 class DTKWIDGETS_EXPORT dtkWidgetsTagCloudItem : public QListWidgetItem
 {
 public:
-     dtkWidgetsTagCloudItem(QString name);
-     dtkWidgetsTagCloudItem(QString name, QString description);
-     dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags);
-     dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags, QString kind, QString type);
-     dtkWidgetsTagCloudItem(const dtkWidgetsTagCloudItem& item);
+    dtkWidgetsTagCloudItem(QString name);
+    dtkWidgetsTagCloudItem(QString name, QString description);
+    dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags);
+    dtkWidgetsTagCloudItem(QString name, QString description, QStringList tags, QString kind,
+                           QString type);
+    dtkWidgetsTagCloudItem(const dtkWidgetsTagCloudItem &item);
     ~dtkWidgetsTagCloudItem(void);
 
 public:

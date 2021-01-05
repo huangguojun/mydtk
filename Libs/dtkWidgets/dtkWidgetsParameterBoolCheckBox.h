@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class DTKWIDGETS_EXPORT dtkWidgetsParameterBoolCheckBox : public dtkWidgetsParameterBase<dtk::d_bool>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterBoolCheckBox
+    : public dtkWidgetsParameterBase<dtk::d_bool>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterBoolCheckBox(QWidget* parent = 0);
+    dtkWidgetsParameterBoolCheckBox(QWidget *parent = 0);
     ~dtkWidgetsParameterBoolCheckBox(void);
 
 public:

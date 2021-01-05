@@ -14,7 +14,5 @@
 
 #include "dtkVisualizationDecoratorManager.h"
 
-
-
 //
 // dtkVisualizationDecoratorManager.cpp ends here

@@ -14,8 +14,8 @@
 
 #include "dtkScreenMenu.h"
 
-#include <QtWidgets>
 #include <QtCore>
+#include <QtWidgets>
 
 class dtkScreenMenuPrivate
 {
@@ -24,9 +24,11 @@ public:
     int height;
 };
 
-dtkScreenMenu::dtkScreenMenu(const QString& title, QWidget *parent) : QMenu(title, parent), d(new dtkScreenMenuPrivate)
+dtkScreenMenu::dtkScreenMenu(const QString &title, QWidget *parent)
+    : QMenu(title, parent), d(new dtkScreenMenuPrivate)
 {
-    QAction *screenshot = this->addAction(QString("Take screenshot")); screenshot->setVisible(true);
+    QAction *screenshot = this->addAction(QString("Take screenshot"));
+    screenshot->setVisible(true);
     screenshot->setShortcut(Qt::Key_Print);
 
     connect(screenshot, SIGNAL(triggered(bool)), this, SLOT(takeScreenshot(void)));
@@ -38,7 +40,7 @@ QImage dtkScreenMenu::screenshot(QWidget *widget, qlonglong maxsize)
 
     widget->render(&pixmap);
 
-    if ( maxsize > 0 && pixmap.width() > maxsize)
+    if (maxsize > 0 && pixmap.width() > maxsize)
         return pixmap.scaledToWidth(maxsize).toImage();
 
     return pixmap.toImage();
@@ -49,9 +51,13 @@ void dtkScreenMenu::takeScreenshot(void)
     if (QWidget *widget = dynamic_cast<QWidget *>(parent())) {
 
         QString path = QDir::homePath();
-        QString name = QString("%1 - Screenshot - %2").arg(qApp->applicationName()).arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
+        QString name =
+                QString("%1 - Screenshot - %2")
+                        .arg(qApp->applicationName())
+                        .arg(QDateTime::currentDateTime().toString("MMMM dd yyyy - hh:mm:ss"));
         QString file = QDir::home().filePath(name);
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save screenshot"), file, tr("Screenshot (*.png)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save screenshot"), file,
+                                                        tr("Screenshot (*.png)"));
 
         if (fileName.isEmpty())
             return;

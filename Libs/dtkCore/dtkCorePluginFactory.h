@@ -33,7 +33,7 @@ class DTKCORE_EXPORT dtkCorePluginFactoryBase
 public:
     virtual ~dtkCorePluginFactoryBase(void) = default;
 
-    virtual void    connect(dtkObjectManager *manager) const = 0;
+    virtual void connect(dtkObjectManager *manager) const = 0;
     virtual void disconnect(dtkObjectManager *manager) const = 0;
 };
 
@@ -43,34 +43,35 @@ public:
 
 class dtkCorePluginBase;
 
-template <typename T> class dtkCorePluginFactory : public dtkCorePluginFactoryBase
+template<typename T>
+class dtkCorePluginFactory : public dtkCorePluginFactoryBase
 {
 public:
-     dtkCorePluginFactory(void);
+    dtkCorePluginFactory(void);
     ~dtkCorePluginFactory(void);
 
 public:
-    typedef T *(*creator) ();
+    typedef T *(*creator)();
     typedef std::function<QWidget *()> widget_creator;
 
 public:
-    void record(const QString& key, creator func);
-    void recordPlugin(const QString& key, dtkCorePluginBase *plugin, bool force = false);
-    void record(const QString& key, widget_creator func);
+    void record(const QString &key, creator func);
+    void recordPlugin(const QString &key, dtkCorePluginBase *plugin, bool force = false);
+    void record(const QString &key, widget_creator func);
 
 public:
     void clear(void);
 
 public:
-    T *create(const QString& key) const;
+    T *create(const QString &key) const;
 
-    QWidget *createWidget(const QString& key) const;
+    QWidget *createWidget(const QString &key) const;
 
 public:
     QStringList keys(void) const;
 
 public:
-    void    connect(dtkObjectManager *manager) const override;
+    void connect(dtkObjectManager *manager) const override;
     void disconnect(dtkObjectManager *manager) const override;
 
 private:
@@ -86,7 +87,8 @@ private:
 // Helper functions
 // ///////////////////////////////////////////////////////////////////
 
-template <typename S, typename T> S *dtkCorePluginFactoryCreator(void)
+template<typename S, typename T>
+S *dtkCorePluginFactoryCreator(void)
 {
     return new T;
 }

@@ -23,16 +23,16 @@
 
 using namespace std;
 
-#include <windows.h>
-#include <WinUser.h>
-#include <windowsx.h>
-#include <dwmapi.h>
-#include <objidl.h>
-#include <gdiplus.h>
 #include <GdiPlusColor.h>
+#include <WinUser.h>
+#include <dwmapi.h>
+#include <gdiplus.h>
+#include <objidl.h>
+#include <windows.h>
+#include <windowsx.h>
 
-#pragma comment (lib, "Dwmapi.lib")
-#pragma comment (lib, "user32.lib")
+#pragma comment(lib, "Dwmapi.lib")
+#pragma comment(lib, "user32.lib")
 
 // /////////////////////////////////////////////////////////////////////////////
 //
@@ -43,17 +43,17 @@ class dtkThemesWidgetsMainWindowPrivate
 public:
     dtkThemesWidgetsMainWindow *q;
 
-    QFrame                           *titlebar = nullptr;
-    QLabel                           *title    = nullptr;
+    QFrame *titlebar = nullptr;
+    QLabel *title = nullptr;
     dtkThemesWidgetsMainWindowButton *minimize = nullptr;
     dtkThemesWidgetsMainWindowButton *maximize = nullptr;
-    dtkThemesWidgetsMainWindowButton *close    = nullptr;
+    dtkThemesWidgetsMainWindowButton *close = nullptr;
 
 public:
     QSizeGrip *g = nullptr;
     bool is_grabbing_title_bar = false;
     QPoint cursor_window_pos_when_grabbing;
-    const int title_bar_height = 2*7+18; // height of MainWindowButton + vertical gaps
+    const int title_bar_height = 2 * 7 + 18; // height of MainWindowButton + vertical gaps
 };
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -72,12 +72,15 @@ dtkThemesWidgetsMainWindow::dtkThemesWidgetsMainWindow(QWidget *parent)
     d->titlebar->setAttribute(Qt::WA_NoSystemBackground);
     d->titlebar->setAttribute(Qt::WA_TranslucentBackground);
 
-    d->title    = new QLabel(qApp->applicationName(), this);
+    d->title = new QLabel(qApp->applicationName(), this);
     d->title->adjustSize();
 
-    d->minimize = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Minimize, d->titlebar);
-    d->maximize = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Maximize, d->titlebar);
-    d->close    = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Close,    d->titlebar);
+    d->minimize = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Minimize,
+                                                       d->titlebar);
+    d->maximize = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Maximize,
+                                                       d->titlebar);
+    d->close = new dtkThemesWidgetsMainWindowButton(dtkThemesWidgetsMainWindowButton::Close,
+                                                    d->titlebar);
 
     QHBoxLayout *layout = new QHBoxLayout(d->titlebar);
     layout->setAlignment(Qt::AlignCenter);
@@ -111,8 +114,8 @@ void dtkThemesWidgetsMainWindow::touch(QWidget *widget)
     if (!widget)
         return;
 
-    std::function<void (dtkThemesWidgetsMainWindow *, QWidget *)> fix = [&fix] (dtkThemesWidgetsMainWindow *self, QWidget *source) -> void {
-
+    std::function<void(dtkThemesWidgetsMainWindow *, QWidget *)> fix =
+            [&fix](dtkThemesWidgetsMainWindow *self, QWidget *source) -> void {
         source->setMouseTracking(true);
         source->installEventFilter(self);
 
@@ -157,10 +160,10 @@ bool dtkThemesWidgetsMainWindow::eventFilter(QObject *source, QEvent *event)
 
 void dtkThemesWidgetsMainWindow::mousePressEvent(QMouseEvent *event)
 {
-    const bool start_grab = !d->is_grabbing_title_bar && event->button() == Qt::LeftButton && event->y() < d->title_bar_height;
+    const bool start_grab = !d->is_grabbing_title_bar && event->button() == Qt::LeftButton
+            && event->y() < d->title_bar_height;
 
-    if (start_grab)
-    {
+    if (start_grab) {
         d->is_grabbing_title_bar = true;
         d->cursor_window_pos_when_grabbing = event->windowPos().toPoint();
         event->accept();
@@ -171,8 +174,7 @@ void dtkThemesWidgetsMainWindow::mousePressEvent(QMouseEvent *event)
 
 void dtkThemesWidgetsMainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (d->is_grabbing_title_bar && event->button() == Qt::LeftButton)
-    {
+    if (d->is_grabbing_title_bar && event->button() == Qt::LeftButton) {
         d->is_grabbing_title_bar = false;
         event->accept();
     } else {
@@ -182,8 +184,7 @@ void dtkThemesWidgetsMainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void dtkThemesWidgetsMainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    if (d->is_grabbing_title_bar)
-    {
+    if (d->is_grabbing_title_bar) {
         this->topLevelWidget()->move(event->globalPos() - d->cursor_window_pos_when_grabbing);
         event->accept();
     } else {

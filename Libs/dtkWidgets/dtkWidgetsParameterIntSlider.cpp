@@ -22,19 +22,19 @@
 // dtkWidgetsParameterIntSliderPrivate declaration
 // ///////////////////////////////////////////////////////////////////
 
-class dtkWidgetsParameterIntSliderPrivate: public QSlider
+class dtkWidgetsParameterIntSliderPrivate : public QSlider
 {
     Q_OBJECT
 
 public:
-    QLabel  *min = nullptr;
-    QLabel  *max = nullptr;
+    QLabel *min = nullptr;
+    QLabel *max = nullptr;
 
 protected:
-     void paintEvent(QPaintEvent*);
+    void paintEvent(QPaintEvent *);
 };
 
-void dtkWidgetsParameterIntSliderPrivate::paintEvent(QPaintEvent *event )
+void dtkWidgetsParameterIntSliderPrivate::paintEvent(QPaintEvent *event)
 {
     QSlider::paintEvent(event);
 
@@ -45,10 +45,11 @@ void dtkWidgetsParameterIntSliderPrivate::paintEvent(QPaintEvent *event )
     font.setBold(true);
     painter.setFont(font);
 
-    double pos_rel = (value() - minimum()) / (double) (maximum()+ tickInterval() - minimum());
+    double pos_rel = (value() - minimum()) / (double)(maximum() + tickInterval() - minimum());
 
     if (this->orientation() == Qt::Horizontal) {
-        painter.drawText(QPoint((this->size().width()) * pos_rel, this->size().height()), QString::number(value()));
+        painter.drawText(QPoint((this->size().width()) * pos_rel, this->size().height()),
+                         QString::number(value()));
     }
 }
 
@@ -56,7 +57,8 @@ void dtkWidgetsParameterIntSliderPrivate::paintEvent(QPaintEvent *event )
 // dtkWidgetsParameterIntSlider implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterIntSlider::dtkWidgetsParameterIntSlider(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterIntSliderPrivate)
+dtkWidgetsParameterIntSlider::dtkWidgetsParameterIntSlider(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_int>(parent), d(new dtkWidgetsParameterIntSliderPrivate)
 {
     d->setOrientation(Qt::Horizontal);
     d->setTickPosition(QSlider::TicksBelow);
@@ -68,14 +70,14 @@ dtkWidgetsParameterIntSlider::dtkWidgetsParameterIntSlider(QWidget* parent) : dt
     layout->addWidget(d);
     layout->addWidget(d->max);
     QObject::connect(d, &QSlider::valueChanged, [=](int value) {
-            QStyleOptionSlider opt;
+        QStyleOptionSlider opt;
 
-            QRect sr = d->style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, d);
-            QPoint bottomRightCorner = sr.bottomLeft();
+        QRect sr = d->style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, d);
+        QPoint bottomRightCorner = sr.bottomLeft();
 
-            QToolTip::showText(mapToGlobal( QPoint( bottomRightCorner.x(), bottomRightCorner.y() ) ), QString::number(value), d);
-        });
-
+        QToolTip::showText(mapToGlobal(QPoint(bottomRightCorner.x(), bottomRightCorner.y())),
+                           QString::number(value), d);
+    });
 
     this->setLayout(layout);
 }
@@ -94,8 +96,10 @@ bool dtkWidgetsParameterIntSlider::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_int *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterIntSlider.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterIntSlider.";
         return false;
     }
 
@@ -106,20 +110,17 @@ bool dtkWidgetsParameterIntSlider::connect(dtkCoreParameter *p)
     d->setToolTip(m_parameter->documentation());
 
     d->setValue(m_parameter->value());
-    d->setTickInterval((m_parameter->max() - m_parameter->min()) / 10 );
+    d->setTickInterval((m_parameter->max() - m_parameter->min()) / 10);
 
-    m_parameter->connect([=] (QVariant v)
-    {
+    m_parameter->connect([=](QVariant v) {
         int value = v.value<dtk::d_int>().value();
         d->blockSignals(true);
         d->setValue(value);
         d->blockSignals(false);
     });
 
-    QObject::connect(d, QOverload<int>::of(&QSlider::valueChanged), [=] (int v)
-    {
-        m_parameter->shareValue(QVariant::fromValue(v));
-    });
+    QObject::connect(d, QOverload<int>::of(&QSlider::valueChanged),
+                     [=](int v) { m_parameter->shareValue(QVariant::fromValue(v)); });
 
     return true;
 }

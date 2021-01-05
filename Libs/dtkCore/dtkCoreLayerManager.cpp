@@ -16,8 +16,8 @@
 
 #include <QtCore>
 
-#include "dtkCorePluginManager.h"
 #include "dtkCorePluginFactory.h"
+#include "dtkCorePluginManager.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkCoreLayerManagerPrivate implementation
@@ -52,12 +52,14 @@ dtkCoreLayerManager::~dtkCoreLayerManager(void)
     d = nullptr;
 }
 
-void dtkCoreLayerManager::record(const QString& plugin_manager_name, dtkCorePluginManagerBase *plugin_manager)
+void dtkCoreLayerManager::record(const QString &plugin_manager_name,
+                                 dtkCorePluginManagerBase *plugin_manager)
 {
     d->plugin_managers[plugin_manager_name] = plugin_manager;
 }
 
-void dtkCoreLayerManager::record(const QString& plugin_factory_name, dtkCorePluginFactoryBase *plugin_factory)
+void dtkCoreLayerManager::record(const QString &plugin_factory_name,
+                                 dtkCorePluginFactoryBase *plugin_factory)
 {
     d->plugin_factories[plugin_factory_name] = plugin_factory;
 }
@@ -67,7 +69,7 @@ void dtkCoreLayerManager::initialize(void)
     this->initialize(QString());
 }
 
-void dtkCoreLayerManager::initialize(const QString& path)
+void dtkCoreLayerManager::initialize(const QString &path)
 {
     for (auto pm : d->plugin_managers) {
         pm->initialize(path);
@@ -117,7 +119,7 @@ bool dtkCoreLayerManager::autoLoading(void) const
     return d->auto_loading;
 }
 
-void dtkCoreLayerManager::setObjectManager(dtkObjectManager * manager)
+void dtkCoreLayerManager::setObjectManager(dtkObjectManager *manager)
 {
     d->object_manager = manager;
 }

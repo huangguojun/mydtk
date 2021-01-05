@@ -20,12 +20,12 @@
 
 #include <dtkCore/dtkCoreParameterPath>
 
-class  DTKWIDGETS_EXPORT dtkWidgetsParameterFileSave : public dtkWidgetsParameterBase<dtk::d_path>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterFileSave : public dtkWidgetsParameterBase<dtk::d_path>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterFileSave(QWidget* parent = nullptr);
+    dtkWidgetsParameterFileSave(QWidget *parent = nullptr);
     ~dtkWidgetsParameterFileSave(void);
 
 public:

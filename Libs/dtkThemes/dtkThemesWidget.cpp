@@ -45,41 +45,95 @@ void dtkThemesWidgetPrivate::update(void)
 
             QString key;
 
-            switch(i) {
+            switch (i) {
             case 0:
-                switch(j) {
-                case  0: key = "@base0"; break;
-                case  1: key = "@base1"; break;
-                case  2: key = "@base2"; break;
-                case  3: key = "@base3"; break;
-                case  4: key = "@base4"; break;
-                case  5: key = "@base5"; break;
-                case  6: key = "@base6"; break;
-                case  7: key = "@base7"; break;
-                case  8: key = "@base8"; break;
-                case  9: key = "@bg";    break;
-                case 10: key = "@bgalt"; break;
-                case 11: key = "@fg";    break;
-                case 12: key = "@fgalt"; break;
-                default: break;
+                switch (j) {
+                case 0:
+                    key = "@base0";
+                    break;
+                case 1:
+                    key = "@base1";
+                    break;
+                case 2:
+                    key = "@base2";
+                    break;
+                case 3:
+                    key = "@base3";
+                    break;
+                case 4:
+                    key = "@base4";
+                    break;
+                case 5:
+                    key = "@base5";
+                    break;
+                case 6:
+                    key = "@base6";
+                    break;
+                case 7:
+                    key = "@base7";
+                    break;
+                case 8:
+                    key = "@base8";
+                    break;
+                case 9:
+                    key = "@bg";
+                    break;
+                case 10:
+                    key = "@bgalt";
+                    break;
+                case 11:
+                    key = "@fg";
+                    break;
+                case 12:
+                    key = "@fgalt";
+                    break;
+                default:
+                    break;
                 };
                 break;
             case 1:
-                switch(j) {
-                case  0: key = "@grey";     break;
-                case  1: key = "@red";      break;
-                case  2: key = "@orange";   break;
-                case  3: key = "@green";    break;
-                case  4: key = "@teal";     break;
-                case  5: key = "@yellow";   break;
-                case  6: key = "@blue";     break;
-                case  7: key = "@darkblue"; break;
-                case  8: key = "@magenta";  break;
-                case  9: key = "@violet";   break;
-                case 10: key = "@cyan";     break;
-                case 11: key = "@darkcyan"; break;
-                case 12: key = "@hl";       break;
-                default: break;
+                switch (j) {
+                case 0:
+                    key = "@grey";
+                    break;
+                case 1:
+                    key = "@red";
+                    break;
+                case 2:
+                    key = "@orange";
+                    break;
+                case 3:
+                    key = "@green";
+                    break;
+                case 4:
+                    key = "@teal";
+                    break;
+                case 5:
+                    key = "@yellow";
+                    break;
+                case 6:
+                    key = "@blue";
+                    break;
+                case 7:
+                    key = "@darkblue";
+                    break;
+                case 8:
+                    key = "@magenta";
+                    break;
+                case 9:
+                    key = "@violet";
+                    break;
+                case 10:
+                    key = "@cyan";
+                    break;
+                case 11:
+                    key = "@darkcyan";
+                    break;
+                case 12:
+                    key = "@hl";
+                    break;
+                default:
+                    break;
                 };
                 break;
             default:
@@ -90,8 +144,9 @@ void dtkThemesWidgetPrivate::update(void)
             label->setAlignment(Qt::AlignCenter);
             label->setText(key);
 
-            if(!this->parser) {
-                label->setStyleSheet(QString("background: %1").arg(dtkThemesEngine::instance()->value(key)));
+            if (!this->parser) {
+                label->setStyleSheet(
+                        QString("background: %1").arg(dtkThemesEngine::instance()->value(key)));
                 label->setToolTip(key + " (" + dtkThemesEngine::instance()->value(key) + ")");
             } else {
                 label->setStyleSheet(QString("background: %1").arg(this->parser->values()[key]));
@@ -122,7 +177,7 @@ dtkThemesWidget::dtkThemesWidget(QWidget *parent) : QWidget(parent)
     connect(dtkThemesEngine::instance(), SIGNAL(changed()), d, SLOT(update()));
 }
 
-dtkThemesWidget::dtkThemesWidget(const QString& theme, QWidget *parent) : QWidget(parent)
+dtkThemesWidget::dtkThemesWidget(const QString &theme, QWidget *parent) : QWidget(parent)
 {
     d = new dtkThemesWidgetPrivate;
 

@@ -12,9 +12,9 @@
 
 // Code:
 
+#include "dtkWidgetsLayoutItem.h"
 #include "dtkWidgetsController.h"
 #include "dtkWidgetsLayout.h"
-#include "dtkWidgetsLayoutItem.h"
 #include "dtkWidgetsLayoutItem_p.h"
 #include "dtkWidgetsWidget.h"
 
@@ -34,7 +34,7 @@ class dtkWidgetsLayoutItemButton : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsLayoutItemButton(fa::icon icon, QWidget *parent = nullptr);
+    dtkWidgetsLayoutItemButton(fa::icon icon, QWidget *parent = nullptr);
     ~dtkWidgetsLayoutItemButton(void);
 
 signals:
@@ -51,16 +51,14 @@ private:
     fa::icon m_icon;
 };
 
-dtkWidgetsLayoutItemButton::dtkWidgetsLayoutItemButton(fa::icon icon, QWidget *parent) : QFrame(parent)
+dtkWidgetsLayoutItemButton::dtkWidgetsLayoutItemButton(fa::icon icon, QWidget *parent)
+    : QFrame(parent)
 {
     dtkFontAwesome::instance()->initFontAwesome();
     this->m_icon = icon;
 }
 
-dtkWidgetsLayoutItemButton::~dtkWidgetsLayoutItemButton(void)
-{
-
-}
+dtkWidgetsLayoutItemButton::~dtkWidgetsLayoutItemButton(void) {}
 
 QSize dtkWidgetsLayoutItemButton::sizeHint(void) const
 {
@@ -76,7 +74,8 @@ void dtkWidgetsLayoutItemButton::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
 
-   // dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+    // dtkFontAwesome::instance()->setDefaultOption("color",
+    // dtkThemesEngine::instance()->color("@fg"));
 
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing);
@@ -87,26 +86,26 @@ void dtkWidgetsLayoutItemButton::paintEvent(QPaintEvent *event)
 // dtkWidgetsLayoutItemProxy
 // /////////////////////////////////////////////////////////////////
 
-dtkWidgetsLayoutItemProxy::dtkWidgetsLayoutItemProxy(QWidget *parent) : QFrame(parent), d(new dtkWidgetsLayoutItemProxyPrivate)
+dtkWidgetsLayoutItemProxy::dtkWidgetsLayoutItemProxy(QWidget *parent)
+    : QFrame(parent), d(new dtkWidgetsLayoutItemProxyPrivate)
 {
     d->view = nullptr;
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    if(!dtkWidgetsLayoutItem::actions.isEmpty()) {
+    if (!dtkWidgetsLayoutItem::actions.isEmpty()) {
         d->form = new QFormLayout;
         d->form->setFormAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-        for(QString action : dtkWidgetsLayoutItem::actions) {
+        for (QString action : dtkWidgetsLayoutItem::actions) {
             QPushButton *button = new QPushButton(action, this);
             button->setFixedWidth(150);
 
             d->form->addWidget(button);
 
-            connect(button, &QPushButton::clicked, this, [=] () {
-                emit create(dtkWidgetsLayoutItem::actions.key(action));
-            });
+            connect(button, &QPushButton::clicked, this,
+                    [=]() { emit create(dtkWidgetsLayoutItem::actions.key(action)); });
         }
 
         layout->addLayout(d->form);
@@ -119,16 +118,17 @@ dtkWidgetsLayoutItemProxy::dtkWidgetsLayoutItemProxy(QWidget *parent) : QFrame(p
 
 dtkWidgetsLayoutItemProxy::~dtkWidgetsLayoutItemProxy(void)
 {
-    if(!d->view)
+    if (!d->view)
         goto finalize;
 
-    if(!d->view->widget())
+    if (!d->view->widget())
         goto finalize;
 
-    if(!d->view->widget()->parentWidget())
+    if (!d->view->widget()->parentWidget())
         goto finalize;
 
-    if(dtkWidgetsLayoutItemProxy *proxy = dynamic_cast<dtkWidgetsLayoutItemProxy *>(d->view->widget()->parentWidget()->parentWidget())) {
+    if (dtkWidgetsLayoutItemProxy *proxy = dynamic_cast<dtkWidgetsLayoutItemProxy *>(
+                d->view->widget()->parentWidget()->parentWidget())) {
 
         if (proxy == this) {
 
@@ -162,9 +162,10 @@ void dtkWidgetsLayoutItemProxy::setView(dtkWidgetsWidget *view)
     if (!view->widget())
         return;
 
-    if(view->parentWidget()) {
+    if (view->parentWidget()) {
 
-        if (dtkWidgetsLayoutItem *item = dynamic_cast<dtkWidgetsLayoutItem *>(view->parentWidget()->parentWidget()->parentWidget())) {
+        if (dtkWidgetsLayoutItem *item = dynamic_cast<dtkWidgetsLayoutItem *>(
+                    view->parentWidget()->parentWidget()->parentWidget())) {
 
             if (item->d->proxy->d->view == view) {
 
@@ -190,7 +191,7 @@ void dtkWidgetsLayoutItemProxy::setView(dtkWidgetsWidget *view)
         d->view->setParent(nullptr);
     }
 
-    if(d->form)
+    if (d->form)
         this->layout()->removeItem(d->form);
 
     this->layout()->addWidget(view);
@@ -199,7 +200,8 @@ void dtkWidgetsLayoutItemProxy::setView(dtkWidgetsWidget *view)
 
     connect(view, SIGNAL(focused()), this, SIGNAL(focusedIn()));
 
-    if (dtkWidgetsLayoutItem *item = dynamic_cast<dtkWidgetsLayoutItem *>(this->parentWidget()->parentWidget())) {
+    if (dtkWidgetsLayoutItem *item =
+                dynamic_cast<dtkWidgetsLayoutItem *>(this->parentWidget()->parentWidget())) {
 
         QStringList items = dtkWidgetsController::instance()->viewNames();
 
@@ -245,7 +247,8 @@ void dtkWidgetsLayoutItemProxy::keyPressEvent(QKeyEvent *event)
     // event->accept();
 
     // if(d->view)
-    //     qApp->sendEvent(d->view, new QKeyEvent(event->type(), event->key(), event->modifiers()));
+    //     qApp->sendEvent(d->view, new QKeyEvent(event->type(), event->key(),
+    //     event->modifiers()));
 
     QFrame::keyPressEvent(event);
 }
@@ -258,13 +261,16 @@ void dtkWidgetsLayoutItemProxy::mouseMoveEvent(QMouseEvent *event)
     if (dtkWidgetsLayoutItem::actions.count())
         return;
 
-    QRect rect(this->rect().width() / 2 - this->rect().width() / 4, this->rect().height() / 2 - this->rect().height() / 4, this->rect().size().width() / 2, this->rect().size().height() / 2);
+    QRect rect(this->rect().width() / 2 - this->rect().width() / 4,
+               this->rect().height() / 2 - this->rect().height() / 4,
+               this->rect().size().width() / 2, this->rect().size().height() / 2);
 
     /*
     if(rect.contains(event->pos()))
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg").lighter());
-    else
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
+        dtkFontAwesome::instance()->setDefaultOption("color",
+    dtkThemesEngine::instance()->color("@fg").lighter()); else
+        dtkFontAwesome::instance()->setDefaultOption("color",
+    dtkThemesEngine::instance()->color("@fg"));
         */
 
     this->update();
@@ -278,9 +284,11 @@ void dtkWidgetsLayoutItemProxy::mousePressEvent(QMouseEvent *event)
     if (dtkWidgetsLayoutItem::actions.count())
         return;
 
-    QRect rect(this->rect().width() / 2 - this->rect().width() / 4, this->rect().height() / 2 - this->rect().height() / 4, this->rect().size().width() / 2, this->rect().size().height() / 2);
+    QRect rect(this->rect().width() / 2 - this->rect().width() / 4,
+               this->rect().height() / 2 - this->rect().height() / 4,
+               this->rect().size().width() / 2, this->rect().size().height() / 2);
 
-    if(rect.contains(event->pos()))
+    if (rect.contains(event->pos()))
         emit create();
 }
 
@@ -291,13 +299,19 @@ void dtkWidgetsLayoutItemProxy::paintEvent(QPaintEvent *event)
     if (dtkWidgetsLayoutItem::actions.count())
         return QFrame::paintEvent(event);
 
-    QRect rect(event->rect().width() / 2 - event->rect().width() / 4, event->rect().height() / 2 - event->rect().height() / 4, event->rect().size().width() / 2, event->rect().size().height() / 2);
+    QRect rect(event->rect().width() / 2 - event->rect().width() / 4,
+               event->rect().height() / 2 - event->rect().height() / 4,
+               event->rect().size().width() / 2, event->rect().size().height() / 2);
 
- /*   if (d->dirty)
-        dtkFontAwesome::instance()->setDefaultOption("color", dtkThemesEngine::instance()->color("@fg"));
-*/
+    /*   if (d->dirty)
+           dtkFontAwesome::instance()->setDefaultOption("color",
+       dtkThemesEngine::instance()->color("@fg"));
+   */
     QPainter painter(this);
-    painter.drawPixmap(rect, dtkFontAwesome::instance()->icon(fa::plussquare).pixmap(rect.size().width(), rect.size().height()));
+    painter.drawPixmap(rect,
+                       dtkFontAwesome::instance()
+                               ->icon(fa::plussquare)
+                               .pixmap(rect.size().width(), rect.size().height()));
 
     d->dirty = false;
 }
@@ -324,7 +338,8 @@ dtkWidgetsLayoutItemProxy *dtkWidgetsLayoutItemPrivate::firstViewChild(dtkWidget
 // dtkWidgetsLayoutItem
 // /////////////////////////////////////////////////////////////////
 
-dtkWidgetsLayoutItem::dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent) : QFrame(parent), d(new dtkWidgetsLayoutItemPrivate)
+dtkWidgetsLayoutItem::dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent)
+    : QFrame(parent), d(new dtkWidgetsLayoutItemPrivate)
 {
     d->a = nullptr;
     d->b = nullptr;
@@ -342,7 +357,7 @@ dtkWidgetsLayoutItem::dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent) : QFram
     d->proxy = new dtkWidgetsLayoutItemProxy(this);
 
     connect(d->proxy, SIGNAL(create()), this, SIGNAL(create()));
-    connect(d->proxy, SIGNAL(create(const QString&)), this, SIGNAL(create(const QString&)));
+    connect(d->proxy, SIGNAL(create(const QString &)), this, SIGNAL(create(const QString &)));
 
     d->splitter = new QSplitter(this);
     d->splitter->setHandleWidth(1);
@@ -359,11 +374,11 @@ dtkWidgetsLayoutItem::dtkWidgetsLayoutItem(dtkWidgetsLayoutItem *parent) : QFram
     d->label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
     d->label->setEditable(true);
 
-    connect(d->label->lineEdit(), &QLineEdit::editingFinished, [=] () {
-            if(d->proxy->view()) {
-                d->proxy->view()->setObjectName(d->label->lineEdit()->text());
-            }
-        });
+    connect(d->label->lineEdit(), &QLineEdit::editingFinished, [=]() {
+        if (d->proxy->view()) {
+            d->proxy->view()->setObjectName(d->label->lineEdit()->text());
+        }
+    });
 
     QHBoxLayout *footer_layout = new QHBoxLayout;
     footer_layout->setSpacing(20);
@@ -440,7 +455,7 @@ void dtkWidgetsLayoutItem::setOrientation(Qt::Orientation orientation)
     d->splitter->setOrientation(orientation);
 }
 
-void dtkWidgetsLayoutItem::setSizes(const QList<int>& sizes)
+void dtkWidgetsLayoutItem::setSizes(const QList<int> &sizes)
 {
     d->splitter->setSizes(sizes);
 }
@@ -488,7 +503,7 @@ void dtkWidgetsLayoutItem::clear(void)
     if (d->proxy && d->proxy->view())
         d->proxy->view()->setParent(nullptr);
 
-    if(d->proxy)
+    if (d->proxy)
         delete d->proxy;
 
     d->proxy = new dtkWidgetsLayoutItemProxy(d->root);
@@ -496,7 +511,7 @@ void dtkWidgetsLayoutItem::clear(void)
     connect(d->proxy, SIGNAL(focusedIn()), this, SLOT(onFocusedIn()));
     connect(d->proxy, SIGNAL(focusedOut()), this, SLOT(onFocusedOut()));
     connect(d->proxy, SIGNAL(create()), this, SIGNAL(create()));
-    connect(d->proxy, SIGNAL(create(const QString&)), this, SIGNAL(create(const QString&)));
+    connect(d->proxy, SIGNAL(create(const QString &)), this, SIGNAL(create(const QString &)));
 
     d->splitter->addWidget(d->proxy);
 
@@ -547,7 +562,7 @@ void dtkWidgetsLayoutItem::split(bool force)
     disconnect(d->proxy, SIGNAL(focusedIn()), this, SLOT(onFocusedIn()));
     disconnect(d->proxy, SIGNAL(focusedOut()), this, SLOT(onFocusedOut()));
     disconnect(d->proxy, SIGNAL(create()), this, SIGNAL(create()));
-    disconnect(d->proxy, SIGNAL(create(const QString&)), this, SIGNAL(create(const QString&)));
+    disconnect(d->proxy, SIGNAL(create(const QString &)), this, SIGNAL(create(const QString &)));
 
     delete d->proxy;
 
@@ -556,7 +571,7 @@ void dtkWidgetsLayoutItem::split(bool force)
     d->footer->hide();
 
     d->splitter->resize(size);
-    d->splitter->setSizes(QList<int>() << size.width()/2 << size.width()/2);
+    d->splitter->setSizes(QList<int>() << size.width() / 2 << size.width() / 2);
 
     d->layout->setCurrent(d->b);
 }
@@ -576,8 +591,10 @@ void dtkWidgetsLayoutItem::unsplit(void)
 
         if (d->b->d->a && d->b->d->b) {
 
-            dtkWidgetsLayoutItem *a = d->b->d->a; a->d->parent = this;
-            dtkWidgetsLayoutItem *b = d->b->d->b; b->d->parent = this;
+            dtkWidgetsLayoutItem *a = d->b->d->a;
+            a->d->parent = this;
+            dtkWidgetsLayoutItem *b = d->b->d->b;
+            b->d->parent = this;
 
             d->splitter->setOrientation(d->b->d->splitter->orientation());
 
@@ -593,8 +610,8 @@ void dtkWidgetsLayoutItem::unsplit(void)
 
             dtkWidgetsLayoutItemProxy *child = nullptr;
 
-            if(!(child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->a)))
-                 child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->b);
+            if (!(child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->a)))
+                child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->b);
 
             if (child)
                 child->setFocus(Qt::OtherFocusReason);
@@ -606,7 +623,8 @@ void dtkWidgetsLayoutItem::unsplit(void)
             connect(d->proxy, SIGNAL(focusedIn()), this, SLOT(onFocusedIn()));
             connect(d->proxy, SIGNAL(focusedOut()), this, SLOT(onFocusedOut()));
             connect(d->proxy, SIGNAL(create()), this, SIGNAL(create()));
-            connect(d->proxy, SIGNAL(create(const QString&)), this, SIGNAL(create(const QString&)));
+            connect(d->proxy, SIGNAL(create(const QString &)), this,
+                    SIGNAL(create(const QString &)));
 
             d->splitter->addWidget(d->proxy);
 
@@ -620,7 +638,7 @@ void dtkWidgetsLayoutItem::unsplit(void)
 
             d->footer->show();
 
-            if(d->proxy->view())
+            if (d->proxy->view())
                 d->label->setCurrentText(d->proxy->view()->widget()->objectName());
         }
     }
@@ -633,8 +651,10 @@ void dtkWidgetsLayoutItem::unsplit(void)
 
         if (d->a->d->a && d->a->d->b) {
 
-            dtkWidgetsLayoutItem *a = d->a->d->a; a->d->parent = this;
-            dtkWidgetsLayoutItem *b = d->a->d->b; b->d->parent = this;
+            dtkWidgetsLayoutItem *a = d->a->d->a;
+            a->d->parent = this;
+            dtkWidgetsLayoutItem *b = d->a->d->b;
+            b->d->parent = this;
 
             d->splitter->setOrientation(d->a->d->splitter->orientation());
 
@@ -650,8 +670,8 @@ void dtkWidgetsLayoutItem::unsplit(void)
 
             dtkWidgetsLayoutItemProxy *child = nullptr;
 
-            if(!(child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->a)))
-                 child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->b);
+            if (!(child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->a)))
+                child = dtkWidgetsLayoutItemPrivate::firstViewChild(d->b);
 
             if (child)
                 child->setFocus(Qt::OtherFocusReason);
@@ -663,7 +683,8 @@ void dtkWidgetsLayoutItem::unsplit(void)
             connect(d->proxy, SIGNAL(focusedIn()), this, SLOT(onFocusedIn()));
             connect(d->proxy, SIGNAL(focusedOut()), this, SLOT(onFocusedOut()));
             connect(d->proxy, SIGNAL(create()), this, SIGNAL(create()));
-            connect(d->proxy, SIGNAL(create(const QString&)), this, SIGNAL(create(const QString&)));
+            connect(d->proxy, SIGNAL(create(const QString &)), this,
+                    SIGNAL(create(const QString &)));
 
             d->splitter->addWidget(d->proxy);
 
@@ -682,7 +703,6 @@ void dtkWidgetsLayoutItem::unsplit(void)
     } else {
 
         qDebug() << Q_FUNC_INFO << "Unhandled case.";
-
     }
 
     d->root->setUpdatesEnabled(true);
@@ -703,7 +723,8 @@ void dtkWidgetsLayoutItem::maximize(void)
     d->root->connect(d->root->d->proxy, SIGNAL(focusedIn()), d->root, SLOT(onFocusedIn()));
     d->root->connect(d->root->d->proxy, SIGNAL(focusedOut()), d->root, SLOT(onFocusedOut()));
     d->root->connect(d->root->d->proxy, SIGNAL(create()), d->root, SIGNAL(create()));
-    d->root->connect(d->root->d->proxy, SIGNAL(create(const QString&)), d->root, SIGNAL(create(const QString&)));
+    d->root->connect(d->root->d->proxy, SIGNAL(create(const QString &)), d->root,
+                     SIGNAL(create(const QString &)));
 
     d->root->d->splitter->addWidget(d->root->d->proxy);
 
@@ -758,7 +779,7 @@ void dtkWidgetsLayoutItem::onFocusedOut(void)
     d->footer->update();
 }
 
-void dtkWidgetsLayoutItem::setActions(const dtkWidgetsLayoutItem::Actions& actions)
+void dtkWidgetsLayoutItem::setActions(const dtkWidgetsLayoutItem::Actions &actions)
 {
     dtkWidgetsLayoutItem::actions = actions;
 }
@@ -848,7 +869,8 @@ void dtkWidgetsLayoutItem::dropEvent(QDropEvent *event)
     if (d->proxy->view())
         return;
 
-    if(dtkWidgetsWidget *view = dtkWidgetsController::instance()->view(event->mimeData()->text())) {
+    if (dtkWidgetsWidget *view =
+                dtkWidgetsController::instance()->view(event->mimeData()->text())) {
         view->setObjectName(event->mimeData()->text());
 
         this->setView(view);

@@ -38,7 +38,8 @@ public:
     QString title;
 };
 
-dtkVisualizationViewVideoRasterPrivate::dtkVisualizationViewVideoRasterPrivate(QWidget *parent) : QLabel(parent)
+dtkVisualizationViewVideoRasterPrivate::dtkVisualizationViewVideoRasterPrivate(QWidget *parent)
+    : QLabel(parent)
 {
     this->setAlignment(Qt::AlignCenter);
     this->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -51,7 +52,8 @@ QSize dtkVisualizationViewVideoRasterPrivate::sizeHint(void) const
 
 void dtkVisualizationViewVideoRasterPrivate::resizeEvent(QResizeEvent *event)
 {
-    this->setPixmap(QPixmap::fromImage(this->image.scaled(event->size().width(), event->size().height(), Qt::KeepAspectRatio)));
+    this->setPixmap(QPixmap::fromImage(this->image.scaled(
+            event->size().width(), event->size().height(), Qt::KeepAspectRatio)));
 }
 
 void dtkVisualizationViewVideoRasterPrivate::paintEvent(QPaintEvent *event)
@@ -67,16 +69,19 @@ void dtkVisualizationViewVideoRasterPrivate::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(0, 0, 0, 128));
-    painter.drawRect(0, this->size().height() - offset - margin, this->size().width(), margin * 7/4);
+    painter.drawRect(0, this->size().height() - offset - margin, this->size().width(),
+                     margin * 7 / 4);
     painter.setPen(Qt::white);
-    painter.drawText(this->size().width()/2 - metrics.width(this->title)/2, this->size().height() - offset, this->title);
+    painter.drawText(this->size().width() / 2 - metrics.width(this->title) / 2,
+                     this->size().height() - offset, this->title);
 }
 
 // ///////////////////////////////////////////////////////////////////
 // dtkVisualizationViewVideoRaster
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewVideoRaster::dtkVisualizationViewVideoRaster(QWidget *parent) : dtkWidgetsWidget(parent), d(new dtkVisualizationViewVideoRasterPrivate)
+dtkVisualizationViewVideoRaster::dtkVisualizationViewVideoRaster(QWidget *parent)
+    : dtkWidgetsWidget(parent), d(new dtkVisualizationViewVideoRasterPrivate)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(0);
@@ -104,21 +109,23 @@ void dtkVisualizationViewVideoRaster::update(void)
     qDebug() << Q_FUNC_INFO;
 }
 
-void dtkVisualizationViewVideoRaster::setTitle(const QString& title)
+void dtkVisualizationViewVideoRaster::setTitle(const QString &title)
 {
     d->title = title;
 }
 
-void dtkVisualizationViewVideoRaster::setImage(const QImage& image)
+void dtkVisualizationViewVideoRaster::setImage(const QImage &image)
 {
     d->image = image;
-    d->setPixmap(QPixmap::fromImage(image.scaled(this->width(), this->height(), Qt::KeepAspectRatio)));
+    d->setPixmap(
+            QPixmap::fromImage(image.scaled(this->width(), this->height(), Qt::KeepAspectRatio)));
 }
 
 void dtkVisualizationViewVideoRaster::resizeEvent(QResizeEvent *event)
 {
     dtkWidgetsWidget::resizeEvent(event);
-    d->setPixmap(QPixmap::fromImage(d->image.scaled(event->size().width(), event->size().height(), Qt::KeepAspectRatio)));
+    d->setPixmap(QPixmap::fromImage(
+            d->image.scaled(event->size().width(), event->size().height(), Qt::KeepAspectRatio)));
 }
 
 //

@@ -30,30 +30,30 @@ class dtkAbstractViewNavigator;
 class dtkAbstractViewInteractor;
 class dtkAbstractData;
 
-#include <dtkMathSupport/dtkVector3D.h>
 #include <dtkMathSupport/dtkQuaternion.h>
+#include <dtkMathSupport/dtkVector3D.h>
 
 class DTKCORESUPPORT_EXPORT dtkAbstractView : public dtkAbstractObject
 {
     Q_OBJECT
 
 public:
-    dtkAbstractView(      dtkAbstractView *parent = 0);
-    dtkAbstractView(const dtkAbstractView& other);
+    dtkAbstractView(dtkAbstractView *parent = 0);
+    dtkAbstractView(const dtkAbstractView &other);
     virtual ~dtkAbstractView(void);
 
 public:
     virtual dtkAbstractView *clone(void);
 
 public:
-    dtkAbstractView& operator = (const dtkAbstractView& other);
+    dtkAbstractView &operator=(const dtkAbstractView &other);
 
 protected:
-    virtual void copy(const dtkAbstractObject& other);
+    virtual void copy(const dtkAbstractObject &other);
 
 public:
-    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractView& viewer);
-    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug,       dtkAbstractView *viewer);
+    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractView &viewer);
+    friend DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, dtkAbstractView *viewer);
 
 signals:
     void closed(void);
@@ -61,11 +61,11 @@ signals:
     void nameChanged(void);
 
 public slots:
-    virtual void   link(dtkAbstractView *other);
+    virtual void link(dtkAbstractView *other);
     virtual void unlink(dtkAbstractView *other);
 
 public slots:
-    virtual void   select(dtkAbstractData *data);
+    virtual void select(dtkAbstractData *data);
     virtual void unselect(dtkAbstractData *data);
 
 public slots:
@@ -91,8 +91,8 @@ public slots:
     virtual bool stereo(void);
 
 public slots:
-    virtual void  clear(void);
-    virtual void  reset(void);
+    virtual void clear(void);
+    virtual void reset(void);
     virtual void update(void);
 
 public slots:
@@ -112,22 +112,22 @@ public slots:
     void resize(int width, int height);
 
 public slots:
-    void addAnimator  (dtkAbstractViewAnimator   *animator);
-    void addNavigator (dtkAbstractViewNavigator  *navigator);
+    void addAnimator(dtkAbstractViewAnimator *animator);
+    void addNavigator(dtkAbstractViewNavigator *navigator);
     void addInteractor(dtkAbstractViewInteractor *interactor);
 
 public slots:
-    void    enableAnimator(const QString& animator);
-    void   disableAnimator(const QString& animator);
-    void   enableNavigator(const QString& navigator);
-    void  disableNavigator(const QString& navigator);
-    void  enableInteractor(const QString& interactor);
-    void disableInteractor(const QString& interactor);
+    void enableAnimator(const QString &animator);
+    void disableAnimator(const QString &animator);
+    void enableNavigator(const QString &navigator);
+    void disableNavigator(const QString &navigator);
+    void enableInteractor(const QString &interactor);
+    void disableInteractor(const QString &interactor);
 
 public slots:
-    dtkAbstractViewAnimator   *animator  (const QString& type);
-    dtkAbstractViewNavigator  *navigator (const QString& type);
-    dtkAbstractViewInteractor *interactor(const QString& type);
+    dtkAbstractViewAnimator *animator(const QString &type);
+    dtkAbstractViewNavigator *navigator(const QString &type);
+    dtkAbstractViewInteractor *interactor(const QString &type);
 
 public slots:
     QList<dtkAbstractViewAnimator *> animators(void) const;
@@ -135,16 +135,16 @@ public slots:
     QList<dtkAbstractViewInteractor *> interactors(void) const;
 
 public slots:
-    virtual void   initialize(void);
+    virtual void initialize(void);
     virtual void uninitialize(void);
 
 public:
-    QString    name(void) const;
-    void    setName(const QString& name);
+    QString name(void) const;
+    void setName(const QString &name);
 
-// /////////////////////////////////////////////////////////////////
-// New VR API
-// /////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////
+    // New VR API
+    // /////////////////////////////////////////////////////////////////
 
 public:
     virtual void setHeadPosition(dtkVector3DReal position);
@@ -155,13 +155,13 @@ public:
     virtual void setLowerLeft(dtkVector3DReal position);
     virtual void setLowerRight(dtkVector3DReal position);
 
-// /////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////
 
 private:
     DTK_DECLARE_PRIVATE(dtkAbstractView);
 };
 
-DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractView& viewer);
-DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug,       dtkAbstractView *viewer);
+DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, const dtkAbstractView &viewer);
+DTKCORESUPPORT_EXPORT QDebug operator<<(QDebug debug, dtkAbstractView *viewer);
 
 #endif

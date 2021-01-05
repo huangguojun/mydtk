@@ -24,16 +24,16 @@ class dtkDistributedCommunicator;
 class dtkDistributedPolicy;
 class dtkDistributedApplicationPrivate;
 
-class DTKWIDGETS_EXPORT dtkDistributedGuiApplication: public QApplication
+class DTKWIDGETS_EXPORT dtkDistributedGuiApplication : public QApplication
 {
 public:
-    dtkDistributedGuiApplication(int& argc, char **argv);
+    dtkDistributedGuiApplication(int &argc, char **argv);
     virtual ~dtkDistributedGuiApplication(void);
 
 public:
     virtual void initialize(void);
     virtual void exec(QRunnable *task);
-    virtual void spawn(QMap<QString, QString> options = QMap<QString, QString>() );
+    virtual void spawn(QMap<QString, QString> options = QMap<QString, QString>());
     virtual void unspawn(void);
 
 public:
@@ -43,9 +43,13 @@ public:
     QCommandLineParser *parser(void);
 
 public:
-    static dtkDistributedGuiApplication *create(int& argc, char *argv[]) {
+    static dtkDistributedGuiApplication *create(int &argc, char *argv[])
+    {
         for (int i = 0; i < argc; i++)
-            if (!qstrcmp(argv[i], "-nw") || !qstrcmp(argv[i], "--nw") ||  !qstrcmp(argv[i], "-no-window") || !qstrcmp(argv[i], "--no-window") || !qstrcmp(argv[i], "-h") || !qstrcmp(argv[i], "--help") || !qstrcmp(argv[i], "--version")) {
+            if (!qstrcmp(argv[i], "-nw") || !qstrcmp(argv[i], "--nw")
+                || !qstrcmp(argv[i], "-no-window") || !qstrcmp(argv[i], "--no-window")
+                || !qstrcmp(argv[i], "-h") || !qstrcmp(argv[i], "--help")
+                || !qstrcmp(argv[i], "--version")) {
                 qputenv("QT_QPA_PLATFORM", QByteArrayLiteral("minimal"));
             }
 
@@ -59,10 +63,4 @@ public:
 
 private:
     dtkDistributedApplicationPrivate *d;
-
 };
-
-
-
-
-

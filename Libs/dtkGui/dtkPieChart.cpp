@@ -26,11 +26,12 @@
 class dtkPieChartPrivate
 {
 public:
-    QHash<QString, int > values;
-    QHash<QString, QColor > colors;
+    QHash<QString, int> values;
+    QHash<QString, QColor> colors;
 };
 
-dtkPieChart::dtkPieChart(QWidget *parent, int width, int height) : QWidget(parent), d(new dtkPieChartPrivate)
+dtkPieChart::dtkPieChart(QWidget *parent, int width, int height)
+    : QWidget(parent), d(new dtkPieChartPrivate)
 {
     this->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     this->setMinimumSize(width, height);
@@ -55,8 +56,7 @@ QSize dtkPieChart::sizeHint(void) const
     return (size);
 }
 
-
-void dtkPieChart::addPiece(const QString& key, int val, QColor color)
+void dtkPieChart::addPiece(const QString &key, int val, QColor color)
 {
     if (val < 1)
         return;
@@ -108,12 +108,11 @@ void dtkPieChart::paintEvent(QPaintEvent *ev)
         lastAngleOffset += angle;
 
         int fh = fontMetrics().height();
-        QRect legendEntryRect(0, (fh * 1.5)*currentPos, fh, fh);
+        QRect legendEntryRect(0, (fh * 1.5) * currentPos, fh, fh);
         currentPos++;
         legendEntryRect.translate(legendRect.topLeft());
 
-        QLinearGradient lg(legendEntryRect.topLeft(),
-                           legendEntryRect.bottomRight());
+        QLinearGradient lg(legendEntryRect.topLeft(), legendEntryRect.bottomRight());
         lg.setColorAt(0, d->colors[text]);
         lg.setColorAt(1, Qt::white);
         p.setBrush(QBrush(lg));

@@ -61,7 +61,7 @@ public:
 
 signals:
     void runtimeClicked(void);
-    void fileClicked(const QString& path);
+    void fileClicked(const QString &path);
 
 protected slots:
     void onItemClicked(QTreeWidgetItem *, int);
@@ -85,11 +85,11 @@ public:
 
 public slots:
     void setRuntime(void);
-    void setFile(const QString& path);
+    void setFile(const QString &path);
     void setAutoScroll(bool autoScroll);
 
 public:
-    void setFilter(const QRegExp& expression);
+    void setFilter(const QRegExp &expression);
 
 private:
     dtkLogModel *model;
@@ -111,7 +111,7 @@ public:
     QRegExp expression(void);
 
 public:
-    dtkWidgetsLogViewBar  *bar;
+    dtkWidgetsLogViewBar *bar;
     dtkWidgetsLogViewTree *tree;
     dtkWidgetsLogViewList *list;
 

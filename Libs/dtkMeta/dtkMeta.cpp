@@ -19,7 +19,7 @@
 // dtkMetaType implementation
 // /////////////////////////////////////////////////////////////////
 
-QString dtkMetaType::description(const QVariant& v)
+QString dtkMetaType::description(const QVariant &v)
 {
     QString str;
     QDebug dbg(&str);
@@ -46,13 +46,14 @@ QString dtkMetaType::description(const QVariant& v)
             QAssociativeIterable::const_iterator it = iterable.begin();
             const QAssociativeIterable::const_iterator end = iterable.end();
 
-            for ( ; it != end; ++it) {
-                dbg << dtkMetaType::description(it.key()) << ": " << dtkMetaType::description(it.value());
-                dbg << '\n' ;
+            for (; it != end; ++it) {
+                dbg << dtkMetaType::description(it.key()) << ": "
+                    << dtkMetaType::description(it.value());
+                dbg << '\n';
             }
 
         } else if (!userStream) {
-            dbg << qSetRealNumberPrecision( 15 )  << v;
+            dbg << qSetRealNumberPrecision(15) << v;
             QString cleanStr = str.trimmed();
             cleanStr.chop(1);
             // remove "QVariant(typename, " from the string:
@@ -64,7 +65,7 @@ QString dtkMetaType::description(const QVariant& v)
     return str;
 }
 
-QVariant dtkMetaType::cloneContent(const QVariant& v)
+QVariant dtkMetaType::cloneContent(const QVariant &v)
 {
     if (v.canConvert<dtkMetaContainerSequential>()) {
 
@@ -83,7 +84,8 @@ QVariant dtkMetaType::cloneContent(const QVariant& v)
             c_id = QMetaType::type(qPrintable(type_name + "*"));
             return QVariant(c_id, &ptr, 1);
         } else {
-            qDebug() << Q_FUNC_INFO << "Type" << type_name << "has not be registered to QMetaType System.";
+            qDebug() << Q_FUNC_INFO << "Type" << type_name
+                     << "has not be registered to QMetaType System.";
         }
 
     } else {
@@ -118,7 +120,9 @@ QVariant dtkMetaType::cloneContent(const QVariant& v)
                 } else {
                     qDebug() << class_name << class_type;
                     class_name = o->metaObject()->className();
-                    qDebug() << Q_FUNC_INFO << "Type" << class_name << "has not be registered to QMetaType System. If they exist, parent classes are neither registered.";
+                    qDebug() << Q_FUNC_INFO << "Type" << class_name
+                             << "has not be registered to QMetaType System. If they "
+                                "exist, parent classes are neither registered.";
                 }
             }
 
@@ -151,7 +155,10 @@ QVariant dtkMetaType::cloneContent(const QVariant& v)
                     void *ptr = nullptr;
                     return QVariant(type_id, &ptr, 1);
                 } else {
-                    qDebug() << Q_FUNC_INFO << ": Type" << type_name << "has not be registered to QMetaType System. Maybe it is not registered or maybe it is a non copyable class.";
+                    qDebug() << Q_FUNC_INFO << ": Type" << type_name
+                             << "has not be registered to QMetaType System. "
+                                "Maybe it is not registered or maybe it is a "
+                                "non copyable class.";
                 }
             }
         }
@@ -160,7 +167,7 @@ QVariant dtkMetaType::cloneContent(const QVariant& v)
     return QVariant();
 }
 
-QVariant dtkMetaType::createEmptyContainer(const QVariant& v)
+QVariant dtkMetaType::createEmptyContainer(const QVariant &v)
 {
     if (v.canConvert<dtkMetaContainerSequential>()) {
 
@@ -180,18 +187,20 @@ QVariant dtkMetaType::createEmptyContainer(const QVariant& v)
             if (res.canConvert<dtkMetaContainerSequential>()) {
                 return res;
             } else {
-                qDebug() << Q_FUNC_INFO << "Type" << res.typeName() << "is not compatible with dtkMetaContainer.";
+                qDebug() << Q_FUNC_INFO << "Type" << res.typeName()
+                         << "is not compatible with dtkMetaContainer.";
             }
 
         } else {
-            qDebug() << Q_FUNC_INFO << "Type" << type_name << "has not be registered to QMetaType System.";
+            qDebug() << Q_FUNC_INFO << "Type" << type_name
+                     << "has not be registered to QMetaType System.";
         }
     }
 
     return QVariant();
 }
 
-bool dtkMetaType::destroyPointer(QVariant& v)
+bool dtkMetaType::destroyPointer(QVariant &v)
 {
     QString type_name = QString(v.typeName());
     bool ok = false;

@@ -38,10 +38,13 @@ class DTKCORESUPPORT_EXPORT dtkAbstractViewAnimatorPrivate : public dtkAbstractO
 {
 public:
     dtkAbstractViewAnimatorPrivate(dtkAbstractViewAnimator *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractViewAnimatorPrivate(const dtkAbstractViewAnimatorPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(other.enabled),
-        data(other.data),
-        view(other.view) {}
+    dtkAbstractViewAnimatorPrivate(const dtkAbstractViewAnimatorPrivate &other)
+        : dtkAbstractObjectPrivate(other),
+          enabled(other.enabled),
+          data(other.data),
+          view(other.view)
+    {
+    }
 
 public:
     virtual ~dtkAbstractViewAnimatorPrivate(void) {}

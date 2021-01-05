@@ -32,7 +32,7 @@ class dtkCoreParameter;
 class DTKWIDGETS_EXPORT dtkWidgetsParameterMenuBarGenerator
 {
 public:
-     dtkWidgetsParameterMenuBarGenerator(const QString& menu_file, const QString& definition_file);
+    dtkWidgetsParameterMenuBarGenerator(const QString &menu_file, const QString &definition_file);
     ~dtkWidgetsParameterMenuBarGenerator(void);
 
 public:

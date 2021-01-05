@@ -29,9 +29,9 @@ public:
 public:
     bool isDecorating(void) override;
 
-    void setData(const QVariant&)            override;
+    void setData(const QVariant &) override;
     void setCanvas(dtkVisualizationCanvas *) override;
-    void unsetCanvas(void)                   override;
+    void unsetCanvas(void) override;
 
     QVariant data(void) const override;
     dtkVisualizationCanvas *canvas(void) const override;
@@ -42,12 +42,11 @@ public:
     void setVisibility(bool) override;
 
 public:
-    virtual void setColor(const QColor&);
-    virtual void setOpacity(const double&);
+    virtual void setColor(const QColor &);
+    virtual void setOpacity(const double &);
 
 public:
     void touch(void) override;
-
 
 signals:
     void updated(void);

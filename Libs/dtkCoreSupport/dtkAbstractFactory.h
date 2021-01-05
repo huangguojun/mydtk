@@ -22,8 +22,8 @@
 
 #include <QtCore/QObject>
 
-#include <dtkCoreSupportExport.h>
 #include "dtkGlobal.h"
+#include <dtkCoreSupportExport.h>
 
 class DTKCORESUPPORT_EXPORT dtkAbstractFactory : public QObject
 {
@@ -34,9 +34,7 @@ public:
     ~dtkAbstractFactory(void);
 
 private slots:
-    void clear(void) {
-        delete this;
-    }
+    void clear(void) { delete this; }
 };
 
 #endif

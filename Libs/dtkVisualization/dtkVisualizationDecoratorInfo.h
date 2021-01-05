@@ -23,13 +23,14 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorInfo : public dtkVisualiz
     Q_OBJECT
 
 public:
-     dtkVisualizationDecoratorInfo(void);
+    dtkVisualizationDecoratorInfo(void);
     ~dtkVisualizationDecoratorInfo(void);
 
 public:
-    void setFileInfo(const QFileInfo& f_info);
-    void setInformation(const QString& key, const QString& value, const QString& tooltip = QString());
-    void setInformation(const QString& key, QWidget *value);
+    void setFileInfo(const QFileInfo &f_info);
+    void setInformation(const QString &key, const QString &value,
+                        const QString &tooltip = QString());
+    void setInformation(const QString &key, QWidget *value);
 
 public:
     void setVisibility(bool) override;
@@ -37,9 +38,9 @@ public:
 public:
     bool isDecorating(void) override;
 
-    void setData(const QVariant&)            override;
+    void setData(const QVariant &) override;
     void setCanvas(dtkVisualizationCanvas *) override;
-    void unsetCanvas(void)                   override;
+    void unsetCanvas(void) override;
 
     QVariant data(void) const override;
     dtkVisualizationCanvas *canvas(void) const override;

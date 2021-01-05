@@ -33,7 +33,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecorator : public QObject
     Q_OBJECT
 
 public:
-     dtkVisualizationDecorator(void) = default;
+    dtkVisualizationDecorator(void) = default;
     ~dtkVisualizationDecorator(void) = default;
 
 public:
@@ -46,17 +46,17 @@ public:
 
 protected:
     void draw(void);
-    void saveSettings(const QString &, const QVariant&);
+    void saveSettings(const QString &, const QVariant &);
 
 protected:
-    virtual void restoreSettings(void) {};
+    virtual void restoreSettings(void){};
 
 public:
     virtual void setVisibility(bool visible) = 0;
 
     virtual bool isDecorating(void) = 0;
 
-    virtual void setData(const QVariant&) = 0;
+    virtual void setData(const QVariant &) = 0;
 
     virtual void setTransform(vtkTransform *);
 
@@ -73,8 +73,8 @@ public:
 // Give the concept the plugin machinery
 // ///////////////////////////////////////////////////////////////////
 
-DTK_DECLARE_OBJECT        (dtkVisualizationDecorator *)
-DTK_DECLARE_PLUGIN        (dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT)
+DTK_DECLARE_OBJECT(dtkVisualizationDecorator *)
+DTK_DECLARE_PLUGIN(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT)
 DTK_DECLARE_PLUGIN_FACTORY(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT)
 DTK_DECLARE_PLUGIN_MANAGER(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT)
 
@@ -82,9 +82,11 @@ DTK_DECLARE_PLUGIN_MANAGER(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT)
 // Register to dtkVisualization layer
 // /////////////////////////////////////////////////////////////////
 
-namespace dtk { namespace visualization {
-    DTK_DECLARE_CONCEPT(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT, decorator);
-} }
+namespace dtk {
+namespace visualization {
+DTK_DECLARE_CONCEPT(dtkVisualizationDecorator, DTKVISUALIZATION_EXPORT, decorator);
+}
+} // namespace dtk
 
 //
 // dtkVisualizationDecorator.h ends here

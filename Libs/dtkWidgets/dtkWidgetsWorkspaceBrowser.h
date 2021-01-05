@@ -23,12 +23,12 @@ class DTKVISUALIZATIONWIDGETS_EXPORT dtkWidgetsWorkspaceBrowser : public dtkWork
     Q_OBJECT
 
 public:
-     dtkWidgetsWorkspaceBrowser(QWidget *parent = nullptr);
+    dtkWidgetsWorkspaceBrowser(QWidget *parent = nullptr);
     ~dtkWidgetsWorkspaceBrowser(void);
 
 public:
-    void enter(void) override {};
-    void leave(void) override {};
+    void enter(void) override{};
+    void leave(void) override{};
     void apply(void) override;
 
 private:

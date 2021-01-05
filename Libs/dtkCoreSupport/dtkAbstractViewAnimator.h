@@ -36,7 +36,7 @@ class DTKCORESUPPORT_EXPORT dtkAbstractViewAnimator : public dtkAbstractObject
 
 public:
     dtkAbstractViewAnimator(void);
-    dtkAbstractViewAnimator(const dtkAbstractViewAnimator& other);
+    dtkAbstractViewAnimator(const dtkAbstractViewAnimator &other);
     virtual ~dtkAbstractViewAnimator(void);
 
 public:
@@ -50,12 +50,12 @@ public:
     virtual void setView(dtkAbstractView *view);
 
     bool enabled(void) const;
-    void  enable(void);
+    void enable(void);
     void disable(void);
 
 public slots:
     virtual void start(void);
-    virtual void  stop(void);
+    virtual void stop(void);
 
 private:
     DTK_DECLARE_PRIVATE(dtkAbstractViewAnimator);

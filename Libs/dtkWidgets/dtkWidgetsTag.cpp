@@ -23,10 +23,7 @@ public:
     QStringList items;
 };
 
-dtkWidgetsTag::dtkWidgetsTag(void) : d(new dtkWidgetsTagPrivate)
-{
-
-}
+dtkWidgetsTag::dtkWidgetsTag(void) : d(new dtkWidgetsTagPrivate) {}
 
 dtkWidgetsTag::dtkWidgetsTag(QString text, int count) : d(new dtkWidgetsTagPrivate)
 {
@@ -34,14 +31,16 @@ dtkWidgetsTag::dtkWidgetsTag(QString text, int count) : d(new dtkWidgetsTagPriva
     d->count = count;
 }
 
-dtkWidgetsTag::dtkWidgetsTag(QString text, int count, QStringList items) : d(new dtkWidgetsTagPrivate)
+dtkWidgetsTag::dtkWidgetsTag(QString text, int count, QStringList items)
+    : d(new dtkWidgetsTagPrivate)
 {
     d->text = text;
     d->count = count;
     d->items = items;
 }
 
-dtkWidgetsTag::dtkWidgetsTag(QString text, int count, QStringList items, QString color) : d(new dtkWidgetsTagPrivate)
+dtkWidgetsTag::dtkWidgetsTag(QString text, int count, QStringList items, QString color)
+    : d(new dtkWidgetsTagPrivate)
 {
     d->text = text;
     d->count = count;
@@ -49,7 +48,7 @@ dtkWidgetsTag::dtkWidgetsTag(QString text, int count, QStringList items, QString
     d->color = color;
 }
 
-dtkWidgetsTag::dtkWidgetsTag(const dtkWidgetsTag& other) : d(new dtkWidgetsTagPrivate)
+dtkWidgetsTag::dtkWidgetsTag(const dtkWidgetsTag &other) : d(new dtkWidgetsTagPrivate)
 {
     d->text = other.d->text;
     d->count = other.d->count;

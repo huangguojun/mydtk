@@ -12,8 +12,8 @@
 
 // Code:
 
-#include "dtkWidgetsTagCloudLayout.h"
 #include "dtkWidgetsTagCloudScope.h"
+#include "dtkWidgetsTagCloudLayout.h"
 #include "dtkWidgetsTagCloudScopeItem.h"
 
 class dtkWidgetsTagCloudScopePrivate
@@ -141,7 +141,8 @@ void dtkWidgetsTagCloudScope::render(void)
         d->layout->removeWidget(tag);
     }
 
-    qDeleteAll(d->tags); d->tags.clear();
+    qDeleteAll(d->tags);
+    d->tags.clear();
 
     foreach (QString filter, d->filters) {
         dtkWidgetsTagCloudScopeItem *tag = new dtkWidgetsTagCloudScopeItem;
@@ -149,7 +150,7 @@ void dtkWidgetsTagCloudScope::render(void)
         if (!d->light)
             tag->setDark();
 
-        if(d->doom)
+        if (d->doom)
             tag->setDoom();
 
         tag->setText(filter);
@@ -178,7 +179,7 @@ void dtkWidgetsTagCloudScope::addTag(QString tag, int count)
     d->counts[tag] = count;
 }
 
-void dtkWidgetsTagCloudScope::setTags(const QStringList& tags)
+void dtkWidgetsTagCloudScope::setTags(const QStringList &tags)
 {
     QList<QString> t = tags;
     qSort(t.begin(), t.end(), qLess<QString>());

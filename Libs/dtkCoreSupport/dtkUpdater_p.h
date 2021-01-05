@@ -36,7 +36,7 @@ class dtkUpdaterPrivate : public QObject
     Q_OBJECT
 
 public:
-    void downl(const QUrl& url);
+    void downl(const QUrl &url);
     void extract(void);
 
 public slots:

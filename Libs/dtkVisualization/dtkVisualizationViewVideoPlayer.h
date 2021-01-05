@@ -13,7 +13,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideoPlayer : public dtkVisual
     Q_OBJECT
 
 public:
-     dtkVisualizationViewVideoPlayer(QWidget *parent = nullptr);
+    dtkVisualizationViewVideoPlayer(QWidget *parent = nullptr);
     ~dtkVisualizationViewVideoPlayer(void);
 
 public slots:
@@ -21,7 +21,7 @@ public slots:
 
 public:
     dtkWidgetsOverlayPane *overlay(void);
-    dtkWidgetsHUD *hud(void) ;
+    dtkWidgetsHUD *hud(void);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *) override;

@@ -29,7 +29,7 @@ class dtkUpdaterPrivate;
 class DTKCORESUPPORT_EXPORT dtkUpdater
 {
 public:
-    dtkUpdater(const QUrl& url);
+    dtkUpdater(const QUrl &url);
     ~dtkUpdater(void);
 
 private:

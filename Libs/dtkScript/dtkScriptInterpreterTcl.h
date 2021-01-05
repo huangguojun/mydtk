@@ -36,7 +36,7 @@ public:
     ~dtkScriptInterpreterTcl(void);
 
 public slots:
-    virtual QString interpret(const QString& command, int *stat);
+    virtual QString interpret(const QString &command, int *stat);
 
 private:
     dtkScriptInterpreterTclPrivate *d;

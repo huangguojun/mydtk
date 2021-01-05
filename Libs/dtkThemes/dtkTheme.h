@@ -23,14 +23,15 @@ class DTKTHEMES_EXPORT dtkTheme : public QProxyStyle
     Q_OBJECT
 
 public:
-    dtkTheme(const QString&);
-    dtkTheme(const QString&, QStyle *style);
+    dtkTheme(const QString &);
+    dtkTheme(const QString &, QStyle *style);
 
 public:
     QStyle *baseStyle(void) const;
 
 public:
-    void drawPrimitive(QStyle::PrimitiveElement, const QStyleOption *, QPainter *, const QWidget* widget) const override;
+    void drawPrimitive(QStyle::PrimitiveElement, const QStyleOption *, QPainter *,
+                       const QWidget *widget) const override;
 
 public:
     void polish(QPalette &) override;
@@ -40,7 +41,8 @@ public:
     void touch(QWidget *);
 
 public:
-    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap, const QStyleOption *option) const override;
+    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
+                                const QStyleOption *option) const override;
 
 public:
     QIcon standardIcon(StandardPixmap, const QStyleOption *, const QWidget *) const override;

@@ -40,7 +40,8 @@ void dtkVisualizationViewOverlayIcon::mousePressEvent(QMouseEvent *mouseEvent)
 //
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewOverlayText::dtkVisualizationViewOverlayText(QString text, QWidget *parent) : QLabel(text, parent)
+dtkVisualizationViewOverlayText::dtkVisualizationViewOverlayText(QString text, QWidget *parent)
+    : QLabel(text, parent)
 {
     // this->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     // this->setScaledContents(true);
@@ -58,19 +59,19 @@ QSize dtkVisualizationViewOverlayText::sizeHint(void) const
     return QSize(metrics.width(this->text()), 24);
 }
 
-
 // ///////////////////////////////////////////////////////////////////
 //
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(QChar qchar, QString text, QWidget *parent) : QFrame(parent)
+dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(QChar qchar, QString text, QWidget *parent)
+    : QFrame(parent)
 {
     this->pixmap = true;
 
     QColor color = Qt::gray;
 
     if (!text.isEmpty()) {
-        this->label_text  = new dtkVisualizationViewOverlayText(text, this);
+        this->label_text = new dtkVisualizationViewOverlayText(text, this);
         this->label_text->setObjectName("tata");
     }
 
@@ -109,19 +110,21 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(QChar qchar, QString te
     layout->setAlignment(Qt::AlignRight);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(this->label_icon);
-    if(!text.isEmpty())
+    if (!text.isEmpty())
         layout->addWidget(this->label_text);
 
     this->setStyleSheet("background: none;");
 
-    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this, &dtkVisualizationViewOverlay::iconClicked);
+    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this,
+            &dtkVisualizationViewOverlay::iconClicked);
 
-    if(this->label_text)
-        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this, &dtkVisualizationViewOverlay::textClicked);
+    if (this->label_text)
+        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this,
+                &dtkVisualizationViewOverlay::textClicked);
 
     int w = this->label_icon->sizeHint().width();
 
-    if(this->label_text) {
+    if (this->label_text) {
         w += 20;
         w += this->label_text->sizeHint().width();
     } else {
@@ -132,7 +135,9 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(QChar qchar, QString te
     this->setFixedHeight(30);
 }
 
-dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(fa::icon icon, QString text, QWidget *parent) : QFrame(parent)
+dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(fa::icon icon, QString text,
+                                                         QWidget *parent)
+    : QFrame(parent)
 {
     this->pixmap = false;
     this->icon = icon;
@@ -143,7 +148,7 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(fa::icon icon, QString 
     dtkFontAwesome::instance()->setDefaultOption("color", color);
 
     if (!text.isEmpty())
-        this->label_text  = new dtkVisualizationViewOverlayText(text, this);
+        this->label_text = new dtkVisualizationViewOverlayText(text, this);
 
     this->label_icon = new dtkVisualizationViewOverlayIcon(this);
     this->label_icon->setPixmap(dtkFontAwesome::instance()->icon(icon).pixmap(24, 24));
@@ -151,20 +156,22 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(fa::icon icon, QString 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignRight);
     layout->setContentsMargins(0, 0, 0, 0);
-    if(!text.isEmpty())
+    if (!text.isEmpty())
         layout->addWidget(this->label_text);
     layout->addWidget(this->label_icon);
 
     this->setStyleSheet("background: none;");
 
-    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this, &dtkVisualizationViewOverlay::iconClicked);
+    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this,
+            &dtkVisualizationViewOverlay::iconClicked);
 
-    if(this->label_text)
-        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this, &dtkVisualizationViewOverlay::textClicked);
+    if (this->label_text)
+        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this,
+                &dtkVisualizationViewOverlay::textClicked);
 
     int w = this->label_icon->sizeHint().width();
 
-    if(this->label_text) {
+    if (this->label_text) {
         w += 20;
         w += this->label_text->sizeHint().width();
     } else {
@@ -175,11 +182,14 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(fa::icon icon, QString 
     this->setFixedHeight(30);
 }
 
-dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(const QString& path_on, const QString& path_off, QString text, QWidget *parent) : QFrame(parent)
+dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(const QString &path_on,
+                                                         const QString &path_off, QString text,
+                                                         QWidget *parent)
+    : QFrame(parent)
 {
     this->pixmap = true;
 
-    this->pix_on  = QPixmap(path_on);
+    this->pix_on = QPixmap(path_on);
     this->pix_off = QPixmap(path_off);
 
     QColor color = Qt::gray;
@@ -187,8 +197,8 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(const QString& path_on,
     dtkFontAwesome::instance()->initFontAwesome();
     dtkFontAwesome::instance()->setDefaultOption("color", color);
 
-    if(!text.isEmpty())
-        this->label_text  = new dtkVisualizationViewOverlayText(text, this);
+    if (!text.isEmpty())
+        this->label_text = new dtkVisualizationViewOverlayText(text, this);
 
     this->label_icon = new dtkVisualizationViewOverlayIcon(this);
     this->label_icon->setPixmap(this->pix_off);
@@ -196,20 +206,22 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(const QString& path_on,
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignRight);
     layout->setContentsMargins(0, 0, 0, 0);
-    if(!text.isEmpty())
+    if (!text.isEmpty())
         layout->addWidget(this->label_text);
     layout->addWidget(this->label_icon);
 
     this->setStyleSheet("background: none;");
 
-    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this, &dtkVisualizationViewOverlay::iconClicked);
+    connect(this->label_icon, &dtkVisualizationViewOverlayIcon::clicked, this,
+            &dtkVisualizationViewOverlay::iconClicked);
 
-    if(this->label_text)
-        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this, &dtkVisualizationViewOverlay::textClicked);
+    if (this->label_text)
+        connect(this->label_text, &dtkVisualizationViewOverlayText::clicked, this,
+                &dtkVisualizationViewOverlay::textClicked);
 
     int w = this->label_icon->sizeHint().width();
 
-    if(this->label_text) {
+    if (this->label_text) {
         w += 20;
         w += this->label_text->sizeHint().width();
     } else {
@@ -220,24 +232,21 @@ dtkVisualizationViewOverlay::dtkVisualizationViewOverlay(const QString& path_on,
     this->setFixedHeight(30);
 }
 
-dtkVisualizationViewOverlay::~dtkVisualizationViewOverlay(void)
-{
+dtkVisualizationViewOverlay::~dtkVisualizationViewOverlay(void) {}
 
-}
-
-void dtkVisualizationViewOverlay::changePixmaps(const QPixmap& pix_on, const QPixmap& pix_off)
+void dtkVisualizationViewOverlay::changePixmaps(const QPixmap &pix_on, const QPixmap &pix_off)
 {
     this->pix_on = pix_on;
     this->pix_off = pix_off;
 }
 
-void dtkVisualizationViewOverlay::changePaths(const QString& path_on, const QString& path_off)
+void dtkVisualizationViewOverlay::changePaths(const QString &path_on, const QString &path_off)
 {
     this->pix_on = QPixmap(path_on);
     this->pix_off = QPixmap(path_off);
 }
 
-void dtkVisualizationViewOverlay::changeColor(const QColor& color)
+void dtkVisualizationViewOverlay::changeColor(const QColor &color)
 {
     dtkFontAwesome::instance()->setDefaultOption("color", color);
     this->label_icon->setPixmap(dtkFontAwesome::instance()->icon(this->icon).pixmap(24, 24));
@@ -252,21 +261,23 @@ void dtkVisualizationViewOverlay::changeIcon(fa::icon icon)
 void dtkVisualizationViewOverlay::toggle(bool toggled)
 {
     this->toggled = toggled;
-    if(this->toggled) {
-        if(this->pixmap) {
+    if (this->toggled) {
+        if (this->pixmap) {
             this->label_icon->setPixmap(this->pix_on);
         } else {
             QColor color = Qt::white;
             dtkFontAwesome::instance()->setDefaultOption("color", color);
-            this->label_icon->setPixmap(dtkFontAwesome::instance()->icon(this->icon).pixmap(24, 24));
+            this->label_icon->setPixmap(
+                    dtkFontAwesome::instance()->icon(this->icon).pixmap(24, 24));
         }
     } else {
-        if(this->pixmap) {
+        if (this->pixmap) {
             this->label_icon->setPixmap(this->pix_off);
-        } else  {
+        } else {
             QColor color = Qt::gray;
             dtkFontAwesome::instance()->setDefaultOption("color", color);
-            this->label_icon->setPixmap(dtkFontAwesome::instance()->icon(this->icon).pixmap(24, 24));
+            this->label_icon->setPixmap(
+                    dtkFontAwesome::instance()->icon(this->icon).pixmap(24, 24));
         }
     }
 }
@@ -275,10 +286,10 @@ void dtkVisualizationViewOverlay::activate(bool activated)
 {
     this->activated = activated;
 
-    if(!this->label_text)
+    if (!this->label_text)
         return;
 
-    if(this->activated) {
+    if (this->activated) {
         this->label_text->setStyleSheet("background: white; border-radius: 3px;");
     } else {
         this->label_text->setStyleSheet("background : none;");
@@ -297,13 +308,13 @@ bool dtkVisualizationViewOverlay::isToggled(void) const
 
 void dtkVisualizationViewOverlay::setVisible(bool visible)
 {
-    if(this->activated)
+    if (this->activated)
         QFrame::setVisible(visible);
 }
 
 QString dtkVisualizationViewOverlay::text(void) const
 {
-    if(this->label_text)
+    if (this->label_text)
         return this->label_text->text();
 
     return QString();

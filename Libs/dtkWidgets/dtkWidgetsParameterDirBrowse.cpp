@@ -30,7 +30,8 @@ public:
 // dtkWidgetsParameterDirBrowse implementation
 // ///////////////////////////////////////////////////////////////////
 
-dtkWidgetsParameterDirBrowse::dtkWidgetsParameterDirBrowse(QWidget* parent) : dtkWidgetsParameterBase<dtk::d_path>(parent), d(new dtkWidgetsParameterDirBrowsePrivate)
+dtkWidgetsParameterDirBrowse::dtkWidgetsParameterDirBrowse(QWidget *parent)
+    : dtkWidgetsParameterBase<dtk::d_path>(parent), d(new dtkWidgetsParameterDirBrowsePrivate)
 {
     d->push_button = new QPushButton;
 
@@ -54,14 +55,16 @@ bool dtkWidgetsParameterDirBrowse::connect(dtkCoreParameter *p)
 
     m_parameter = dynamic_cast<dtk::d_path *>(p);
 
-    if(!m_parameter) {
-        qWarning() << Q_FUNC_INFO << "The type of the parameter is not compatible with the widget dtkWidgetsParameterDirBrowse.";
+    if (!m_parameter) {
+        qWarning() << Q_FUNC_INFO
+                   << "The type of the parameter is not compatible with the "
+                      "widget dtkWidgetsParameterDirBrowse.";
         return false;
     }
 
     d->push_button->setText("Browse");
 
-    m_parameter->connect([=] (QVariant v) {
+    m_parameter->connect([=](QVariant v) {
         d->push_button->blockSignals(true);
         QString value = v.value<dtk::d_path>().baseName();
         if (value.isEmpty()) {
@@ -71,9 +74,9 @@ bool dtkWidgetsParameterDirBrowse::connect(dtkCoreParameter *p)
         d->push_button->blockSignals(false);
     });
 
-    QObject::connect(d->push_button, &QPushButton::clicked, [=] ()
-    {
-        QString v = QFileDialog::getExistingDirectory(this, "Open Directory", m_parameter->dirName());
+    QObject::connect(d->push_button, &QPushButton::clicked, [=]() {
+        QString v =
+                QFileDialog::getExistingDirectory(this, "Open Directory", m_parameter->dirName());
         m_parameter->shareValue(QVariant::fromValue(v));
     });
 

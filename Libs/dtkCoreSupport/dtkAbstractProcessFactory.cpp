@@ -17,8 +17,8 @@
  *
  */
 
-#include "dtkAbstractProcess.h"
 #include "dtkAbstractProcessFactory.h"
+#include "dtkAbstractProcess.h"
 #include "dtkSmartPointer.h"
 
 #include <dtkLog>
@@ -26,7 +26,8 @@
 class dtkAbstractProcessFactoryPrivate
 {
 public:
-    typedef QHash<QString, dtkAbstractProcessFactory::dtkAbstractProcessCreator> dtkAbstractProcessCreatorHash;
+    typedef QHash<QString, dtkAbstractProcessFactory::dtkAbstractProcessCreator>
+            dtkAbstractProcessCreatorHash;
     typedef QHash<QString, QString> dtkAbstractProcessInterfacesHash;
     typedef QHash<QString, unsigned int> dtkAbstractProcessCountHash;
 
@@ -43,14 +44,15 @@ dtkAbstractProcessFactory *dtkAbstractProcessFactory::instance(void)
     return s_instance;
 }
 
-dtkAbstractProcess *dtkAbstractProcessFactory::create(const QString& type)
+dtkAbstractProcess *dtkAbstractProcessFactory::create(const QString &type)
 {
     if (!d->creators.contains(type))
         return NULL;
 
     dtkAbstractProcess *process = d->creators[type]();
 
-    process->setObjectName(QString("%1%2").arg(process->metaObject()->className()).arg(d->processCount[type]));
+    process->setObjectName(
+            QString("%1%2").arg(process->metaObject()->className()).arg(d->processCount[type]));
 
     d->processCount[type]++;
 
@@ -59,14 +61,15 @@ dtkAbstractProcess *dtkAbstractProcessFactory::create(const QString& type)
     return process;
 }
 
-dtkSmartPointer<dtkAbstractProcess> dtkAbstractProcessFactory::createSmartPointer(const QString& type)
+dtkSmartPointer<dtkAbstractProcess>
+dtkAbstractProcessFactory::createSmartPointer(const QString &type)
 {
     dtkSmartPointer<dtkAbstractProcess> process = this->create(type);
     return process;
 }
 
-
-bool dtkAbstractProcessFactory::registerProcessType(const QString& type, dtkAbstractProcessCreator func)
+bool dtkAbstractProcessFactory::registerProcessType(const QString &type,
+                                                    dtkAbstractProcessCreator func)
 {
     if (!d->creators.contains(type)) {
         d->creators.insert(type, func);
@@ -77,7 +80,9 @@ bool dtkAbstractProcessFactory::registerProcessType(const QString& type, dtkAbst
     return false;
 }
 
-bool dtkAbstractProcessFactory::registerProcessType(const QString& type, dtkAbstractProcessCreator func, const QString& interface)
+bool dtkAbstractProcessFactory::registerProcessType(const QString &type,
+                                                    dtkAbstractProcessCreator func,
+                                                    const QString &interface)
 {
     if (!d->creators.contains(type)) {
         d->creators.insert(type, func);
@@ -89,12 +94,12 @@ bool dtkAbstractProcessFactory::registerProcessType(const QString& type, dtkAbst
     return false;
 }
 
-unsigned int dtkAbstractProcessFactory::size(const QString& type)
+unsigned int dtkAbstractProcessFactory::size(const QString &type)
 {
     return d->processCount[type];
 }
 
-bool dtkAbstractProcessFactory::exists(const QString& type)
+bool dtkAbstractProcessFactory::exists(const QString &type)
 {
     return d->creators.contains(type);
 }
@@ -109,14 +114,14 @@ QStringList dtkAbstractProcessFactory::implementations(void)
     return d->interfaces.values();
 }
 
-QStringList dtkAbstractProcessFactory::implementations(const QString& interface)
+QStringList dtkAbstractProcessFactory::implementations(const QString &interface)
 {
     QStringList implementations;
 
     if (d->interfaces.keys().contains(interface))
         implementations << d->interfaces.values(interface);
     else
-        dtkWarn() << "There is no available implementation of " << interface ;
+        dtkWarn() << "There is no available implementation of " << interface;
 
     return implementations;
 }
@@ -126,9 +131,9 @@ QStringList dtkAbstractProcessFactory::interfaces(void)
     return d->interfaces.keys();
 }
 
-dtkAbstractProcessFactory::dtkAbstractProcessFactory(void) : dtkAbstractFactory(), d(new dtkAbstractProcessFactoryPrivate)
+dtkAbstractProcessFactory::dtkAbstractProcessFactory(void)
+    : dtkAbstractFactory(), d(new dtkAbstractProcessFactoryPrivate)
 {
-
 }
 
 dtkAbstractProcessFactory::~dtkAbstractProcessFactory(void)

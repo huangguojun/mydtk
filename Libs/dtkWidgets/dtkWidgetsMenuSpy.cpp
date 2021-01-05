@@ -12,10 +12,10 @@
 
 // Code:
 
+#include "dtkWidgetsMenuSpy.h"
 #include "dtkWidgetsMenu.h"
 #include "dtkWidgetsMenuBar.h"
 #include "dtkWidgetsMenuBar_p.h"
-#include "dtkWidgetsMenuSpy.h"
 
 // /////////////////////////////////////////////////////////////////////////////
 // dtkWidgetsMenuSpyPrivate
@@ -26,7 +26,7 @@ class dtkWidgetsMenuSpyPrivate : public QObject
     Q_OBJECT
 
 public:
-    dtkWidgetsMenuBar          *menu_bar           = nullptr;
+    dtkWidgetsMenuBar *menu_bar = nullptr;
     dtkWidgetsMenuBarContainer *menu_bar_container = nullptr;
 
 public slots:
@@ -36,14 +36,13 @@ public slots:
 
 void dtkWidgetsMenuSpyPrivate::onIndexClicked(int index)
 {
-    if(!this->menu_bar)
+    if (!this->menu_bar)
         return;
 
-    if(!this->menu_bar_container)
+    if (!this->menu_bar_container)
         return;
 
-    std::function<void (void)> callback = [=] (void) -> void
-    {
+    std::function<void(void)> callback = [=](void) -> void {
         this->blockSignals(false);
         this->menu_bar_container->blockSignals(false);
     };
@@ -55,16 +54,13 @@ void dtkWidgetsMenuSpyPrivate::onIndexClicked(int index)
 
 void dtkWidgetsMenuSpyPrivate::onIndexVisible(int index)
 {
-    if(!this->menu_bar)
+    if (!this->menu_bar)
         return;
 
-    if(!this->menu_bar_container)
+    if (!this->menu_bar_container)
         return;
 
-    std::function<void (void)> callback = [=] (void) -> void
-    {
-        this->menu_bar->blockSignals(false);
-    };
+    std::function<void(void)> callback = [=](void) -> void { this->menu_bar->blockSignals(false); };
 
     this->menu_bar->blockSignals(true);
     this->menu_bar->setCurrentIndex(index, callback);
@@ -74,9 +70,9 @@ void dtkWidgetsMenuSpyPrivate::onIndexVisible(int index)
 // dtkWidgetsMenuSpy
 // /////////////////////////////////////////////////////////////////////////////
 
-dtkWidgetsMenuSpy::dtkWidgetsMenuSpy(QObject *parent) : QObject(parent), d(new dtkWidgetsMenuSpyPrivate)
+dtkWidgetsMenuSpy::dtkWidgetsMenuSpy(QObject *parent)
+    : QObject(parent), d(new dtkWidgetsMenuSpyPrivate)
 {
-
 }
 
 dtkWidgetsMenuSpy::~dtkWidgetsMenuSpy(void)

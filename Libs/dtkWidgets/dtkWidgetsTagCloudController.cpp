@@ -12,12 +12,12 @@
 
 // Code:
 
-#include "dtkWidgetsTagCloud.h"
 #include "dtkWidgetsTagCloudController.h"
+#include "dtkWidgetsTagCloud.h"
+#include "dtkWidgetsTagCloudItem.h"
 #include "dtkWidgetsTagCloudList.h"
 #include "dtkWidgetsTagCloudScope.h"
 #include "dtkWidgetsTagCloudView.h"
-#include "dtkWidgetsTagCloudItem.h"
 
 class dtkWidgetsTagCloudControllerPrivate
 {
@@ -99,7 +99,8 @@ void dtkWidgetsTagCloudController::addItem(QString name, QString description, QS
     this->render();
 }
 
-void dtkWidgetsTagCloudController::addItem(QString name, QString description, QStringList tags, QString kind, QString type)
+void dtkWidgetsTagCloudController::addItem(QString name, QString description, QStringList tags,
+                                           QString kind, QString type)
 {
     d->items << dtkWidgetsTagCloudItem(name, description, tags, kind, type);
 
@@ -125,18 +126,23 @@ static bool intersect(QStringList l1, QStringList l2)
 {
     bool pass = true;
 
-    foreach(QString s, l1) if (!l2.contains(s)) pass = false;
+    foreach (QString s, l1)
+        if (!l2.contains(s))
+            pass = false;
 
     return pass;
 }
 
 static bool unite(QStringList l1, QStringList l2)
 {
-    if (l1.isEmpty()) return true;
+    if (l1.isEmpty())
+        return true;
 
     bool pass = false;
 
-    foreach(QString s, l1) if (l2.contains(s)) pass = true;
+    foreach (QString s, l1)
+        if (l2.contains(s))
+            pass = true;
 
     return pass;
 }
@@ -166,7 +172,8 @@ void dtkWidgetsTagCloudController::render(void)
         d->list->clear();
 
         foreach (dtkWidgetsTagCloudItem item, d->items)
-            if ((d->union_mode && unite(d->filters, item.tags())) || (!d->union_mode && intersect(d->filters, item.tags())))
+            if ((d->union_mode && unite(d->filters, item.tags()))
+                || (!d->union_mode && intersect(d->filters, item.tags())))
                 d->list->addItem(item);
     }
 

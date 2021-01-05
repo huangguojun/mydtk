@@ -2,10 +2,10 @@
 
 #include <dtkWidgetsExport>
 
-#include <dtkCore>
 #include <QtWidgets/QWidget>
+#include <dtkCore>
 
-class DTKWIDGETS_EXPORT dtkWidgetsWorkspace: public QWidget
+class DTKWIDGETS_EXPORT dtkWidgetsWorkspace : public QWidget
 {
     Q_OBJECT
 
@@ -24,13 +24,13 @@ public slots:
 // Give the concept the plugin machinery
 // ///////////////////////////////////////////////////////////////////
 
-DTK_DECLARE_OBJECT        (dtkWidgetsWorkspace *)
-DTK_DECLARE_PLUGIN        (dtkWidgetsWorkspace, DTKWIDGETS_EXPORT)
+DTK_DECLARE_OBJECT(dtkWidgetsWorkspace *)
+DTK_DECLARE_PLUGIN(dtkWidgetsWorkspace, DTKWIDGETS_EXPORT)
 DTK_DECLARE_PLUGIN_FACTORY(dtkWidgetsWorkspace, DTKWIDGETS_EXPORT)
 DTK_DECLARE_PLUGIN_MANAGER(dtkWidgetsWorkspace, DTKWIDGETS_EXPORT)
 
 namespace dtk {
-    namespace widgets {
-        DTK_DECLARE_CONCEPT(dtkWidgetsWorkspace, DTKWIDGETS_EXPORT, workspace);
-    }
+namespace widgets {
+DTK_DECLARE_CONCEPT(dtkWidgetsWorkspace, DTKWIDGETS_EXPORT, workspace);
 }
+} // namespace dtk

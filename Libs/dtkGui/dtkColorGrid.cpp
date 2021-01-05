@@ -96,12 +96,12 @@ int dtkColorGrid::widthInCells(void) const
     return d->widthInCells;
 }
 
-const QColor& dtkColorGrid::lastHighlighted(void) const
+const QColor &dtkColorGrid::lastHighlighted(void) const
 {
     return d->hlColor;
 }
 
-const QColor& dtkColorGrid::lastPicked(void) const
+const QColor &dtkColorGrid::lastPicked(void) const
 {
     return d->selColor;
 }
@@ -118,11 +118,13 @@ dtkColorList *dtkColorGrid::scheme(void) const
 
 int dtkColorGrid::heightInCells() const
 {
-    if (!d->colors) return 0;
+    if (!d->colors)
+        return 0;
 
     int h = d->colors->size() / d->widthInCells;
 
-    if (d->colors->size() % d->widthInCells) h++;
+    if (d->colors->size() % d->widthInCells)
+        h++;
 
     return h;
 }
@@ -138,7 +140,8 @@ void dtkColorGrid::setAutoSize(bool autosize)
 
 void dtkColorGrid::setCellSize(int size)
 {
-    if (size < 8) size = 8;
+    if (size < 8)
+        size = 8;
 
     d->cellSize = size;
     setFixedSize(minimumSizeHint());
@@ -147,7 +150,8 @@ void dtkColorGrid::setCellSize(int size)
 
 void dtkColorGrid::setWidthInCells(int width)
 {
-    if (width < 1) width = 1;
+    if (width < 1)
+        width = 1;
 
     d->widthInCells = width;
     setFixedSize(minimumSizeHint());
@@ -166,7 +170,8 @@ void dtkColorGrid::setClickMode(ClickMode mode)
 
 void dtkColorGrid::setScheme(dtkColorList *list)
 {
-    if (!list) return;
+    if (!list)
+        return;
 
     d->colors = list;
     d->idx = -1;
@@ -221,7 +226,7 @@ int dtkColorGrid::index() const
     return i;
 }
 
-void dtkColorGrid::paintEvent ( QPaintEvent *event )
+void dtkColorGrid::paintEvent(QPaintEvent *event)
 {
     DTK_UNUSED(event);
 
@@ -236,16 +241,17 @@ void dtkColorGrid::paintEvent ( QPaintEvent *event )
 
         int c = d->cellSize + 1;
         int x = d->col * c;
-        int y = d->row * c;;
+        int y = d->row * c;
+        ;
 
         p.setPen(QPen(palette().highlight(), 2));
         p.drawRect(QRect(x + 1, y + 1, c, c));
     }
 }
 
-void dtkColorGrid::mouseMoveEvent ( QMouseEvent *event )
+void dtkColorGrid::mouseMoveEvent(QMouseEvent *event)
 {
-    //if (!hasFocus()) setFocus();
+    // if (!hasFocus()) setFocus();
 
     QWidget::mouseMoveEvent(event);
 
@@ -271,16 +277,16 @@ void dtkColorGrid::mouseMoveEvent ( QMouseEvent *event )
             if (d->pickDrag && event->buttons() & Qt::LeftButton) {
                 d->selColor = d->hlColor;
                 emit picked(d->selColor);
-                //emit accepted();
+                // emit accepted();
             }
         }
     }
-
 }
 
-void dtkColorGrid::mousePressEvent ( QMouseEvent *event )
+void dtkColorGrid::mousePressEvent(QMouseEvent *event)
 {
-    if (!hasFocus()) setFocus();
+    if (!hasFocus())
+        setFocus();
 
     if (d->clickMode == CM_PRESS && event->button() == Qt::LeftButton && d->hlColor.isValid()) {
         d->selColor = d->hlColor;
@@ -289,9 +295,10 @@ void dtkColorGrid::mousePressEvent ( QMouseEvent *event )
     }
 }
 
-void dtkColorGrid::mouseReleaseEvent ( QMouseEvent *event )
+void dtkColorGrid::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!hasFocus()) setFocus();
+    if (!hasFocus())
+        setFocus();
 
     if (d->clickMode == CM_RELEASE && event->button() == Qt::LeftButton && d->hlColor.isValid()) {
         d->selColor = d->hlColor;
@@ -300,7 +307,7 @@ void dtkColorGrid::mouseReleaseEvent ( QMouseEvent *event )
     }
 }
 
-void dtkColorGrid::leaveEvent ( QEvent *event )
+void dtkColorGrid::leaveEvent(QEvent *event)
 {
     DTK_UNUSED(event);
 
@@ -312,9 +319,9 @@ void dtkColorGrid::leaveEvent ( QEvent *event )
     }
 }
 
-bool dtkColorGrid::event ( QEvent *event )
+bool dtkColorGrid::event(QEvent *event)
 {
-    //if (event->type() == QEvent::ToolTip) {
+    // if (event->type() == QEvent::ToolTip) {
     //    QToolTip::showText(d->pos, "zzz", this);
 
     //    event->accept();
@@ -324,7 +331,7 @@ bool dtkColorGrid::event ( QEvent *event )
     return QWidget::event(event);
 }
 
-void dtkColorGrid::keyPressEvent ( QKeyEvent *event )
+void dtkColorGrid::keyPressEvent(QKeyEvent *event)
 {
     QToolTip::hideText();
 
@@ -431,7 +438,8 @@ void dtkColorGrid::keyPressEvent ( QKeyEvent *event )
             d->idx = index();
 
             if (d->idx == -1 && d->row == h) {
-                d->row = 0; d->col++;
+                d->row = 0;
+                d->col++;
                 d->idx = index();
             }
 
@@ -478,19 +486,23 @@ dtkColorList *dtkColorGrid::defaultColors()
     const int step = 32;
 
     for (int b = 0; b <= 256; b += 16) {
-        if (b == 256) b = 255;
+        if (b == 256)
+            b = 255;
 
         s_defaultColors.append(QColor(b, b, b));
     }
 
     for (int r = 0; r <= 256; r += step) {
-        if (r == 256) r = 255;
+        if (r == 256)
+            r = 255;
 
         for (int g = 0; g <= 256; g += step) {
-            if (g == 256) g = 255;
+            if (g == 256)
+                g = 255;
 
             for (int b = 0; b <= 256; b += step) {
-                if (b == 256) b = 255;
+                if (b == 256)
+                    b = 255;
 
                 s_defaultColors.append(QColor(r, g, b));
             }
@@ -510,19 +522,23 @@ dtkColorList *dtkColorGrid::defaultColors2()
     const int step = 64;
 
     for (int b = 0; b <= 256; b += 16) {
-        if (b == 256) b = 255;
+        if (b == 256)
+            b = 255;
 
         s_defaultColors2.append(QColor(b, b, b));
     }
 
     for (int r = 0; r <= 256; r += step) {
-        if (r == 256) r = 255;
+        if (r == 256)
+            r = 255;
 
         for (int g = 0; g <= 256; g += step) {
-            if (g == 256) g = 255;
+            if (g == 256)
+                g = 255;
 
             for (int b = 0; b <= 256; b += step) {
-                if (b == 256) b = 255;
+                if (b == 256)
+                    b = 255;
 
                 s_defaultColors2.append(QColor(r, g, b));
             }

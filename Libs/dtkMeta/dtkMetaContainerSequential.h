@@ -24,13 +24,15 @@
 
 class DTKMETA_EXPORT dtkMetaContainerSequential
 {
-    typedef dtkMetaContainerSequentialHandler::iterator       HandlerIterator;
+    typedef dtkMetaContainerSequentialHandler::iterator HandlerIterator;
     typedef dtkMetaContainerSequentialHandler::const_iterator HandlerConstIterator;
 
 public:
     struct iterator;
-    struct DTKMETA_EXPORT item {
+    struct DTKMETA_EXPORT item
+    {
         HandlerIterator *it;
+
     private:
         friend class dtkMetaContainerSequential;
         friend struct iterator;
@@ -39,38 +41,47 @@ public:
         explicit item(HandlerIterator *iterator);
 
     public:
-        item(const item& o) = delete;
-        item(item&& o);
+        item(const item &o) = delete;
+        item(item &&o);
         ~item(void);
 
     public:
-        item& operator = (const item& o);
-        item& operator = (item&& o);
+        item &operator=(const item &o);
+        item &operator=(item &&o);
 
     public:
-        bool operator == (const item& o) const;
-        bool operator != (const item& o) const;
+        bool operator==(const item &o) const;
+        bool operator!=(const item &o) const;
 
     public:
         const QVariant value(void) const;
 
     public:
-        template <typename T> const T& value(void) const;
+        template<typename T>
+        const T &value(void) const;
 
     public:
-        template <typename T> item& operator  = (const T& t);
-        template <typename T> item& operator += (const T& t);
-        template <typename T> item& operator -= (const T& t);
-        template <typename T> item& operator *= (const T& t);
-        template <typename T> item& operator /= (const T& t);
+        template<typename T>
+        item &operator=(const T &t);
+        template<typename T>
+        item &operator+=(const T &t);
+        template<typename T>
+        item &operator-=(const T &t);
+        template<typename T>
+        item &operator*=(const T &t);
+        template<typename T>
+        item &operator/=(const T &t);
 
     public:
-        template <typename T> bool operator == (const T& t) const;
-        template <typename T> bool operator != (const T& t) const;
+        template<typename T>
+        bool operator==(const T &t) const;
+        template<typename T>
+        bool operator!=(const T &t) const;
     };
 
 public:
-    struct DTKMETA_EXPORT iterator {
+    struct DTKMETA_EXPORT iterator
+    {
     private:
         friend class dtkMetaContainerSequential;
         item proxy;
@@ -79,38 +90,40 @@ public:
         explicit iterator(HandlerIterator *iterator);
 
     public:
-        iterator(const iterator& o);
-        iterator(iterator&& o);
+        iterator(const iterator &o);
+        iterator(iterator &&o);
         ~iterator(void);
 
     public:
-        iterator& operator = (const iterator& o);
-        iterator& operator = (iterator&& o);
+        iterator &operator=(const iterator &o);
+        iterator &operator=(iterator &&o);
 
     public:
-        bool operator == (const iterator& o) const;
-        bool operator != (const iterator& o) const;
+        bool operator==(const iterator &o) const;
+        bool operator!=(const iterator &o) const;
 
     public:
-        item& operator *  (void);
-        item& operator [] (qlonglong j);
+        item &operator*(void);
+        item &operator[](qlonglong j);
 
     public:
-        template <typename T> T& value(void);
+        template<typename T>
+        T &value(void);
 
     public:
-        iterator& operator ++ (void);
-        iterator  operator ++ (int);
-        iterator& operator -- (void);
-        iterator  operator -- (int);
-        iterator& operator += (qlonglong j);
-        iterator& operator -= (qlonglong j);
-        iterator  operator +  (qlonglong j) const;
-        iterator  operator -  (qlonglong j) const;
+        iterator &operator++(void);
+        iterator operator++(int);
+        iterator &operator--(void);
+        iterator operator--(int);
+        iterator &operator+=(qlonglong j);
+        iterator &operator-=(qlonglong j);
+        iterator operator+(qlonglong j) const;
+        iterator operator-(qlonglong j) const;
     };
 
 public:
-    struct DTKMETA_EXPORT const_iterator {
+    struct DTKMETA_EXPORT const_iterator
+    {
     private:
         friend class dtkMetaContainerSequential;
         HandlerConstIterator *it;
@@ -119,98 +132,103 @@ public:
         explicit const_iterator(HandlerConstIterator *iterator);
 
     public:
-        const_iterator(const const_iterator& o);
-        const_iterator(const_iterator&& o);
+        const_iterator(const const_iterator &o);
+        const_iterator(const_iterator &&o);
         ~const_iterator(void);
 
     public:
-        const_iterator& operator = (const const_iterator& o);
-        const_iterator& operator = (const_iterator&& o);
+        const_iterator &operator=(const const_iterator &o);
+        const_iterator &operator=(const_iterator &&o);
 
     public:
-        bool operator == (const const_iterator& o) const;
-        bool operator != (const const_iterator& o) const;
+        bool operator==(const const_iterator &o) const;
+        bool operator!=(const const_iterator &o) const;
 
     public:
-        QVariant operator *  (void)        const;
-        QVariant operator [] (qlonglong j) const;
+        QVariant operator*(void)const;
+        QVariant operator[](qlonglong j) const;
 
     public:
-        const_iterator& operator ++ (void);
-        const_iterator  operator ++ (int);
-        const_iterator& operator -- (void);
-        const_iterator  operator -- (int);
-        const_iterator& operator += (qlonglong j);
-        const_iterator& operator -= (qlonglong j);
-        const_iterator  operator +  (qlonglong j) const;
-        const_iterator  operator -  (qlonglong j) const;
+        const_iterator &operator++(void);
+        const_iterator operator++(int);
+        const_iterator &operator--(void);
+        const_iterator operator--(int);
+        const_iterator &operator+=(qlonglong j);
+        const_iterator &operator-=(qlonglong j);
+        const_iterator operator+(qlonglong j) const;
+        const_iterator operator-(qlonglong j) const;
     };
 
 public:
     dtkMetaContainerSequential(dtkMetaContainerSequentialHandler *handler);
-    dtkMetaContainerSequential(dtkMetaContainerSequential&& o);
+    dtkMetaContainerSequential(dtkMetaContainerSequential &&o);
 
 public:
     ~dtkMetaContainerSequential(void);
 
 public:
-    iterator  begin(void);
-    const_iterator  begin(void) const;
+    iterator begin(void);
+    const_iterator begin(void) const;
     const_iterator cbegin(void) const;
-    iterator    end(void);
-    const_iterator    end(void) const;
-    const_iterator   cend(void) const;
+    iterator end(void);
+    const_iterator end(void) const;
+    const_iterator cend(void) const;
 
 public:
     bool hasBiDirectionalIterator(void) const;
-    bool  hasRandomAccessIterator(void) const;
+    bool hasRandomAccessIterator(void) const;
 
 public:
-    bool      empty(void) const;
-    qlonglong  size(void) const;
+    bool empty(void) const;
+    qlonglong size(void) const;
 
 public:
-    void   clear(void);
+    void clear(void);
     void reserve(qlonglong size);
-    void  resize(qlonglong size);
+    void resize(qlonglong size);
 
 public:
-    template <typename T> void  append(const T& t);
-    template <typename T> void prepend(const T& t);
+    template<typename T>
+    void append(const T &t);
+    template<typename T>
+    void prepend(const T &t);
 
 public:
-    void  append(const QVariant& v);
-    void prepend(const QVariant& v);
+    void append(const QVariant &v);
+    void prepend(const QVariant &v);
 
 public:
-    template <typename T> void insert(qlonglong idx, const T& t);
-    template <typename T> void  setAt(qlonglong idx, const T& t);
+    template<typename T>
+    void insert(qlonglong idx, const T &t);
+    template<typename T>
+    void setAt(qlonglong idx, const T &t);
 
 public:
-    void insert(qlonglong idx, const QVariant& v);
-    void  setAt(qlonglong idx, const QVariant& v);
+    void insert(qlonglong idx, const QVariant &v);
+    void setAt(qlonglong idx, const QVariant &v);
 
 public:
-    const QVariant& at(qlonglong idx) const;
+    const QVariant &at(qlonglong idx) const;
 
 public:
-    template <typename T> const T& at(qlonglong idx) const;
+    template<typename T>
+    const T &at(qlonglong idx) const;
 
 public:
     void removeAt(qlonglong idx);
 
 public:
-    const QVariant& first(void) const;
-    item& first(void);
+    const QVariant &first(void) const;
+    item &first(void);
 
-    const QVariant& last(void) const;
-    item& last(void);
+    const QVariant &last(void) const;
+    item &last(void);
 
-    const QVariant& operator [] (qlonglong idx) const;
-    item& operator [] (qlonglong idx);
+    const QVariant &operator[](qlonglong idx) const;
+    item &operator[](qlonglong idx);
 
 protected:
-    friend QDebug& operator << (QDebug debug, const dtkMetaContainerSequential& container);
+    friend QDebug &operator<<(QDebug debug, const dtkMetaContainerSequential &container);
 
 protected:
     dtkMetaContainerSequentialHandler *h;
@@ -222,7 +240,7 @@ protected:
 // Debug operator
 // ///////////////////////////////////////////////////////////////////
 
-QDebug& operator << (QDebug debug, const dtkMetaContainerSequential& container);
+QDebug &operator<<(QDebug debug, const dtkMetaContainerSequential &container);
 
 // /////////////////////////////////////////////////////////////////
 // Register standard containers as a sequential container pointer
@@ -238,12 +256,13 @@ DTK_DECLARE_SEQUENTIAL_CONTAINER_POINTER(std::vector);
 // Register QStringList* as a sequential container pointer
 // /////////////////////////////////////////////////////////////////
 
-template <> struct QMetaTypeId<QStringList *> {
-    enum {
-        Defined = QMetaTypeId2<QString>::Defined
-    };
+template<>
+struct QMetaTypeId<QStringList *>
+{
+    enum { Defined = QMetaTypeId2<QString>::Defined };
 
-    static int qt_metatype_id() {
+    static int qt_metatype_id()
+    {
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0);
 
         if (const int id = metatype_id.load())
@@ -251,7 +270,8 @@ template <> struct QMetaTypeId<QStringList *> {
 
         QByteArray typeName("QStringList*", 12);
 
-        const int newId = qRegisterNormalizedMetaType<QStringList *>(typeName, reinterpret_cast<QStringList **>(quintptr(-1)));
+        const int newId = qRegisterNormalizedMetaType<QStringList *>(
+                typeName, reinterpret_cast<QStringList **>(quintptr(-1)));
         metatype_id.storeRelease(newId);
 
         if (newId > 0) {
@@ -262,8 +282,10 @@ template <> struct QMetaTypeId<QStringList *> {
     }
 };
 
-template<> struct dtkMetaTypeIsSequentialContainerPointer<QStringList *> : std::true_type {};
-
+template<>
+struct dtkMetaTypeIsSequentialContainerPointer<QStringList *> : std::true_type
+{
+};
 
 // /////////////////////////////////////////////////////////////////
 

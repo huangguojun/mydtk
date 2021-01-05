@@ -17,8 +17,8 @@
  *
  */
 
-#include "dtkPlotView.h"
 #include "dtkPlotViewGrid.h"
+#include "dtkPlotView.h"
 
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
@@ -37,16 +37,14 @@ dtkPlotViewGridPrivate::dtkPlotViewGridPrivate(dtkPlotView *parent) : QwtPlotGri
     attach(plot);
 }
 
-dtkPlotViewGridPrivate::~dtkPlotViewGridPrivate(void)
-{
-
-}
+dtkPlotViewGridPrivate::~dtkPlotViewGridPrivate(void) {}
 
 // /////////////////////////////////////////////////////////////////
 //
 // /////////////////////////////////////////////////////////////////
 
-dtkPlotViewGrid::dtkPlotViewGrid(dtkPlotView *parent) : QObject(parent), d(new dtkPlotViewGridPrivate(parent))
+dtkPlotViewGrid::dtkPlotViewGrid(dtkPlotView *parent)
+    : QObject(parent), d(new dtkPlotViewGridPrivate(parent))
 {
     d->setPen(QPen(Qt::DotLine));
 #if QWT_VERSION >= 0x060100
@@ -72,7 +70,7 @@ QColor dtkPlotViewGrid::color(void) const
 #endif
 }
 
-void dtkPlotViewGrid::setColor(const QColor& color)
+void dtkPlotViewGrid::setColor(const QColor &color)
 {
 #if QWT_VERSION >= 0x060100
     d->setMajorPen(QPen(color, 0, Qt::DotLine));

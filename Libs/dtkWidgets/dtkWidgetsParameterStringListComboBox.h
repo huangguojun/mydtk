@@ -20,12 +20,13 @@
 
 #include <dtkCore/dtkCoreParameter>
 
-class  DTKWIDGETS_EXPORT dtkWidgetsParameterStringListComboBox : public dtkWidgetsParameterBase<dtk::d_inliststring>
+class DTKWIDGETS_EXPORT dtkWidgetsParameterStringListComboBox
+    : public dtkWidgetsParameterBase<dtk::d_inliststring>
 {
     Q_OBJECT
 
 public:
-     dtkWidgetsParameterStringListComboBox(QWidget* parent = 0);
+    dtkWidgetsParameterStringListComboBox(QWidget *parent = 0);
     ~dtkWidgetsParameterStringListComboBox(void);
 
 public:

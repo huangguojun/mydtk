@@ -26,8 +26,8 @@ class DTKTHEMES_EXPORT dtkThemesWidget : public QWidget
     Q_OBJECT
 
 public:
-     dtkThemesWidget(QWidget *parent = nullptr);
-     dtkThemesWidget(const QString& theme, QWidget *parent = nullptr);
+    dtkThemesWidget(QWidget *parent = nullptr);
+    dtkThemesWidget(const QString &theme, QWidget *parent = nullptr);
     ~dtkThemesWidget(void);
 
 public:

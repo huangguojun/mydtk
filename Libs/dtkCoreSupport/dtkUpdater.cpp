@@ -20,8 +20,8 @@
 #include <QtNetwork>
 
 #include "dtkGlobal.h"
-#include "dtkUpdater_p.h"
 #include "dtkUpdater.h"
+#include "dtkUpdater_p.h"
 
 // /////////////////////////////////////////////////////////////////
 // dtkUpdaterPrivate
@@ -52,7 +52,8 @@ void dtkUpdaterPrivate::onRequestFinished(QNetworkReply *reply)
         while (!reader.atEnd()) {
             reader.readNext();
 
-            if (reader.isStartElement() && reader.attributes().hasAttribute("version") && reader.attributes().value("version").toString() > qApp->applicationVersion()) {
+            if (reader.isStartElement() && reader.attributes().hasAttribute("version")
+                && reader.attributes().value("version").toString() > qApp->applicationVersion()) {
                 reader.readNext();
 
                 if (reader.isCharacters()) {
@@ -71,15 +72,17 @@ void dtkUpdaterPrivate::onRequestFinished(QNetworkReply *reply)
             qDebug() << "You are up to date at version" << qApp->applicationVersion();
             return;
         } else {
-            qDebug() << "Updates are available (you have " << qApp->applicationVersion() << "), would you like to download ?";
+            qDebug() << "Updates are available (you have " << qApp->applicationVersion()
+                     << "), would you like to download ?";
         }
 
-        char c = getchar(); getchar();
+        char c = getchar();
+        getchar();
 
         if (c == 'y')
             downl(binUrl);
 
-    }  else {
+    } else {
 
         binFile->write(reply->readAll());
         binFile->flush();
@@ -87,31 +90,31 @@ void dtkUpdaterPrivate::onRequestFinished(QNetworkReply *reply)
 
         qDebug() << "Download completed, would you like to install ?";
 
-        char c = getchar(); getchar();
+        char c = getchar();
+        getchar();
 
         if (c == 'y')
             extract();
     }
 }
 
-void dtkUpdaterPrivate::downl(const QUrl& url)
+void dtkUpdaterPrivate::downl(const QUrl &url)
 {
     if (!binFile->open(QFile::ReadWrite))
         qDebug() << "Unable to open binary file for saving";
 
     http->get(QNetworkRequest(url));
-
 }
 
 void dtkUpdaterPrivate::extract(void)
 {
     QProcess process;
-#if defined (Q_OS_UNIX)
+#if defined(Q_OS_UNIX)
     QString input = "/tmp/bin";
     QString output = qApp->applicationDirPath();
-# if defined (Q_OS_MAC)
+#    if defined(Q_OS_MAC)
     output += "/../../..";
-# endif
+#    endif
     process.start("tar", QStringList() << "-xzf" << input << "-C" << output);
 #else
     ;
@@ -125,17 +128,18 @@ void dtkUpdaterPrivate::extract(void)
 // dtkUpdater
 // /////////////////////////////////////////////////////////////////
 
-dtkUpdater::dtkUpdater(const QUrl& cfgUrl)
+dtkUpdater::dtkUpdater(const QUrl &cfgUrl)
 {
     QFile::remove("/tmp/cfg");
     QFile::remove("/tmp/bin");
 
-    d          = new dtkUpdaterPrivate;
-    d->http    = new QNetworkAccessManager;
+    d = new dtkUpdaterPrivate;
+    d->http = new QNetworkAccessManager;
     d->cfgFile = new QFile("/tmp/cfg");
     d->binFile = new QFile("/tmp/bin");
 
-    QObject::connect(d->http, SIGNAL(finished(QNetworkReply *)), d, SLOT(onRequestFinished(QNetworkReply *)));
+    QObject::connect(d->http, SIGNAL(finished(QNetworkReply *)), d,
+                     SLOT(onRequestFinished(QNetworkReply *)));
 
     d->http->get(QNetworkRequest(cfgUrl));
 }

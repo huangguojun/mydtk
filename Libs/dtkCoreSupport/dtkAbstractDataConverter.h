@@ -35,16 +35,16 @@ class DTKCORESUPPORT_EXPORT dtkAbstractDataConverter : public dtkAbstractObject
 
 public:
     dtkAbstractDataConverter(void);
-    dtkAbstractDataConverter(const dtkAbstractDataConverter& other);
+    dtkAbstractDataConverter(const dtkAbstractDataConverter &other);
     virtual ~dtkAbstractDataConverter(void);
 
 public:
-    virtual QString  description (void) const = 0;
+    virtual QString description(void) const = 0;
     virtual QStringList fromTypes(void) const = 0;
-    virtual QString       toType (void) const = 0;
+    virtual QString toType(void) const = 0;
 
     bool enabled(void) const;
-    void  enable(void);
+    void enable(void);
     void disable(void);
 
     dtkAbstractData *data(void) const;
@@ -52,12 +52,12 @@ public:
     virtual void setData(dtkAbstractData *data);
 
 signals:
-    void started(const QString& message);
+    void started(const QString &message);
     void progressed(int step);
     void finished(void);
 
 public slots:
-    virtual bool canConvert(const QString& toType);
+    virtual bool canConvert(const QString &toType);
 
     virtual dtkAbstractData *convert(void);
 

@@ -20,9 +20,9 @@
 #ifndef DTKABSTRACTDATADESERIALIZER_P
 #define DTKABSTRACTDATADESERIALIZER_P
 
-#include <dtkCoreSupportExport.h>
-#include "dtkAbstractObject_p.h"
 #include "dtkAbstractDataDeserializer.h"
+#include "dtkAbstractObject_p.h"
+#include <dtkCoreSupportExport.h>
 
 class dtkAbstractData;
 
@@ -33,10 +33,14 @@ class dtkAbstractData;
 class DTKCORESUPPORT_EXPORT dtkAbstractDataDeserializerPrivate : public dtkAbstractObjectPrivate
 {
 public:
-    dtkAbstractDataDeserializerPrivate(dtkAbstractDataDeserializer *q = 0) : dtkAbstractObjectPrivate(q) {}
-    dtkAbstractDataDeserializerPrivate(const dtkAbstractDataDeserializerPrivate& other) : dtkAbstractObjectPrivate(other),
-        enabled(false),
-        data(other.data) {}
+    dtkAbstractDataDeserializerPrivate(dtkAbstractDataDeserializer *q = 0)
+        : dtkAbstractObjectPrivate(q)
+    {
+    }
+    dtkAbstractDataDeserializerPrivate(const dtkAbstractDataDeserializerPrivate &other)
+        : dtkAbstractObjectPrivate(other), enabled(false), data(other.data)
+    {
+    }
 
 public:
     virtual ~dtkAbstractDataDeserializerPrivate(void) {}

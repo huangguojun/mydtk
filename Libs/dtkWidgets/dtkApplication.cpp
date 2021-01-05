@@ -19,7 +19,11 @@
 /*!
   \class dtkApplication
   \inmodule dtkWidgets
-  \brief This class is used by GUI applications to provide their event loop. It is based on QApplication, and adds a few command line options to setup settings and dtkLog. It can also be used to start a non GUI appliation if the \tt{-nw} argument is given and the create method is called (it won't work if you use new directly)
+  \brief This class is used by GUI applications to provide their event loop. It
+is based on QApplication, and adds a few command line options to setup settings
+and dtkLog. It can also be used to start a non GUI appliation if the \tt{-nw}
+argument is given and the create method is called (it won't work if you use new
+directly)
 
     \code
    int main(int argc, char *argv[])
@@ -74,14 +78,18 @@ Options:
 
 /*! \fn dtkApplication::dtkApplication(int &argc, char **argv)
 
-Constructs a dtkApplication. Initializes the window system and constructs an application object with argc command line arguments in argv.
+Constructs a dtkApplication. Initializes the window system and constructs an
+application object with argc command line arguments in argv.
 
-The argc and argv arguments are processed by the application, and made available in a more convenient form by the arguments() function.
+The argc and argv arguments are processed by the application, and made available
+in a more convenient form by the arguments() function.
 
-Warning: The data referred to by \a argc and \a argv must stay valid for the entire lifetime of the dtkCoreApplication object. In addition, argc must be greater than zero and argv must contain at least one valid character string.
+Warning: The data referred to by \a argc and \a argv must stay valid for the
+entire lifetime of the dtkCoreApplication object. In addition, argc must be
+greater than zero and argv must contain at least one valid character string.
 */
 
-dtkApplication::dtkApplication(int& argc, char **argv): QApplication(argc, argv)
+dtkApplication::dtkApplication(int &argc, char **argv) : QApplication(argc, argv)
 {
     d = new dtkApplicationPrivate;
     d->setApplication(this);
@@ -101,7 +109,9 @@ dtkApplication::~dtkApplication(void)
 
 /*! \fn dtkApplication *create(int &argc, char *argv[])
 
-  Helper function to create an instance of a dtkApplication. If the \tt{--nw} option is set, it will use a \e{minimal} \tt{QT_QPA_PLATFORM}. \a argc and \a argv are the usual parameters of a QCoreApplication.
+  Helper function to create an instance of a dtkApplication. If the \tt{--nw}
+  option is set, it will use a \e{minimal} \tt{QT_QPA_PLATFORM}. \a argc and \a
+  argv are the usual parameters of a QCoreApplication.
 
 */
 
@@ -116,21 +126,23 @@ QSettings *dtkApplication::settings(void)
     return d->settings;
 }
 
-
 /*! \fn bool dtkApplication::noGui(void)
 
-  Return true if the application is not a GUI application (ie. the \tt{-nw} was used in the command line)
+  Return true if the application is not a GUI application (ie. the \tt{-nw} was
+  used in the command line)
 
 */
 
 bool dtkApplication::noGui(void)
 {
-    return !(qApp && qobject_cast<QGuiApplication *>(qApp) && (QGuiApplication::platformName() != "minimal")) ;
+    return !(qApp && qobject_cast<QGuiApplication *>(qApp)
+             && (QGuiApplication::platformName() != "minimal"));
 }
 
 /*! \fn QCommandLineParser *dtkApplication::parser(void)
 
-  Return the main QCommandLineParser used by the application. It can be used to app specific options for your application.
+  Return the main QCommandLineParser used by the application. It can be used to
+  app specific options for your application.
 
 */
 
@@ -141,7 +153,8 @@ QCommandLineParser *dtkApplication::parser(void)
 
 /*! \fn void dtkApplication::initialize(void)
 
- Initialize the command line parser. Should be called once all the specific options of your application are added in the parser.
+ Initialize the command line parser. Should be called once all the specific
+ options of your application are added in the parser.
 
  \sa parser
 */
@@ -150,4 +163,3 @@ void dtkApplication::initialize(void)
 {
     d->initialize();
 }
-

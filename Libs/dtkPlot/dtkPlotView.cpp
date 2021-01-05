@@ -17,12 +17,12 @@
  *
  */
 
-#include "dtkPlotCurve.h"
 #include "dtkPlotView.h"
+#include "dtkPlotCurve.h"
+#include "dtkPlotViewGrid.h"
 #include "dtkPlotViewPanner.h"
 #include "dtkPlotViewPicker.h"
 #include "dtkPlotViewZoomer.h"
-#include "dtkPlotViewGrid.h"
 
 #include "dtkPlotViewToolBar.h"
 
@@ -30,9 +30,9 @@
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_grid.h>
+#include <qwt_plot_zoomer.h>
 #include <qwt_scale_engine.h>
 #include <qwt_scale_widget.h>
-#include <qwt_plot_zoomer.h>
 
 #include <float.h>
 
@@ -197,7 +197,7 @@ void dtkPlotView::deactivatePicking(void)
     d->picker->deactivate();
 }
 
-void dtkPlotView::setPickingColor(const QColor& color)
+void dtkPlotView::setPickingColor(const QColor &color)
 {
     if (d->picker)
         d->picker->setColor(color);
@@ -240,7 +240,7 @@ bool dtkPlotView::isZoomActivated(void) const
     return value;
 }
 
-void dtkPlotView::setZoomColor(const QColor& color)
+void dtkPlotView::setZoomColor(const QColor &color)
 {
     if (d->zoomer)
         d->zoomer->setColor(color);
@@ -275,7 +275,7 @@ void dtkPlotView::deactivateGrid(void)
     this->update();
 }
 
-void dtkPlotView::setGridColor(const QColor& color)
+void dtkPlotView::setGridColor(const QColor &color)
 {
     if (d->grid)
         d->grid->setColor(color);
@@ -308,13 +308,13 @@ void dtkPlotView::deactivateLegend(void)
     this->update();
 }
 
-void dtkPlotView::setTitle(const QString& title)
+void dtkPlotView::setTitle(const QString &title)
 {
     d->setTitle(title);
     this->setName(title);
 }
 
-void dtkPlotView::setTitleSize(const int& size)
+void dtkPlotView::setTitleSize(const int &size)
 {
     QFont font;
     font.setFamily("verdana");
@@ -337,7 +337,7 @@ int dtkPlotView::titleSize(void) const
     return d->title().font().pointSize();
 }
 
-void dtkPlotView::setAxisTitleX(const QString& title)
+void dtkPlotView::setAxisTitleX(const QString &title)
 {
     d->setAxisTitle(QwtPlot::xBottom, title);
 }
@@ -347,7 +347,7 @@ QString dtkPlotView::axisTitleX(void) const
     return d->axisWidget(QwtPlot::xBottom)->title().text();
 }
 
-void dtkPlotView::setAxisTitleY(const QString& title)
+void dtkPlotView::setAxisTitleY(const QString &title)
 {
     d->setAxisTitle(QwtPlot::yLeft, title);
 }
@@ -357,7 +357,7 @@ QString dtkPlotView::axisTitleY(void) const
     return d->axisWidget(QwtPlot::yLeft)->title().text();
 }
 
-void dtkPlotView::setAxisTitleSizeX(const int& size)
+void dtkPlotView::setAxisTitleSizeX(const int &size)
 {
     int axisId = QwtPlot::xBottom;
 
@@ -370,7 +370,7 @@ void dtkPlotView::setAxisTitleSizeX(const int& size)
     d->setAxisTitle(axisId, title);
 }
 
-void dtkPlotView::setAxisTitleSizeY(const int& size)
+void dtkPlotView::setAxisTitleSizeY(const int &size)
 {
     int axisId = QwtPlot::yLeft;
 
@@ -470,7 +470,7 @@ void dtkPlotView::setBackgroundColor(double red, double green, double blue)
     this->setBackgroundColor(QColor(red, green, blue));
 }
 
-void dtkPlotView::setBackgroundColor(const QColor& color)
+void dtkPlotView::setBackgroundColor(const QColor &color)
 {
     d->background_color = color;
 
@@ -484,7 +484,7 @@ QColor dtkPlotView::backgroundColor() const
     return d->canvasBackground().color();
 }
 
-void dtkPlotView::setForegroundColor(const QColor& color)
+void dtkPlotView::setForegroundColor(const QColor &color)
 {
     d->foreground_color = color;
 
@@ -498,7 +498,8 @@ QColor dtkPlotView::foregroundColor() const
 
 void dtkPlotView::updateColors(void)
 {
-    QString sheet = "background: " + d->background_color.name() + "; color: " + d->foreground_color.name() + ";";
+    QString sheet = "background: " + d->background_color.name()
+            + "; color: " + d->foreground_color.name() + ";";
 
     d->setStyleSheet(sheet);
 
@@ -536,13 +537,13 @@ int dtkPlotView::alphaCurveArea(void) const
     return d->alphaCurveArea;
 }
 
-void dtkPlotView::setStyleSheet(const QString& sheet)
+void dtkPlotView::setStyleSheet(const QString &sheet)
 {
     d->setStyleSheet(sheet);
     d->toolbar->setStyleSheet(sheet);
 }
 
-dtkPlotView& dtkPlotView::operator<<(dtkPlotCurve *curve)
+dtkPlotView &dtkPlotView::operator<<(dtkPlotCurve *curve)
 {
     QwtPlotCurve *c = ((QwtPlotCurve *)(curve->d));
 
@@ -566,7 +567,7 @@ void dtkPlotView::updateCurveColor(dtkPlotCurve *curve)
     int v_color_value = qGray(v_color.rgb());
     int delta = 0;
 
-    while ( qAbs(c_color_value - v_color_value) < 50 && delta < 120) {
+    while (qAbs(c_color_value - v_color_value) < 50 && delta < 120) {
         int r = (c_color.red() + delta) % 255;
         int g = (c_color.green() + delta) % 255;
         int b = (c_color.blue() + delta) % 255;
@@ -620,8 +621,10 @@ void dtkPlotView::readSettings(void)
     d->zoom_color = settings.value("zoom_color", QColor(Qt::black)).value<QColor>();
     d->background_color = settings.value("background_color", QColor(Qt::white)).value<QColor>();
     d->foreground_color = settings.value("forergound_color", QColor(Qt::black)).value<QColor>();
-    d->scaleEngineX = (dtkPlotView::Scale) settings.value("axis_x_scale_engine", dtkPlotView::Linear).toUInt();
-    d->scaleEngineY = (dtkPlotView::Scale) settings.value("axis_y_scale_engine", dtkPlotView::Linear).toUInt();
+    d->scaleEngineX =
+            (dtkPlotView::Scale)settings.value("axis_x_scale_engine", dtkPlotView::Linear).toUInt();
+    d->scaleEngineY =
+            (dtkPlotView::Scale)settings.value("axis_y_scale_engine", dtkPlotView::Linear).toUInt();
     settings.endGroup();
 
     this->updateColors();

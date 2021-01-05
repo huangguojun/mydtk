@@ -95,32 +95,27 @@ public:
 
 void dtkWidgetsOverlayRopePrivate::solve(void)
 {
-    if(!vertices.count())
+    if (!vertices.count())
         return;
 
-    for (int i = 0; i < vertices.count() - 1; i++)
-    {
-        dtkWidgetsOverlayRopeVertex& a = vertices[i];
-        dtkWidgetsOverlayRopeVertex& b = vertices[i + 1];
+    for (int i = 0; i < vertices.count() - 1; i++) {
+        dtkWidgetsOverlayRopeVertex &a = vertices[i];
+        dtkWidgetsOverlayRopeVertex &b = vertices[i + 1];
 
         QVector2D v = b.position - a.position;
 
         qreal length = v.length();
 
-        if (length != 0.0)
-        {
+        if (length != 0.0) {
             qreal error = vertices_distance / length - 1.0;
 
             QVector2D correction = v * error;
 
-            if (i != 0)
-            {
+            if (i != 0) {
                 qreal invMass = a.invMass + b.invMass;
                 a.position -= correction * (a.invMass / invMass);
                 b.position += correction * (b.invMass / invMass);
-            }
-            else
-            {
+            } else {
                 b.position += correction;
             }
         }
@@ -129,9 +124,8 @@ void dtkWidgetsOverlayRopePrivate::solve(void)
 
 void dtkWidgetsOverlayRopePrivate::integrate(qreal dt)
 {
-    for (int i = 1; i < vertices.size(); ++i)
-    {
-        dtkWidgetsOverlayRopeVertex& a = vertices[i];
+    for (int i = 1; i < vertices.size(); ++i) {
+        dtkWidgetsOverlayRopeVertex &a = vertices[i];
 
         a.velocity += QVector2D(0.0, 9.8) * dt;
         a.position += a.velocity * dt;
@@ -140,9 +134,8 @@ void dtkWidgetsOverlayRopePrivate::integrate(qreal dt)
 
 void dtkWidgetsOverlayRopePrivate::velocityFixup(qreal inv_dt)
 {
-    for (int i = 1; i < vertices.size(); ++i)
-    {
-        dtkWidgetsOverlayRopeVertex& a = vertices[i];
+    for (int i = 1; i < vertices.size(); ++i) {
+        dtkWidgetsOverlayRopeVertex &a = vertices[i];
 
         a.velocity = (a.position - a.oldPosition) * inv_dt;
         a.oldPosition = a.position;
@@ -151,18 +144,15 @@ void dtkWidgetsOverlayRopePrivate::velocityFixup(qreal inv_dt)
 
 void dtkWidgetsOverlayRopePrivate::collide(void)
 {
-    if (this->collider)
-    {
+    if (this->collider) {
         QVector2D mouse(xf, yf);
 
-        for (int i = 1; i < vertices.size(); ++i)
-        {
-            dtkWidgetsOverlayRopeVertex& a = vertices[i];
+        for (int i = 1; i < vertices.size(); ++i) {
+            dtkWidgetsOverlayRopeVertex &a = vertices[i];
 
             qreal d = QVector2D::dotProduct(a.position - mouse, a.position - mouse);
 
-            if (d < collision_radius * collision_radius)
-            {
+            if (d < collision_radius * collision_radius) {
                 QVector2D dir = a.position - mouse;
 
                 dir.normalize();
@@ -175,10 +165,10 @@ void dtkWidgetsOverlayRopePrivate::collide(void)
 
 void dtkWidgetsOverlayRopePrivate::drag(void)
 {
-    if(!this->vertices.count())
+    if (!this->vertices.count())
         return;
 
-    if(!xf || !yf)
+    if (!xf || !yf)
         return;
 
     if (this->dragging) {
@@ -210,12 +200,11 @@ void dtkWidgetsOverlayRopePrivate::buildRope(void)
     vertices.clear();
 
     if (this->mode != dtkWidgetsOverlayRope::Dynamic) {
-        this->xi = q->width()/2.0;
+        this->xi = q->width() / 2.0;
         this->yi = 50.0;
     }
 
-    for (quint32 i = 0; i < vertices_count; ++i)
-    {
+    for (quint32 i = 0; i < vertices_count; ++i) {
         dtkWidgetsOverlayRopeVertex v;
 
         v.position.setX(xi);
@@ -231,35 +220,36 @@ void dtkWidgetsOverlayRopePrivate::buildRope(void)
 
 void dtkWidgetsOverlayRopePrivate::renderRope(QPainter *painter)
 {
-    if(!vertices.count())
+    if (!vertices.count())
         return;
 
     painter->setPen(QPen(Qt::gray, 2));
 
     int i;
 
-    for (i = 0; i < vertices.size() - 1; ++i)
-    {
-        dtkWidgetsOverlayRopeVertex& a = vertices[i];
-        dtkWidgetsOverlayRopeVertex& b = vertices[i + 1];
+    for (i = 0; i < vertices.size() - 1; ++i) {
+        dtkWidgetsOverlayRopeVertex &a = vertices[i];
+        dtkWidgetsOverlayRopeVertex &b = vertices[i + 1];
 
         painter->drawLine(a.position.toPoint(), b.position.toPoint());
     }
 
     painter->setPen(QPen(Qt::gray, 4));
     painter->setBrush(Qt::white);
-    painter->drawRoundedRect(vertices[0].position.x() - 10, vertices[0].position.y() - 10, 20, 20, 10, 10);
+    painter->drawRoundedRect(vertices[0].position.x() - 10, vertices[0].position.y() - 10, 20, 20,
+                             10, 10);
 
     i--;
 
     painter->setPen(QPen(Qt::gray, 4));
     painter->setBrush(Qt::white);
-    painter->drawRoundedRect(vertices[i].position.x() - 10, vertices[i].position.y() - 10, 20, 20, 10, 10);
+    painter->drawRoundedRect(vertices[i].position.x() - 10, vertices[i].position.y() - 10, 20, 20,
+                             10, 10);
 }
 
 void dtkWidgetsOverlayRopePrivate::renderCollider(QPainter *painter)
 {
-    if(!this->collider)
+    if (!this->collider)
         return;
 
     QPointF start;
@@ -273,8 +263,7 @@ void dtkWidgetsOverlayRopePrivate::renderCollider(QPainter *painter)
     qreal theta = 0;
     qreal inc = M_PI * 2.0 / (qreal)kSegments;
 
-    for(quint32 i = 0; i < kSegments; ++i)
-    {
+    for (quint32 i = 0; i < kSegments; ++i) {
         theta += inc;
         QVector2D p(std::cos(theta), std::sin(theta));
         p *= collision_radius;
@@ -306,7 +295,7 @@ dtkWidgetsOverlayRope::dtkWidgetsOverlayRope(QWidget *parent) : QFrame(parent)
     d->hud = new dtkWidgetsHUD(this);
 
     QTimer *timer = new QTimer(this);
-    timer->setInterval(1000/60);
+    timer->setInterval(1000 / 60);
     timer->start();
 
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -353,13 +342,18 @@ void dtkWidgetsOverlayRope::paintEvent(QPaintEvent *event)
     d->renderRope(&painter);
     d->renderCollider(&painter);
 
-    QRect bottom_rect = QRect(event->rect().bottomLeft().x(), event->rect().bottomLeft().y() - 50, event->rect().width(), 51);
+    QRect bottom_rect = QRect(event->rect().bottomLeft().x(), event->rect().bottomLeft().y() - 50,
+                              event->rect().width(), 51);
 
     painter.setPen(QColor("#282828"));
     painter.setBrush(QColor("#2d2e2e"));
     painter.drawRect(bottom_rect);
     painter.setPen(QColor("#bebfbf"));
-    painter.drawText(bottom_rect, "Hit Qt::Key_B to (re)build the rope, Qt::Key_C to switch to collide mode, Qt::Key_G to switch to dragging mode, Qt::Key_D to switch to dynamic mode, Qt::Key_K to clear, Qt::LeftButton to interact", QTextOption(Qt::AlignCenter));
+    painter.drawText(bottom_rect,
+                     "Hit Qt::Key_B to (re)build the rope, Qt::Key_C to switch to collide "
+                     "mode, Qt::Key_G to switch to dragging mode, Qt::Key_D to switch to "
+                     "dynamic mode, Qt::Key_K to clear, Qt::LeftButton to interact",
+                     QTextOption(Qt::AlignCenter));
 
     QFrame::paintEvent(event);
 }
@@ -373,8 +367,7 @@ void dtkWidgetsOverlayRope::resizeEvent(QResizeEvent *event)
 
 void dtkWidgetsOverlayRope::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key())
-    {
+    switch (event->key()) {
     case Qt::Key_B:
         event->accept();
         d->buildRope();
@@ -414,14 +407,13 @@ void dtkWidgetsOverlayRope::mousePressEvent(QMouseEvent *event)
     d->xf = event->pos().x();
     d->yf = event->pos().y();
 
-    if(!d->xi && !d->yi) {
+    if (!d->xi && !d->yi) {
         d->xi = d->xf;
         d->yi = d->yf;
         d->buildRope();
     }
 
-    switch (event->button())
-    {
+    switch (event->button()) {
     case Qt::LeftButton:
         event->accept();
         if (d->mode == dtkWidgetsOverlayRope::Collider) {
@@ -471,8 +463,7 @@ void dtkWidgetsOverlayRope::mouseReleaseEvent(QMouseEvent *event)
     d->xf = event->pos().x();
     d->yf = event->pos().y();
 
-    switch(event->button())
-    {
+    switch (event->button()) {
     case Qt::LeftButton:
         event->accept();
         if (d->mode == dtkWidgetsOverlayRope::Collider) {
@@ -492,7 +483,7 @@ void dtkWidgetsOverlayRope::mouseReleaseEvent(QMouseEvent *event)
 
             this->hide();
 
-            if(QWidget *widget = this->parentWidget()->childAt(d->xf, d->yf)) {
+            if (QWidget *widget = this->parentWidget()->childAt(d->xf, d->yf)) {
                 emit target(widget);
             }
 

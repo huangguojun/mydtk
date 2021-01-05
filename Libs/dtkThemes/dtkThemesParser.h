@@ -24,18 +24,18 @@ class DTKTHEMES_EXPORT dtkThemesParser : public QObject
     Q_OBJECT
 
 public:
-     dtkThemesParser(QObject *parent = nullptr);
-     dtkThemesParser(const QString& path, QObject *parent = nullptr);
+    dtkThemesParser(QObject *parent = nullptr);
+    dtkThemesParser(const QString &path, QObject *parent = nullptr);
     ~dtkThemesParser(void);
 
 public slots:
-    QString parse(const QString&);
+    QString parse(const QString &);
 
 public:
-    const QColor color(const QString& key) const;
+    const QColor color(const QString &key) const;
 
 public:
-    const QHash<QString, QString>& values(void) const;
+    const QHash<QString, QString> &values(void) const;
 
 private:
     class dtkThemesParserPrivate *d;

@@ -23,7 +23,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationViewVideoRaster : public dtkWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationViewVideoRaster(QWidget *parent = nullptr);
+    dtkVisualizationViewVideoRaster(QWidget *parent = nullptr);
     ~dtkVisualizationViewVideoRaster(void);
 
 public:
@@ -33,10 +33,10 @@ public slots:
     void update(void) override;
 
 public:
-    void setTitle(const QString&);
+    void setTitle(const QString &);
 
 public slots:
-    void setImage(const QImage&);
+    void setImage(const QImage &);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

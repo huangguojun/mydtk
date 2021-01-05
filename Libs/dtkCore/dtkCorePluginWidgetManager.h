@@ -25,10 +25,10 @@ class DTKCORE_EXPORT dtkCorePluginWidgetManager : public QObject
     Q_OBJECT
 
 public:
-    static dtkCorePluginWidgetManager& instance(void);
+    static dtkCorePluginWidgetManager &instance(void);
 
 public:
-    void add(const void *, const QVariant&, QWidget *);
+    void add(const void *, const QVariant &, QWidget *);
 
     int remove(const void *);
     int remove(QWidget *);
@@ -36,25 +36,25 @@ public:
     void clear(void);
 
     QWidget *widget(const void *) const;
-    QWidget   *take(const void *) const;
+    QWidget *take(const void *) const;
 
     QString description(void) const;
 
 signals:
-    void added(const QVariant&, QWidget *) const;
+    void added(const QVariant &, QWidget *) const;
 
 protected:
     static dtkCorePluginWidgetManager *s_instance;
 
 private:
-     dtkCorePluginWidgetManager(void);
+    dtkCorePluginWidgetManager(void);
     ~dtkCorePluginWidgetManager(void);
 
 private:
     class dtkCorePluginWidgetManagerPrivate *d;
 };
 
-DTKCORE_EXPORT QDebug operator<<(QDebug, dtkCorePluginWidgetManager&);
+DTKCORE_EXPORT QDebug operator<<(QDebug, dtkCorePluginWidgetManager &);
 
 //
 // dtkCorePluginWidgetManager.h ends here

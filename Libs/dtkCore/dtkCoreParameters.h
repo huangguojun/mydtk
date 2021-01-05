@@ -2,7 +2,7 @@
 
 class dtkCoreParameter;
 
-#include <QString>
 #include <QHash>
+#include <QString>
 
-using dtkCoreParameters  = QHash <QString, dtkCoreParameter *>;
+using dtkCoreParameters = QHash<QString, dtkCoreParameter *>;

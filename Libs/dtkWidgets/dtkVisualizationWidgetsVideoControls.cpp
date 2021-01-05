@@ -13,7 +13,8 @@ class dtkVisualizationWidgetsVideoControlsItem : public QFrame
     Q_OBJECT
 
 public:
-    dtkVisualizationWidgetsVideoControlsItem(fa::icon icon, int icon_size, QWidget *parent = nullptr);
+    dtkVisualizationWidgetsVideoControlsItem(fa::icon icon, int icon_size,
+                                             QWidget *parent = nullptr);
 
     void setIcon(fa::icon icon);
 
@@ -30,12 +31,15 @@ protected:
 
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationWidgetsVideoControlsItem::dtkVisualizationWidgetsVideoControlsItem(fa::icon icon, int icon_size, QWidget *parent) : QFrame(parent)
+dtkVisualizationWidgetsVideoControlsItem::dtkVisualizationWidgetsVideoControlsItem(fa::icon icon,
+                                                                                   int icon_size,
+                                                                                   QWidget *parent)
+    : QFrame(parent)
 {
     m_icon_size = icon_size;
 
     label = new QLabel(this);
-    label->setFixedSize(QSize(icon_size,icon_size));
+    label->setFixedSize(QSize(icon_size, icon_size));
     label->setPixmap(dtkFontAwesome::instance()->icon(icon).pixmap(icon_size, icon_size));
     label->setAttribute(Qt::WA_TranslucentBackground);
     label->setAttribute(Qt::WA_NoSystemBackground);
@@ -69,10 +73,11 @@ class dtkVisualizationWidgetsVideoControlsPrivate : public QObject
 
 public:
     dtkVisualizationWidgetsVideoControlsItem *status_item = nullptr;
-    dtkVisualizationWidgetsVideoControlsItem *rewind      = nullptr;
-    dtkVisualizationWidgetsVideoControlsItem *fullscreen  = nullptr;
+    dtkVisualizationWidgetsVideoControlsItem *rewind = nullptr;
+    dtkVisualizationWidgetsVideoControlsItem *fullscreen = nullptr;
 
-    dtkVisualizationWidgetsVideoControls::State state = dtkVisualizationWidgetsVideoControls::State::StoppedState;
+    dtkVisualizationWidgetsVideoControls::State state =
+            dtkVisualizationWidgetsVideoControls::State::StoppedState;
 
 public slots:
     void updateDurationInfo(qint64 currentInfo);
@@ -92,17 +97,18 @@ void dtkVisualizationWidgetsVideoControlsPrivate::updateDurationInfo(qint64 curr
     QString tStr;
     int duration = this->progress_bar->maximum() / 1000;
     if (currentInfo || duration) {
-        QTime currentTime((currentInfo / 3600) % 60, (currentInfo / 60) % 60,
-            currentInfo % 60, (currentInfo * 1000) % 1000);
-        QTime totalTime((duration / 3600) % 60, (duration / 60) % 60,
-            duration % 60, (duration * 1000) % 1000);
+        QTime currentTime((currentInfo / 3600) % 60, (currentInfo / 60) % 60, currentInfo % 60,
+                          (currentInfo * 1000) % 1000);
+        QTime totalTime((duration / 3600) % 60, (duration / 60) % 60, duration % 60,
+                        (duration * 1000) % 1000);
         QString format = "mm:ss";
         if (duration > 3600)
             format = "hh:mm:ss";
         tStr = currentTime.toString(format) + " / " + totalTime.toString(format);
     }
     this->label_duration->setText(tStr);
-    //TODO: do not hard code color, but this requiress VTK background to use dtkThemes
+    // TODO: do not hard code color, but this requiress VTK background to use
+    // dtkThemes
     this->label_duration->setStyleSheet("font: 14pt; color: #bbbbbb;");
 }
 
@@ -110,7 +116,8 @@ void dtkVisualizationWidgetsVideoControlsPrivate::updateDurationInfo(qint64 curr
 // dtkVisualizationWidgetsVideoControls
 // ///////////////////////////////////////////////////////////////////
 
-dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidget *parent) : QFrame(parent), d(new dtkVisualizationWidgetsVideoControlsPrivate)
+dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidget *parent)
+    : QFrame(parent), d(new dtkVisualizationWidgetsVideoControlsPrivate)
 {
     this->setAttribute(Qt::WA_NoSystemBackground);
     this->setAttribute(Qt::WA_TranslucentBackground);
@@ -119,24 +126,25 @@ dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidg
     dtkFontAwesome::instance()->setDefaultOption("color", QColor(Qt::white));
 
     d->status_item = new dtkVisualizationWidgetsVideoControlsItem(fa::play, 24, parent);
-    d->rewind      = new dtkVisualizationWidgetsVideoControlsItem(fa::stepbackward, 24, parent);
-    d->fullscreen  = new dtkVisualizationWidgetsVideoControlsItem(fa::arrowsalt, 24, parent);
-    connect(d->status_item, &dtkVisualizationWidgetsVideoControlsItem::clicked, this, &dtkVisualizationWidgetsVideoControls::toggle);
+    d->rewind = new dtkVisualizationWidgetsVideoControlsItem(fa::stepbackward, 24, parent);
+    d->fullscreen = new dtkVisualizationWidgetsVideoControlsItem(fa::arrowsalt, 24, parent);
+    connect(d->status_item, &dtkVisualizationWidgetsVideoControlsItem::clicked, this,
+            &dtkVisualizationWidgetsVideoControls::toggle);
     connect(d->fullscreen, &dtkVisualizationWidgetsVideoControlsItem::clicked, [=]() {
-            if (d->is_fullscreen) // was fullscreen
-                d->fullscreen->setIcon(fa::arrowsalt);
-            else
-                d->fullscreen->setIcon(fa::compress);
+        if (d->is_fullscreen) // was fullscreen
+            d->fullscreen->setIcon(fa::arrowsalt);
+        else
+            d->fullscreen->setIcon(fa::compress);
 
-            d->is_fullscreen = !d->is_fullscreen;
-            emit fullscreen(d->is_fullscreen);
-        });
+        d->is_fullscreen = !d->is_fullscreen;
+        emit fullscreen(d->is_fullscreen);
+    });
     connect(d->rewind, &dtkVisualizationWidgetsVideoControlsItem::clicked, [=]() {
-            d->state = State::StoppedState;
-            d->status_item->setIcon(fa::play);
-            d->progress_bar->reset();
-            emit restart();
-        });
+        d->state = State::StoppedState;
+        d->status_item->setIcon(fa::play);
+        d->progress_bar->reset();
+        emit restart();
+    });
 
     d->progress_bar = new QProgressBar(parent);
     d->progress_bar->setOrientation(Qt::Horizontal);
@@ -149,8 +157,17 @@ dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidg
     d->progress_bar_buffered->setFixedHeight(10);
     d->progress_bar_buffered->setVisible(false);
 
-    QString style_bar = "QProgressBar{ border: 1px solid transparent; text-align: center; color:rgba(0,0,0,100); border-radius: 5px; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(182, 182, 182, 100), stop:1 rgba(209, 209, 209, 100)); } QProgressBar::chunk{ background-color: rgba(253,26,30,100); }";
-    QString style_bar_buffered = "QProgressBar{ border: 1px solid transparent; text-align: center; color:rgba(0,0,0,100); border-radius: 5px; background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(222, 222, 222, 100), stop:1 rgba(249, 249, 249, 100)); } QProgressBar::chunk{ background-color: rgba(253,156,170,100); }";
+    QString style_bar = "QProgressBar{ border: 1px solid transparent; text-align: center; "
+                        "color:rgba(0,0,0,100); border-radius: 5px; background-color: "
+                        "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(182, "
+                        "182, 182, 100), stop:1 rgba(209, 209, 209, 100)); } "
+                        "QProgressBar::chunk{ background-color: rgba(253,26,30,100); }";
+    QString style_bar_buffered =
+            "QProgressBar{ border: 1px solid transparent; text-align: center; "
+            "color:rgba(0,0,0,100); border-radius: 5px; background-color: "
+            "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(222, "
+            "222, 222, 100), stop:1 rgba(249, 249, 249, 100)); } "
+            "QProgressBar::chunk{ background-color: rgba(253,156,170,100); }";
 
     d->progress_bar->setStyleSheet(style_bar);
     d->progress_bar_buffered->setStyleSheet(style_bar_buffered);
@@ -158,11 +175,11 @@ dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidg
     d->label_duration = new QLabel(this);
     d->label_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QVBoxLayout *vlayout =  new QVBoxLayout(this);
+    QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(32, 0, 32, 0);
     vlayout->setAlignment(Qt::AlignLeft);
 
-    QHBoxLayout *layout =  new QHBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
 
     layout->addWidget(d->status_item);
@@ -175,7 +192,6 @@ dtkVisualizationWidgetsVideoControls::dtkVisualizationWidgetsVideoControls(QWidg
     vlayout->addWidget(d->progress_bar);
     vlayout->addWidget(d->progress_bar_buffered);
     vlayout->addLayout(layout);
-
 
     this->setLayout(vlayout);
 }
@@ -262,22 +278,24 @@ void dtkVisualizationWidgetsVideoControls::setCurrentBufferFrame(qlonglong count
 void dtkVisualizationWidgetsVideoControls::mouseMoveEvent(QMouseEvent *event)
 {
     int size = d->progress_bar->width();
-    double percent = (event->pos().x() - d->progress_bar->x())/ (double)size ;
+    double percent = (event->pos().x() - d->progress_bar->x()) / (double)size;
 
     QString message;
-    int frame_index = percent * d->progress_bar->maximum() / 1000.0 ;
+    int frame_index = percent * d->progress_bar->maximum() / 1000.0;
 
-    QTime currentTime((frame_index / 3600) % 60, (frame_index / 60) % 60,
-                      frame_index % 60, (frame_index * 1000) % 1000);
+    QTime currentTime((frame_index / 3600) % 60, (frame_index / 60) % 60, frame_index % 60,
+                      (frame_index * 1000) % 1000);
 
     QString format = "mm:ss";
     if (frame_index > 3600)
         format = "hh:mm:ss";
 
-    message  = currentTime.toString(format);
+    message = currentTime.toString(format);
     if (d->display_frame_info) {
-        int frame_index = std::round(percent * d->progress_bar->maximum() + (1-percent) * d->progress_bar->minimum());
-        message += "\n" + QString::number(frame_index) + "/" + QString::number(d->progress_bar->maximum());
+        int frame_index = std::round(percent * d->progress_bar->maximum()
+                                     + (1 - percent) * d->progress_bar->minimum());
+        message += "\n" + QString::number(frame_index) + "/"
+                + QString::number(d->progress_bar->maximum());
     }
 
     d->progress_bar->setToolTip(message);
@@ -290,8 +308,9 @@ void dtkVisualizationWidgetsVideoControls::mouseMoveEvent(QMouseEvent *event)
 void dtkVisualizationWidgetsVideoControls::mousePressEvent(QMouseEvent *event)
 {
     int size = d->progress_bar->width();
-    double percent = (event->pos().x() - d->progress_bar->x())/ (double)size ;
-    int frame_index = std::round(percent * d->progress_bar->maximum() + (1.0-percent) * d->progress_bar->minimum());
+    double percent = (event->pos().x() - d->progress_bar->x()) / (double)size;
+    int frame_index = std::round(percent * d->progress_bar->maximum()
+                                 + (1.0 - percent) * d->progress_bar->minimum());
     emit seekTo(frame_index);
     event->ignore();
 

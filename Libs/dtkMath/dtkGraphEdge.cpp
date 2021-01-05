@@ -20,36 +20,35 @@ class dtkGraphEdgePrivate
 public:
     QObject *source;
     QObject *destination;
-
 };
 
 dtkGraphEdge::dtkGraphEdge(void) : d(new dtkGraphEdgePrivate)
 {
-    d->source      = NULL;
+    d->source = NULL;
     d->destination = NULL;
 }
 
 dtkGraphEdge::dtkGraphEdge(QObject *source, QObject *destination) : d(new dtkGraphEdgePrivate)
 {
-    d->source      = source;
+    d->source = source;
     d->destination = destination;
 }
 
-dtkGraphEdge::dtkGraphEdge(const dtkGraphEdge& other) : d(new dtkGraphEdgePrivate)
+dtkGraphEdge::dtkGraphEdge(const dtkGraphEdge &other) : d(new dtkGraphEdgePrivate)
 {
-    d->source      = other.d->source;
+    d->source = other.d->source;
     d->destination = other.d->destination;
 }
 
-dtkGraphEdge& dtkGraphEdge::operator=(const dtkGraphEdge& other)
+dtkGraphEdge &dtkGraphEdge::operator=(const dtkGraphEdge &other)
 {
-    d->source      = other.d->source;
+    d->source = other.d->source;
     d->destination = other.d->destination;
 
     return (*this);
 }
 
-bool dtkGraphEdge::operator==(const dtkGraphEdge& other) const
+bool dtkGraphEdge::operator==(const dtkGraphEdge &other) const
 {
     return (d->source == other.d->source) && (d->destination == other.d->destination);
 }
@@ -80,4 +79,3 @@ void dtkGraphEdge::setDestination(QObject *destination)
 {
     d->destination = destination;
 }
-

@@ -143,7 +143,8 @@
     \sa operator!=()
 */
 
-/*! \fn bool dtkArray::operator == (const dtkArray<T, PreallocSizeOther>& other) const
+/*! \fn bool dtkArray::operator == (const dtkArray<T, PreallocSizeOther>& other)
+   const
 
     Returns \c true if \a other is equal to this array; otherwise
     returns \c false.
@@ -171,7 +172,8 @@
     \sa operator==()
 */
 
-/*! \fn bool dtkArray::operator != (const dtkArray<T, PreallocSizeOther>& other) const
+/*! \fn bool dtkArray::operator != (const dtkArray<T, PreallocSizeOther>& other)
+   const
 
     Returns \c true if \a other is not equal to this array; otherwise
     returns \c false.
@@ -354,7 +356,8 @@
 */
 
 /*!
-    \fn void dtkArray::append(const T& v1, const T& v2, const T& v3, const T& v4)
+    \fn void dtkArray::append(const T& v1, const T& v2, const T& v3, const T&
+   v4)
 
     Inserts \a v1, \a v2, \a v3 and \a v4 at the end of the array.
 
@@ -442,7 +445,8 @@
     \a before. Returns an iterator pointing at the inserted item.
 */
 
-/*! \fn dtkArray::iterator dtkArray::insert(iterator before, qlonglong length, const T &value)
+/*! \fn dtkArray::iterator dtkArray::insert(iterator before, qlonglong length,
+   const T &value)
 
     Inserts \a length times \a value in front of the item pointed to
     by the iterator \a before. Returns an iterator pointing at the
@@ -481,7 +485,8 @@
     \sa setAt()
 */
 
-/*! \fn void dtkArray::replace(qlonglong index, const T *values, qlonglong length)
+/*! \fn void dtkArray::replace(qlonglong index, const T *values, qlonglong
+   length)
 
     \overload
 
@@ -699,7 +704,6 @@
     \sa reverse()
 */
 
-
 /*! \fn T *dtkArray::data(void)
 
     Returns a pointer to the data stored in the array. The pointer
@@ -721,18 +725,6 @@
 
     \overload
 */
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*! \typedef dtkArray::iterator
 
@@ -757,7 +749,8 @@
     while iterators are active on that container. For more information,
     read \l{Implicit sharing iterator problem}.
 
-    \sa dtkArray::constBegin(), dtkArray::constEnd(), dtkArray::cbegin(), dtkArray::cend(), dtkArray::iterator
+    \sa dtkArray::constBegin(), dtkArray::constEnd(), dtkArray::cbegin(),
+   dtkArray::cend(), dtkArray::iterator
 */
 
 /*! \typedef dtkArray::Iterator

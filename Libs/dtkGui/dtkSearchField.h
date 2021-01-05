@@ -36,14 +36,14 @@ public:
     QString text(void) const;
 
 public slots:
-    void setText(const QString& text);
-    void setPlaceholderText(const QString& text);
+    void setText(const QString &text);
+    void setPlaceholderText(const QString &text);
 
 public slots:
     void clear(void);
 
 signals:
-    void textChanged(const QString& text);
+    void textChanged(const QString &text);
     void editingFinished();
 
 protected:

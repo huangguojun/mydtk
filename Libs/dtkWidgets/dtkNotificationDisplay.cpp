@@ -12,15 +12,15 @@
 
 // Code:
 
-#include "dtkNotification.h"
 #include "dtkNotificationDisplay.h"
+#include "dtkNotification.h"
 #include "dtkNotificationEvent.h"
 #include "dtkNotificationQueue.h"
 
 class dtkNotificationDisplayPrivate
 {
 public:
-    QString read(const QString& path);
+    QString read(const QString &path);
 
 public:
     QLabel *message;
@@ -33,7 +33,7 @@ public:
     QToolButton *clse;
 };
 
-QString dtkNotificationDisplayPrivate::read(const QString& path)
+QString dtkNotificationDisplayPrivate::read(const QString &path)
 {
     QFile file(path);
 
@@ -51,7 +51,8 @@ QString dtkNotificationDisplayPrivate::read(const QString& path)
 //
 // /////////////////////////////////////////////////////////////////
 
-dtkNotificationDisplay::dtkNotificationDisplay(QWidget *parent) : QFrame(parent), d(new dtkNotificationDisplayPrivate)
+dtkNotificationDisplay::dtkNotificationDisplay(QWidget *parent)
+    : QFrame(parent), d(new dtkNotificationDisplayPrivate)
 {
     dtkNotificationQueue::instance()->registerNotifiable(this);
 
@@ -142,7 +143,7 @@ void dtkNotificationDisplay::dismissible(bool dismissible)
     d->clse->setVisible(dismissible);
 }
 
-void dtkNotificationDisplay::display(const QString& message)
+void dtkNotificationDisplay::display(const QString &message)
 {
     d->message->setText(message);
 }

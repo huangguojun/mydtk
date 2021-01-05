@@ -23,7 +23,7 @@ class DTKWIDGETS_EXPORT dtkWidgetsHUDInfo : public QFrame
     Q_OBJECT
 
 public:
-     dtkWidgetsHUDInfo(const QString& text, QWidget *parent = nullptr);
+    dtkWidgetsHUDInfo(const QString &text, QWidget *parent = nullptr);
     ~dtkWidgetsHUDInfo(void);
 
 public:

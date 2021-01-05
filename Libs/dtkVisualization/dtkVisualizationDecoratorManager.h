@@ -23,7 +23,6 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationDecoratorManager : public QObject
     Q_OBJECT
 
 public:
-
 };
 
 //

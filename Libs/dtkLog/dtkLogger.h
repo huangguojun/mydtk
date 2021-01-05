@@ -27,11 +27,11 @@ class dtkLogModel;
 class DTKLOG_EXPORT dtkLogger
 {
 public:
-    static dtkLogger& instance(void);
+    static dtkLogger &instance(void);
 
 public:
-    dtkLog::Level       level(void) const;
-    QString       levelString(void) const;
+    dtkLog::Level level(void) const;
+    QString levelString(void) const;
 
 public:
     void setLevel(dtkLog::Level level);
@@ -43,8 +43,8 @@ public:
     void detachConsole(void);
 
 public:
-    void attachFile(const QString& path, qlonglong max_file_size = DEFAULT_MAX_FILE_SIZE);
-    void detachFile(const QString& path);
+    void attachFile(const QString &path, qlonglong max_file_size = DEFAULT_MAX_FILE_SIZE);
+    void detachFile(const QString &path);
 
 public:
     void attachModel(dtkLogModel *model);
@@ -55,16 +55,16 @@ public:
     void redirectCerr(dtkLog::Level level = dtkLog::Error);
 
 private:
-     dtkLogger(void);
-     dtkLogger(const dtkLogger& other);
+    dtkLogger(void);
+    dtkLogger(const dtkLogger &other);
     ~dtkLogger(void);
 
 private:
-    void write(const QString& message);
-    void write(const QString& message, dtkLog::Level level);
+    void write(const QString &message);
+    void write(const QString &message, dtkLog::Level level);
 
 private:
-    dtkLogger& operator=(const dtkLogger& other);
+    dtkLogger &operator=(const dtkLogger &other);
 
 private:
     class dtkLoggerPrivate *d;

@@ -29,13 +29,13 @@ class DTKCORE_EXPORT dtkCorePluginFactoryPrivate : public QObject
     Q_OBJECT
 
 signals:
-    void created(const QVariant&) const;
+    void created(const QVariant &) const;
 
 public:
-    void touch(const QVariant&) const;
+    void touch(const QVariant &) const;
 
 public:
-    void    connect(dtkObjectManager *manager) const;
+    void connect(dtkObjectManager *manager) const;
     void disconnect(dtkObjectManager *manager) const;
 };
 

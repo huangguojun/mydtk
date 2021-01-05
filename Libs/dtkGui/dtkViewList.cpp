@@ -36,9 +36,12 @@ dtkViewList::dtkViewList(QWidget *parent) : QListWidget(parent), d(new dtkViewLi
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     this->setFixedHeight(100);
 
-    connect(dtkAbstractViewFactory::instance(), SIGNAL(created(dtkAbstractView *, const QString&)), this, SLOT(update()));
+    connect(dtkAbstractViewFactory::instance(), SIGNAL(created(dtkAbstractView *, const QString &)),
+            this, SLOT(update()));
 
-    //connect(dtkAbstractViewFactory::instance(), SIGNAL(nameChanged(dtkAbstractView *, const QString&)), this, SLOT(update()));
+    // connect(dtkAbstractViewFactory::instance(),
+    // SIGNAL(nameChanged(dtkAbstractView *, const QString&)), this,
+    // SLOT(update()));
 
     connect(dtkAbstractViewFactory::instance(), SIGNAL(cleared()), this, SLOT(clear()));
 

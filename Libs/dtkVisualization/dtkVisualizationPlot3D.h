@@ -28,7 +28,7 @@ class DTKVISUALIZATION_EXPORT dtkVisualizationPlot3D : public dtkWidgetsWidget
     Q_OBJECT
 
 public:
-     dtkVisualizationPlot3D(QWidget *parent = nullptr);
+    dtkVisualizationPlot3D(QWidget *parent = nullptr);
     ~dtkVisualizationPlot3D(void);
 
 public:
@@ -38,8 +38,8 @@ public slots:
     void update(void) override;
 
 public:
-  //  dtkWidgetsOverlayPane *overlay(void);
- //   dtkWidgetsHUD *hud(void);
+    //  dtkWidgetsOverlayPane *overlay(void);
+    //   dtkWidgetsHUD *hud(void);
 
 public:
     vtkRenderer *renderer(void);
