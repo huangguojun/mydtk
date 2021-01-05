@@ -5,13 +5,7 @@
  * Created: 2015/02/04 12:03:44
  */
 
-/* Commentary:
- *
- */
 
-/* Change log:
- *
- */
 
 #include "dtkApplication.h"
 #include <dtkCore/dtkApplicationPrivate.h>
