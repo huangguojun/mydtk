@@ -9,13 +9,7 @@
  *     Update #: 22
  */
 
-/* Commentary:
- *
- */
 
-/* Change log:
- *
- */
 
 #include "dtkPlotRenderer.h"
 #include "dtkPlotView.h"
