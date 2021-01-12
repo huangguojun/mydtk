@@ -103,8 +103,10 @@ endforeach()
 ##
 ## ###################################################################
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkWrap.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/FindQwt.cmake)
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
+#include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkWrap.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/FindQwt.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/FindSphinx.cmake)
 
 
 ## #################################################################
@@ -167,6 +169,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfigVersion.cmake.in
 #######################################
 add_subdirectory(App)
 add_subdirectory(Libs)
+add_subdirectory(Doc)
 
 ########################################
 ## Install
