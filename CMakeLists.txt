@@ -169,6 +169,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMake/dtkConfigVersion.cmake.in
 #######################################
 add_subdirectory(App)
 add_subdirectory(Libs)
+add_subdirectory(Test)
 add_subdirectory(Doc)
 
 ########################################
@@ -194,3 +195,8 @@ set (CPACK_DEBIAN_PACKAGE_DEPENDS " libtinyxml-dev ")
 set (CPACK_PACKAGE_CONTACT "guojun.huang@nanovision.com.cn")
 include (CPack)
 
+########################################
+## CTest 
+#######################################
+enable_testing()
+add_test(NAME mydtk COMMAND $<TARGET_FILE:mytest>)
