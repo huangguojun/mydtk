@@ -17,12 +17,11 @@ PacketReceiver::PacketReceiver(boost::asio::io_service &io, int port, int forwar
       IsReceiving(true),
       ShouldStop(false)
 {
-    this->Socket.open(boost::asio::ip::udp::v4()); // Opening the socket with an
-                                                   // UDP v4 protocol
-    this->Socket.set_option(
+    Socket.open(boost::asio::ip::udp::v4()); 
+    Socket.set_option(
             boost::asio::ip::udp::socket::reuse_address(true)); // Tell the OS we accept to re-use
                                                                 // the port address for an other app
-    this->Socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
+    Socket.bind(boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
 
     /*
     // Check that the provided ipadress is valid
@@ -79,10 +78,10 @@ void PacketReceiver::StartReceive()
 {
     {
         boost::lock_guard<boost::mutex> guard(this->IsReceivingMtx);
-        this->IsReceiving = true;
+        IsReceiving = true;
     }
 
-    this->Socket.async_receive_from(
+    Socket.async_receive_from(
             boost::asio::buffer(this->RXBuffer, BUFFER_SIZE), this->SenderEndpoint,
             boost::bind(&PacketReceiver::SocketCallback, this, boost::asio::placeholders::error,
                         boost::asio::placeholders::bytes_transferred));
@@ -131,12 +130,7 @@ void PacketReceiver::SocketCallback(const boost::system::error_code &error,
     NetworkPacket *packet = NetworkPacket::BuildEthernetIP4UDP(this->RXBuffer, numberOfBytes,
                                                                sourceIP, sourcePort, ourPort);
 
-    // std::cout << this->Socket.remote_endpoint().address() << std::endl;
-
-    /*
-
-
-    if (this->isForwarding)
+    /*if (this->isForwarding)
     {
        // ForwardedSocket.send_to(boost::asio::buffer(packet->GetPayloadData(),
     packet->GetPayloadSize()), ForwardEndpoint);
@@ -152,7 +146,7 @@ void PacketReceiver::SocketCallback(const boost::system::error_code &error,
 
     this->StartReceive();
 
-    if ((++this->PacketCounter % 5) == 0) {
+    if ((++ PacketCounter % 5) == 0) {
         std::cout << "RECV packets: " << this->PacketCounter << " on " << this->Port << std::endl;
     }
 }

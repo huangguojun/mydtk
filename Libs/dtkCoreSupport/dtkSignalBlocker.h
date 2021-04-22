@@ -9,13 +9,6 @@
  *     Update #: 16
  */
 
-/* Commentary:
- *
- */
-
-/* Change log:
- *
- */
 
 #ifndef DTKSIGNALBLOCKER_H
 #define DTKSIGNALBLOCKER_H

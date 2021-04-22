@@ -43,8 +43,7 @@ public:
 
     void Stop();
 
-    int LidarPort; /*!< The port to receive LIDAR information. Default is 2368
-                    */
+    int LidarPort; /*!< The port to receive LIDAR information. Default is 2368*/
     int ForwardedLidarPort; /*!< The port to send LIDAR forwarded packets*/
     std::string ForwardedIpAddress; /*!< The ip to send forwarded packets*/
     bool IsForwarding; /*!< Allowing the forwarding of the packets*/
