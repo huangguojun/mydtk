@@ -190,7 +190,6 @@ set (CPACK_GENERATOR "DEB")
 set (CPACK_PACKAGE_VERSION_MAJOR "${dtk_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${dtk_VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${dtk_VERSION_PATCH}")
-set (CPACK_PACKAGE_CONTACT "guojun.huang@nanovision.com.cn")
 include (CPack)
 
 ########################################
