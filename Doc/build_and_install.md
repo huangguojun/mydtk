@@ -21,7 +21,6 @@ sudo apt-get install libboost-all-dev  qt5-default
 sudo apt-get install libvtk6-dev libvtk6-qt-dev libvtkgdcm2-dev
 sudo apt-get install libtinyxml-dev  libpython2.7-dev
 sudo apt-get install libproj-dev
-
 ```
 
 #### 编译：

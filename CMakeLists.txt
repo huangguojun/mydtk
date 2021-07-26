@@ -83,21 +83,21 @@ find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 
 
-find_package(CUDA REQUIRED)
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -D_FORCE_INLINES  )
+#find_package(CUDA REQUIRED)
+#set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -D_FORCE_INLINES  )
 
 ### 解决VTK CUDA 冲突问题
-get_directory_property(dir_defs DIRECTORY ${CMAKE_SOURCE_DIR} COMPILE_DEFINITIONS)
-set(vtk_flags)
-foreach(it ${dir_defs})
-    if(it MATCHES "vtk*")
-    list(APPEND vtk_flags ${it})
-    endif()
-endforeach()
+#get_directory_property(dir_defs DIRECTORY ${CMAKE_SOURCE_DIR} COMPILE_DEFINITIONS)
+#set(vtk_flags)
+#foreach(it ${dir_defs})
+#    if(it MATCHES "vtk*")
+#    list(APPEND vtk_flags ${it})
+#    endif()
+#endforeach()
 
-foreach(d ${vtk_flags})
-    remove_definitions(-D${d})
-endforeach()
+#foreach(d ${vtk_flags})
+#    remove_definitions(-D${d})
+#endforeach()
 
 ## ###################################################################
 ##
